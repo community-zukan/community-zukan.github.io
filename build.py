@@ -24,6 +24,7 @@ import os
 import re
 import shutil
 import sys
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone, timedelta
 
@@ -372,6 +373,7 @@ def build_case(cfg, c, related):
     {dl_row("注意点", esc(c.get("出典の注意")))}
     {dl_row("確認日", esc(fmt_date(c.get("確認日"))))}
   </dl>
+  {report_link(cfg, c)}
 </section>"""
     missing_html = ""
     if missing:
@@ -408,6 +410,16 @@ def build_case(cfg, c, related):
 """
     return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc,
                 path=f"cases/{c['ID']}/", body=body, depth=2)
+
+
+def report_link(cfg, c):
+    if not cfg.get("contact_url"):
+        return ""
+    url = cfg["contact_url"]
+    if cfg.get("contact_id_entry"):
+        target = f"{c['ID']} {c['企業名']} {c['_title']}"
+        url += "?usp=pp_url&" + urllib.parse.urlencode({cfg["contact_id_entry"]: target})
+    return f'<p class="report"><a href="{esc(url)}" target="_blank" rel="noopener">この事例の誤りを知らせる</a></p>'
 
 
 def find_related(c, cases, n=3):
@@ -459,7 +471,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>掲載内容について</h2>
-  <p>内容の誤りや、掲載している事例についてのご連絡は、{contact_text(cfg)}</p>
+  <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
 </article>
 """
     return page(cfg, title="この図鑑について", description="コミュニティ図鑑の収録ルール、集め方、タグの意味を説明しています。",
