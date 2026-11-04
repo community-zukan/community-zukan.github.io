@@ -319,6 +319,16 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .defs.compact th:nth-child(2), .defs.compact td:nth-child(2) { white-space: nowrap; }
 @media (max-width: 480px) { .defs.compact th, .defs.compact td { padding: var(--space-2); } }
 
+/* 運営者 */
+.operator-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-6); }
+.operator-card p { margin: 0 0 var(--space-3); }
+.operator-card .operator-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); }
+.operator-name strong { font-family: var(--font-display); font-size: 22px; color: var(--ink); }
+.operator-name span { font-size: 14px; color: var(--text-sub); }
+.operator-card .operator-link { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-4) 0 0; }
+.operator-link .button { border-radius: var(--radius-pill); min-height: 44px; display: inline-flex; align-items: center; color: var(--on-sky); }
+.operator-link span { font-size: 13px; color: var(--text-sub); }
+
 /* 404 ページ */
 .search-again { display: flex; gap: var(--space-2); margin: var(--space-6) 0; }
 .search-again input { flex: 1; min-width: 0; font: inherit; font-size: 16px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3); min-height: 46px; }

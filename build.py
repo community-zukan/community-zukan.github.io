@@ -1027,6 +1027,13 @@ def build_about(cfg, cases, updated):
 
   <h2>掲載内容について</h2>
   <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
+
+  <h2>運営者</h2>
+  <div class="operator-card">
+    <p class="operator-name"><strong>{esc(cfg.get('operator', ''))}</strong><span>キャリア研究家</span></p>
+    <p>これまでに1,000人以上のキャリア相談を受けてきました。著書に『ライフピボット』などがあります。この図鑑のほか、人生の転機について考える「<a href="https://ashitano-tenki.github.io/">あしたの転機観測所</a>」やnoteマガジン、コミュニティも運営しています。</p>
+    <p class="operator-link"><a class="button" href="{esc(cfg.get('operator_url', ''))}" rel="noopener" target="_blank">黒田悠介のリンク集を見る</a><span>ほかの活動や発信をまとめています</span></p>
+  </div>
 </article>
 """
     return page(cfg, title="この図鑑について", description="コミュニティ図鑑の収録ルール、集め方、タグの意味を説明しています。",
