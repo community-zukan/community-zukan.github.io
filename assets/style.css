@@ -15,8 +15,9 @@
   --fan-fg: #6b4e00; --fan-bg: var(--base-yellow);          /* 種別：ファン・顧客（黄色） */
   --hint: #fffaeb; --hint-line: #ecd68a;  /* AIによる提案の箱 */
   /* 文字 */
-  --font-sans: "Helvetica Neue", Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, "Noto Sans JP", sans-serif;
-  --font-display: var(--font-sans);
+  /* 本文は端末の標準フォント（読み込みが要らず表示が速い）。見出しだけ Zen Kaku Gothic New を読み込む */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", system-ui, sans-serif;
+  --font-display: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
   /* 余白 */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
@@ -60,6 +61,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
+h1, h2, h3, .brand-name { font-family: var(--font-display); font-weight: 700; }
 h1, h2, h3 { line-height: 1.45; letter-spacing: .03em; }
 em { font-style: normal; font-weight: 700; }
 
@@ -75,7 +77,7 @@ em { font-style: normal; font-weight: 700; }
 .site-header { background: var(--card); border-bottom: 1px solid var(--line); }
 .site-header .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-6); padding-top: 14px; padding-bottom: 14px; }
 .brand { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; line-height: 1.4; }
-.brand-name { font-size: 20px; font-weight: 700; letter-spacing: .06em; }
+.brand-name { font-size: 20px; font-weight: 900; letter-spacing: .06em; }
 .brand-sub { font-size: 12px; color: var(--text-sub); }
 .site-nav { display: flex; flex-wrap: wrap; gap: 0 18px; font-size: 14px; }
 .site-nav a { color: var(--text-body); text-decoration: none; padding: 6px 0; white-space: nowrap; }
