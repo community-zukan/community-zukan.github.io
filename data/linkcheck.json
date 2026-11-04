@@ -1,0 +1,193 @@
+{
+  "checked_at": "2026-11-04T18:47:56+09:00",
+  "cases": 147,
+  "urls": 291,
+  "summary": {
+    "正常": 273,
+    "移転": 0,
+    "拒否": 11,
+    "要確認": 7
+  },
+  "items": [
+    {
+      "id": "F04",
+      "company": "良品計画（無印良品）",
+      "title": "IDEA PARK",
+      "url": "https://www.muji.net/lab/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません"
+    },
+    {
+      "id": "F06",
+      "company": "freee",
+      "title": "freee部",
+      "url": "https://www.freee.co.jp/blog/freee-bu-17909.html",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません"
+    },
+    {
+      "id": "F06",
+      "company": "freee",
+      "title": "freee部",
+      "url": "https://www.freee.co.jp/blog/freeebu_party_2020.html",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません"
+    },
+    {
+      "id": "F58",
+      "company": "ユーザベース",
+      "title": "INITIAL Circle",
+      "url": "https://initial.inc/enterprise/circle",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません"
+    },
+    {
+      "id": "F86",
+      "company": "アドビ",
+      "title": "Adobe User Group（Adobe Marketo Engageの分科会など）",
+      "url": "https://business.adobe.com/jp/blog/the-latest/2026-japan-adobe-advocates",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません"
+    },
+    {
+      "id": "F93",
+      "company": "RevComm",
+      "title": "＆MiiTel（アンドミーテル）",
+      "url": "https://hrmos.co/pages/revcomm/jobs/B055",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません"
+    },
+    {
+      "id": "S10",
+      "company": "JERA",
+      "title": "Allies in JERA",
+      "url": "https://outjapan.co.jp/content/files/ally_project/2024/JERA",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません"
+    },
+    {
+      "id": "F04",
+      "company": "良品計画（無印良品）",
+      "title": "IDEA PARK",
+      "url": "https://markezine.jp/article/detail/20386",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F11",
+      "company": "パナソニック",
+      "title": "LUMIXコミュニティ",
+      "url": "https://www.panasonic.com/jp/about/news/20261009.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F14",
+      "company": "味の素",
+      "title": "味のもト～ク",
+      "url": "https://markezine.jp/article/detail/50262",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F17",
+      "company": "アテニア",
+      "title": "アテニア ファンコミュニティ",
+      "url": "https://markezine.jp/article/detail/41043",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F24",
+      "company": "ヌーラボ",
+      "title": "JBUG（Backlogユーザーグループ）",
+      "url": "https://codezine.jp/news/detail/27165",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F68",
+      "company": "三菱UFJアセットマネジメント",
+      "title": "オルカンカフェ",
+      "url": "https://www.am.mufg.jp/fund/topics/__icsFiles/afieldfile/2025/07/17/253425s_250717.pdf",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F86",
+      "company": "アドビ",
+      "title": "Adobe User Group（Adobe Marketo Engageの分科会など）",
+      "url": "https://webtan.impress.co.jp/n/2023/04/21/44721",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "S01",
+      "company": "トリドールホールディングス",
+      "title": "ハピ→カン！コミュニティ",
+      "url": "https://markezine.jp/article/detail/50208?mode=print",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "S05",
+      "company": "パナソニック",
+      "title": "One Panasonic",
+      "url": "https://holdings.panasonic/jp/corporate/sustainability/human-capital-management/community.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "S64",
+      "company": "富士通",
+      "title": "やわらかデザイン脳になろう！（やわデザ）",
+      "url": "https://global.fujitsu/ja-jp/subsidiaries/flm/about/resources/topics/2023/0712",
+      "status": "拒否",
+      "http_status": 429,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "S66",
+      "company": "日本オラクル",
+      "title": "Oracle Diverse Abilities Network（ODAN）",
+      "url": "https://blogs.oracle.com/oraclejapanpr/oracle-erg-odan-05-22-2024",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    }
+  ]
+}
