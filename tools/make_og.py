@@ -3,7 +3,7 @@
 
   python3 tools/make_og.py                          # 公開用CSVから事例ごとの画像を作る
   python3 tools/make_og.py --csv testdata/public.csv  # 手元のCSVで作る
-  python3 tools/make_og.py --site                   # サイト全体の画像 assets/ogp.png を作り直す
+  python3 tools/make_og.py --site                   # サイト全体の画像 assets/ogp.png とファビコンの PNG を作り直す
 
 - 事例ごとの画像は og-items/{ID}.png に書きます。build.py が見つけたら /og/{ID}.png として公開し、
   事例ページの og:image にします。画像がない事例は assets/ogp.png のままです。
@@ -33,7 +33,6 @@ W, H = 1200, 630
 BG, SURFACE, INK, INK2, INK3 = "#fbfaf5", "#ffffff", "#1a1d23", "#4a4f57", "#5e636b"
 LINE, ACCENT, YELLOW = "#e3e6ea", "#1874b8", "#f5c518"
 TYPE_COLORS = {"社内": ("#1568a6", "#e8eef5"), "ファン・顧客": ("#6b4e00", "#fff3c4")}
-DOT_PEACH = YELLOW
 
 FONT_FILES = {
     "bold": ["/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", "NotoSansCJKjp-Bold.otf"],
@@ -100,12 +99,24 @@ def wrap(draw, text, fnt, width, max_lines):
     return lines
 
 
-def dots(draw, x, y, r):
-    """ファビコンと同じ3つの丸。(x, y) は左上の丸の中心。"""
-    gap = r * 2.5
-    draw.ellipse([x - r, y - r, x + r, y + r], fill=ACCENT)
-    draw.ellipse([x + gap - r, y - r, x + gap + r, y + r], fill=DOT_PEACH)
-    draw.ellipse([x + gap / 2 - r, y + gap * 0.8 - r, x + gap / 2 + r, y + gap * 0.8 + r], fill=ACCENT)
+BOOK = os.path.join(ROOT, "tools", "emoji", "book-512.png")  # 本を開いた絵文字「📖」（Noto Emoji）
+
+
+def book(img, x, y, size):
+    """ファビコンと同じ「📖」の絵。(x, y) は絵の左上。"""
+    mark = Image.open(BOOK).convert("RGBA").resize((size, size), Image.LANCZOS)
+    img.paste(mark, (int(x), int(y)), mark)
+
+
+def make_icons():
+    """ファビコンの PNG（32px）と apple-touch-icon（180px、生成りの地）を作る。"""
+    src = Image.open(BOOK).convert("RGBA")
+    src.resize((32, 32), Image.LANCZOS).save(os.path.join(ROOT, "assets", "favicon-32.png"), optimize=True)
+    touch = Image.new("RGBA", (180, 180), BG)
+    mark = src.resize((140, 140), Image.LANCZOS)
+    touch.paste(mark, (20, 20), mark)
+    touch.convert("RGB").save(os.path.join(ROOT, "assets", "apple-touch-icon.png"), optimize=True)
+    print("作りました: assets/favicon-32.png・assets/apple-touch-icon.png")
 
 
 def frame(cfg):
@@ -114,7 +125,7 @@ def frame(cfg):
     d.rectangle([0, 0, 16, H], fill=YELLOW)
     # 下の帯：サイト名とURL
     d.line([(80, H - 104), (W - 80, H - 104)], fill=LINE, width=2)
-    dots(d, 96, H - 62, 9)
+    book(img, 80, H - 88, 48)
     d.text((140, H - 52), cfg["name"], font=font("bold", 30), fill=INK, anchor="ls")
     host = cfg["base_url"].split("//", 1)[-1].rstrip("/")
     d.text((W - 80, H - 52), host, font=font("regular", 24), fill=INK3, anchor="rs")
@@ -123,7 +134,7 @@ def frame(cfg):
 
 def make_site(cfg):
     img, d = frame(cfg)
-    dots(d, 112, 150, 22)
+    book(img, 78, 76, 112)
     d.text((80, 300), cfg["name"], font=font("bold", 96), fill=INK, anchor="ls")
     lines = wrap(d, cfg["subtitle"], font("regular", 40), W - 160, 2)
     y = 372
@@ -174,6 +185,7 @@ def main():
     cfg = build.load_config()
     if args.site:
         make_site(cfg)
+        make_icons()
         return
     cases = build.enrich(cfg, build.load_rows(cfg, args.csv))
     os.makedirs(OUT, exist_ok=True)

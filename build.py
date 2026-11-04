@@ -540,10 +540,9 @@ def build_combos_index(cfg, combos):
 # ---------- HTML の部品 ----------
 
 
-# ヘッダーのロゴ（ファビコンと同じ絵：空色の地に3つの点、うち1つが黄色）
-LOGO_MARK = ('<svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1874b8"/>'
-             '<circle cx="11" cy="13" r="4" fill="#fff"/><circle cx="21" cy="13" r="4" fill="#f5c518"/>'
-             '<circle cx="16" cy="21" r="4" fill="#fff" opacity=".85"/></svg>')
+# ヘッダーのロゴ（ファビコンと同じ絵：本を開いた絵文字「📖」。Noto Emoji の絵を assets/icon.svg に置いている）
+def logo_mark(rel):
+    return f'<img class="logo-mark" src="{rel}assets/icon.svg?v={ver("icon.svg")}" alt="" width="30" height="30">'
 
 
 def nav_links(rel, path):
@@ -598,9 +597,9 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{esc(full_title)}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{rel}assets/icon.svg" type="image/svg+xml">
-<link rel="icon" href="{rel}assets/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href="{rel}assets/apple-touch-icon.png">
+<link rel="icon" href="{rel}assets/icon.svg?v={ver('icon.svg')}" type="image/svg+xml">
+<link rel="icon" href="{rel}assets/favicon-32.png?v={ver('favicon-32.png')}" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{rel}assets/apple-touch-icon.png?v={ver('apple-touch-icon.png')}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
@@ -613,7 +612,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <a class="skip" href="#main">本文へ移動</a>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo" href="{rel or './'}">{LOGO_MARK}<span class="logo-name">{esc(cfg['name'])}</span></a>
+    <a class="logo" href="{rel or './'}">{logo_mark(rel)}<span class="logo-name">{esc(cfg['name'])}</span></a>
     <nav class="global-nav" id="global-nav" aria-label="サイト内">
       {nav_links(rel, path)}
     </nav>
@@ -1028,6 +1027,7 @@ def build_about(cfg, cases, updated):
 
   <h2>掲載内容について</h2>
   <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
+  <p>サイトのアイコン（本を開いた絵）は、Google の <a href="https://github.com/googlefonts/noto-emoji" rel="noopener" target="_blank">Noto Emoji</a> の絵を使っています（Apache License 2.0）。</p>
 
   <h2>運営者</h2>
   <div class="operator-card">

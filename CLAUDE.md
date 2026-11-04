@@ -5,7 +5,7 @@ https://community-zukan.github.io/
 
 運営者は黒田悠介さん。データ集めと公開判定は Claude（Cowork の定期実行）が担当し、このリポジトリのコードは Claude Code が担当します。お手本は同じ運営者の「あしたの転機観測所」（https://github.com/ashitano-tenki/ashitano-tenki.github.io ）で、図鑑はその仕組みを小さく写したものです。迷ったら観測所の実装を読んでください。
 
-最終更新：2026-11-04（Cowork のセッションで作成。同日、Claude Code が「やること」の1〜14・16と、観測所の学びの取り込み（デザインシステムほか）を実装し、この文書を実際の状態に合わせた）
+最終更新：2026-11-05（2026-11-04 に Cowork のセッションで作成。同日、Claude Code が「やること」の1〜14・16と、観測所の学びの取り込み（デザインシステムほか）を実装し、この文書を実際の状態に合わせた。11-05 にアイコンと運営者の紹介を替えた）
 
 ## 全体の流れ
 
@@ -42,8 +42,9 @@ Claude Code はスプレッドシートに書き込みません。列を足す�
 | assets/site.js | どのページでも使う仕組み：暗い表示の切り替え、ヘッダーのメニュー・虫めがね・あとで見るの件数、スマホで下に読むとヘッダーを隠す |
 | assets/app.js | 一覧の絞り込み・検索（ひらがな・言い換え）・並べ替え・「もっと見る」・あとで見るの切り替え（?saved=1 でも開く）・検索の例・0件のときの「外すと見つかる条件」・PC のカード／一覧の切り替え・検索語の記録（GoatCounter） |
 | assets/case.js | 事例ページのあとで見る・URLのコピー・役に立った／いまひとつ |
-| assets/icon.svg・favicon-32.png・apple-touch-icon.png | ファビコン（空色の地に3つの点、うち1つが黄色。ヘッダーのロゴも同じ絵で build.py の LOGO_MARK） |
-| assets/ogp.png | サイト全体の共有画像（1200×630）。`tools/make_og.py --site` で作り直す |
+| assets/icon.svg・favicon-32.png・apple-touch-icon.png | ファビコン。本を開いた絵文字「📖」（Google の Noto Emoji の絵。Apache License 2.0。「この図鑑について」に表記）。ヘッダーのロゴも同じ icon.svg を build.py の logo_mark で読む。PNG は `tools/make_og.py --site` で作り直す |
+| tools/emoji/ | 「📖」のもとの絵（Noto Emoji の 512px の PNG）とライセンス。共有画像とファビコンの PNG はここから作る |
+| assets/ogp.png | サイト全体の共有画像（1200×630）。左上と下の帯に「📖」。`tools/make_og.py --site` で作り直す |
 | tools/make_og.py | 事例ページごとの共有画像を og-items/ に作る（Pillow と Noto Sans CJK を使う。og-items/ はリポジトリに入れない） |
 | tools/check_links.py | 出典URLを開いて確かめ、data/linkcheck.json に書く |
 | .github/workflows/build.yml | 毎日の更新。書体と Pillow・pykakasi を入れ、共有画像を作ってからビルドし、データの写しを data/latest.csv にコミットする。履歴を読むため fetch-depth: 0 |
@@ -205,3 +206,4 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 - 2026-11-04（同日、Claude Code）：このMacから clone して push できるようにした（workflow ファイルの push には GitHub の workflow 権限が要る）。「やること」の1〜14を1項目ずつコミットして公開し、Actions の成功を確かめた。手元で --csv を付けて試すと data/latest.csv が上書きされる不具合を直した。リンク点検の初回は GitHub の一時的なエラーで保存に失敗したため、保存を3回まで試し直すようにした。
 - 2026-11-04（夜、Claude Code）：16番を実装した。誤判定の4件は、取り直しても結果が変わらない「自動アクセスだけを断るサイト」だったので、「拒否」に分けるサイトの一覧に足した。
 - 2026-11-04（夜、Claude Code）：観測所の学びを28項目に分けて黒田さんに採否を選んでもらい、27項目を実装した（B12 は保留）。配色と書体は見本のページで種別の色を3案から選んでもらった（案2：空色と黄色）。デザインの変更は【デザイン】の名前で1つずつコミットし、戻し先のタグ zukan-before-design-2026-11-04 を付けた。週次レポートの定期タスクを作った。
+- 2026-11-05（Claude Code）：運営者の紹介を、プロフィール文（Googleドキュメント）のコミュニティに関わる部分から書き直した。ロゴとファビコン・共有画像の絵を、3つの点から本を開いた絵文字「📖」（Noto Emoji）に替えた（戻し先のタグ zukan-before-icon-2026-11-05）。
