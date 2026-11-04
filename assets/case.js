@@ -33,6 +33,31 @@
     });
   }
 
+  // 役に立った：押した回数は GoatCounter が数える（data-goatcounter-click）。押したことはこのブラウザにだけ残す
+  var useful = document.getElementById('useful');
+  if (useful) {
+    var ub = document.getElementById('useful-button');
+    var thanks = document.getElementById('useful-thanks');
+    var UKEY = 'zukan-useful';
+    var done = function () {
+      ub.disabled = true;
+      ub.textContent = '役に立った（送りました）';
+      thanks.textContent = 'ありがとうございました。';
+    };
+    useful.hidden = false;
+    try { if ((JSON.parse(localStorage.getItem(UKEY) || '[]') || []).indexOf(ub.getAttribute('data-id')) !== -1) done(); } catch (e) { /* 何もしない */ }
+    ub.addEventListener('click', function () {
+      if (ub.disabled) return;
+      try {
+        var l = JSON.parse(localStorage.getItem(UKEY) || '[]') || [];
+        l.push(ub.getAttribute('data-id'));
+        localStorage.setItem(UKEY, JSON.stringify(l));
+      } catch (e) { /* 保存できなくても数えるのは続ける */ }
+      // GoatCounter の数え上げがクリックの処理を終えてからボタンを止める
+      setTimeout(done, 0);
+    });
+  }
+
   var copy = document.getElementById('copy-url');
   if (copy) {
     var status = document.getElementById('copy-status');

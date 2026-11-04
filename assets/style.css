@@ -303,3 +303,9 @@ em { font-style: normal; font-weight: 700; }
   .overview dd { font-size: 14px; }
 }
 .report { font-size: 14px; margin: 14px 0 0; }
+.useful { margin-top: 28px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.useful[hidden] { display: none; }
+.useful p { margin: 0; font-size: 15px; }
+.useful .action-button:disabled { cursor: default; opacity: .7; }
+.useful-thanks { font-size: 13px; color: var(--ink-3); flex-basis: 100%; }
+.useful-thanks:empty { display: none; }

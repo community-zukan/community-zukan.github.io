@@ -651,7 +651,8 @@ def build_case(cfg, c, related, og_image=None):
         dl_row("ツール", esc(c.get("ツール"))),
         dl_row("運営体制", esc(c.get("運営体制"))),
     ])
-    links = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(domain(u))}</a></li>' for u in c["_urls"])
+    links = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
+                    f'data-goatcounter-title="出典 {esc(c["企業名"])} {esc(domain(u))}">{esc(domain(u))}</a></li>' for u in c["_urls"])
     source = f"""<section class="block source">
   <h2>出典</h2>
   {f'<ul class="source-links">{links}</ul>' if links else ''}
@@ -687,6 +688,11 @@ def build_case(cfg, c, related, og_image=None):
     <div class="case-main">
       {''.join(blocks)}
       {source}
+      <div class="useful" id="useful" hidden>
+        <p>この事例は参考になりましたか。</p>
+        <button type="button" class="action-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
+        <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
+      </div>
     </div>
     <aside class="case-side">
       <h2 class="visually-hidden">概要</h2>
@@ -732,13 +738,14 @@ def share_bar(cfg, c):
         ("Facebook", f"https://www.facebook.com/sharer/sharer.php?u={q(url)}"),
         ("LINE", f"https://social-plugins.line.me/lineit/share?url={q(url)}"),
     ]
-    share = "".join(f'<li><a class="share-link" href="{esc(h)}" target="_blank" rel="noopener">{n}</a></li>' for n, h in links)
+    share = "".join(f'<li><a class="share-link" href="{esc(h)}" target="_blank" rel="noopener" '
+                    f'data-goatcounter-click="share-{n.lower()}-{esc(c["ID"])}">{n}</a></li>' for n, h in links)
     return f"""<div class="actions">
-  <button type="button" class="action-button save" id="save" data-id="{esc(c['ID'])}" aria-pressed="false" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>
+  <button type="button" class="action-button save" id="save" data-id="{esc(c['ID'])}" aria-pressed="false" data-goatcounter-click="save-{esc(c['ID'])}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>
   <div class="share">
     <span class="share-head">共有</span>
     <ul class="share-list">
-      <li><button type="button" class="share-link" id="copy-url" data-url="{esc(url)}" hidden>URLをコピー</button></li>
+      <li><button type="button" class="share-link" id="copy-url" data-url="{esc(url)}" data-goatcounter-click="share-copy-{esc(c['ID'])}" hidden>URLをコピー</button></li>
       {share}
     </ul>
     <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
@@ -818,6 +825,10 @@ def build_about(cfg, cases, updated):
     <tbody>{rows}</tbody>
   </table>
   </div>
+
+  <h2>アクセス解析</h2>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」のボタンが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
   <h2>掲載内容について</h2>
   <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
