@@ -59,6 +59,80 @@
     return alts;
   }
 
+  // 1件の事例が、条件 s・検索語 terms・あとで見るだけ（only）に当てはまるか
+  function matches(c, s, terms, only) {
+    var ok = keys.every(function (k) {
+      if (!s[k]) return true;
+      var v = c.dataset[k] || '';
+      var vals = multi[k] ? v.split('|') : [v];
+      return s[k].some(function (x) { return vals.indexOf(x) !== -1; });
+    });
+    if (ok && only) ok = saved.indexOf(idOf(c)) !== -1;
+    if (ok && terms.length) {
+      var hay = c.dataset.search;
+      ok = terms.every(function (alts) {
+        return alts.some(function (w) { return hay.indexOf(w) !== -1; });
+      });
+    }
+    return ok;
+  }
+  function countWith(s, terms, only) {
+    return cards.filter(function (c) { return matches(c, s, terms, only); }).length;
+  }
+
+  // 0件のとき：条件を1つ外すと見つかるものを、件数つきで示す
+  var relax = document.getElementById('relax');
+  var emptyHint = document.getElementById('empty-hint');
+  function showRelax(s, words, terms) {
+    relax.innerHTML = '';
+    var options = [];
+    keys.forEach(function (k) {
+      (s[k] || []).forEach(function (x) {
+        var s2 = {};
+        keys.forEach(function (k2) { if (s[k2]) s2[k2] = s[k2].filter(function (y) { return k2 !== k || y !== x; }); if (s2[k2] && !s2[k2].length) delete s2[k2]; });
+        options.push({ label: '「' + x + '」を外す', n: countWith(s2, terms, savedOnly), run: function () {
+          boxes.forEach(function (b) { if (b.name === k && b.value === x) b.checked = false; });
+        } });
+      });
+    });
+    var shownWords = q.value.trim().split(/\s+/);
+    words.forEach(function (w, i) {
+      var t2 = terms.filter(function (_, j) { return j !== i; });
+      options.push({ label: 'キーワード「' + (shownWords[i] || w) + '」を外す', n: countWith(s, t2, savedOnly), run: function () {
+        q.value = shownWords.filter(function (_, j) { return j !== i; }).join(' ');
+      } });
+    });
+    if (savedOnly) {
+      options.push({ label: '「あとで見る」だけの表示をやめる', n: countWith(s, terms, false), run: function () { setSavedOnly(false); } });
+    }
+    options = options.filter(function (o) { return o.n > 0; });
+    options.sort(function (a, b) { return b.n - a.n; });
+    options.slice(0, 5).forEach(function (o) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'small-button';
+      b.textContent = o.label + '（' + o.n + '件）';
+      b.addEventListener('click', function () { o.run(); apply(true); });
+      li.appendChild(b);
+      relax.appendChild(li);
+    });
+    relax.hidden = !relax.children.length;
+    emptyHint.textContent = relax.children.length ? '次の条件を外すと見つかります。' : '条件を減らすか、キーワードを変えてみてください。';
+  }
+
+  // 言い換えで広げて探したときは、その旨を一言そえる
+  var searchNote = document.getElementById('search-note');
+  function showSearchNote(words, terms) {
+    var parts = [];
+    words.forEach(function (w, i) {
+      var extra = terms[i].filter(function (a) { return a !== w; });
+      if (extra.length) parts.push('「' + q.value.trim().split(/\s+/)[i] + '」は「' + extra.slice(0, 3).join('」「') + '」も含めて');
+    });
+    searchNote.textContent = parts.length ? parts.join('、') + '探しました。' : '';
+    searchNote.hidden = !parts.length;
+  }
+
   // 絞り込みと検索は全件に効かせ、当てはまった事例のうち先頭の limit 件だけを表示する
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
@@ -68,19 +142,7 @@
     var shown = 0;
     var visible = 0;
     Array.prototype.forEach.call(list.children, function (c) {
-      var ok = keys.every(function (k) {
-        if (!s[k]) return true;
-        var v = c.dataset[k] || '';
-        var vals = multi[k] ? v.split('|') : [v];
-        return s[k].some(function (x) { return vals.indexOf(x) !== -1; });
-      });
-      if (ok && savedOnly) ok = saved.indexOf(idOf(c)) !== -1;
-      if (ok && words.length) {
-        var hay = c.dataset.search;
-        ok = terms.every(function (alts) {
-          return alts.some(function (w) { return hay.indexOf(w) !== -1; });
-        });
-      }
+      var ok = matches(c, s, terms, savedOnly);
       if (ok) shown++;
       c.hidden = !ok || shown > limit;
       if (!c.hidden) visible++;
@@ -94,6 +156,8 @@
     activeCount.textContent = n ? n + '件の条件' : '';
     reset.hidden = !filtering;
     empty.hidden = shown !== 0;
+    if (shown === 0) showRelax(s, words, terms);
+    showSearchNote(words, terms);
     if (pushState) saveUrl(s);
   }
 
@@ -171,6 +235,15 @@
     setSavedOnly(false);
     savedToggle.addEventListener('click', function () { setSavedOnly(!savedOnly); apply(false); });
   }
+
+  // 検索の例：押すと検索欄に入れて探す（ページは読み込み直さない）
+  Array.prototype.forEach.call(document.querySelectorAll('.examples a[data-q]'), function (a) {
+    a.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      q.value = a.getAttribute('data-q');
+      apply(true);
+    });
+  });
 
   if (window.matchMedia('(min-width: 900px)').matches) details.open = true;
   loadUrl();

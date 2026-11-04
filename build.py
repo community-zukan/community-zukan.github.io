@@ -556,6 +556,15 @@ def nav_links(rel, path):
         out.append(f'<a href="{(rel + href) or "./"}"{cur}>{label}</a>')
     return "\n      ".join(out)
 
+
+def search_examples(cfg):
+    """検索欄の下に小さく並べる「検索の例」（config/site.json の search_examples）。週次レポートで実際に検索された言葉から足していく。"""
+    words = cfg.get("search_examples") or []
+    if not words:
+        return ""
+    links = "".join(f'<a href="?q={urllib.parse.quote(w)}" data-q="{esc(w)}">{esc(w)}</a>' for w in words)
+    return f'<p class="examples"><span>検索の例</span>{links}</p>'
+
 def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
     rel = "../" * depth
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
@@ -746,6 +755,7 @@ def build_index(cfg, cases, updated):
       <option value="year-asc">開始年が古い順</option>
       <option value="checked-desc">確認日が新しい順</option>
     </select>
+    {search_examples(cfg)}
   </div>
   <details class="filters" id="filters">
     <summary><span>条件で絞り込む</span><span class="active-count" id="active-count"></span></summary>
@@ -756,6 +766,7 @@ def build_index(cfg, cases, updated):
   </details>
   <div class="result-bar">
     <p id="result-count" aria-live="polite">{len(cases)}件の事例</p>
+    <p class="search-note" id="search-note" hidden></p>
     <button type="button" id="reset" class="link-button" hidden>条件をすべて外す</button>
     <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>
   </div>
@@ -767,7 +778,8 @@ def build_index(cfg, cases, updated):
   </div>
   <div class="empty" id="empty" hidden>
     <p>条件に合う事例はありませんでした。</p>
-    <p>条件を減らすか、キーワードを変えてみてください。</p>
+    <p id="empty-hint">条件を減らすか、キーワードを変えてみてください。</p>
+    <ul class="relax" id="relax" hidden></ul>
     <button type="button" class="button" id="reset2">条件をすべて外す</button>
   </div>
 </section>
