@@ -138,6 +138,14 @@ def date_key(v):
     return f"{m.group(1)}{int(m.group(2)):02d}{int(m.group(3)):02d}" if m else ""
 
 
+def score_value(v):
+    """観測スコア（0〜100）。列がない・空欄・数値でないときは空文字。"""
+    try:
+        return str(round(float((v or "").strip())))
+    except ValueError:
+        return ""
+
+
 def fmt_date(v):
     m = re.match(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", v or "")
     return f"{m.group(1)}年{int(m.group(2))}月{int(m.group(3))}日" if m else (v or "")
@@ -258,6 +266,7 @@ def card(c):
         "industry": c["_industry"],
         "year": c.get("開始年", ""),
         "checked": date_key(c.get("確認日")),
+        "score": score_value(c.get("観測スコア")),
     }
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
     search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型"])
@@ -318,6 +327,7 @@ def build_index(cfg, cases, updated):
     <input id="q" type="search" placeholder="企業名・ツールなどで検索" autocomplete="off">
     <label class="visually-hidden" for="sort">並び順</label>
     <select id="sort">
+      <option value="score" selected>おすすめ順</option>
       <option value="default">収録順</option>
       <option value="year-desc">開始年が新しい順</option>
       <option value="year-asc">開始年が古い順</option>
@@ -515,6 +525,21 @@ def build_about(cfg, cases, updated):
   <h2>集め方と更新</h2>
   <p>事例の探索、出典の確認、タグづけ、掲載してよいかの判断は、AI（Claude）が決まった手順で行い、運営者がふりかえりで点検しています。新しい事例は随時追加し、サイトは毎日更新しています。最終更新は{esc(updated)}です。</p>
   <p>数値や状況は出典の時点のものです。最新の状況は、各企業の発表をご確認ください。</p>
+
+  <h2>おすすめ順</h2>
+  <p>事例一覧は、はじめは「おすすめ順」で並んでいます。事例ごとに次の4つの点数を足した「観測スコア」（100点満点）の高い順で、同じ点数のときは確認日の新しい順です。初めて読む人が、よく知られていて情報の多い事例から読めるようにするための並び順で、各社の取り組みの良し悪しを評価した点数ではありません。</p>
+  <div class="table-wrap">
+  <table class="defs compact">
+    <thead><tr><th scope="col">項目</th><th scope="col">配点</th><th scope="col">決め方</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">知名度</th><td>30点</td><td>企業やコミュニティがどのくらい知られているかを、AIが5段階で推定しています。推定していない事例は12点です。</td></tr>
+      <tr><th scope="row">情報の厚み</th><td>30点</td><td>規模・成果・運営体制・開始年・ツールのうち、公開情報で分かった項目1つにつき6点です。</td></tr>
+      <tr><th scope="row">鮮度</th><td>25点</td><td>出典の時期が12か月以内なら25点、24か月以内なら18点、48か月以内なら10点、それより前なら4点、分からなければ8点です。</td></tr>
+      <tr><th scope="row">出典の確かさ</th><td>15点</td><td>広告・PR記事は6点、それ以外は15点です。</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>知名度はAIによる推定で、調査にもとづく数値ではありません。並び順は「収録順」「開始年が新しい順」などに切り替えられます。</p>
 
   <h2>「自社でやるなら」の欄</h2>
   <p>事例ページの「自社でやるなら」は、事例をもとにAIが考えた応用案です。出典に書かれている事実ではないため、ほかの欄と分けて表示しています。</p>

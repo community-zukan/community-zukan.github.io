@@ -227,6 +227,9 @@ em { font-style: normal; font-weight: 700; }
 .defs th, .defs td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; line-height: 1.7; font-feature-settings: normal; }
 .defs thead th { background: var(--accent-soft); }
 .defs tbody th { white-space: nowrap; }
+.defs.compact { min-width: 0; }
+.defs.compact th:nth-child(2), .defs.compact td:nth-child(2) { white-space: nowrap; }
+@media (max-width: 480px) { .defs.compact th, .defs.compact td { padding: 8px; } }
 
 /* フッター */
 .site-footer { border-top: 1px solid var(--line); background: var(--surface); padding: 24px 0 32px; font-size: 13px; color: var(--ink-3); }

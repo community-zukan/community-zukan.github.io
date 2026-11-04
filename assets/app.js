@@ -77,7 +77,14 @@
         if (ea !== eb) return ea ? 1 : -1; // 開始年が空欄の事例は最後に
         if (!ea && ya !== yb) return mode === 'year-desc' ? yb - ya : ya - yb;
       }
-      if (mode === 'checked-desc') {
+      if (mode === 'score') {
+        // 観測スコアの高い順。スコアが空欄の事例は最後に、同点は確認日の新しい順
+        var sa = parseInt(a.dataset.score, 10), sb = parseInt(b.dataset.score, 10);
+        var na = isNaN(sa), nb = isNaN(sb);
+        if (na !== nb) return na ? 1 : -1;
+        if (!na && sa !== sb) return sb - sa;
+      }
+      if (mode === 'checked-desc' || mode === 'score') {
         var d = byChecked(a, b);
         if (d) return d;
       }
@@ -97,7 +104,7 @@
     var p = new URLSearchParams();
     keys.forEach(function (k) { if (s[k]) p.set(k, s[k].join(',')); });
     if (q.value.trim()) p.set('q', q.value.trim());
-    if (sort.value !== 'default') p.set('sort', sort.value);
+    if (sort.value !== 'score') p.set('sort', sort.value);
     var qs = p.toString();
     history.replaceState(null, '', qs ? '?' + qs : location.pathname);
   }
@@ -111,7 +118,7 @@
       if (b.checked) any = true;
     });
     if (p.get('q')) q.value = p.get('q');
-    if (p.get('sort')) sort.value = p.get('sort');
+    if (p.get('sort') && sort.querySelector('option[value="' + p.get('sort') + '"]')) sort.value = p.get('sort');
     if (any) details.open = true;
   }
 
