@@ -38,9 +38,10 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML
 HEADERS = {"User-Agent": UA, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
            "Accept-Language": "ja,en-US;q=0.8,en;q=0.6"}
 TIMEOUT = 15          # 1件あたりの待ち時間（秒）
+RETRY_TIMEOUT = 30    # 取り直すときの待ち時間（秒）。応答の遅いサイトのために長めにする
 WORKERS = 4           # 同時に確かめるドメインの数（相手に負担をかけないよう少なめ）
 DOMAIN_GAP = 2.0      # 同じドメインに続けてアクセスするときの間隔（秒）
-RETRY_WAIT = 60       # 失敗したものを試し直すまでの待ち時間（秒）
+RETRY_WAITS = [60, 180]  # 「応答なし」「404」などを取り直すまでの待ち時間（秒）。この回数だけ取り直す
 REFUSED = {401, 403, 405, 406, 429, 451, 999}  # 自動アクセスを断るときによく返る番号
 
 _last_access = {}
@@ -86,24 +87,25 @@ def to_ascii(url):
                                     urllib.parse.quote(parts.query, safe=safe + "?"), ""))
 
 
-def request(url, method):
+def request(url, method, timeout=TIMEOUT):
     """(HTTPの番号, 最終的なURL) を返す。つながらないときは例外。転送はたどり、Cookie を使う転送にも対応する。"""
     wait_for_domain(host_of(url))
     opener = urllib.request.build_opener(Redirects, urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()),
                                          urllib.request.HTTPSHandler(context=ssl.create_default_context()))
     req = urllib.request.Request(to_ascii(url), headers=HEADERS, method=method)
-    with opener.open(req, timeout=TIMEOUT) as res:
+    with opener.open(req, timeout=timeout) as res:
         if method == "GET":
             res.read(4096)
         return res.status, res.geturl()
 
 
-def check_once(url):
-    """1回確かめる。HEAD で失敗したら GET で試し直す。(status, http_status, final_url, note, retryable) を返す。"""
+def check_once(url, timeout=TIMEOUT):
+    """1回確かめる。HEAD で失敗したら GET で試し直す。(status, http_status, final_url, note, retryable) を返す。
+    retryable が真のもの（応答なし・404・サーバーの不具合など）は、時間をおいて取り直す。"""
     code, final, note = None, "", ""
     for method in ("HEAD", "GET"):
         try:
-            code, final = request(url, method)
+            code, final = request(url, method, timeout)
             break
         except urllib.error.HTTPError as ex:
             code, final, note = ex.code, "", ""
@@ -131,7 +133,8 @@ def check_once(url):
     if code in REFUSED:
         return "拒否", code, "", "自動アクセスを断られました（壊れているとは限りません）", False
     if code in (404, 410):
-        return "要確認", code, "", "ページが見つかりません", False
+        # ブラウザでは開けるのに、自動のアクセスにだけ404を返すサイトがあるので、取り直してから決める
+        return "要確認", code, "", "ページが見つかりません", True
     if code >= 500:
         return "要確認", code, "", "サーバーの不具合", True
     return "要確認", code, "", "想定外の応答です", False
@@ -152,7 +155,7 @@ def main():
     cases = build.enrich(cfg, build.load_rows(cfg, args.csv))
     targets = [(c["ID"], c["企業名"], c["_title"], u) for c in cases for u in c["_urls"]]
 
-    def run(batch):
+    def run(batch, timeout=TIMEOUT):
         """ドメインごとにまとめ、ドメイン単位で並べて確かめる（同じドメインは順番に、間をあけて）。"""
         by_host = collections.defaultdict(list)
         for t in batch:
@@ -160,17 +163,21 @@ def main():
         out = {}
 
         def work(group):
-            return [((t[0], t[3]), check_once(t[3])) for t in group]
+            return [((t[0], t[3]), check_once(t[3], timeout)) for t in group]
         with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
             for results in pool.map(work, by_host.values()):
                 out.update(dict(results))
         return out
 
     results = run(targets)
-    retry = [t for t in targets if results[(t[0], t[3])][4]]
-    if retry:  # 応答がない・サーバーの不具合だったものは、時間をおいてもう1回
-        time.sleep(RETRY_WAIT)
-        results.update(run(retry))
+    # 応答なし・404・サーバーの不具合だったものは、時間をおいて取り直す。開けたらその結果を使う
+    for i, wait in enumerate(RETRY_WAITS, 1):
+        retry = [t for t in targets if results[(t[0], t[3])][4]]
+        if not retry:
+            break
+        print("取り直し %d回目：%d件（%d秒待ちます）" % (i, len(retry), wait))
+        time.sleep(wait)
+        results.update(run(retry, RETRY_TIMEOUT))
 
     summary = {"正常": 0, "移転": 0, "拒否": 0, "要確認": 0}
     items = []
@@ -180,6 +187,8 @@ def main():
             status, note = "拒否", "自動アクセスを断るサイトです（壊れているとは限りません）"
         summary[status] += 1
         if status != "正常":
+            if status == "要確認" and results[(cid, url)][4]:
+                note += "（時間をおいて%d回取り直しても同じでした）" % len(RETRY_WAITS)
             items.append({"id": cid, "company": company, "title": title, "url": url, "status": status,
                           "http_status": code, "final_url": final, "note": note})
     order = {"要確認": 0, "移転": 1, "拒否": 2}

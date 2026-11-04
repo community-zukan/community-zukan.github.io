@@ -11,7 +11,8 @@
   "goatcounter": "communityzukan",
   "google_site_verification": "QfZTihD29VHshRbTilTzPcex8edTvSmGA6GJXm81WHs",
   "min_ratio": 0.5,
-  "linkcheck_refusing_hosts": ["markezine.jp", "nikkei.com"],
+  "_linkcheck_refusing_hosts の説明": "自動のアクセスを断る（応答しない・404を返す）が、ブラウザでは開けると確かめたサイト。開けなくても「要確認」ではなく「拒否」に分ける。サブドメインも含む。",
+  "linkcheck_refusing_hosts": ["markezine.jp", "nikkei.com", "muji.net", "adobe.com", "freee.co.jp", "initial.inc"],
   "industry_groups": [
     ["化粧品・美容", ["化粧品", "美容", "理美容"]],
     ["食品・飲料", ["食品", "飲料", "ビール", "コーヒー", "酒"]],

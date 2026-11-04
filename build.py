@@ -164,7 +164,16 @@ def industry_group(cfg, v):
 
 
 def split_urls(v):
-    return [u.strip() for u in re.split(r"\s+/\s+|\s+", v or "") if u.strip().startswith("http")]
+    """出典URL（「 / 」区切りで2つまで）を分ける。URLの中の半角スペース（ファイル名など）は %20 にする。
+    以前は空白でも区切っていたため、スペースを含むURLが途中で切れていた。"""
+    urls = []
+    for part in re.split(r"\s+/\s+", (v or "").strip()):
+        # 「 / 」を使わずに空白だけで並べたURLも分ける（次の http の手前で区切る）
+        for u in re.split(r"\s+(?=https?://)", part.strip()):
+            u = u.strip()
+            if u.startswith("http"):
+                urls.append(re.sub(r"\s", "%20", u))
+    return urls
 
 
 def domain(u):
