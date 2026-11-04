@@ -66,6 +66,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; }
 h1, h2, h3 { line-height: 1.45; letter-spacing: .03em; }
 em { font-style: normal; font-weight: 700; }
+/* 別のタブで開くリンクに小さな印。語をつなぐ文字（U+2060）で「↗」だけが次の行に落ちないようにする */
+a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: .85em; font-weight: 400; text-decoration: none; }
 
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-4); }
 @media (min-width: 768px) { .wrap { padding: 0 var(--space-8); } }
