@@ -93,8 +93,8 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 11. **新着と更新の記録（RSSつき）**：確認日（U）を公開日として使う。観測所の /report/ と feed.xml を参考に。data/latest.csv の履歴と比べて、新しく出た事例・内容が変わった事例を出す。
 12. **組み合わせのページ**：目的×段階、種別×活動の型など、件数が5件以上の組み合わせだけ固定ページにし、短い解説を添える。sitemap にも入れる。解説は事例から言えることだけを書き、AIの解釈であることを示す。
 13. **あとで見る・共有ボタン**：あとで見るは localStorage（try/catch で包む）。共有はURLのコピーと X・Facebook・LINE への共有リンク。
-14. **アクセス解析（GoatCounter）**：config/site.json に goatcounter を足し、値があるときだけタグを出す。出典リンクのクリック、あとで見る・共有を data-goatcounter-click で数える。「この図鑑について」にアクセス解析の説明を足す。サイトコードは黒田さんが作る（まだもらっていない）。
-15. **Google Search Console**：config/site.json に google_site_verification を足し、値があるときだけ全ページの head に meta を出す。文字列は黒田さんからもらう（まだもらっていない）。
+14. **アクセス解析（GoatCounter）**：2026-11-04 に config/site.json の goatcounter（communityzukan）と、build.py の page() でタグを出すところまで入れた（計測は始まっている）。残りは、出典リンクのクリック、あとで見る・共有を data-goatcounter-click で数える。「この図鑑について」にアクセス解析の説明（GoatCounter はクッキーを使わないこと）を足す。
+15. **Google Search Console**：2026-11-04 に config/site.json の google_site_verification と、全ページの head に meta を出す処理を入れた。所有権の確認は黒田さんが行う。sitemap.xml を Search Console に送る作業も黒田さん側。
 
 ### 作らない（2026-11-04 黒田さんの判断）
 
