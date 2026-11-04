@@ -578,7 +578,9 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");try{{if(localStorage.getItem("zukan-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}}catch(e){{}}</script>
 <link rel="stylesheet" href="{rel}assets/style.css?v={ver('style.css')}">
+<script src="{rel}assets/site.js?v={ver('site.js')}" defer></script>
 <link rel="alternate" type="application/rss+xml" title="{esc(cfg['name'])}｜新着と更新" href="{esc(base)}/feed.xml">
 {extra}</head>
 <body>
@@ -607,6 +609,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     {operator_line(cfg, rel)}
     <div class="footer-bottom">
       <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着と更新のRSS</a></p>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>暗い表示にする</button>
     </div>
   </div>
 </footer>
