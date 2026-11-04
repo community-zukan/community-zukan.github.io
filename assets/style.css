@@ -216,6 +216,27 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .empty p { margin: 0 0 6px; color: var(--text-body); }
 .empty .button { margin-top: var(--space-3); }
 
+/* PC の「カード／一覧」の切り替え */
+.view-toggle { display: none; gap: var(--space-1); }
+.view-btn { display: inline-grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--card); color: var(--text-sub); cursor: pointer; }
+.view-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.view-btn[aria-pressed="true"] { color: var(--sky); border-color: var(--sky); background: var(--chip-bg); }
+@media (min-width: 760px) {
+  .view-toggle:not([hidden]) { display: flex; }
+  .saved-toggle { margin-left: 0; }
+  .result-bar #result-count { margin-right: auto; }
+  /* 一覧：1行に種別・企業名・コミュニティ名・業種などを並べ、要約とタグは出さない */
+  .cards.is-list { grid-template-columns: 1fr !important; gap: 0; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--card); overflow: hidden; }
+  .cards.is-list .card a { display: grid; grid-template-columns: 15em minmax(0, 1fr); column-gap: var(--space-4); align-items: baseline; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; padding: var(--space-3) var(--space-4); }
+  .cards.is-list .card:last-child a { border-bottom: 0; }
+  .cards.is-list .card-top { grid-column: 1; grid-row: 1 / span 2; flex-wrap: nowrap; min-width: 0; }
+  .cards.is-list .card-company { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cards.is-list .card-title { grid-column: 2; margin: 0; font-size: 16px; }
+  .cards.is-list .card-meta { grid-column: 2; margin: 0; }
+  .cards.is-list .card-point, .cards.is-list .tags { display: none; }
+  .cards.is-list .card a:hover { background: var(--base); }
+}
+
 /* 事例ページ */
 .case { padding: 20px var(--space-4) var(--space-16); }
 @media (min-width: 768px) { .case { padding: var(--space-6) var(--space-8) 80px; } }

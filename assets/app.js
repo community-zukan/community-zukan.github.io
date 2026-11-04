@@ -245,6 +245,28 @@
     });
   });
 
+  // PC の「カード／一覧」の切り替え。選んだ表示はこのブラウザに残す（スマホではカードのまま）
+  var viewToggle = document.getElementById('view-toggle');
+  if (viewToggle) {
+    var setView = function (v) {
+      list.classList.toggle('is-list', v === 'list');
+      Array.prototype.forEach.call(viewToggle.querySelectorAll('.view-btn'), function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-view') === v ? 'true' : 'false');
+      });
+    };
+    var v0 = 'card';
+    try { v0 = localStorage.getItem('zukan-view') === 'list' ? 'list' : 'card'; } catch (e) { /* 何もしない */ }
+    setView(v0);
+    viewToggle.hidden = false;
+    Array.prototype.forEach.call(viewToggle.querySelectorAll('.view-btn'), function (b) {
+      b.addEventListener('click', function () {
+        var v = b.getAttribute('data-view');
+        setView(v);
+        try { localStorage.setItem('zukan-view', v); } catch (e) { /* 保存できなくても切り替えは効く */ }
+      });
+    });
+  }
+
   if (window.matchMedia('(min-width: 900px)').matches) details.open = true;
   loadUrl();
   doSort();

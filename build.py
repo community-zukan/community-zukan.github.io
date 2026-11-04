@@ -769,6 +769,10 @@ def build_index(cfg, cases, updated):
     <p class="search-note" id="search-note" hidden></p>
     <button type="button" id="reset" class="link-button" hidden>条件をすべて外す</button>
     <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>
+    <div class="view-toggle" id="view-toggle" role="group" aria-label="表示のしかた" hidden>
+      <button type="button" class="view-btn" data-view="card" aria-pressed="true" title="カードで表示"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><span class="visually-hidden">カードで表示</span></button>
+      <button type="button" class="view-btn" data-view="list" aria-pressed="false" title="一覧で表示"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="visually-hidden">一覧で表示</span></button>
+    </div>
   </div>
   <ul class="cards" id="cards">
     {''.join(card(c) for c in cases)}
