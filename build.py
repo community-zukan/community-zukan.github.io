@@ -23,6 +23,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import urllib.parse
 import urllib.request
@@ -215,6 +216,177 @@ def enrich(cfg, rows):
     return cases
 
 
+# ---------- 新着と更新 ----------
+
+# 「更新」として数える列。確認日・観測スコア・検索用キーワード・規模の区分・AIのヒントは、変わっても更新に数えない
+UPDATE_FIELDS = ["企業名", "コミュニティ名", "業種", "開始年", "規模", "目的", "段階", "活動の型", "場", "ツール",
+                 "主な施策", "公開されている成果", "運営体制", "工夫のポイント", "出典URL", "出典の時期"]
+HISTORY_LIMIT = 200   # 読む履歴の数（毎日1回の記録なら、およそ半年分）
+NEW_DAYS = 90         # 新着と更新のページに載せる期間（日）
+
+
+def load_history():
+    """data/latest.csv の git の履歴を、古い順に [(日付, {ID: 行})] で返す。
+    履歴が読めない（git がない、Actions で fetch-depth が浅い）ときは空のリスト。"""
+    try:
+        log = subprocess.run(["git", "log", f"-{HISTORY_LIMIT}", "--format=%H %cI", "--", "data/latest.csv"],
+                             cwd=ROOT, capture_output=True, text=True, check=True, timeout=30).stdout.split()
+    except Exception:  # noqa: BLE001
+        return []
+    snaps = []
+    for sha, when in zip(log[0::2], log[1::2]):
+        try:
+            text = subprocess.run(["git", "show", f"{sha}:data/latest.csv"], cwd=ROOT, capture_output=True,
+                                  check=True, timeout=30).stdout.decode("utf-8-sig")
+        except Exception:  # noqa: BLE001
+            continue
+        rows = {}
+        for r in csv.DictReader(io.StringIO(text)):
+            r = {(k or "").strip(): (v or "").strip() for k, v in r.items()}
+            if r.get("ID"):
+                rows[r["ID"]] = r
+        day = datetime.fromisoformat(when.replace("Z", "+00:00")).astimezone(JST).date()
+        snaps.append((day, rows))
+    snaps.reverse()
+    return snaps
+
+
+def to_date(v):
+    k = date_key(v)
+    return datetime.strptime(k, "%Y%m%d").date() if k else None
+
+
+def find_changes(cases, history, today):
+    """新しく出た事例と、内容が変わった事例を返す。
+    新着の日付は確認日（U列）。確認日が空なら、履歴で初めて出た日。履歴がなければ確認日だけで新着を出す。"""
+    by_id = {c["ID"]: c for c in cases}
+    snaps = history + [(today, {c["ID"]: c for c in cases})]
+    first_seen, updates = {}, []
+    if len(snaps) >= 2:
+        base_day, prev = snaps[0]
+        for cid in prev:
+            first_seen[cid] = None          # 履歴の一番古い時点にすでにあった事例は、新着に数えない
+        for day, cur in snaps[1:]:
+            for cid, row in cur.items():
+                if cid not in first_seen:
+                    first_seen[cid] = day
+                elif cid in prev:
+                    changed = [f for f in UPDATE_FIELDS if f in row and f in prev[cid] and row[f] != prev[cid][f]]
+                    if changed:
+                        updates.append({"id": cid, "date": day, "fields": changed})
+            prev = cur
+    new = []
+    for c in cases:
+        checked = to_date(c.get("確認日"))
+        if history:
+            if first_seen.get(c["ID"]) is None:
+                continue
+            day = checked or first_seen[c["ID"]]
+        else:
+            if not checked:
+                continue
+            day = checked
+        new.append({"id": c["ID"], "date": day})
+    since = today - timedelta(days=NEW_DAYS)
+    new = [n for n in new if n["date"] >= since and n["id"] in by_id]
+    # 同じ事例の更新は新しいものだけを残し、新着と同じ日の更新は出さない
+    latest = {}
+    for u in updates:
+        if u["id"] in by_id and u["date"] >= since:
+            latest[u["id"]] = u
+    new_day = {n["id"]: n["date"] for n in new}
+    updates = [u for u in latest.values() if new_day.get(u["id"]) != u["date"]]
+    new.sort(key=lambda n: (n["date"], n["id"]), reverse=True)
+    updates.sort(key=lambda u: (u["date"], u["id"]), reverse=True)
+    return new, updates, bool(history)
+
+
+def fmt_day(d):
+    return f"{d.year}年{d.month}月{d.day}日"
+
+
+def build_new(cfg, cases, new, updates, has_history, updated):
+    by_id = {c["ID"]: c for c in cases}
+
+    def item(cid, extra=""):
+        c = by_id[cid]
+        return (f'<li><a href="../cases/{esc(cid)}/">{type_badge(c.get("種別"))}'
+                f'<span class="rel-company">{esc(c["企業名"])}</span><span class="new-title">{esc(c["_title"])}</span></a>{extra}</li>')
+
+    def grouped(entries, render):
+        if not entries:
+            return ""
+        out, day = [], None
+        for e in entries:
+            if e["date"] != day:
+                if day is not None:
+                    out.append("</ul></section>")
+                day = e["date"]
+                out.append(f'<section class="day"><h3>{fmt_day(day)}</h3><ul class="new-list">')
+            out.append(render(e))
+        out.append("</ul></section>")
+        return "".join(out)
+
+    new_html = grouped(new, lambda e: item(e["id"])) or "<p>この期間に新しく載せた事例はありません。</p>"
+    upd_html = grouped(updates, lambda e: item(e["id"], f'<p class="changed">更新した項目：{esc("、".join(e["fields"]))}</p>'))
+    if not upd_html:
+        upd_html = "<p>この期間に内容を更新した事例はありません。</p>"
+    how = ("新着の日付は、運営側で出典を確かめた日（確認日）です。確認日がない事例は、サイトに初めて載った日にしています。"
+           "更新は、毎日の更新で前日のデータと比べて、本文や出典などが変わった事例です。")
+    if not has_history:
+        how = "新着の日付は、運営側で出典を確かめた日（確認日）です。"
+    body = f"""
+<article class="prose wrap new-page">
+  <h1>新着と更新</h1>
+  <p>この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例です。{how}</p>
+  <p class="feed-link"><a href="../feed.xml">RSSで受け取る</a></p>
+  <h2>新着<small>{len(new)}件</small></h2>
+  {new_html}
+  <h2>更新<small>{len(updates)}件</small></h2>
+  {upd_html}
+</article>
+"""
+    return page(cfg, title="新着と更新", description=f"{cfg['name']}に新しく載せた事例と、内容を更新した事例の一覧です。",
+                path="new/", body=body, depth=1)
+
+
+def build_feed(cfg, cases, new, updates):
+    """RSS 2.0。新着と更新を新しい順に50件まで。"""
+    from email.utils import format_datetime
+    by_id = {c["ID"]: c for c in cases}
+    base = cfg["base_url"].rstrip("/")
+    entries = [("新着", n) for n in new] + [("更新", u) for u in updates]
+    entries.sort(key=lambda e: (e[1]["date"], e[1]["id"]), reverse=True)
+    items = []
+    for kind, e in entries[:50]:
+        c = by_id[e["id"]]
+        url = f"{base}/cases/{c['ID']}/"
+        when = datetime(e["date"].year, e["date"].month, e["date"].day, 9, 0, tzinfo=JST)
+        desc = shorten(c.get("工夫のポイント") or c.get("主な施策") or "", 200)
+        if kind == "更新":
+            desc = f"更新した項目：{'、'.join(e['fields'])}。" + desc
+        items.append(f"""  <item>
+    <title>{esc(f"【{kind}】{c['企業名']} {c['_title']}")}</title>
+    <link>{esc(url)}</link>
+    <guid isPermaLink="false">{esc(f"{c['ID']}-{kind}-{e['date'].isoformat()}")}</guid>
+    <pubDate>{format_datetime(when)}</pubDate>
+    <description>{esc(desc)}</description>
+  </item>""")
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{esc(cfg['name'])}｜新着と更新</title>
+  <link>{esc(base)}/new/</link>
+  <atom:link href="{esc(base)}/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>{esc(cfg['description'])}</description>
+  <language>ja</language>
+  <lastBuildDate>{format_datetime(datetime.now(JST))}</lastBuildDate>
+{chr(10).join(items)}
+</channel>
+</rss>
+"""
+
+
 # ---------- HTML の部品 ----------
 
 def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
@@ -257,6 +429,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel}assets/style.css">
+<link rel="alternate" type="application/rss+xml" title="{esc(cfg['name'])}｜新着と更新" href="{esc(base)}/feed.xml">
 {extra}</head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -268,6 +441,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     </a>
     <nav class="site-nav" aria-label="サイト内">
       <a href="{rel or './'}">事例一覧</a>
+      <a href="{rel}new/">新着と更新</a>
       <a href="{rel}about/">この図鑑について</a>
     </nav>
   </div>
@@ -642,7 +816,7 @@ def build_404(cfg):
 """
     return page(cfg, title="ページが見つかりません", description="", path="404.html", body=body).replace(
         'href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace(
-        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"')
+        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"')
 
 
 def copy_og_items(cases):
@@ -700,13 +874,18 @@ def main():
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
         write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases), og))
     write("about/index.html", build_about(cfg, cases, updated))
+    today = datetime.now(JST).date()
+    new, updates, has_history = find_changes(cases, load_history(), today)
+    write("new/index.html", build_new(cfg, cases, new, updates, has_history, updated))
+    write("feed.xml", build_feed(cfg, cases, new, updates))
+    print(f"新着 {len(new)}件、更新 {len(updates)}件（履歴{'あり' if has_history else 'なし：確認日だけで判定'}）")
     write("404.html", build_404(cfg))
 
     public = [{k: v for k, v in c.items() if not k.startswith("_")} for c in cases]
     write("data.json", json.dumps({"updated": datetime.now(JST).isoformat(), "cases": public},
                                   ensure_ascii=False, indent=1))
     base = cfg["base_url"].rstrip("/")
-    urls = [f"{base}/", f"{base}/about/"] + [f"{base}/cases/{c['ID']}/" for c in cases]
+    urls = [f"{base}/", f"{base}/new/", f"{base}/about/"] + [f"{base}/cases/{c['ID']}/" for c in cases]
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "".join(f"<url><loc>{esc(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
     # 毎週のリンク点検の結果（tools/check_links.py）をそのまま公開する

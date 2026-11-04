@@ -25,7 +25,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 新着と更新を出すために data/latest.csv の履歴を読むので、履歴をすべて取ってくる
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
