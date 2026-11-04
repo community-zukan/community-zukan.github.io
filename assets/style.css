@@ -247,3 +247,4 @@ em { font-style: normal; font-weight: 700; }
   .overview div.wide { grid-column: 1 / -1; }
   .overview dd { font-size: 14px; }
 }
+.report { font-size: 14px; margin: 14px 0 0; }
