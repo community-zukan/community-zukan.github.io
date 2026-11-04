@@ -210,6 +210,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .case-head { margin-bottom: 28px; }
 .case-head h1 { font-size: clamp(24px, 4vw, 32px); margin: var(--space-2) 0 6px; }
 .case-meta { color: var(--text-sub); font-size: 14px; margin: 0; }
+.case-main .actions { margin-top: var(--space-6); }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: var(--space-4); }
 .action-button {
   display: inline-flex; align-items: center; gap: var(--space-2); font: inherit; font-size: 14px; font-weight: 500;
@@ -248,8 +249,10 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .ai-label { font-size: 12px; font-weight: 500; border: 1px solid var(--hint-line); border-radius: var(--radius-sm); padding: 0 var(--space-2); color: var(--text-body); background: var(--card); }
 .hint-note { font-size: 13px; color: var(--text-sub); margin-top: 10px !important; line-height: 1.7; }
 .source { border-top: 1px solid var(--line); padding-top: 20px; }
-.source-links { padding-left: 1.2em; margin: 0 0 var(--space-3); }
-.source-links li { margin-bottom: var(--space-1); }
+.source-links { list-style: none; padding: 0; margin: 0 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.source-button { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--space-2); font-weight: 700; font-size: 15px; color: var(--on-sky); background: var(--sky); border-radius: var(--radius-md); padding: 10px 18px; min-height: 46px; text-decoration: none; }
+.source-button:hover { filter: brightness(1.08); }
+.source-domain { font-size: 13px; font-weight: 400; opacity: .85; }
 .source-meta { margin: 0; font-size: 14px; }
 .source-meta div { display: grid; grid-template-columns: 6.5em 1fr; gap: var(--space-2); padding: var(--space-1) 0; }
 .source-meta dt { color: var(--text-sub); }
@@ -320,7 +323,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .theme-toggle:hover { color: var(--footer-strong); border-color: var(--footer-strong); }
 
 /* 小さなリンクやボタン：見た目は変えずに、指で押せる範囲を上下に広げる */
-.report a, .feed-link a, .site-footer a, .source-links a, .combo-filter a, .rss-note a { display: inline-block; padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; }
+.report a, .feed-link a, .site-footer a, .combo-filter a, .rss-note a { display: inline-block; padding-top: 10px; padding-bottom: 10px; margin-top: -10px; margin-bottom: -10px; }
 .link-button { padding: 10px 0; margin: -6px 0; }
 .share-link, .saved-toggle { min-height: 40px; }
 .site-footer p a { white-space: nowrap; margin-right: .3em; }
@@ -352,10 +355,13 @@ main { flex: 1 0 auto; }
   .overview div.wide { grid-column: 1 / -1; }
   .overview dd { font-size: 14px; }
 }
-.report { font-size: 14px; margin: 14px 0 0; }
-.useful { margin-top: 28px; padding: var(--space-4) 18px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.report { font-size: 13px; margin: 0; }
+.feedback { margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6); font-size: 13px; color: var(--text-sub); }
+.useful { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
 .useful[hidden] { display: none; }
-.useful p { margin: 0; font-size: 15px; }
-.useful .action-button:disabled { cursor: default; opacity: .7; }
-.useful-thanks { font-size: 13px; color: var(--text-sub); flex-basis: 100%; }
+.useful p { margin: 0; }
+.small-button { font: inherit; font-size: 13px; color: var(--text-body); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 4px 14px; min-height: 36px; cursor: pointer; }
+.small-button:hover { border-color: var(--sky); color: var(--sky); }
+.small-button:disabled { cursor: default; opacity: .7; }
+.useful-thanks { flex-basis: 100%; }
 .useful-thanks:empty { display: none; }

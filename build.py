@@ -827,8 +827,8 @@ def build_case(cfg, c, related, og_image=None):
         dl_row("ツール", esc(c.get("ツール"))),
         dl_row("運営体制", esc(c.get("運営体制"))),
     ])
-    links = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
-                    f'data-goatcounter-title="出典 {esc(c["企業名"])} {esc(domain(u))}">{esc(domain(u))}</a></li>' for u in c["_urls"])
+    links = "".join(f'<li><a class="source-button" href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
+                    f'data-goatcounter-title="出典 {esc(c["企業名"])} {esc(domain(u))}">出典を開く<span class="source-domain">{esc(domain(u))}</span></a></li>' for u in c["_urls"])
     source = f"""<section class="block source">
   <h2>出典</h2>
   {f'<ul class="source-links">{links}</ul>' if links else ''}
@@ -838,7 +838,6 @@ def build_case(cfg, c, related, og_image=None):
     {dl_row("注意点", esc(c.get("出典の注意")))}
     {dl_row("確認日", esc(fmt_date(c.get("確認日"))))}
   </dl>
-  {report_link(cfg, c)}
 </section>"""
     missing_html = ""
     if missing:
@@ -858,16 +857,19 @@ def build_case(cfg, c, related, og_image=None):
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{esc(c['_title'])}</h1>
     {f'<p class="case-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
-    {share_bar(cfg, c)}
   </header>
   <div class="case-grid">
     <div class="case-main">
       {''.join(blocks)}
       {source}
-      <div class="useful" id="useful" hidden>
-        <p>この事例は参考になりましたか。</p>
-        <button type="button" class="action-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
-        <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
+      {share_bar(cfg, c)}
+      <div class="feedback">
+        <div class="useful" id="useful" hidden>
+          <p>この事例は参考になりましたか。</p>
+          <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
+          <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
+        </div>
+        {report_link(cfg, c)}
       </div>
     </div>
     <aside class="case-side">
