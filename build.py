@@ -6,7 +6,7 @@ _site/ に静的なHTMLを書き出します。標準ライブラリだけで動
 
 使い方:
   python3 build.py                     # config/site.json の csv_url から読む
-  python3 build.py --csv testdata/public.csv   # 手元のCSVで試す
+  python3 build.py --csv testdata/public.csv   # 手元のCSVで試す（data/latest.csv は書き換えない）
   python3 build.py --force             # 件数が急に減っても公開する
 
 公開を止める条件（観測所と同じ考え方）:
@@ -552,12 +552,13 @@ def main():
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
     write(".nojekyll", "")
 
-    # 確認用に、使ったデータを残す
-    os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
-    with open(os.path.join(ROOT, "data", "latest.csv"), "w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        w.writeheader()
-        w.writerows(rows)
+    # 確認用に、使ったデータを残す（手元のCSVで試したときは書き換えない）
+    if not args.csv:
+        os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
+        with open(os.path.join(ROOT, "data", "latest.csv"), "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            w.writeheader()
+            w.writerows(rows)
 
     print(f"{len(cases)}件の事例でサイトを作りました（{updated}）。")
 

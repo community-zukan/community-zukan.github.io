@@ -1,2 +1,5 @@
 _site/
 __pycache__/
+.venv/
+tools/fonts/
+og-items/
