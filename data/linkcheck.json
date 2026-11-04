@@ -1,11 +1,11 @@
 {
-  "checked_at": "2026-11-04T18:47:56+09:00",
+  "checked_at": "2026-11-04T18:58:06+09:00",
   "cases": 147,
   "urls": 291,
   "summary": {
-    "正常": 273,
+    "正常": 272,
     "移転": 0,
-    "拒否": 11,
+    "拒否": 12,
     "要確認": 7
   },
   "items": [
@@ -124,6 +124,16 @@
       "company": "ヌーラボ",
       "title": "JBUG（Backlogユーザーグループ）",
       "url": "https://codezine.jp/news/detail/27165",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）"
+    },
+    {
+      "id": "F48",
+      "company": "アステリア",
+      "title": "Asteria Park（旧ASTERIA User Group）",
+      "url": "https://bridge-salon.jp/upload/tekiji_pdf/T~~38530~000000~1402~0~20240516~1130~20240516599484G.pdf",
       "status": "拒否",
       "http_status": 403,
       "final_url": "",
