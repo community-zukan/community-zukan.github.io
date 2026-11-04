@@ -581,6 +581,7 @@ def build_index(cfg, cases, updated):
   <div class="result-bar">
     <p id="result-count" aria-live="polite">{len(cases)}件の事例</p>
     <button type="button" id="reset" class="link-button" hidden>条件をすべて外す</button>
+    <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>
   </div>
   <ul class="cards" id="cards">
     {''.join(card(c) for c in cases)}
@@ -680,6 +681,7 @@ def build_case(cfg, c, related, og_image=None):
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{esc(c['_title'])}</h1>
     {f'<p class="case-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
+    {share_bar(cfg, c)}
   </header>
   <div class="case-grid">
     <div class="case-main">
@@ -694,6 +696,7 @@ def build_case(cfg, c, related, og_image=None):
   </div>
   {rel_html}
 </article>
+<script src="../../assets/case.js" defer></script>
 """
     base = cfg["base_url"].rstrip("/") + "/"
     url = f"{base}cases/{c['ID']}/"
@@ -717,6 +720,30 @@ def build_case(cfg, c, related, og_image=None):
     }
     return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc, jsonld=[webpage, crumbs],
                 path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
+
+
+def share_bar(cfg, c):
+    """あとで見る・URLのコピー・SNSへの共有。あとで見るとコピーは JavaScript が動くときだけ出す。"""
+    url = f"{cfg['base_url'].rstrip('/')}/cases/{c['ID']}/"
+    text = f"{c['企業名']} {c['_title']}｜{cfg['name']}"
+    q = urllib.parse.quote
+    links = [
+        ("X", f"https://x.com/intent/post?text={q(text)}&url={q(url)}"),
+        ("Facebook", f"https://www.facebook.com/sharer/sharer.php?u={q(url)}"),
+        ("LINE", f"https://social-plugins.line.me/lineit/share?url={q(url)}"),
+    ]
+    share = "".join(f'<li><a class="share-link" href="{esc(h)}" target="_blank" rel="noopener">{n}</a></li>' for n, h in links)
+    return f"""<div class="actions">
+  <button type="button" class="action-button save" id="save" data-id="{esc(c['ID'])}" aria-pressed="false" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>
+  <div class="share">
+    <span class="share-head">共有</span>
+    <ul class="share-list">
+      <li><button type="button" class="share-link" id="copy-url" data-url="{esc(url)}" hidden>URLをコピー</button></li>
+      {share}
+    </ul>
+    <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
+  </div>
+</div>"""
 
 
 def report_link(cfg, c):

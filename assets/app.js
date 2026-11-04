@@ -13,6 +13,15 @@
   var more = document.getElementById('more');
   var moreButton = document.getElementById('more-button');
   var PAGE = 24;          // 一度に表示する件数
+  var savedToggle = document.getElementById('saved-toggle');
+  var savedOnly = false;
+
+  // 事例ページで「あとで見る」に入れた事例（localStorage）。使えない環境では空として扱う
+  function savedIds() {
+    try { return JSON.parse(localStorage.getItem('zukan-saved') || '[]') || []; } catch (e) { return []; }
+  }
+  var saved = savedIds();
+  function idOf(c) { return (c.querySelector('a').getAttribute('href') || '').replace(/^cases\/|\/$/g, ''); }
   var limit = PAGE;
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.facet input'));
   var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry', 'size'];
@@ -65,6 +74,7 @@
         var vals = multi[k] ? v.split('|') : [v];
         return s[k].some(function (x) { return vals.indexOf(x) !== -1; });
       });
+      if (ok && savedOnly) ok = saved.indexOf(idOf(c)) !== -1;
       if (ok && words.length) {
         var hay = c.dataset.search;
         ok = terms.every(function (alts) {
@@ -79,7 +89,7 @@
     more.hidden = rest <= 0;
     moreButton.textContent = 'もっと見る（残り' + rest + '件）';
     var n = Object.keys(s).reduce(function (a, k) { return a + s[k].length; }, 0);
-    var filtering = n > 0 || words.length > 0;
+    var filtering = n > 0 || words.length > 0 || savedOnly;
     count.textContent = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
     activeCount.textContent = n ? n + '件の条件' : '';
     reset.hidden = !filtering;
@@ -144,9 +154,21 @@
 
   function clearAll() {
     boxes.forEach(function (b) { b.checked = false; });
+    setSavedOnly(false);
     q.value = '';
     apply(true);
     q.focus();
+  }
+
+  function setSavedOnly(on) {
+    savedOnly = on;
+    savedToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    savedToggle.textContent = on ? 'あとで見るを表示中（' + saved.length + '件）' : 'あとで見る（' + saved.length + '件）';
+  }
+  if (saved.length) {
+    savedToggle.hidden = false;
+    setSavedOnly(false);
+    savedToggle.addEventListener('click', function () { setSavedOnly(!savedOnly); apply(false); });
   }
 
   if (window.matchMedia('(min-width: 900px)').matches) details.open = true;
