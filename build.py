@@ -330,6 +330,9 @@ def build_index(cfg, cases, updated):
   <ul class="cards" id="cards">
     {''.join(card(c) for c in cases)}
   </ul>
+  <div class="more" id="more" hidden>
+    <button type="button" class="more-button" id="more-button">もっと見る</button>
+  </div>
   <div class="empty" id="empty" hidden>
     <p>条件に合う事例はありませんでした。</p>
     <p>条件を減らすか、キーワードを変えてみてください。</p>

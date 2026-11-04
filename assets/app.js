@@ -10,6 +10,10 @@
   var empty = document.getElementById('empty');
   var activeCount = document.getElementById('active-count');
   var details = document.getElementById('filters');
+  var more = document.getElementById('more');
+  var moreButton = document.getElementById('more-button');
+  var PAGE = 24;          // 一度に表示する件数
+  var limit = PAGE;
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.facet input'));
   var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry'];
   var multi = { purpose: true, activity: true };
@@ -29,11 +33,14 @@
     }).trim();
   }
 
-  function apply(pushState) {
+  // 絞り込みと検索は全件に効かせ、当てはまった事例のうち先頭の limit 件だけを表示する
+  function apply(pushState, keepLimit) {
+    if (!keepLimit) limit = PAGE;
     var s = selected();
     var words = normalize(q.value).split(/\s+/).filter(Boolean);
     var shown = 0;
-    cards.forEach(function (c) {
+    var visible = 0;
+    Array.prototype.forEach.call(list.children, function (c) {
       var ok = keys.every(function (k) {
         if (!s[k]) return true;
         var v = c.dataset[k] || '';
@@ -44,9 +51,13 @@
         var hay = c.dataset.search;
         ok = words.every(function (w) { return hay.indexOf(w) !== -1; });
       }
-      c.hidden = !ok;
       if (ok) shown++;
+      c.hidden = !ok || shown > limit;
+      if (!c.hidden) visible++;
     });
+    var rest = shown - visible;
+    more.hidden = rest <= 0;
+    moreButton.textContent = 'もっと見る（残り' + rest + '件）';
     var n = Object.keys(s).reduce(function (a, k) { return a + s[k].length; }, 0);
     var filtering = n > 0 || words.length > 0;
     count.textContent = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
@@ -111,4 +122,13 @@
   sort.addEventListener('change', function () { doSort(); apply(true); });
   reset.addEventListener('click', clearAll);
   reset2.addEventListener('click', clearAll);
+  moreButton.addEventListener('click', function () {
+    var first = limit;
+    limit += PAGE;
+    apply(false, true);
+    // 追加した最初の事例にフォーカスを移す（キーボードやスクリーンリーダーで続きから読めるように）
+    var shownCards = Array.prototype.filter.call(list.children, function (c) { return !c.hidden; });
+    var next = shownCards[first] && shownCards[first].querySelector('a');
+    if (next) next.focus({ preventScroll: true });
+  });
 })();

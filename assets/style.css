@@ -165,6 +165,14 @@ em { font-style: normal; font-weight: 700; }
 .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { font-size: 12px; background: var(--accent-soft); color: var(--accent); padding: 1px 9px; border-radius: 4px; line-height: 1.8; }
 
+.more { text-align: center; margin-top: 24px; }
+.more[hidden] { display: none; }
+.more-button {
+  font: inherit; font-size: 15px; font-weight: 500; color: var(--accent);
+  background: var(--surface); border: 1px solid var(--accent); border-radius: var(--radius);
+  padding: 10px 24px; min-height: 46px; min-width: 240px; cursor: pointer;
+}
+.more-button:hover { background: var(--accent-soft); }
 .empty { text-align: center; padding: 48px 16px; background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); }
 .empty p { margin: 0 0 6px; color: var(--ink-2); }
 .empty .button { margin-top: 12px; }
@@ -230,7 +238,8 @@ em { font-style: normal; font-weight: 700; }
 @media (min-width: 1000px) {
   .finder { display: grid; grid-template-columns: 270px minmax(0, 1fr); column-gap: 28px; align-items: start; }
   .finder .filters { grid-column: 1; grid-row: 1 / span 4; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
-  .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty { grid-column: 2; }
+  .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty, .finder .more { grid-column: 2; }
+  .finder .more { grid-row: 4; }
   .finder .search-row { grid-row: 1; }
   .finder .result-bar { grid-row: 2; margin-top: 4px; }
   .finder .cards { grid-row: 3; grid-template-columns: repeat(2, 1fr); }
