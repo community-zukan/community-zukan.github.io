@@ -183,6 +183,8 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <meta property="og:image:alt" content="{esc(full_title)}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{rel}assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="{rel}assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{rel}assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
