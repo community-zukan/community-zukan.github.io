@@ -602,9 +602,12 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p>{esc(cfg['name'])}｜{esc(cfg['subtitle'])}</p>
-    <p>掲載内容は各出典の公開情報の要約です。詳しくは出典をご覧ください。</p>
-    {operator_line(cfg)}
+    <p class="footer-name">{esc(cfg['name'])}</p>
+    <p>{esc(cfg['subtitle'])}。掲載内容は各出典の公開情報の要約です。詳しくは出典をご覧ください。</p>
+    {operator_line(cfg, rel)}
+    <div class="footer-bottom">
+      <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着と更新のRSS</a></p>
+    </div>
   </div>
 </footer>
 </body>
@@ -612,7 +615,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 """
 
 
-def operator_line(cfg):
+def operator_line(cfg, rel=""):
     parts = []
     if cfg.get("operator"):
         name = esc(cfg["operator"])
@@ -621,6 +624,7 @@ def operator_line(cfg):
         parts.append(f"運営：{name}")
     if cfg.get("contact_url"):
         parts.append(f'<a href="{esc(cfg["contact_url"])}">掲載内容の修正のご連絡</a>')
+    parts.append(f'<a href="{rel}about/">この図鑑について</a>')
     return f"<p>{'　'.join(parts)}</p>" if parts else ""
 
 
