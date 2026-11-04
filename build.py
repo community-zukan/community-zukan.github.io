@@ -704,7 +704,7 @@ def build_index(cfg, cases, updated):
     body = f"""
 <section class="hero">
   <div class="wrap">
-    <h1>企業のコミュニティ運営を、<br class="sp">公開事例から知る</h1>
+    <h1>企業のコミュニティ運営を、<br class="sp"><span class="mark">公開事例から知る</span></h1>
     <p class="lead">ファンコミュニティと社内コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
     <p class="stats"><span><b>{len(cases)}</b>件</span><span>ファン・顧客 {n_fan}件</span><span>社内 {n_int}件</span><span>{esc(updated)}更新</span></p>
   </div>
