@@ -1031,8 +1031,10 @@ def build_about(cfg, cases, updated):
 
   <h2>運営者</h2>
   <div class="operator-card">
-    <p class="operator-name"><strong>{esc(cfg.get('operator', ''))}</strong><span>キャリア研究家</span></p>
-    <p>これまでに1,000人以上のキャリア相談を受けてきました。著書に『ライフピボット』などがあります。この図鑑のほか、人生の転機について考える「<a href="https://ashitano-tenki.github.io/">あしたの転機観測所</a>」やnoteマガジン、コミュニティも運営しています。</p>
+    <p class="operator-name"><strong>{esc(cfg.get('operator', ''))}</strong><span>コミュニティ研究家</span></p>
+    <p>2017年に、日本最大級の実名制フリーランスコミュニティ「FreelanceNow」と、問いでつながるコミュニティ「議論メシ」を立ち上げました。議論メシでは1,200回以上のイベントを開き、延べ13,000人以上が参加しています。スタートアップ、大企業、NPO、行政などとのコラボレーションは400回を超えます。</p>
+    <p>2024年3月からは、コミューン株式会社のコミューンコミュニティラボ所長として、コミュニティの研究と社会実装に取り組みました。著書に、社会の変化とコミュニティの関係を書いた『コミュニティシフト』と、企業の経営や事業におけるコミュニティの役割を論じた『コミュニティ経営の教科書』があります。</p>
+    <p>2026年10月からはフリーランスとして、コミュニティ研究家、キャリア研究家、ディスカッションパートナーを仕事にしています。同じ時期に FreelanceNow を、キャリアの転機をシェアするコミュニティ「あしたの転機」にリニューアルしました。メンバーは1.6万人を超えています。この図鑑のほか、「<a href="https://ashitano-tenki.github.io/">あしたの転機観測所</a>」も運営しています。</p>
     <p class="operator-link"><a class="button" href="{esc(cfg.get('operator_url', ''))}" rel="noopener" target="_blank">黒田悠介のリンク集を見る</a><span>ほかの活動や発信をまとめています</span></p>
   </div>
 </article>
