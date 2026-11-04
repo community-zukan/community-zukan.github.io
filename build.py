@@ -16,6 +16,7 @@ _site/ に静的なHTMLを書き出します。標準ライブラリだけで動
 """
 
 import argparse
+import hashlib
 import csv
 import html
 import io
@@ -54,6 +55,15 @@ PURPOSE_ORDER = [
 ]
 TYPE_LABEL = {"社内": "社内", "ファン・顧客": "ファン・顧客"}
 
+
+
+def ver(name):
+    """assets/ のファイルの中身から短い版の印を作る。更新したとき、古いCSSやJavaScriptがブラウザに残らないようにする。"""
+    try:
+        with open(os.path.join(ROOT, "assets", name), "rb") as f:
+            return hashlib.sha1(f.read()).hexdigest()[:8]
+    except OSError:
+        return "0"
 
 def esc(s):
     return html.escape(s or "", quote=True)
@@ -568,7 +578,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{rel}assets/style.css">
+<link rel="stylesheet" href="{rel}assets/style.css?v={ver('style.css')}">
 <link rel="alternate" type="application/rss+xml" title="{esc(cfg['name'])}｜新着と更新" href="{esc(base)}/feed.xml">
 {extra}</head>
 <body>
@@ -737,7 +747,7 @@ def build_index(cfg, cases, updated):
   </div>
 </section>
 <script type="application/json" id="synonyms">{synonyms_json}</script>
-<script src="assets/app.js" defer></script>
+<script src="assets/app.js?v={ver('app.js')}" defer></script>
 """
     base = cfg["base_url"].rstrip("/") + "/"
     website = {
@@ -843,7 +853,7 @@ def build_case(cfg, c, related, og_image=None):
   </div>
   {rel_html}
 </article>
-<script src="../../assets/case.js" defer></script>
+<script src="../../assets/case.js?v={ver('case.js')}" defer></script>
 """
     base = cfg["base_url"].rstrip("/") + "/"
     url = f"{base}cases/{c['ID']}/"
