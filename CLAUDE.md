@@ -5,7 +5,7 @@ https://community-zukan.github.io/
 
 運営者は黒田悠介さん。データ集めと公開判定は Claude（Cowork の定期実行）が担当し、このリポジトリのコードは Claude Code が担当します。お手本は同じ運営者の「あしたの転機観測所」（https://github.com/ashitano-tenki/ashitano-tenki.github.io ）で、図鑑はその仕組みを小さく写したものです。迷ったら観測所の実装を読んでください。
 
-最終更新：2026-11-04（Cowork のセッションで作成。同日、黒田さんの取り入れ判断を反映）
+最終更新：2026-11-04（Cowork のセッションで作成。同日、Claude Code が「やること」の1〜14を実装し、この文書を実際の状態に合わせた）
 
 ## 全体の流れ
 
@@ -34,18 +34,44 @@ Claude Code はスプレッドシートに書き込みません。列を足す�
 
 | ファイル | 中身 |
 |---|---|
-| build.py | サイトを作るスクリプト。標準ライブラリだけ。ページの文面もここにある |
-| config/site.json | サイト名、CSVのURL、運営者、連絡フォーム、業種のまとめ方（industry_groups）、件数チェックの比率 |
-| assets/style.css・app.js・icon.svg | 見た目、絞り込みと検索、ファビコン |
-| .github/workflows/build.yml | 毎日の更新。データの写しを data/latest.csv にコミットする |
-| data/latest.csv | 最後に読んだ公開データの写し（履歴で変化を追える） |
-| testdata/public.csv | 手元で試すための公開データ（2026-11-04 時点、112件） |
+| build.py | サイトを作るスクリプト。ページの文面、新着と更新・RSS、組み合わせのページ、JSON-LD もここで作る。標準ライブラリだけで動き、pykakasi があればひらがな検索用の読みを足す |
+| config/site.json | サイト名、CSVのURL、運営者、連絡フォーム、GoatCounter、Search Console、業種のまとめ方（industry_groups）、件数チェックの比率、リンク点検で「拒否」に分けるサイト（linkcheck_refusing_hosts） |
+| config/synonyms.json | 検索の言い換え表（Viva Engage と Yammer など） |
+| config/combo_notes.json | 組み合わせのページに添える解説（AIによる解釈）と、書いた日付 |
+| assets/style.css | 見た目 |
+| assets/app.js | 一覧の絞り込み・検索（ひらがな・言い換え）・並べ替え・「もっと見る」・あとで見るの切り替え |
+| assets/case.js | 事例ページのあとで見る・URLのコピー・役に立った |
+| assets/icon.svg・favicon-32.png・apple-touch-icon.png | ファビコン |
+| assets/ogp.png | サイト全体の共有画像（1200×630）。`tools/make_og.py --site` で作り直す |
+| tools/make_og.py | 事例ページごとの共有画像を og-items/ に作る（Pillow と Noto Sans CJK を使う。og-items/ はリポジトリに入れない） |
+| tools/check_links.py | 出典URLを開いて確かめ、data/linkcheck.json に書く |
+| .github/workflows/build.yml | 毎日の更新。書体と Pillow・pykakasi を入れ、共有画像を作ってからビルドし、データの写しを data/latest.csv にコミットする。履歴を読むため fetch-depth: 0 |
+| .github/workflows/check-links.yml | 毎週月曜 6:30 のリンク切れの点検。要確認があれば Issue を作る |
+| data/latest.csv | 最後に読んだ公開データの写し。git の履歴を「新着と更新」に使う。手元で --csv を付けて試したときは書き換えない |
+| data/linkcheck.json | 最後のリンク点検の結果（Actions が書く） |
+| testdata/public.csv | 手元で試すためのデータ。2026-11-04 の data/latest.csv（150件）から A〜U 列だけを残したもの（V〜Y 列がない場合の確認用） |
+| testdata/public_vy.csv | 同じ150件に V〜Y 列を付けたもの。規模の区分・検索用キーワードにテスト用の値（実データではない）を入れ、確認日・観測スコアが空の行も混ぜてある |
+
+## できたページ
+
+| URL | 中身 |
+|---|---|
+| / | 事例一覧。おすすめ順が既定。24件ずつ表示し「もっと見る」で足す |
+| /cases/{ID}/ | 事例ページ。共有画像は /og/{ID}.png |
+| /new/ | 新着と更新（直近90日） |
+| /combos/ と /combos/{項目}-{項目}/{値}-{値}/ | 組み合わせのページ（目的×段階、種別×活動の型。5件以上のものだけ） |
+| /about/ | この図鑑について（おすすめ順の配点、アクセス解析の説明を含む） |
+| /feed.xml・/sitemap.xml・/data.json・/linkcheck.json | RSS、サイトマップ、公開データ、リンク点検の結果 |
 
 ## 手元で試す
 
 ```
-python3 build.py --csv testdata/public.csv --no-live-check
+python3 -m venv .venv && .venv/bin/pip install pillow==11.3.0 pykakasi==2.3.0   # 初回だけ（なくてもビルドは通る）
+.venv/bin/python tools/make_og.py --csv testdata/public.csv        # 共有画像（書体は tools/fonts/ に自動で入る）
+.venv/bin/python build.py --csv testdata/public_vy.csv --no-live-check
+python3 build.py --csv testdata/public.csv --no-live-check          # V〜Y 列がない・pykakasi がない場合
 python3 -m http.server 8765 -d _site
+.venv/bin/python tools/check_links.py --csv testdata/public.csv    # リンク点検（5分ほど。data/linkcheck.json はコミットしない）
 ```
 
 公開を止める条件：CSVを取れない、CSVではなくHTMLが返る、0件、公開中のサイト（/data.json）の件数の半分未満。意図して減らしたときは Actions の手動実行で「件数が急に減っても公開する」に印を付けます。
@@ -75,46 +101,53 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 
 ## やること
 
-### 必須（判断を待たずに進めてよい）
+2026-11-04 に、もとの「必須」1〜6と「決定済み」7〜14を実装した（14は残りのクリック計測と説明まで）。15は黒田さんの作業。
 
-1. **SNS共有の画像**：いまは og:image がない。サイト全体の ogp.png（1200×630）と、事例ページごとの共有画像（企業名・コミュニティ名・種別を載せたもの）を作る。観測所の tools/make_item_og.py と assets/og/ が参考になる。twitter:card は summary_large_image に。
-2. **ファビコンの PNG**：favicon-32.png と apple-touch-icon.png を足す（いまは SVG だけ）。
-3. **構造化データ**：トップに WebSite、事例ページに WebPage と BreadcrumbList の JSON-LD を入れる。
-4. **リンク切れの点検**：観測所の .github/workflows/check-links.yml と tools/check_links.py を写す。毎週、公開中の出典URLを開いて「正常・移転・拒否・要確認」に分け、/linkcheck.json に出す。要確認があれば Issue を作る。サイトの掲載は自動では変えない（データ側の定期実行が linkcheck.json を読んで直す。スキルへの組み込みは Cowork 側で行う）。MarkeZine や日経のように自動アクセスを断るサイトは「拒否」に分ける。
-5. **一覧のページ分け**：いまは全件を1ページに出している。200件を超えたら重くなるので、20〜30件ずつ表示して「もっと見る」で足す形にする（絞り込みと検索はこれまでどおり全件に効くように）。
-6. **確認日の扱い**：U列（確認日）が空の行がある（Cowork 側で順次埋まる）。表示や並べ替えで空でも崩れないように。
+### 済んだこと（2026-11-04）
 
-### 決定済み（2026-11-04 黒田さんの判断。着手してよい）
+| 項目 | 実装 |
+|---|---|
+| 1 SNS共有の画像 | assets/ogp.png と事例ごとの /og/{ID}.png（種別・企業名・コミュニティ名。ロゴや出典の画像は使わない）。twitter:card は summary_large_image |
+| 2 ファビコンの PNG | favicon-32.png・apple-touch-icon.png |
+| 3 構造化データ | トップに WebSite（SearchAction つき）、事例ページに WebPage と BreadcrumbList |
+| 4 リンク切れの点検 | check-links.yml（毎週月曜）・tools/check_links.py。結果は /linkcheck.json。要確認があれば Issue。MarkeZine・日経は「拒否」 |
+| 5 一覧のページ分け | 24件ずつ表示。絞り込みと検索は全件に効く |
+| 6 確認日の扱い | 空でも表示と並べ替えが崩れない。並び順に「確認日が新しい順」 |
+| 7 おすすめ順 | 観測スコアの高い順が既定。同点は確認日の新しい順。配点は「この図鑑について」 |
+| 8 規模の区分・出典の時期 | 規模の区分の絞り込み（値が1件もないときは出さない）。事例ページに「出典の時期 2025年12月」 |
+| 9 検索用キーワード | 検索の対象に入れる（画面には出さない） |
+| 10 ひらがな検索 | pykakasi で企業名・コミュニティ名の読みを足す。言い換えは config/synonyms.json |
+| 11 新着と更新 | /new/ と /feed.xml。新着の日付は確認日、なければ初めて載った日。履歴が読めないときは確認日だけで判定 |
+| 12 組み合わせのページ | /combos/。解説は config/combo_notes.json（黒田さんが確認して公開） |
+| 13 あとで見る・共有 | 事例ページにあとで見る・URLのコピー・X・Facebook・LINE。一覧に「あとで見る（n件）」の切り替え |
+| 14 アクセス解析 | 出典リンク・あとで見る・共有・役に立ったを data-goatcounter-click で数える。「この図鑑について」に説明 |
 
-7. **おすすめ順（観測スコア）**：公開用の Y 観測スコアで並べる「おすすめ順」を足し、既定の並び順にする。同点は確認日の新しい順。「この図鑑について」に配点を説明する（上の「観測スコアの配点」）。知名度はAIの推定であることも書く。
-8. **規模の区分の絞り込み・出典の時期の表示**：W 規模の区分を絞り込みに足す（空欄は「規模不明」として数えるか、絞り込みの対象外にする）。事例ページに V 出典の時期を「出典の時期 2025年12月」の形で出す。
-9. **検索用キーワード**：X 検索用キーワードを検索の対象に入れる（画面には出さない）。
-10. **ひらがな検索**：観測所のように pykakasi で企業名・コミュニティ名の読みを足し、config/synonyms.json で言い換え（Viva Engage と Yammer など）を持つ。
-11. **新着と更新の記録（RSSつき）**：確認日（U）を公開日として使う。観測所の /report/ と feed.xml を参考に。data/latest.csv の履歴と比べて、新しく出た事例・内容が変わった事例を出す。
-12. **組み合わせのページ**：目的×段階、種別×活動の型など、件数が5件以上の組み合わせだけ固定ページにし、短い解説を添える。sitemap にも入れる。解説は事例から言えることだけを書き、AIの解釈であることを示す。
-13. **あとで見る・共有ボタン**：あとで見るは localStorage（try/catch で包む）。共有はURLのコピーと X・Facebook・LINE への共有リンク。
-14. **アクセス解析（GoatCounter）**：2026-11-04 に config/site.json の goatcounter（communityzukan）と、build.py の page() でタグを出すところまで入れた（計測は始まっている）。残りは、出典リンクのクリック、あとで見る・共有を data-goatcounter-click で数える。「この図鑑について」にアクセス解析の説明（GoatCounter はクッキーを使わないこと）を足す。
-15. **Google Search Console**：2026-11-04 に config/site.json の google_site_verification と、全ページの head に meta を出す処理を入れた。所有権の確認は黒田さんが行う。sitemap.xml を Search Console に送る作業も黒田さん側。
+### 続けて見ること
+
+- **組み合わせの解説**：データが増えて5件以上の組み合わせが増えると、解説のないページが自動でできる（事例の一覧と内訳だけ出る）。ビルドのログの「解説なし」を見て、解説を書き、黒田さんに一覧で見せてから combo_notes.json に足す。解説はデータから言えることだけを2〜3文で、評価や順位はつけない。細かい件数は書かない。書いたら written の日付を更新する。
+- **規模の区分（W）・検索用キーワード（X）**：2026-11-04 時点の実データはすべて空。Cowork 側の点検で埋まると、規模の区分の絞り込みが自動で出る。
+- **リンク点検の結果**：Issue に出た要確認のURLは、データ側の定期実行が linkcheck.json を読んで直す（スキルへの組み込みは Cowork 側）。
+- **15 Google Search Console**：所有権の確認と sitemap.xml の送信は黒田さんの作業。
 
 ### 作らない（2026-11-04 黒田さんの判断）
 
 段階のセルフチェック、支援者向けのページ、事例ページの画像（出典のOGP取得）、AIに相談する入口。SNSで紹介する下書き（Cowork 側）は保留。
 
-## 観測所との対応表（何をどこから持ってくるか）
+## 観測所との対応表（何をどこから持ってきたか）
 
 | 観測所 | 図鑑 | 状態 |
 |---|---|---|
-| build.py（転機・段階・タイプ） | build.py（種別・目的・段階・活動の型・場・業種） | あり |
+| build.py（転機・段階・タイプ） | build.py（種別・目的・段階・活動の型・場・業種・規模の区分） | あり |
 | 件数チェックと前回の件数 data/meta.json | 公開中の /data.json の件数で比べる | あり |
-| data/latest.csv のコミット | 同じ | あり |
-| check-links.yml・linkcheck.json | なし | 必須の4番 |
-| OGP画像・紹介ページごとの共有画像 | なし | 必須1番 |
-| JSON-LD・Search Console・GoatCounter | なし | 必須3、決定済み14・15 |
-| おすすめ順（観測スコア） | 収録順・開始年順だけ | 決定済み7（スコアはシート側で済み） |
-| 新着・観測レポート・RSS | なし | 決定済み11 |
-| 掛け合わせページ・解説文 | なし | 決定済み12 |
-| ひらがな検索・言い換え | 単純な部分一致 | 決定済み9・10 |
-| あとで見る・共有・役に立ったボタン | なし | 決定済み13（役に立ったボタンは GoatCounter と一緒に） |
+| data/latest.csv のコミット | 同じ。履歴を新着と更新に使う | あり |
+| check-links.yml・linkcheck.json | check-links.yml・tools/check_links.py | あり |
+| OGP画像・紹介ページごとの共有画像 | assets/ogp.png・tools/make_og.py | あり |
+| JSON-LD・Search Console・GoatCounter | あり（Search Console の確認は黒田さん） | あり |
+| おすすめ順（観測スコア） | あり | あり |
+| 新着・観測レポート・RSS | /new/・/feed.xml | あり |
+| 掛け合わせページ・解説文 | /combos/・config/combo_notes.json | あり |
+| ひらがな検索・言い換え | あり（config/synonyms.json） | あり |
+| あとで見る・共有・役に立ったボタン | あり | あり |
 | セルフチェック・支援者の方へ | なし | 作らない |
 | 掲載先の画像（OGP取得） | なし | 作らない |
 | ダークモードの切り替えボタン | OSの設定に合わせるだけ | 必要なら |
@@ -125,3 +158,4 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 - 2026-11-04：サイトを公開（112件）。連絡フォームを作り、事例ページから事前入力で開けるようにした。フォームの回答をシートにつないだ。観測所との差分を洗い出し、運用側の必須項目（出典が開けないときの確かめ方、未解決の点を残して公開しない、出典の時期の列、除外リストの拾い直し、週次でのサイトの動きの確認など）をスキルに入れる案を出した。サイト側の作業はこの文書に引き継いだ。
 - 2026-11-04（同日）：黒田さんが取り入れ判断のページで決定。シートに AB〜AF 列と観測スコアの数式を足し、公開用に V〜Y を足した。運用ナレッジ・探索チェックリスト・振り返りの文書を作り、除外リストの拾い直し（毎週土曜）とデータの控え（毎週日曜）の定期タスクを作った。
 - このセッションからは git push ができなかったため、ファイルは GitHub の画面から1つずつ作ってコミットした。Claude Code からは通常どおり clone して push してください。
+- 2026-11-04（同日、Claude Code）：このMacから clone して push できるようにした（workflow ファイルの push には GitHub の workflow 権限が要る）。「やること」の1〜14を1項目ずつコミットして公開し、Actions の成功を確かめた。手元で --csv を付けて試すと data/latest.csv が上書きされる不具合を直した。リンク点検の初回は GitHub の一時的なエラーで保存に失敗したため、保存を3回まで試し直すようにした。

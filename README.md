@@ -21,15 +21,22 @@ https://community-zukan.github.io/
 
 ## ファイル
 
-- `build.py` サイトを作るスクリプト（Python標準ライブラリのみ）
-- `config/site.json` サイト名、CSVのURL、運営者、業種のまとめ方
-- `assets/` CSSとJavaScript
+- `build.py` サイトを作るスクリプト（Python標準ライブラリのみ。pykakasi があればひらがな検索用の読みを足す）
+- `config/` サイトの設定（site.json）、検索の言い換え表（synonyms.json）、組み合わせのページの解説（combo_notes.json）
+- `assets/` CSS・JavaScript・ファビコン・共有画像
+- `tools/make_og.py` 事例ページごとの共有画像を作る
+- `tools/check_links.py` 出典URLのリンク切れを点検する
 - `.github/workflows/build.yml` 毎日の更新
-- `data/latest.csv` 最後に使ったデータ（自動で更新）
+- `.github/workflows/check-links.yml` 毎週月曜のリンク切れの点検（要確認があれば Issue を作る）
+- `data/latest.csv` 最後に使ったデータ（自動で更新。履歴を「新着と更新」に使う）
+- `data/linkcheck.json` 最後のリンク点検の結果（自動で更新）
+- `testdata/` 手元で試すためのデータ（public.csv は A〜U 列、public_vy.csv は V〜Y 列つき）
 
 ## 手元で試す
 
 ```
-python3 build.py --csv testdata/public.csv --no-live-check
-python3 -m http.server -d _site
+python3 build.py --csv testdata/public_vy.csv --no-live-check
+python3 -m http.server 8765 -d _site
 ```
+
+手元のCSVで試したときは data/latest.csv を書き換えません。共有画像やひらがな検索まで試すときは、CLAUDE.md の「手元で試す」を見てください。
