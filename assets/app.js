@@ -133,6 +133,22 @@
     searchNote.hidden = !parts.length;
   }
 
+  // 検索された言葉を GoatCounter のイベントとして数える（言い換え表と、データ集めで探すテーマに使う）。
+  // 入力が1.5秒止まったときだけ送り、同じ言葉は続けて送らない。0件だった言葉は別に数える
+  var searchTimer, lastSent = '';
+  function countSearch(shown) {
+    clearTimeout(searchTimer);
+    var term = q.value.trim().replace(/\s+/g, ' ').slice(0, 50);
+    if (!term) return;
+    searchTimer = setTimeout(function () {
+      if (term === lastSent || !window.goatcounter || !window.goatcounter.count) return;
+      lastSent = term;
+      try {
+        window.goatcounter.count({ path: (shown ? 'search/' : 'search-zero/') + term, title: (shown ? '検索：' : '検索（0件）：') + term, event: true });
+      } catch (e) { /* 数えられなくても検索は続ける */ }
+    }, 1500);
+  }
+
   // 絞り込みと検索は全件に効かせ、当てはまった事例のうち先頭の limit 件だけを表示する
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
@@ -158,6 +174,7 @@
     empty.hidden = shown !== 0;
     if (shown === 0) showRelax(s, words, terms);
     showSearchNote(words, terms);
+    countSearch(shown);
     if (pushState) saveUrl(s);
   }
 
