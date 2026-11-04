@@ -1027,8 +1027,17 @@ def build_404(cfg):
     body = """
 <article class="prose wrap">
   <h1>ページが見つかりませんでした</h1>
-  <p>URLが変わったか、事例が削除された可能性があります。</p>
-  <p><a class="button" href="/">事例一覧へ戻る</a></p>
+  <p>URLが変わったか、事例が削除された可能性があります。企業名やコミュニティ名で探し直せます。</p>
+  <form class="search-again" action="/" role="search">
+    <input type="search" name="q" aria-label="キーワードで探す" placeholder="企業名・ツール・施策などで探す">
+    <button type="submit" class="button">探す</button>
+  </form>
+  <h2>ほかの入口</h2>
+  <ul class="entrances">
+    <li><a href="/">事例一覧</a>：すべての事例を、目的・段階・活動の型で絞り込めます。</li>
+    <li><a href="/new/">新着と更新</a>：最近載った事例と、内容が変わった事例です。</li>
+    <li><a href="/combos/">組み合わせ</a>：目的と段階、種別と活動の型の組み合わせから探せます。</li>
+  </ul>
 </article>
 """
     return page(cfg, title="ページが見つかりません", description="", path="404.html", body=body).replace(
