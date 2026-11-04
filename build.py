@@ -152,13 +152,16 @@ def enrich(cfg, rows):
 
 # ---------- HTML の部品 ----------
 
-def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website"):
+def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
     rel = "../" * depth
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
     base = cfg["base_url"].rstrip("/")
     canonical = base + "/" + path
     og_image = base + "/" + (og_image or "assets/ogp.png")
     extra = ""
+    for obj in jsonld or []:
+        text = json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+        extra += f'<script type="application/ld+json">{text}</script>\n'
     if cfg.get("google_site_verification"):
         extra += f'<meta name="google-site-verification" content="{esc(cfg["google_site_verification"])}">\n'
     if cfg.get("goatcounter"):
@@ -335,7 +338,16 @@ def build_index(cfg, cases, updated):
 </section>
 <script src="assets/app.js" defer></script>
 """
-    return page(cfg, title="", description=cfg["description"], path="", body=body)
+    base = cfg["base_url"].rstrip("/") + "/"
+    website = {
+        "@context": "https://schema.org", "@type": "WebSite",
+        "name": cfg["name"], "alternateName": f"{cfg['name']}｜{cfg['subtitle']}",
+        "url": base, "description": cfg["description"], "inLanguage": "ja",
+        "publisher": {"@type": "Person", "name": cfg.get("operator", ""), "url": cfg.get("operator_url", "")},
+        "potentialAction": {"@type": "SearchAction", "target": base + "?q={search_term_string}",
+                            "query-input": "required name=search_term_string"},
+    }
+    return page(cfg, title="", description=cfg["description"], path="", body=body, jsonld=[website])
 
 
 WIDE = {"規模", "ツール", "運営体制", "目的", "注意点"}
@@ -422,7 +434,27 @@ def build_case(cfg, c, related, og_image=None):
   {rel_html}
 </article>
 """
-    return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc,
+    base = cfg["base_url"].rstrip("/") + "/"
+    url = f"{base}cases/{c['ID']}/"
+    name = f"{c['企業名']} {c['_title']}"
+    webpage = {
+        "@context": "https://schema.org", "@type": "WebPage",
+        "name": name, "url": url, "description": desc, "inLanguage": "ja",
+        "isPartOf": {"@type": "WebSite", "name": cfg["name"], "url": base},
+        "about": {"@type": "Organization", "name": c["企業名"]},
+        "primaryImageOfPage": base + (og_image or "assets/ogp.png"),
+    }
+    if c.get("確認日") and re.match(r"\d{4}[-/]\d{1,2}[-/]\d{1,2}", c["確認日"]):
+        y, m, d = re.split(r"[-/]", c["確認日"])[:3]
+        webpage["dateModified"] = f"{y}-{int(m):02d}-{int(d):02d}"
+    crumbs = {
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "事例一覧", "item": base},
+            {"@type": "ListItem", "position": 2, "name": name, "item": url},
+        ],
+    }
+    return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc, jsonld=[webpage, crumbs],
                 path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
 
 
