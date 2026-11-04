@@ -867,6 +867,7 @@ def build_case(cfg, c, related, og_image=None):
         <div class="useful" id="useful" hidden>
           <p>この事例は参考になりましたか。</p>
           <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
+          <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
           <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
         </div>
         {report_link(cfg, c)}
@@ -1005,7 +1006,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」のボタンが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタンが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
   <h2>掲載内容について</h2>

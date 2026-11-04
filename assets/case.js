@@ -33,29 +33,37 @@
     });
   }
 
-  // 役に立った：押した回数は GoatCounter が数える（data-goatcounter-click）。押したことはこのブラウザにだけ残す
+  // 役に立った・いまひとつ：押した回数は GoatCounter が数える（data-goatcounter-click）。押したことはこのブラウザにだけ残す
   var useful = document.getElementById('useful');
   if (useful) {
-    var ub = document.getElementById('useful-button');
+    var yes = document.getElementById('useful-button');
+    var no = document.getElementById('notuseful-button');
     var thanks = document.getElementById('useful-thanks');
     var UKEY = 'zukan-useful';
-    var done = function () {
-      ub.disabled = true;
-      ub.textContent = '役に立った（送りました）';
-      thanks.textContent = 'ありがとうございました。';
+    var cid = yes.getAttribute('data-id');
+    var loadU = function () { try { return JSON.parse(localStorage.getItem(UKEY) || '[]') || []; } catch (e) { return []; } };
+    var done = function (good) {
+      yes.disabled = true;
+      no.disabled = true;
+      (good ? yes : no).setAttribute('aria-pressed', 'true');
+      thanks.textContent = good ? 'ありがとうございました。' : 'ありがとうございました。足りない点は「この事例の誤りを知らせる」からも送れます。';
     };
     useful.hidden = false;
-    try { if ((JSON.parse(localStorage.getItem(UKEY) || '[]') || []).indexOf(ub.getAttribute('data-id')) !== -1) done(); } catch (e) { /* 何もしない */ }
-    ub.addEventListener('click', function () {
-      if (ub.disabled) return;
+    var past = loadU();
+    if (past.indexOf(cid) !== -1) done(true);
+    else if (past.indexOf(cid + ':no') !== -1) done(false);
+    var press = function (good) {
+      if (yes.disabled) return;
       try {
-        var l = JSON.parse(localStorage.getItem(UKEY) || '[]') || [];
-        l.push(ub.getAttribute('data-id'));
+        var l = loadU();
+        l.push(good ? cid : cid + ':no');
         localStorage.setItem(UKEY, JSON.stringify(l));
       } catch (e) { /* 保存できなくても数えるのは続ける */ }
       // GoatCounter の数え上げがクリックの処理を終えてからボタンを止める
-      setTimeout(done, 0);
-    });
+      setTimeout(function () { done(good); }, 0);
+    };
+    yes.addEventListener('click', function () { press(true); });
+    no.addEventListener('click', function () { press(false); });
   }
 
   var copy = document.getElementById('copy-url');

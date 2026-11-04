@@ -362,6 +362,7 @@ main { flex: 1 0 auto; }
 .useful p { margin: 0; }
 .small-button { font: inherit; font-size: 13px; color: var(--text-body); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 4px 14px; min-height: 36px; cursor: pointer; }
 .small-button:hover { border-color: var(--sky); color: var(--sky); }
-.small-button:disabled { cursor: default; opacity: .7; }
+.small-button:disabled { cursor: default; opacity: .6; }
+.small-button[aria-pressed="true"] { opacity: 1; border-color: var(--sky); color: var(--sky); font-weight: 700; }
 .useful-thanks { flex-basis: 100%; }
 .useful-thanks:empty { display: none; }
