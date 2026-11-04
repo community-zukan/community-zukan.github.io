@@ -44,11 +44,19 @@ jobs:
           done
           exit 1
 
-      # サイトを作り直して linkcheck.json を公開する（掲載内容や見た目は変わらない）
+      # サイトを作り直して linkcheck.json を公開する（掲載内容や見た目は変わらない）。
+      # ここで失敗しても翌朝の「サイトを更新」で公開されるので、Issue の作成には進む
       - name: 結果を公開する
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run build.yml --repo "${{ github.repository }}" --ref main
+        run: |
+          for i in 1 2 3; do
+            gh workflow run build.yml --repo "${{ github.repository }}" --ref main && exit 0
+            echo "公開の依頼に失敗しました（${i}回目）。30秒後に試し直します"
+            sleep 30
+          done
+          exit 1
 
       # 要確認があったときだけ Issue を作る。Issue ができるとアカウントのメールに通知が届く
       - name: 要確認があれば Issue で知らせる
@@ -56,9 +64,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [ -f report.md ]; then
-            gh issue create --repo "${{ github.repository }}" \
-              --title "リンク点検で要確認のURLがありました $(TZ=Asia/Tokyo date +%Y-%m-%d)" \
-              --body-file report.md
+            for i in 1 2 3; do
+              gh issue create --repo "${{ github.repository }}" \
+                --title "リンク点検で要確認のURLがありました $(TZ=Asia/Tokyo date +%Y-%m-%d)" \
+                --body-file report.md && exit 0
+              echo "Issue の作成に失敗しました（${i}回目）。30秒後に試し直します"
+              sleep 30
+            done
+            exit 1
           else
             echo "要確認のURLはありませんでした"
           fi
