@@ -76,12 +76,22 @@ class Redirects(urllib.request.HTTPRedirectHandler):
         return new
 
 
+def to_ascii(url):
+    """日本語などを含むURLを、送れる形（パーセントエンコード）にする。すでにエンコード済みの部分はそのまま。"""
+    parts = urllib.parse.urlsplit(url)
+    host = parts.hostname.encode("idna").decode("ascii") if parts.hostname else ""
+    netloc = host + (":%d" % parts.port if parts.port else "")
+    safe = "/:@!$&'()*+,;=%-._~"
+    return urllib.parse.urlunsplit((parts.scheme, netloc, urllib.parse.quote(parts.path, safe=safe),
+                                    urllib.parse.quote(parts.query, safe=safe + "?"), ""))
+
+
 def request(url, method):
     """(HTTPの番号, 最終的なURL) を返す。つながらないときは例外。転送はたどり、Cookie を使う転送にも対応する。"""
     wait_for_domain(host_of(url))
     opener = urllib.request.build_opener(Redirects, urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()),
                                          urllib.request.HTTPSHandler(context=ssl.create_default_context()))
-    req = urllib.request.Request(url, headers=HEADERS, method=method)
+    req = urllib.request.Request(to_ascii(url), headers=HEADERS, method=method)
     with opener.open(req, timeout=TIMEOUT) as res:
         if method == "GET":
             res.read(4096)
