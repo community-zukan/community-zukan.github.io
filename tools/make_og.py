@@ -29,10 +29,11 @@ FONTS = os.path.join(ROOT, "tools", "fonts")
 W, H = 1200, 630
 
 # サイトの配色（assets/style.css と同じ）
-BG, SURFACE, INK, INK2, INK3 = "#f7f5f0", "#ffffff", "#1f2328", "#4a5058", "#6b7178"
-LINE, ACCENT = "#e2ded5", "#1d5a6e"
-TYPE_COLORS = {"社内": ("#3c4f8f", "#e6e9f5"), "ファン・顧客": ("#a5471f", "#f8e9e1")}
-DOT_PEACH = "#f0b48a"
+# デザインシステム「黒田悠介」の色（assets/style.css と同じ）
+BG, SURFACE, INK, INK2, INK3 = "#fbfaf5", "#ffffff", "#1a1d23", "#4a4f57", "#5e636b"
+LINE, ACCENT, YELLOW = "#e3e6ea", "#1874b8", "#f5c518"
+TYPE_COLORS = {"社内": ("#1568a6", "#e8eef5"), "ファン・顧客": ("#6b4e00", "#fff3c4")}
+DOT_PEACH = YELLOW
 
 FONT_FILES = {
     "bold": ["/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", "NotoSansCJKjp-Bold.otf"],
@@ -110,11 +111,11 @@ def dots(draw, x, y, r):
 def frame(cfg):
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, 16, H], fill=ACCENT)
+    d.rectangle([0, 0, 16, H], fill=YELLOW)
     # 下の帯：サイト名とURL
     d.line([(80, H - 104), (W - 80, H - 104)], fill=LINE, width=2)
     dots(d, 96, H - 62, 9)
-    d.text((140, H - 52), cfg["name"], font=font("bold", 30), fill=ACCENT, anchor="ls")
+    d.text((140, H - 52), cfg["name"], font=font("bold", 30), fill=INK, anchor="ls")
     host = cfg["base_url"].split("//", 1)[-1].rstrip("/")
     d.text((W - 80, H - 52), host, font=font("regular", 24), fill=INK3, anchor="rs")
     return img, d
@@ -137,7 +138,7 @@ def make_site(cfg):
 def make_case(cfg, c, path):
     img, d = frame(cfg)
     t = c.get("種別", "")
-    fg, bg = TYPE_COLORS.get(t, (ACCENT, "#e3eef1"))
+    fg, bg = TYPE_COLORS.get(t, (ACCENT, "#e8eef5"))
     label = t or "事例"
     bf = font("bold", 30)
     bw = d.textlength(label, font=bf)
