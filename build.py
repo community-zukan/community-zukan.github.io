@@ -107,6 +107,48 @@ def live_count(cfg):
         return None
 
 
+def normalize(text):
+    """検索用にそろえる：全角英数を半角に、大文字を小文字に、ひらがなをカタカナに（assets/app.js と同じ）。"""
+    import unicodedata
+    text = unicodedata.normalize("NFKC", text or "").lower()
+    return "".join(chr(ord(ch) + 0x60) if "ぁ" <= ch <= "ゖ" else ch for ch in text)
+
+
+_KAKASI = None
+
+
+def reading(text):
+    """漢字の読み（カタカナ）。ひらがなでも探せるように検索の対象に入れる。
+    pykakasi が入っているとき（Actions では入れる）だけ作り、なければ空文字（ひらがな検索ができないだけで、ほかは変わらない）。"""
+    global _KAKASI
+    if _KAKASI is None:
+        try:
+            import pykakasi
+            _KAKASI = pykakasi.kakasi()
+        except ImportError:
+            _KAKASI = False
+    if not _KAKASI or not text:
+        return ""
+    return normalize("".join(part["kana"] for part in _KAKASI.convert(text)))
+
+
+def load_synonyms():
+    """config/synonyms.json の言い換え表。読みは「どのグループに当たるか」の判定にだけ使う。"""
+    path = os.path.join(ROOT, "config", "synonyms.json")
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as f:
+        groups = json.load(f).get("groups", [])
+    out = []
+    for g in groups:
+        if not isinstance(g, list):
+            continue
+        words = sorted({normalize(w) for w in g if w.strip()})
+        readings = sorted({reading(w) for w in g if w.strip()} - {""} - set(words))
+        out.append({"words": words, "readings": readings})
+    return out
+
+
 def split_multi(v):
     return [t.strip() for t in re.split(r"[、,，]", v or "") if t.strip()]
 
@@ -281,7 +323,10 @@ def card(c):
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
     # 検索用キーワード（X列）は画面には出さず、検索の対象にだけ入れる
     search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型", "検索用キーワード"])
-    return f"""<li class="card" {attrs} data-search="{esc(search.lower())}">
+    # 企業名・コミュニティ名の読みを足して、ひらがなでも見つかるようにする
+    yomi = reading(" ".join([c.get("企業名", ""), c.get("コミュニティ名", "")]))
+    search = normalize(search) + (" " + yomi if yomi else "")
+    return f"""<li class="card" {attrs} data-search="{esc(search)}">
   <a href="cases/{esc(c['ID'])}/">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h3 class="card-title">{esc(c['_title'])}</h3>
@@ -330,6 +375,7 @@ def build_index(cfg, cases, updated):
             for v, n in opts
         )
         filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div>{note}</fieldset>')
+    synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     body = f"""
 <section class="hero">
   <div class="wrap">
@@ -341,7 +387,7 @@ def build_index(cfg, cases, updated):
 <section class="finder wrap" aria-label="事例を探す">
   <div class="search-row">
     <label class="visually-hidden" for="q">キーワード</label>
-    <input id="q" type="search" placeholder="企業名・ツールなどで検索" autocomplete="off">
+    <input id="q" type="search" placeholder="企業名・ツールなどで検索（ひらがなでも）" autocomplete="off">
     <label class="visually-hidden" for="sort">並び順</label>
     <select id="sort">
       <option value="score" selected>おすすめ順</option>
@@ -374,6 +420,7 @@ def build_index(cfg, cases, updated):
     <button type="button" class="button" id="reset2">条件をすべて外す</button>
   </div>
 </section>
+<script type="application/json" id="synonyms">{synonyms_json}</script>
 <script src="assets/app.js" defer></script>
 """
     base = cfg["base_url"].rstrip("/") + "/"

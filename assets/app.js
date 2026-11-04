@@ -27,10 +27,27 @@
     return s;
   }
 
+  // build.py の normalize と同じ：全角英数を半角に、小文字に、ひらがなをカタカナに
   function normalize(t) {
-    return (t || '').toLowerCase().replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (ch) {
-      return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+    t = (t || '');
+    if (t.normalize) t = t.normalize('NFKC');
+    return t.toLowerCase().replace(/[ぁ-ゖ]/g, function (ch) {
+      return String.fromCharCode(ch.charCodeAt(0) + 0x60);
     }).trim();
+  }
+
+  // 言い換え表（config/synonyms.json）。検索語がグループの言葉か読みに当たれば、グループの言葉でも探す
+  var synonyms = [];
+  try { synonyms = JSON.parse(document.getElementById('synonyms').textContent) || []; } catch (e) { synonyms = []; }
+  function alternatives(term) {
+    var alts = [term];
+    synonyms.forEach(function (g) {
+      var hit = g.words.concat(g.readings).some(function (w) {
+        return w === term || (term.length >= 2 && w.indexOf(term) !== -1);
+      });
+      if (hit) g.words.forEach(function (w) { if (alts.indexOf(w) === -1) alts.push(w); });
+    });
+    return alts;
   }
 
   // 絞り込みと検索は全件に効かせ、当てはまった事例のうち先頭の limit 件だけを表示する
@@ -38,6 +55,7 @@
     if (!keepLimit) limit = PAGE;
     var s = selected();
     var words = normalize(q.value).split(/\s+/).filter(Boolean);
+    var terms = words.map(alternatives);
     var shown = 0;
     var visible = 0;
     Array.prototype.forEach.call(list.children, function (c) {
@@ -49,7 +67,9 @@
       });
       if (ok && words.length) {
         var hay = c.dataset.search;
-        ok = words.every(function (w) { return hay.indexOf(w) !== -1; });
+        ok = terms.every(function (alts) {
+          return alts.some(function (w) { return hay.indexOf(w) !== -1; });
+        });
       }
       if (ok) shown++;
       c.hidden = !ok || shown > limit;
