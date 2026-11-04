@@ -156,6 +156,11 @@ def page(cfg, *, title, description, path, body, depth=0):
     rel = "../" * depth
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
     canonical = cfg["base_url"].rstrip("/") + "/" + path
+    extra = ""
+    if cfg.get("google_site_verification"):
+        extra += f'<meta name="google-site-verification" content="{esc(cfg["google_site_verification"])}">\n'
+    if cfg.get("goatcounter"):
+        extra += f'<script data-goatcounter="https://{esc(cfg["goatcounter"])}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>\n'
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -175,7 +180,7 @@ def page(cfg, *, title, description, path, body, depth=0):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{rel}assets/style.css">
-</head>
+{extra}</head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
 <header class="site-header">
