@@ -11,6 +11,7 @@
   "goatcounter": "communityzukan",
   "google_site_verification": "QfZTihD29VHshRbTilTzPcex8edTvSmGA6GJXm81WHs",
   "min_ratio": 0.5,
+  "linkcheck_refusing_hosts": ["markezine.jp", "nikkei.com"],
   "industry_groups": [
     ["化粧品・美容", ["化粧品", "美容", "理美容"]],
     ["食品・飲料", ["食品", "飲料", "ビール", "コーヒー", "酒"]],

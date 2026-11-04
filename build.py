@@ -607,6 +607,10 @@ def main():
     urls = [f"{base}/", f"{base}/about/"] + [f"{base}/cases/{c['ID']}/" for c in cases]
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "".join(f"<url><loc>{esc(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
+    # 毎週のリンク点検の結果（tools/check_links.py）をそのまま公開する
+    lc = os.path.join(ROOT, "data", "linkcheck.json")
+    if os.path.exists(lc):
+        shutil.copy(lc, os.path.join(OUT, "linkcheck.json"))
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
     write(".nojekyll", "")
 
