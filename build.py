@@ -152,10 +152,12 @@ def enrich(cfg, rows):
 
 # ---------- HTML の部品 ----------
 
-def page(cfg, *, title, description, path, body, depth=0):
+def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website"):
     rel = "../" * depth
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
-    canonical = cfg["base_url"].rstrip("/") + "/" + path
+    base = cfg["base_url"].rstrip("/")
+    canonical = base + "/" + path
+    og_image = base + "/" + (og_image or "assets/ogp.png")
     extra = ""
     if cfg.get("google_site_verification"):
         extra += f'<meta name="google-site-verification" content="{esc(cfg["google_site_verification"])}">\n'
@@ -171,10 +173,15 @@ def page(cfg, *, title, description, path, body, depth=0):
 <link rel="canonical" href="{esc(canonical)}">
 <meta property="og:title" content="{esc(full_title)}">
 <meta property="og:description" content="{esc(description)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:url" content="{esc(canonical)}">
 <meta property="og:site_name" content="{esc(cfg['name'])}">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="{esc(og_image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{esc(full_title)}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="{rel}assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -343,7 +350,7 @@ def tag_list(items):
     return '<ul class="tags">' + "".join(f"<li>{esc(t)}</li>" for t in items) + "</ul>" if items else ""
 
 
-def build_case(cfg, c, related):
+def build_case(cfg, c, related, og_image=None):
     meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年開始", c.get("段階"), c.get("場") and f"{c['場']}で活動"] if x]
     blocks = []
     for col, label in [("主な施策", "主な施策"), ("公開されている成果", "公開されている成果"), ("工夫のポイント", "工夫のポイント")]:
@@ -414,7 +421,7 @@ def build_case(cfg, c, related):
 </article>
 """
     return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc,
-                path=f"cases/{c['ID']}/", body=body, depth=2)
+                path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
 
 
 def report_link(cfg, c):
@@ -502,6 +509,21 @@ def build_404(cfg):
         'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"')
 
 
+def copy_og_items(cases):
+    """tools/make_og.py が作った事例ごとの共有画像を /og/ に置く。ない事例は共通の画像を使う。"""
+    src = os.path.join(ROOT, "og-items")
+    found = set()
+    if not os.path.isdir(src):
+        return found
+    os.makedirs(os.path.join(OUT, "og"), exist_ok=True)
+    for c in cases:
+        f = os.path.join(src, f"{c['ID']}.png")
+        if os.path.exists(f):
+            shutil.copy(f, os.path.join(OUT, "og", f"{c['ID']}.png"))
+            found.add(c["ID"])
+    return found
+
+
 def write(path, text):
     full = os.path.join(OUT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -537,8 +559,10 @@ def main():
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(OUT, "assets"))
 
     write("index.html", build_index(cfg, cases, updated))
+    og_items = copy_og_items(cases)
     for c in cases:
-        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases)))
+        og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
+        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases), og))
     write("about/index.html", build_about(cfg, cases, updated))
     write("404.html", build_404(cfg))
 

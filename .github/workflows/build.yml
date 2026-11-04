@@ -29,6 +29,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      # 共有画像に日本語の書体が要るので、Noto Sans CJK を入れる
+      - name: 日本語の書体と Pillow を入れる
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          python -m pip install --quiet --disable-pip-version-check "pillow==11.3.0"
+      # 事例ページごとの共有画像（1200×630）を作る。失敗してもサイト共通の画像のまま更新は続ける
+      - name: 事例ページの共有画像を作る
+        continue-on-error: true
+        run: python tools/make_og.py
       - name: サイトを作る
         run: |
           if [ "${{ inputs.force }}" = "true" ]; then
