@@ -387,6 +387,137 @@ def build_feed(cfg, cases, new, updates):
 """
 
 
+# ---------- 組み合わせのページ ----------
+
+COMBO_MIN = 5   # この件数以上の組み合わせだけページにする
+COMBO_PAIRS = [("purpose", "stage"), ("type", "activity")]
+COMBO_LABEL = {"purpose": "目的", "stage": "段階", "type": "種別", "activity": "活動の型"}
+SLUG = {
+    "ビジョン浸透": "vision", "エンゲージメント": "engagement", "イノベーション": "innovation",
+    "ナレッジ共有・継承": "knowledge", "部門横断": "cross-functional", "定着・オンボーディング": "onboarding",
+    "LTV・継続": "ltv", "共創・商品開発": "co-creation", "サポート効率化": "support", "口コミ・認知": "awareness",
+    "ブランド体験": "brand-experience",
+    "立ち上げ期": "launch", "成長期": "growth", "成熟期": "mature", "転換期": "transition",
+    "社内": "internal", "ファン・顧客": "fan",
+    "ナレッジ共有型": "knowledge-sharing", "プロジェクト型": "project", "趣味親睦型": "social",
+}
+
+
+def combo_values(c, key):
+    return {"purpose": c["_purpose"], "activity": c["_activity"],
+            "stage": [c.get("段階")], "type": [c.get("種別")]}[key]
+
+
+def find_combos(cases):
+    """件数が COMBO_MIN 以上の組み合わせ。値に slug がないもの（選択肢の外の値）は飛ばす。"""
+    combos = []
+    for a, b in COMBO_PAIRS:
+        groups = {}
+        for c in cases:
+            for x in combo_values(c, a):
+                for y in combo_values(c, b):
+                    if x in SLUG and y in SLUG:
+                        groups.setdefault((x, y), []).append(c)
+        order_a = {"purpose": PURPOSE_ORDER, "type": ["ファン・顧客", "社内"]}[a]
+        order_b = {"stage": STAGE_ORDER, "activity": ["ナレッジ共有型", "プロジェクト型", "趣味親睦型"]}[b]
+        for (x, y), cs in sorted(groups.items(), key=lambda kv: (order_a.index(kv[0][0]) if kv[0][0] in order_a else 99,
+                                                                  order_b.index(kv[0][1]) if kv[0][1] in order_b else 99)):
+            if len(cs) >= COMBO_MIN:
+                combos.append({"a": a, "b": b, "x": x, "y": y, "cases": cs,
+                               "key": f"{COMBO_LABEL[a]}={x}|{COMBO_LABEL[b]}={y}",
+                               "path": f"combos/{a}-{b}/{SLUG[x]}-{SLUG[y]}/"})
+    return combos
+
+
+def load_combo_notes():
+    path = os.path.join(ROOT, "config", "combo_notes.json")
+    if not os.path.exists(path):
+        return {}, ""
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return data.get("notes", {}), data.get("written", "")
+
+
+def breakdown(cs, f, order=None):
+    counts = {}
+    for c in cs:
+        for v in f(c):
+            if v:
+                counts[v] = counts.get(v, 0) + 1
+    items = sorted(counts.items(), key=lambda kv: (order.index(kv[0]) if order and kv[0] in order else 99, -kv[1], kv[0]))
+    return "、".join(f"{k} {v}件" for k, v in items)
+
+
+def build_combo(cfg, combo, notes, written):
+    a, b, x, y, cs = combo["a"], combo["b"], combo["x"], combo["y"], combo["cases"]
+    la, lb = COMBO_LABEL[a], COMBO_LABEL[b]
+    title = f"{x}×{y}"
+    note = notes.get(combo["key"], "")
+    note_html = ""
+    if note:
+        d = to_date(written)
+        when = f"{fmt_day(d)}時点の" if d else ""
+        note_html = f"""<section class="block hint combo-note">
+  <h2>この組み合わせの傾向<span class="ai-label">AIによる解釈</span></h2>
+  <p>{esc(note)}</p>
+  <p class="hint-note">{when}事例の目的・段階・活動の型などのタグから、AIがまとめた傾向です。各社の取り組みを評価したものではありません。</p>
+</section>"""
+    rows = []
+    if a != "type" and b != "type":
+        rows.append(("種別", breakdown(cs, lambda c: [c.get("種別")], ["ファン・顧客", "社内"])))
+    if b != "stage":
+        rows.append(("段階", breakdown(cs, lambda c: [c.get("段階")], STAGE_ORDER)))
+    if b != "activity":
+        rows.append(("活動の型", breakdown(cs, lambda c: c["_activity"], ["ナレッジ共有型", "プロジェクト型", "趣味親睦型"])))
+    rows.append(("場", breakdown(cs, lambda c: [c.get("場")], PLACE_ORDER)))
+    if a != "purpose":
+        rows.append(("目的", breakdown(cs, lambda c: c["_purpose"], PURPOSE_ORDER)))
+    else:
+        rows.append(("ほかの目的", breakdown(cs, lambda c: [p for p in c["_purpose"] if p != x], PURPOSE_ORDER)))
+    stats = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in rows if v)
+    qs = urllib.parse.urlencode({a: x, b: y})
+    cs_sorted = sorted(cs, key=lambda c: (-(int(score_value(c.get("観測スコア")) or -1)), c["ID"]))
+    body = f"""
+<article class="wrap combo">
+  <p class="crumb"><a href="../../">組み合わせの一覧</a></p>
+  <header class="case-head">
+    <p class="combo-axes">{esc(la)}「{esc(x)}」×{esc(lb)}「{esc(y)}」</p>
+    <h1>{esc(title)}</h1>
+    <p class="case-meta">{esc(la)}が「{esc(x)}」で、{esc(lb)}が「{esc(y)}」の事例は{len(cs)}件です。</p>
+  </header>
+  {note_html}
+  <dl class="source-meta combo-stats">{stats}</dl>
+  <p class="combo-filter"><a href="../../../?{esc(qs)}">事例一覧でこの条件を開く</a>（ほかの条件も重ねて絞り込めます）</p>
+  <h2 class="combo-list-head">事例<small>{len(cs)}件</small></h2>
+  <ul class="cards">
+    {''.join(card(c, "../../../") for c in cs_sorted)}
+  </ul>
+</article>
+"""
+    desc = f"{la}が「{x}」で、{lb}が「{y}」の企業コミュニティの事例{len(cs)}件。" + (shorten(note, 60) if note else "")
+    return page(cfg, title=f"{title}の事例", description=desc, path=combo["path"], body=body, depth=3)
+
+
+def build_combos_index(cfg, combos):
+    sections = []
+    for a, b in COMBO_PAIRS:
+        items = [cb for cb in combos if cb["a"] == a and cb["b"] == b]
+        if not items:
+            continue
+        lis = "".join(f'<li><a href="{a}-{b}/{SLUG[cb["x"]]}-{SLUG[cb["y"]]}/"><span class="new-title">{esc(cb["x"])}×{esc(cb["y"])}</span>'
+                      f'<span class="rel-company">{len(cb["cases"])}件</span></a></li>' for cb in items)
+        sections.append(f'<h2>{esc(COMBO_LABEL[a])}×{esc(COMBO_LABEL[b])}</h2><ul class="new-list combo-index">{lis}</ul>')
+    body = f"""
+<article class="prose wrap">
+  <h1>組み合わせから探す</h1>
+  <p>目的と段階、種別と活動の型の組み合わせごとに、事例をまとめたページです。事例が{COMBO_MIN}件以上ある組み合わせだけを載せています。各ページには、事例のタグからAIがまとめた傾向の解説を添えています。</p>
+  {''.join(sections)}
+</article>
+"""
+    return page(cfg, title="組み合わせから探す", description="目的×段階、種別×活動の型の組み合わせごとに、企業コミュニティの事例をまとめています。",
+                path="combos/", body=body, depth=1)
+
+
 # ---------- HTML の部品 ----------
 
 def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
@@ -442,6 +573,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     <nav class="site-nav" aria-label="サイト内">
       <a href="{rel or './'}">事例一覧</a>
       <a href="{rel}new/">新着と更新</a>
+      <a href="{rel}combos/">組み合わせ</a>
       <a href="{rel}about/">この図鑑について</a>
     </nav>
   </div>
@@ -478,7 +610,7 @@ def type_badge(t):
     return f'<span class="badge {cls}">{esc(TYPE_LABEL.get(t, t))}</span>'
 
 
-def card(c):
+def card(c, prefix=""):
     meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年〜", c.get("段階"), c.get("場")] if x]
     point = c.get("工夫のポイント") or c.get("主な施策")
     tags = "".join(f"<li>{esc(t)}</li>" for t in c["_purpose"])
@@ -501,7 +633,7 @@ def card(c):
     yomi = reading(" ".join([c.get("企業名", ""), c.get("コミュニティ名", "")]))
     search = normalize(search) + (" " + yomi if yomi else "")
     return f"""<li class="card" {attrs} data-search="{esc(search)}">
-  <a href="cases/{esc(c['ID'])}/">
+  <a href="{prefix}cases/{esc(c['ID'])}/">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h3 class="card-title">{esc(c['_title'])}</h3>
     {f'<p class="card-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
@@ -854,7 +986,7 @@ def build_404(cfg):
 """
     return page(cfg, title="ページが見つかりません", description="", path="404.html", body=body).replace(
         'href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace(
-        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"')
+        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"').replace('href="combos/"', 'href="/combos/"')
 
 
 def copy_og_items(cases):
@@ -916,6 +1048,15 @@ def main():
     new, updates, has_history = find_changes(cases, load_history(), today)
     write("new/index.html", build_new(cfg, cases, new, updates, has_history, updated))
     write("feed.xml", build_feed(cfg, cases, new, updates))
+    combos = find_combos(cases)
+    notes, written = load_combo_notes()
+    write("combos/index.html", build_combos_index(cfg, combos))
+    for cb in combos:
+        write(cb["path"] + "index.html", build_combo(cfg, cb, notes, written))
+    missing = [cb["key"] for cb in combos if cb["key"] not in notes]
+    print(f"組み合わせのページ {len(combos)}件（解説なし {len(missing)}件）")
+    for k in missing:
+        print(f"  解説なし：{k}")
     print(f"新着 {len(new)}件、更新 {len(updates)}件（履歴{'あり' if has_history else 'なし：確認日だけで判定'}）")
     write("404.html", build_404(cfg))
 
@@ -923,7 +1064,8 @@ def main():
     write("data.json", json.dumps({"updated": datetime.now(JST).isoformat(), "cases": public},
                                   ensure_ascii=False, indent=1))
     base = cfg["base_url"].rstrip("/")
-    urls = [f"{base}/", f"{base}/new/", f"{base}/about/"] + [f"{base}/cases/{c['ID']}/" for c in cases]
+    urls = ([f"{base}/", f"{base}/new/", f"{base}/combos/", f"{base}/about/"]
+            + [f"{base}/{cb['path']}" for cb in combos] + [f"{base}/cases/{c['ID']}/" for c in cases])
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "".join(f"<url><loc>{esc(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
     # 毎週のリンク点検の結果（tools/check_links.py）をそのまま公開する
