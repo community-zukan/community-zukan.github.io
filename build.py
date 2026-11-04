@@ -1088,7 +1088,9 @@ def main():
     if not args.csv:
         os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
         with open(os.path.join(ROOT, "data", "latest.csv"), "w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            # 観測スコアは鮮度で毎日変わり、履歴（新着と更新）が読みにくくなるので残さない
+            fields = [k for k in rows[0].keys() if k != "観測スコア"]
+            w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
             w.writeheader()
             w.writerows(rows)
 
