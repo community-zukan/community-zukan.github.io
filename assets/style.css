@@ -127,6 +127,7 @@ em { font-style: normal; font-weight: 700; }
 @media (prefers-color-scheme: dark) { .chip input:checked + span { color: #10181b; } .chip input:checked + span small { color: rgba(0,0,0,.65); } }
 .chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
 .chip span:hover { border-color: var(--accent); }
+.facet-note { font-size: 12px; color: var(--ink-3); margin: 8px 0 0; line-height: 1.7; }
 .filter-note { font-size: 13px; color: var(--ink-3); margin: 16px 0 0; line-height: 1.7; }
 
 .result-bar { display: flex; align-items: baseline; gap: 16px; margin: 20px 0 12px; }

@@ -41,9 +41,11 @@ FACETS = [
     ("activity", "活動の型", "活動の型"),
     ("place", "場", "場"),
     ("industry", "業種", "業種グループ"),
+    ("size", "規模の区分", "規模の区分"),
 ]
 STAGE_ORDER = ["立ち上げ期", "成長期", "成熟期", "転換期"]
 PLACE_ORDER = ["オンライン", "オフライン", "両方"]
+SIZE_ORDER = ["〜100人", "100〜1,000人", "1,000〜1万人", "1万人超"]
 PURPOSE_ORDER = [
     "ビジョン浸透", "エンゲージメント", "イノベーション", "ナレッジ共有・継承",
     "部門横断", "定着・オンボーディング",
@@ -144,6 +146,13 @@ def score_value(v):
         return str(round(float((v or "").strip())))
     except ValueError:
         return ""
+
+
+def fmt_month(v):
+    """出典の時期（'2025/12 など）を「2025年12月」にする。読めないときはそのまま。"""
+    v = (v or "").strip().lstrip("'")
+    m = re.match(r"(\d{4})\s*[-/.年]\s*(\d{1,2})", v)
+    return f"{m.group(1)}年{int(m.group(2))}月" if m else v
 
 
 def fmt_date(v):
@@ -264,6 +273,7 @@ def card(c):
         "activity": "|".join(c["_activity"]),
         "place": c.get("場", ""),
         "industry": c["_industry"],
+        "size": c.get("規模の区分", ""),
         "year": c.get("開始年", ""),
         "checked": date_key(c.get("確認日")),
         "score": score_value(c.get("観測スコア")),
@@ -295,7 +305,7 @@ def facet_values(cases, key):
             items = [c.get(col)] if c.get(col) else []
         for v in items:
             vals[v] = vals.get(v, 0) + 1
-    order = {"stage": STAGE_ORDER, "place": PLACE_ORDER, "purpose": PURPOSE_ORDER,
+    order = {"stage": STAGE_ORDER, "place": PLACE_ORDER, "purpose": PURPOSE_ORDER, "size": SIZE_ORDER,
              "type": ["ファン・顧客", "社内"]}.get(key)
     if order:
         return sorted(vals.items(), key=lambda kv: (order.index(kv[0]) if kv[0] in order else 99, kv[0]))
@@ -308,11 +318,17 @@ def build_index(cfg, cases, updated):
     filters = []
     for key, col, label in FACETS:
         opts = facet_values(cases, key)
+        if not opts:
+            continue
+        note = ""
+        if key == "size":
+            n_blank = sum(1 for c in cases if not c.get("規模の区分"))
+            note = f'<p class="facet-note">規模が公開されていない{n_blank}件は、この項目で絞り込むと表示されません。</p>' if n_blank else ""
         chips = "".join(
             f'<label class="chip"><input type="checkbox" name="{key}" value="{esc(v)}"><span>{esc(v)}<small>{n}</small></span></label>'
             for v, n in opts
         )
-        filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')
+        filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div>{note}</fieldset>')
     body = f"""
 <section class="hero">
   <div class="wrap">
@@ -404,6 +420,7 @@ def build_case(cfg, c, related, og_image=None):
         dl_row("業種", esc(c.get("業種"))),
         dl_row("開始年", esc(c.get("開始年") and c["開始年"] + "年")),
         dl_row("規模", esc(c.get("規模"))),
+        dl_row("規模の区分", esc(c.get("規模の区分"))),
         dl_row("目的", tag_list(c["_purpose"])),
         dl_row("活動の型", tag_list(c["_activity"])),
         dl_row("段階", esc(c.get("段階"))),
@@ -416,6 +433,7 @@ def build_case(cfg, c, related, og_image=None):
   <h2>出典</h2>
   {f'<ul class="source-links">{links}</ul>' if links else ''}
   <dl class="source-meta">
+    {dl_row("出典の時期", esc(fmt_month(c.get("出典の時期"))))}
     {dl_row("出典の種類", esc(c.get("出典の種類")))}
     {dl_row("注意点", esc(c.get("出典の注意")))}
     {dl_row("確認日", esc(fmt_date(c.get("確認日"))))}

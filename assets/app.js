@@ -15,7 +15,7 @@
   var PAGE = 24;          // 一度に表示する件数
   var limit = PAGE;
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.facet input'));
-  var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry'];
+  var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry', 'size'];
   var multi = { purpose: true, activity: true };
   cards.forEach(function (c, i) { c.dataset.order = i; });
 
