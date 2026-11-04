@@ -71,15 +71,26 @@
     var mode = sort.value;
     var arr = cards.slice();
     arr.sort(function (a, b) {
-      if (mode !== 'default') {
+      if (mode === 'year-desc' || mode === 'year-asc') {
         var ya = parseInt(a.dataset.year, 10), yb = parseInt(b.dataset.year, 10);
         var ea = isNaN(ya), eb = isNaN(yb);
         if (ea !== eb) return ea ? 1 : -1; // 開始年が空欄の事例は最後に
         if (!ea && ya !== yb) return mode === 'year-desc' ? yb - ya : ya - yb;
       }
+      if (mode === 'checked-desc') {
+        var d = byChecked(a, b);
+        if (d) return d;
+      }
       return a.dataset.order - b.dataset.order;
     });
     arr.forEach(function (c) { list.appendChild(c); });
+  }
+
+  // 確認日の新しい順。確認日が空欄の事例は最後に回す
+  function byChecked(a, b) {
+    var ca = a.dataset.checked || '', cb = b.dataset.checked || '';
+    if (!ca !== !cb) return ca ? -1 : 1;
+    return ca === cb ? 0 : (ca < cb ? 1 : -1);
   }
 
   function saveUrl(s) {

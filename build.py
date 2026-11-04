@@ -132,6 +132,12 @@ def shorten(s, n):
     return s if len(s) <= n else s[: n - 1].rstrip("、。 ") + "…"
 
 
+def date_key(v):
+    """確認日を並べ替え用の 20261104 の形にする。空欄や読めない値は空文字。"""
+    m = re.match(r"(\d{4})[-/.年](\d{1,2})[-/.月](\d{1,2})", v or "")
+    return f"{m.group(1)}{int(m.group(2)):02d}{int(m.group(3)):02d}" if m else ""
+
+
 def fmt_date(v):
     m = re.match(r"(\d{4})[-/](\d{1,2})[-/](\d{1,2})", v or "")
     return f"{m.group(1)}年{int(m.group(2))}月{int(m.group(3))}日" if m else (v or "")
@@ -251,6 +257,7 @@ def card(c):
         "place": c.get("場", ""),
         "industry": c["_industry"],
         "year": c.get("開始年", ""),
+        "checked": date_key(c.get("確認日")),
     }
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
     search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型"])
@@ -314,6 +321,7 @@ def build_index(cfg, cases, updated):
       <option value="default">収録順</option>
       <option value="year-desc">開始年が新しい順</option>
       <option value="year-asc">開始年が古い順</option>
+      <option value="checked-desc">確認日が新しい順</option>
     </select>
   </div>
   <details class="filters" id="filters">
