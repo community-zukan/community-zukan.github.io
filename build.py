@@ -279,7 +279,8 @@ def card(c):
         "score": score_value(c.get("観測スコア")),
     }
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
-    search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型"])
+    # 検索用キーワード（X列）は画面には出さず、検索の対象にだけ入れる
+    search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型", "検索用キーワード"])
     return f"""<li class="card" {attrs} data-search="{esc(search.lower())}">
   <a href="cases/{esc(c['ID'])}/">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
