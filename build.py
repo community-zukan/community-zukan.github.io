@@ -498,7 +498,7 @@ def build_combo(cfg, combo, notes, written):
     cs_sorted = sorted(cs, key=lambda c: (-(int(score_value(c.get("観測スコア")) or -1)), c["ID"]))
     body = f"""
 <article class="wrap combo">
-  <p class="crumb"><a href="../../">組み合わせの一覧</a></p>
+  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../../">事例一覧</a></li><li><a href="../../">組み合わせ</a></li><li aria-current="page">{esc(title)}</li></ol></nav>
   <header class="case-head">
     <p class="combo-axes">{esc(la)}「{esc(x)}」×{esc(lb)}「{esc(y)}」</p>
     <h1>{esc(title)}</h1>
@@ -538,6 +538,23 @@ def build_combos_index(cfg, combos):
 
 
 # ---------- HTML の部品 ----------
+
+
+# ヘッダーのロゴ（ファビコンと同じ絵：空色の地に3つの点、うち1つが黄色）
+LOGO_MARK = ('<svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1874b8"/>'
+             '<circle cx="11" cy="13" r="4" fill="#fff"/><circle cx="21" cy="13" r="4" fill="#f5c518"/>'
+             '<circle cx="16" cy="21" r="4" fill="#fff" opacity=".85"/></svg>')
+
+
+def nav_links(rel, path):
+    """ヘッダーのメニュー。いま開いているページには aria-current を付ける。"""
+    items = [("", "事例一覧"), ("new/", "新着と更新"), ("combos/", "組み合わせ"), ("about/", "この図鑑について")]
+    out = []
+    for href, label in items:
+        here = (path == href) if href == "" else path.startswith(href)
+        cur = ' aria-current="page"' if here else ""
+        out.append(f'<a href="{(rel + href) or "./"}"{cur}>{label}</a>')
+    return "\n      ".join(out)
 
 def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
     rel = "../" * depth
@@ -586,18 +603,19 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <body>
 <a class="skip" href="#main">本文へ移動</a>
 <header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="{rel or './'}">
-      <span class="brand-name">{esc(cfg['name'])}</span>
-      <span class="brand-sub">{esc(cfg['subtitle'])}</span>
-    </a>
-    <nav class="site-nav" aria-label="サイト内">
-      <a href="{rel or './'}">事例一覧</a>
-      <a href="{rel}new/">新着と更新</a>
-      <a href="{rel}combos/">組み合わせ</a>
-      <a href="{rel}about/">この図鑑について</a>
+  <div class="wrap header-inner">
+    <a class="logo" href="{rel or './'}">{LOGO_MARK}<span class="logo-name">{esc(cfg['name'])}</span></a>
+    <nav class="global-nav" id="global-nav" aria-label="サイト内">
+      {nav_links(rel, path)}
     </nav>
+    <a class="icon-btn header-saved" id="header-saved" href="{rel or './'}?saved=1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="visually-hidden">あとで見る</span><span class="count" id="header-saved-count"></span></a>
+    <a class="icon-btn" id="header-search-btn" href="{rel or './'}#q" aria-controls="header-search" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="visually-hidden">検索</span></a>
+    <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-controls="global-nav" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="visually-hidden">メニュー</span></button>
   </div>
+  <form class="wrap header-search" id="header-search" action="{rel or './'}" role="search" hidden>
+    <input type="search" name="q" aria-label="キーワードで探す" placeholder="企業名・ツール・施策などで探す">
+    <button type="submit" class="button">探す</button>
+  </form>
 </header>
 <main id="main">
 {body}
@@ -835,7 +853,7 @@ def build_case(cfg, c, related, og_image=None):
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
 <article class="case wrap">
-  <p class="crumb"><a href="../../">事例一覧</a></p>
+  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../">事例一覧</a></li><li aria-current="page">{esc(c['企業名'])}</li></ol></nav>
   <header class="case-head">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{esc(c['_title'])}</h1>

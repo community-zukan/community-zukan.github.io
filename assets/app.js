@@ -148,6 +148,7 @@
       if (b.checked) any = true;
     });
     if (p.get('q')) q.value = p.get('q');
+    if (p.get('saved') === '1' && saved.length) setSavedOnly(true);
     if (p.get('sort') && sort.querySelector('option[value="' + p.get('sort') + '"]')) sort.value = p.get('sort');
     if (any) details.open = true;
   }
