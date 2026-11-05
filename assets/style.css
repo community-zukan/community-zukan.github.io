@@ -497,7 +497,7 @@ main { flex: 1 0 auto; }
 
 /* 広い画面では絞り込みを左側に置く */
 @media (min-width: 1000px) {
-  .finder { display: grid; grid-template-columns: 270px minmax(0, 1fr); column-gap: 28px; align-items: start; }
+  .finder { display: grid; grid-template-columns: 320px minmax(0, 1fr); column-gap: 24px; align-items: start; }
   .finder .filters { grid-column: 1; grid-row: 1 / span 4; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
   .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty, .finder .more { grid-column: 2; }
   .finder .more { grid-row: 4; }
@@ -505,8 +505,12 @@ main { flex: 1 0 auto; }
   .finder .result-bar { grid-row: 2; margin-top: var(--space-1); }
   .finder .cards { grid-row: 3; grid-template-columns: repeat(2, 1fr); }
   .finder .empty { grid-row: 3; }
-  .chip span { padding: var(--space-1) var(--space-3); min-height: 32px; font-size: 13px; }
+  /* 札は小さく詰めて、2〜3個ずつ横に並べる（2026-11-05 の見本で案A） */
+  .chips { gap: 6px; }
+  .chip span { gap: 5px; padding: 3px 11px; min-height: 30px; font-size: 13px; }
+  .chip small { font-size: 11px; }
 }
+@media (min-width: 1200px) { .finder { grid-template-columns: 360px minmax(0, 1fr); } }
 @media (min-width: 1240px) { .wrap { max-width: 1240px; } }
 
 .report { font-size: 13px; margin: 0; }
@@ -650,3 +654,9 @@ main { flex: 1 0 auto; }
 .rel-top { display: flex; }
 .rel-point { font-size: 13px; color: var(--text-body); line-height: 1.6; margin-top: var(--space-1); }
 @media (max-width: 560px) { .related .rel { width: 68vw; } }
+
+/* 目的の「社内」「ファン・顧客」の小見出しと、絞り込みの欄の上の「すべて外す」 */
+.sublabel { font-size: 12px; color: var(--text-sub); margin: 2px 0 var(--space-1); }
+.chips + .sublabel { margin-top: var(--space-3); }
+.filters-body { position: relative; }
+.filters-reset { position: absolute; top: var(--space-2); right: var(--space-4); font-size: 13px; }

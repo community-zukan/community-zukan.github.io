@@ -1146,14 +1146,25 @@ def build_index(cfg, cases):
     n_int = sum(1 for c in cases if c.get("種別") == "社内")
     n_fan = len(cases) - n_int
     filters = []
+    def chip_list(key, opts):
+        return "".join(
+            f'<label class="chip"><input type="checkbox" name="{key}" value="{esc(v)}"><span>{esc(v)}<small>{n}</small></span></label>'
+            for v, n in opts)
     for key, col, label in FACETS:
         opts = facet_values(cases, key)
         if not opts:
             continue
-        chips = "".join(
-            f'<label class="chip"><input type="checkbox" name="{key}" value="{esc(v)}"><span>{esc(v)}<small>{n}</small></span></label>'
-            for v, n in opts
-        )
+        chips = chip_list(key, opts)
+        if key == "purpose":
+            # 目的は「社内」「ファン・顧客」の小見出しで分ける（2026-11-05 の見本で案A）。どちらに入れるかは、その目的を持つ事例の種別の多いほう
+            side = {}
+            for c in cases:
+                for p in c["_purpose"]:
+                    side.setdefault(p, Counter())[c.get("種別")] += 1
+            groups = [(t, [(v, n) for v, n in opts if side[v].most_common(1)[0][0] == t]) for t in ["社内", "ファン・顧客"]]
+            chips = "".join(f'<p class="sublabel">{esc(TYPE_LABEL.get(t, t))}</p><div class="chips">{chip_list(key, g)}</div>' for t, g in groups if g)
+            filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend>{chips}</fieldset>')
+            continue
         filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     body = f"""
@@ -1186,6 +1197,7 @@ def build_index(cfg, cases):
   <details class="filters" id="filters">
     <summary><span>条件で絞り込む</span><span class="active-count" id="active-count"></span></summary>
     <div class="filters-body">
+      <button type="button" id="reset3" class="link-button filters-reset" hidden>すべて外す</button>
       {''.join(filters)}
     </div>
   </details>

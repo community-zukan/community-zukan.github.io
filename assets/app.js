@@ -7,6 +7,7 @@
   var count = document.getElementById('result-count');
   var reset = document.getElementById('reset');
   var reset2 = document.getElementById('reset2');
+  var reset3 = document.getElementById('reset3');  // 絞り込みの欄の上の「すべて外す」
   var empty = document.getElementById('empty');
   var activeCount = document.getElementById('active-count');
   var details = document.getElementById('filters');
@@ -176,6 +177,7 @@
     count.textContent = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
     activeCount.textContent = n ? n + '件の条件' : '';
     reset.hidden = !filtering;
+    if (reset3) reset3.hidden = !filtering;
     empty.hidden = shown !== 0;
     if (shown === 0) showRelax(s, words, terms);
     showSearchNote(words, terms);
@@ -425,6 +427,7 @@
   reset.addEventListener('click', clearAll);
   if (toolNote) document.getElementById('tool-clear').addEventListener('click', function () { toolSel = ''; apply(true); });
   reset2.addEventListener('click', clearAll);
+  if (reset3) reset3.addEventListener('click', clearAll);
   moreButton.addEventListener('click', function () {
     var first = limit;
     limit += PAGE;
