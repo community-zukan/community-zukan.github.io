@@ -636,3 +636,17 @@ main { flex: 1 0 auto; }
 /* 流れの段の頭に添える基本の情報（開始・規模・ツール） */
 .flow p.flow-meta { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-2); }
 .flow-meta span { display: inline-block; font-weight: 700; color: var(--text-body); margin-right: var(--space-2); }
+
+/* 近い事例（2026-11-05 の見本で案C）：切り口ごとの帯と「すべて見る」 */
+.related h2 { margin-bottom: 0; }
+.rel-row { margin-top: var(--space-4); }
+.rel-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-2); }
+.rel-head h3 { display: flex; align-items: center; gap: 6px; font-size: 15px; margin: 0; }
+.rel-head h3 img { width: 22px; height: 22px; }
+.rel-all { font-size: 14px; font-weight: 700; color: var(--sky-on-tint); text-decoration: none; padding: var(--space-2) 0; }
+.rel-all:hover { text-decoration: underline; }
+.related .rel { width: 230px; padding: var(--space-3) var(--space-4) var(--space-4); }
+.related .rel small { margin-top: var(--space-2); }
+.rel-top { display: flex; }
+.rel-point { font-size: 13px; color: var(--text-body); line-height: 1.6; margin-top: var(--space-1); }
+@media (max-width: 560px) { .related .rel { width: 68vw; } }

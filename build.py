@@ -44,6 +44,7 @@ FACETS = [
     ("activity", "活動の型", "活動の型"),
     ("place", "場", "場"),
     ("industry", "業種", "業種グループ"),
+    ("tool", "ツール", "ツール"),   # 3件以上の事例が使っているツールだけ（TOOL_FACET_MIN）
     ("size", "規模の区分", "規模の区分"),
 ]
 STAGE_ORDER = ["立ち上げ期", "成長期", "成熟期", "転換期"]
@@ -298,6 +299,7 @@ def enrich(cfg, rows):
     return cases
 
 
+TOOL_FACET_MIN = 3       # 絞り込みの欄に出すツールの件数の下限（2件のツールは事例ページの札から開く。2026-11-05 黒田さんの判断）
 TOOL_COUNTS = Counter()  # まとめたツールの名前ごとの事例の数（enrich で数える）。2件以上のものだけ札を押せるようにする
 
 
@@ -1096,6 +1098,8 @@ def facet_values(cases, key):
             items = c["_activity"]
         elif key == "industry":
             items = [c["_industry"]] if c["_industry"] else []
+        elif key == "tool":
+            items = [n for n in dict.fromkeys(n for _, n in c.get("_tools", [])) if TOOL_COUNTS[n] >= TOOL_FACET_MIN]
         else:
             col = dict((k, col) for k, col, _ in FACETS)[key]
             items = [c.get(col)] if c.get(col) else []
@@ -1312,11 +1316,21 @@ def build_case(cfg, c, related, og_image=None, notes=None):
   </section>"""
     rel_html = ""
     if related:
-        items = "".join(
-            f'<a class="rel" href="../{esc(r["ID"])}/"><small>{esc(r["企業名"])}</small><strong>{esc(r["_title"])}</strong></a>'
-            for r in related
-        )
-        rel_html = f'<section class="related"><h2>近い事例</h2><div class="rel-strip">{items}</div></section>'
+        # 近い事例（2026-11-05 の見本で案C）：「同じ目的」「同じ業種」「同じ段階」の帯ごとに4件と、一覧への「すべて見る」
+        rows_html = []
+        for r in related:
+            cards = []
+            for o in r["cases"]:
+                pt = shorten(o.get("工夫のポイント") or o.get("主な施策") or "", 40)
+                cards.append(
+                    f'<a class="rel" href="../{esc(o["ID"])}/" data-goatcounter-click="related/{esc(r["kind"])}">'
+                    f'<span class="rel-top">{type_badge(o.get("種別"))}</span><small>{esc(o["企業名"])}</small>'
+                    f'<strong>{esc(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}</a>')
+            rows_html.append(
+                f'<div class="rel-row"><div class="rel-head"><h3><img src="../../assets/emoji/{r["emoji"]}.png" alt="" width="22" height="22">{esc(r["title"])}</h3>'
+                f'<a class="rel-all" href="../../{r["href"]}" data-goatcounter-click="related-all/{esc(r["kind"])}">すべて見る（{r["total"]}件）<span aria-hidden="true"> →</span></a></div>'
+                f'<div class="rel-strip">{"".join(cards)}</div></div>')
+        rel_html = f'<section class="related"><h2>近い事例</h2>{"".join(rows_html)}</section>'
     note_html_ = ""
     in_notes = [n for n in (notes or []) if c["ID"] in n["ids"]]
     if in_notes:
@@ -1406,6 +1420,40 @@ def report_link(cfg, c):
         target = f"{c['ID']} {c['企業名']} {c['_title']}"
         url += "?usp=pp_url&" + urllib.parse.urlencode({cfg["contact_id_entry"]: target})
     return f'<p class="report"><a href="{esc(url)}" target="_blank" rel="noopener">この事例の誤りを知らせる</a></p>'
+
+
+def related_rows(cfg, c, cases, per_row=4):
+    """事例ページの「近い事例」の帯（案C）。同じ目的（最初の目的）・同じ業種・同じ種別で同じ段階の3つ。
+    帯の中は観測スコアの高い順（同点は近さの順）。上の帯に出した事例は下の帯に重ねて出さない（件数は「すべて見る」で開く一覧の数）。
+    当てはまる事例がない帯は出さない。"""
+    icons = cfg.get("purpose_icons") or {}
+    q = urllib.parse.quote
+    others = [o for o in cases if o["ID"] != c["ID"]]
+    near = {o["ID"]: i for i, o in enumerate(find_related(c, cases, n=len(cases)))}
+    def rank(o):
+        sv = score_value(o.get("観測スコア"))
+        return (-(int(sv) if sv else -1), near.get(o["ID"], 0))
+    rows = []
+    if c["_purpose"]:
+        p = c["_purpose"][0]
+        rows.append(("purpose", icons.get(p, "1f4cc"), f"目的が「{p}」の事例", f"?purpose={q(p)}",
+                     [o for o in others if p in o["_purpose"]]))
+    if c["_industry"]:
+        g = c["_industry"]
+        rows.append(("industry", "1f3e2", f"業種が「{g}」の事例", f"?industry={q(g)}",
+                     [o for o in others if o["_industry"] == g]))
+    if c.get("段階") and c.get("種別"):
+        t, st = c["種別"], c["段階"]
+        rows.append(("stage", AXIS_ICONS.get(st, "1f4c8"), f"{TYPE_LABEL.get(t, t)}で{st}の事例", f"?type={q(t)}&stage={q(st)}",
+                     [o for o in others if o.get("段階") == st and o.get("種別") == t]))
+    shown, out = set(), []
+    for kind, emoji, title, href, lst in rows:
+        pick = [o for o in sorted(lst, key=rank) if o["ID"] not in shown][:per_row]
+        if not pick:
+            continue
+        shown.update(o["ID"] for o in pick)
+        out.append({"kind": kind, "emoji": emoji, "title": title, "href": href, "total": len(lst) + 1, "cases": pick})  # 件数は開いた一覧と同じ数（この事例自身も含む）
+    return out
 
 
 def find_related(c, cases, n=3):
@@ -1607,7 +1655,7 @@ def main():
     og_items = copy_og_items(cases)
     for c in cases:
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
-        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases, n=6), og, notes_list))
+        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, related_rows(cfg, c, cases), og, notes_list))
     write("about/index.html", build_about(cfg, cases, updated))
     today = datetime.now(JST).date()
     new, updates, has_history = find_changes(cases, load_history(), today)

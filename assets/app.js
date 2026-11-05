@@ -36,7 +36,7 @@
     boxes.forEach(function (b) {
       if (b.checked) (s[b.name] = s[b.name] || []).push(b.value);
     });
-    if (toolSel) s.tool = [toolSel];
+    if (toolSel) (s.tool = s.tool || []).push(toolSel);
     return s;
   }
 
@@ -272,7 +272,9 @@
       if (b.checked) any = true;
     });
     if (p.get('q')) q.value = p.get('q');
+    // ツールの条件：絞り込みの欄にあるツール（3件以上）なら印を付け、ない（2件の）ツールは欄の外の条件として持つ
     toolSel = p.get('tool') || '';
+    if (toolSel && boxes.some(function (b) { return b.name === 'tool' && b.value === toolSel; })) toolSel = '';
     if (p.get('saved') === '1' && saved.length) setSavedOnly(true);
     if (p.get('sort') && sort.querySelector('option[value="' + p.get('sort') + '"]')) sort.value = p.get('sort');
     if (any) details.open = true;
