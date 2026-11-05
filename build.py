@@ -866,12 +866,11 @@ def build_case(cfg, c, related, og_image=None):
     # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
     icons = cfg.get("purpose_icons") or {}
     facts = [c.get("業種"), c.get("開始年") and f"{c['開始年']}年開始", c.get("規模") or c.get("規模の区分"),
-             c.get("段階"), c.get("場"), c.get("ツール")]
+             c.get("段階"), *c["_activity"], c.get("場"), c.get("ツール")]  # 白い札（基本の情報と活動の型）はまとめて1か所に
     chips = "".join(f"<li>{esc(x)}</li>" for x in facts if x)
     purposes = "".join(
         f'<li><a href="../../?purpose={urllib.parse.quote(p)}"><img src="../../assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="20" height="20">{esc(p)}</a></li>'
         for p in c["_purpose"])
-    activities = "".join(f'<li class="plain">{esc(a)}</li>' for a in c["_activity"])
     lede = ""
     if c.get("工夫のポイント"):
         lede = f"""<section class="lede" style="--i: 0">
@@ -918,7 +917,7 @@ def build_case(cfg, c, related, og_image=None):
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{esc(c['_title'])}</h1>
     {f'<ul class="case-chips" aria-label="基本の情報">{chips}</ul>' if chips else ''}
-    {f'<ul class="case-purposes" aria-label="目的と活動の型">{purposes}{activities}</ul>' if purposes or activities else ''}
+    {f'<ul class="case-purposes" aria-label="目的">{purposes}</ul>' if purposes else ''}
   </header>
   {lede}
   {flow}

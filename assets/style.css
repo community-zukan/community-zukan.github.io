@@ -453,7 +453,7 @@ main { flex: 1 0 auto; }
 .case.wrap { max-width: 800px; }
 .case-chips, .case-purposes { list-style: none; padding: 0; margin: var(--space-3) 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .case-purposes { margin-top: var(--space-2); }
-.case-chips li, .case-purposes li.plain { font-size: 13px; padding: 2px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--card); color: var(--text-body); line-height: 1.8; }
+.case-chips li { font-size: 13px; padding: 2px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--card); color: var(--text-body); line-height: 1.8; }
 .case-purposes a { display: inline-flex; align-items: center; gap: 6px; padding: 2px 12px 2px 8px; border-radius: var(--radius-pill); border: 1px solid transparent; background: var(--chip-bg); color: var(--sky-on-tint); font-size: 13px; font-weight: 700; line-height: 1.8; text-decoration: none; }
 .case-purposes a:hover { border-color: var(--sky); }
 .case-purposes img { width: 20px; height: 20px; }
