@@ -660,3 +660,15 @@ main { flex: 1 0 auto; }
 .chips + .sublabel { margin-top: var(--space-3); }
 .filters-body { position: relative; }
 .filters-reset { position: absolute; top: var(--space-2); right: var(--space-4); font-size: 13px; }
+
+/* 一覧のカード（2026-11-05 の見本で案A）：右上に最初の目的の絵、目的の札は絵つきの薄い空色 */
+.card a { position: relative; }
+.card-emo { position: absolute; top: 14px; right: 14px; width: 48px; height: 48px; border-radius: 50%; background: var(--chip-bg); display: grid; place-items: center; transition: transform .25s ease; }
+.card-emo img { width: 30px; height: 30px; }
+.card-top, .card-title, .card-meta { margin-right: 52px; }
+@media (hover: hover) { .card a:hover .card-emo { transform: rotate(-10deg) scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .card a:hover .card-emo { transform: none; } }
+.tags-purpose li { display: inline-flex; align-items: center; gap: 4px; background: var(--chip-bg); border-color: transparent; color: var(--sky-on-tint); font-weight: 700; padding: 1px 10px 1px 6px; }
+.tags-purpose img { width: 16px; height: 16px; }
+.cards.is-list .card-emo { display: none; }
+.cards.is-list .card-top, .cards.is-list .card-title, .cards.is-list .card-meta { margin-right: 0; }

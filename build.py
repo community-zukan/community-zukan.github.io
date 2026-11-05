@@ -299,6 +299,7 @@ def enrich(cfg, rows):
     return cases
 
 
+PURPOSE_ICONS = {}        # 目的ごとの絵（config/site.json の purpose_icons。main で読み込む）
 TOOL_FACET_MIN = 3       # 絞り込みの欄に出すツールの件数の下限（2件のツールは事例ページの札から開く。2026-11-05 黒田さんの判断）
 TOOL_COUNTS = Counter()  # まとめたツールの名前ごとの事例の数（enrich で数える）。2件以上のものだけ札を押せるようにする
 
@@ -1058,7 +1059,12 @@ def type_badge(t):
 def card(c, prefix=""):
     meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年〜", c.get("段階"), c.get("場")] if x]
     point = c.get("工夫のポイント") or c.get("主な施策")
-    tags = "".join(f"<li>{esc(t)}</li>" for t in c["_purpose"])
+    # 2026-11-05 の見本で案A：右上に最初の目的の絵を丸の中に置き、目的の札も絵つきにする（絵は config/site.json の purpose_icons）
+    icon = lambda p: PURPOSE_ICONS.get(p, "1f4cc")
+    tags = "".join(f'<li><img src="{prefix}assets/emoji/{icon(t)}.png" alt="" width="16" height="16" loading="lazy">{esc(t)}</li>'
+                   for t in c["_purpose"])
+    emo = (f'<span class="card-emo"><img src="{prefix}assets/emoji/{icon(c["_purpose"][0])}.png" alt="" width="32" height="32" loading="lazy"></span>'
+           if c["_purpose"] else "")
     data = {
         "type": c.get("種別", ""),
         "purpose": "|".join(c["_purpose"]),
@@ -1080,11 +1086,11 @@ def card(c, prefix=""):
     search = normalize(search) + (" " + yomi if yomi else "")
     return f"""<li class="card" {attrs} data-search="{esc(search)}">
   <a href="{prefix}cases/{esc(c['ID'])}/">
-    <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
+    {emo}<div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h3 class="card-title">{esc(c['_title'])}</h3>
     {f'<p class="card-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
     {f'<p class="card-point">{esc(shorten(point, 90))}</p>' if point else ''}
-    {f'<ul class="tags">{tags}</ul>' if tags else ''}
+    {f'<ul class="tags tags-purpose">{tags}</ul>' if tags else ''}
   </a>
 </li>"""
 
@@ -1655,7 +1661,8 @@ def main():
     cases = enrich(cfg, rows)
     updated = datetime.now(JST).strftime("%Y年%-m月%-d日")
 
-    global NOTES_PUBLIC
+    global NOTES_PUBLIC, PURPOSE_ICONS
+    PURPOSE_ICONS = cfg.get("purpose_icons") or {}
     notes_list = load_notes(cases)
     NOTES_PUBLIC = bool(notes_list)
 
