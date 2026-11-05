@@ -767,15 +767,11 @@ def build_index(cfg, cases, updated):
         opts = facet_values(cases, key)
         if not opts:
             continue
-        note = ""
-        if key == "size":
-            n_blank = sum(1 for c in cases if not c.get("規模の区分"))
-            note = f'<p class="facet-note">規模が公開されていない{n_blank}件は、この項目で絞り込むと表示されません。</p>' if n_blank else ""
         chips = "".join(
             f'<label class="chip"><input type="checkbox" name="{key}" value="{esc(v)}"><span>{esc(v)}<small>{n}</small></span></label>'
             for v, n in opts
         )
-        filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div>{note}</fieldset>')
+        filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     body = f"""
 <section class="hero">
@@ -809,7 +805,6 @@ def build_index(cfg, cases, updated):
     <summary><span>条件で絞り込む</span><span class="active-count" id="active-count"></span></summary>
     <div class="filters-body">
       {''.join(filters)}
-      <p class="filter-note">同じ項目の中では「いずれか」、項目をまたぐと「すべて」に当てはまる事例を表示します。空欄の事例は、その項目で絞り込むと表示されません。</p>
     </div>
   </details>
   <div class="result-bar">
