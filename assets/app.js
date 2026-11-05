@@ -9,6 +9,8 @@
   var reset2 = document.getElementById('reset2');
   var reset3 = document.getElementById('reset3');  // 絞り込みの欄の上の「すべて外す」
   var empty = document.getElementById('empty');
+  var aiHelp = document.getElementById('ai-help');
+  var aiBottom = document.getElementById('ai-bottom');
   var activeCount = document.getElementById('active-count');
   var details = document.getElementById('filters');
   var more = document.getElementById('more');
@@ -184,6 +186,12 @@
     countSearch(shown);
     if (pushState) saveUrl(s);
     markTiles(s);
+    // コミュニティAIへの案内：結果が少ない（data-few の件数以下）ときは囲みで、多いときは一番下に1行で出す
+    if (aiHelp && aiBottom) {
+      var few = shown <= (parseInt(aiHelp.getAttribute('data-few'), 10) || 5);
+      aiHelp.hidden = !few;
+      aiBottom.hidden = few;
+    }
     if (toolNote) {
       toolNote.hidden = !toolSel;
       toolNote.querySelector('span').textContent = toolSel ? 'ツール「' + toolSel + '」を使っている事例' : '';

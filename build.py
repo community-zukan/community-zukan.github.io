@@ -299,6 +299,7 @@ def enrich(cfg, rows):
     return cases
 
 
+COMMUNITY_AI = ""        # コミュニティAI のURL（config/site.json の community_ai_url。main で読み込む）。空ならリンクを出さない
 PURPOSE_ICONS = {}        # 目的ごとの絵（config/site.json の purpose_icons。main で読み込む）
 TOOL_FACET_MIN = 3       # 絞り込みの欄に出すツールの件数の下限（2件のツールは事例ページの札から開く。2026-11-05 黒田さんの判断）
 TOOL_COUNTS = Counter()  # まとめたツールの名前ごとの事例の数（enrich で数える）。2件以上のものだけ札を押せるようにする
@@ -621,6 +622,7 @@ def build_combo(cfg, combo, notes, written):
   <ul class="cards">
     {''.join(card(c, "../../../") for c in cs_sorted)}
   </ul>
+  {ai_line("../../../", "自分のコミュニティがいまどの段階か、コミュニティAIと整理する", "combo", "stage-check")}
 </article>
 """
     desc = f"{la}が「{x}」で、{lb}が「{y}」の企業コミュニティの事例{len(cs)}件。" + (shorten(note, 60) if note else "")
@@ -864,6 +866,7 @@ def build_note(cfg, n, notes, by_id, og_notes):
   <div class="note-body">
 {note_html(cfg, n, by_id, rel)}
   </div>
+  {ai_line(rel, "自社で始めるなら？この記事の事例をもとに、コミュニティAIに相談する", "note/" + n["slug"])}
   <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。</p>
   {more}
 </article>
@@ -932,7 +935,35 @@ def nav_links(rel, path):
         here = (path == href) if href == "" else path.startswith(href)
         cur = ' aria-current="page"' if here else ""
         out.append(f'<a href="{(rel + href) or "./"}"{cur}>{label}</a>')
+        if href == "notes/" or (href == "combos/" and not NOTES_PUBLIC):
+            ai = ai_link("コミュニティAIに相談", "nav", cls="nav-ai")
+            if ai:
+                out.append(ai)
     return "\n      ".join(out)
+
+
+AI_NOTE = "Claudeにログインすると使えます（無料プランでも利用できます）。"
+
+
+def ai_link(label, where, anchor="", cls=""):
+    """コミュニティAI（図鑑の外、Claude のアーティファクト）へのリンク。新しいタブで開き（↗ は style.css が付ける）、
+    どこから移ったかを GoatCounter の community-ai/{where} で数える。観測所の転機AIへのリンク（ai_link）を写したもの。"""
+    if not COMMUNITY_AI:
+        return ""
+    href = COMMUNITY_AI + (f"#{anchor}" if anchor else "")
+    cls_attr = f' class="{cls}"' if cls else ""
+    return (f'<a{cls_attr} href="{esc(href)}" target="_blank" rel="noopener" '
+            f'data-goatcounter-click="community-ai/{esc(where)}" data-goatcounter-title="コミュニティAI（{esc(where)}）">{label}'
+            f'<span class="visually-hidden">（新しいタブで開く）</span></a>')
+
+
+def ai_line(rel, label, where, anchor="", note=False):
+    """1行の入口（💬 の絵＋リンク）。note=True ならログインの注記を下に添える。"""
+    a = ai_link(label, where, anchor)
+    if not a:
+        return ""
+    return (f'<p class="ai-line"><img src="{rel}assets/emoji/1f4ac.png" alt="" width="18" height="18">{a}'
+            + (f'<small>{AI_NOTE}</small>' if note else "") + "</p>")
 
 
 EXAMPLES_SHOWN = 5  # 検索の例を一度に出す数
@@ -1173,6 +1204,14 @@ def build_index(cfg, cases):
             continue
         filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
+    # コミュニティAIへの入口（2026-11-06 の見本で案B）：トップは大きな件数の下に1行。事例一覧は、結果が5件以下なら囲み、多いときは一番下に1行（app.js が切り替える）
+    top_link = ai_link("コミュニティAIに相談する", "home")
+    top_ai = (f'<p class="ai-top"><img src="assets/emoji/1f4ac.png" alt="" width="18" height="18">{top_link}'
+              f'<span>立ち上げや運営の悩みを、事例をもとに一緒に考えます</span></p>') if top_link else ""
+    few_link = ai_link("コミュニティAIに相談する", "list-few", cls="button button-ghost ai-help-button")
+    list_ai = (f'<aside class="ai-help" id="ai-help" data-few="5" hidden><p class="ai-help-title">うまく見つからないときは</p>'
+               f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>'
+               f'<p class="ai-bottom" id="ai-bottom" hidden>{ai_link("見つからないときは、コミュニティAIに相談する", "list")}</p>') if few_link else ""
     body = f"""
 <section class="hero">
   <div class="wrap">
@@ -1183,6 +1222,7 @@ def build_index(cfg, cases):
       <div class="stat"><span class="stat-num" data-count="{n_fan}">{n_fan}</span><span class="stat-label">ファン・顧客</span></div>
       <div class="stat"><span class="stat-num" data-count="{n_int}">{n_int}</span><span class="stat-label">社内</span></div>
     </div>
+    {top_ai}
   </div>
 </section>
 {purpose_strip(cfg, cases)}
@@ -1221,14 +1261,17 @@ def build_index(cfg, cases):
   <ul class="cards" id="cards">
     {''.join(card(c) for c in cases)}
   </ul>
-  <div class="more" id="more" hidden>
-    <button type="button" class="more-button" id="more-button">もっと見る</button>
-  </div>
   <div class="empty" id="empty" hidden>
     <p>条件に合う事例はありませんでした。</p>
     <p id="empty-hint">条件を減らすか、キーワードを変えてみてください。</p>
     <ul class="relax" id="relax" hidden></ul>
     <button type="button" class="button" id="reset2">条件をすべて外す</button>
+  </div>
+  <div class="finder-foot">
+    <div class="more" id="more" hidden>
+      <button type="button" class="more-button" id="more-button">もっと見る</button>
+    </div>
+    {list_ai}
   </div>
 </section>
 <script type="application/json" id="synonyms">{synonyms_json}</script>
@@ -1313,10 +1356,18 @@ def build_case(cfg, c, related, og_image=None, notes=None):
         if c.get(col) or meta:
             steps.append(f'<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/{code}.png" alt="" width="26" height="26"></span>'
                          f'<div><h2>{question}</h2>{meta}{f"<p>{esc(c[col])}</p>" if c.get(col) else ""}</div></li>')
+    # コミュニティAIへの入口（2026-11-06 の見本で案B）：「あなたの会社なら」の箱の中、提案のすぐ下に置く。
+    # リンクの末尾に #事例ID を付けると、コミュニティAIがこの事例のカードを出して相談を始める。提案がない事例は流れの下に1行で置く
+    ai = ai_link("コミュニティAIに相談する", f"case/{c['ID']}", c["ID"], "ai-btn")
+    ai_box = (f'<div class="ai-box"><p class="ai-box-title"><img src="../../assets/emoji/1f4ac.png" alt="" width="20" height="20">自分の状況に合わせて考える</p>'
+              f'<p class="ai-box-text">コミュニティAIが、この事例をふまえて相談に乗ります。いまの状況を書き足して送ってください。</p>'
+              f'{ai}<small>{AI_NOTE}</small></div>') if ai else ""
     if c.get(HINT_COL):
         steps.append(f"""<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/1f914.png" alt="" width="26" height="26"></span><div><h2>あなたの会社なら</h2>
-      <div class="hint"><p>{esc(c[HINT_COL])}</p><p class="hint-note">事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p></div></div></li>""")
+      <div class="hint"><p>{esc(c[HINT_COL])}</p><p class="hint-note">事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p>{ai_box}</div></div></li>""")
     flow = f'<ol class="flow">{"".join(steps)}</ol>' if steps else ""
+    if not c.get(HINT_COL):
+        flow += ai_line("../../", "この事例を自分のコミュニティに生かすには？コミュニティAIに相談する", f"case/{c['ID']}", c["ID"], note=True)
     missing_cols = ["規模", "開始年", "公開されている成果", "運営体制", "ツール", "段階", "場"]
     missing = [m for m in missing_cols if not c.get(m)]
     links = "".join(f'<li><a class="source-button" href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
@@ -1538,7 +1589,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマスが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマスが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノート、組み合わせのどれか。事例ページなら事例のID）も数えます。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
@@ -1661,7 +1712,8 @@ def main():
     cases = enrich(cfg, rows)
     updated = datetime.now(JST).strftime("%Y年%-m月%-d日")
 
-    global NOTES_PUBLIC, PURPOSE_ICONS
+    global NOTES_PUBLIC, PURPOSE_ICONS, COMMUNITY_AI
+    COMMUNITY_AI = cfg.get("community_ai_url", "")
     PURPOSE_ICONS = cfg.get("purpose_icons") or {}
     notes_list = load_notes(cases)
     NOTES_PUBLIC = bool(notes_list)

@@ -497,10 +497,10 @@ main { flex: 1 0 auto; }
 
 /* 広い画面では絞り込みを左側に置く */
 @media (min-width: 1000px) {
-  .finder { display: grid; grid-template-columns: 320px minmax(0, 1fr); column-gap: 24px; align-items: start; }
-  .finder .filters { grid-column: 1; grid-row: 1 / span 4; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
-  .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty, .finder .more { grid-column: 2; }
-  .finder .more { grid-row: 4; }
+  .finder { display: grid; grid-template-columns: 320px minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: 24px; align-items: start; }
+  .finder .filters { grid-column: 1; grid-row: 1 / span 5; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+  .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty, .finder .finder-foot { grid-column: 2; }
+  .finder .finder-foot { grid-row: 4; }
   .finder .search-row { grid-row: 1; }
   .finder .result-bar { grid-row: 2; margin-top: var(--space-1); }
   .finder .cards { grid-row: 3; grid-template-columns: repeat(2, 1fr); }
@@ -672,3 +672,25 @@ main { flex: 1 0 auto; }
 .tags-purpose img { width: 16px; height: 16px; }
 .cards.is-list .card-emo { display: none; }
 .cards.is-list .card-top, .cards.is-list .card-title, .cards.is-list .card-meta { margin-right: 0; }
+
+/* コミュニティAIへの入口（2026-11-06 の見本で案B。build.py の ai_link）。色は空色だけで、黄色は増やさない */
+.global-nav .nav-ai { color: var(--sky); font-weight: 700; }
+.ai-top { margin: var(--space-3) 0 0; font-size: 15px; }
+.ai-top img, .ai-line img { vertical-align: -3px; margin-right: 6px; }
+.ai-top a { font-weight: 700; }
+.ai-top span { display: block; font-size: 13px; color: var(--text-sub); }
+.ai-box { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px dashed var(--hint-line); }
+.flow .ai-box p { margin: 0; }
+.ai-box-title { display: flex; align-items: center; gap: var(--space-2); font-weight: 700; color: var(--ink); }
+.flow .ai-box .ai-box-text { margin: 2px 0 var(--space-3); font-size: 14px; color: var(--text-body); }
+.ai-btn { display: inline-block; background: var(--sky); color: var(--on-sky); font-weight: 700; font-size: 15px; border-radius: var(--radius-pill); padding: 10px 20px; text-decoration: none; }
+.ai-btn:hover { opacity: .9; }
+.ai-box small, .ai-line small { display: block; margin-top: var(--space-2); font-size: 12px; color: var(--text-sub); line-height: 1.6; }
+.ai-line { margin: var(--space-6) 0 var(--space-8); font-size: 15px; }
+.ai-line a { font-weight: 700; }
+.ai-help { margin: var(--space-6) 0 0; padding: var(--space-4) 20px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.ai-help[hidden], .ai-bottom[hidden] { display: none; }
+.ai-help-title { margin: 0 0 var(--space-1); font-weight: 700; color: var(--ink); }
+.ai-help-text { margin: 0 0 var(--space-3); font-size: 14px; color: var(--text-body); }
+.ai-help-button { background: var(--card); color: var(--sky); border: 1px solid var(--sky); font-size: 14px; padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 700; }
+.ai-bottom { margin: var(--space-6) 0 0; font-size: 14px; text-align: center; }

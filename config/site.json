@@ -9,6 +9,8 @@
   "contact_url": "https://docs.google.com/forms/d/e/1FAIpQLSdIYyTdu4Io5bF3iuHeK8fX1TrB2DtZ9iv_9n3jGm90ArawEA/viewform",
   "contact_id_entry": "entry.13586301",
   "goatcounter": "communityzukan",
+  "_community_ai_url の説明": "コミュニティの相談のAI「コミュニティAI」（Claude のアーティファクト）のURL。メニュー・トップ・事例一覧・事例ページ・図鑑ノート・組み合わせのページのリンク先。事例ページでは末尾に #事例ID、組み合わせのページでは #stage-check を付ける。空にするとリンクを出さない。",
+  "community_ai_url": "https://claude.ai/artifact/XQU4vhXzpJ98zuAkVnm5gy",
   "google_site_verification": "QfZTihD29VHshRbTilTzPcex8edTvSmGA6GJXm81WHs",
   "min_ratio": 0.5,
   "_search_examples の説明": "事例一覧の検索欄の下に小さく並べる「検索の例」の候補。読み込むたびに、search_examples と searched_words を合わせた候補から5つをランダムに出す（今のデータで1件も見つからない言葉は出さない）。search_examples は運営が選んだ言葉。",
