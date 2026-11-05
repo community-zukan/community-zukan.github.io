@@ -350,18 +350,18 @@ def build_new(cfg, cases, new, updates, has_history, updated):
     upd_html = grouped(updates, lambda e: item(e["id"], f'<p class="changed">更新した項目：{esc("、".join(e["fields"]))}</p>'))
     if not upd_html:
         upd_html = "<p>この期間に内容を更新した事例はありません。</p>"
-    how = ("新着の日付は、運営側で出典を確かめた日（確認日）です。確認日がない事例は、サイトに初めて載った日にしています。"
-           "更新は、毎日の更新で前日のデータと比べて、本文や出典などが変わった事例です。")
+    how = ("新しく載せた事例の日付は、運営側で出典を確かめた日（確認日）です。確認日がない事例は、サイトに初めて載った日にしています。"
+           "内容を更新した事例は、毎日のデータの読み込みで前日と比べて、本文や出典などが変わったものです。")
     if not has_history:
-        how = "新着の日付は、運営側で出典を確かめた日（確認日）です。"
+        how = "新しく載せた事例の日付は、運営側で出典を確かめた日（確認日）です。"
     body = f"""
 <article class="prose wrap new-page">
   <h1>新着</h1>
-  <p>この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例です。{how}</p>
+  <p>この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例を、日付の新しい順に並べています。{how}</p>
   <p class="feed-link"><a href="../feed.xml">RSSで受け取る</a></p>
-  <h2>新着<small>{len(new)}件</small></h2>
+  <h2>新しく載せた事例<small>{len(new)}件</small></h2>
   {new_html}
-  <h2>更新<small>{len(updates)}件</small></h2>
+  <h2>内容を更新した事例<small>{len(updates)}件</small></h2>
   {upd_html}
 </article>
 """
