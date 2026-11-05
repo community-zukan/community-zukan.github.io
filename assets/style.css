@@ -168,7 +168,17 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
   padding: 10px 14px; min-height: 46px;
 }
 #q { flex: 1; min-width: 0; }
-#sort { flex: none; max-width: 36%; }
+#sort {
+  flex: none; max-width: 36%; cursor: pointer;
+  /* 端末の矢印は枠に近すぎるので消し、右に余白をとって自前の「∨」を描く（色は文字の色に合わせる） */
+  appearance: none; -webkit-appearance: none; padding-right: 42px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-sub) 50%), linear-gradient(135deg, var(--text-sub) 50%, transparent 50%);
+  background-position: calc(100% - 22px) 52%, calc(100% - 17px) 52%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+}
+@media (max-width: 600px) {
+  #sort { max-width: 40%; padding-right: 36px; background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%; }
+}
 .filters { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
 .filters summary {
   cursor: pointer; list-style: none; padding: var(--space-3) var(--space-4); font-weight: 500;
