@@ -862,54 +862,55 @@ def tag_list(items):
 
 
 def build_case(cfg, c, related, og_image=None):
-    meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年開始", c.get("段階"), c.get("場") and f"{c['場']}で活動"] if x]
-    blocks = []
-    for col, label in [("主な施策", "主な施策"), ("公開されている成果", "公開されている成果"), ("工夫のポイント", "工夫のポイント")]:
+    # 事例ページ（2026-11-05 の見本で選んだ「読み物」の形）：
+    # 基本の情報を小さな札に → 「この事例のポイント」（工夫のポイント）を大きく → 何をしたか → どうなったか →
+    # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
+    icons = cfg.get("purpose_icons") or {}
+    facts = [c.get("業種"), c.get("開始年") and f"{c['開始年']}年開始", c.get("規模") or c.get("規模の区分"),
+             c.get("段階"), c.get("場"), c.get("ツール")]
+    chips = "".join(f"<li>{esc(x)}</li>" for x in facts if x)
+    purposes = "".join(
+        f'<li><a href="../../?purpose={urllib.parse.quote(p)}"><img src="../../assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="20" height="20">{esc(p)}</a></li>'
+        for p in c["_purpose"])
+    activities = "".join(f'<li class="plain">{esc(a)}</li>' for a in c["_activity"])
+    lede = ""
+    if c.get("工夫のポイント"):
+        lede = f"""<section class="lede" style="--i: 0">
+    <h2><img src="../../assets/emoji/1f4a1.png" alt="" width="20" height="20">この事例のポイント</h2>
+    <p>{esc(c['工夫のポイント'])}</p>
+  </section>"""
+    steps = []
+    for code, question, col in [("1f6e0", "何をしたか", "主な施策"), ("1f4c8", "どうなったか", "公開されている成果"),
+                                ("1f465", "だれが動かしているか", "運営体制")]:
         if c.get(col):
-            blocks.append(f'<section class="block"><h2>{label}</h2><p>{esc(c[col])}</p></section>')
+            steps.append(f'<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/{code}.png" alt="" width="26" height="26"></span>'
+                         f'<div><h2>{question}</h2><p>{esc(c[col])}</p></div></li>')
     if c.get(HINT_COL):
-        blocks.append(f"""<section class="block hint">
-  <h2>自社でやるなら<span class="ai-label">AIによる提案</span></h2>
-  <p>{esc(c[HINT_COL])}</p>
-  <p class="hint-note">この欄は事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p>
-</section>""")
+        steps.append(f"""<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/1f914.png" alt="" width="26" height="26"></span><div><h2>あなたの会社なら</h2>
+      <div class="hint"><p>{esc(c[HINT_COL])}</p><p class="hint-note">事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p></div></div></li>""")
+    flow = f'<ol class="flow">{"".join(steps)}</ol>' if steps else ""
     missing_cols = ["規模", "開始年", "公開されている成果", "運営体制", "ツール", "段階", "場"]
     missing = [m for m in missing_cols if not c.get(m)]
-    overview = "".join([
-        dl_row("種別", esc(c.get("種別"))),
-        dl_row("業種", esc(c.get("業種"))),
-        dl_row("開始年", esc(c.get("開始年") and c["開始年"] + "年")),
-        dl_row("規模", esc(c.get("規模"))),
-        dl_row("規模の区分", esc(c.get("規模の区分"))),
-        dl_row("目的", tag_list(c["_purpose"])),
-        dl_row("活動の型", tag_list(c["_activity"])),
-        dl_row("段階", esc(c.get("段階"))),
-        dl_row("場", esc(c.get("場"))),
-        dl_row("ツール", esc(c.get("ツール"))),
-        dl_row("運営体制", esc(c.get("運営体制"))),
-    ])
     links = "".join(f'<li><a class="source-button" href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
                     f'data-goatcounter-title="出典 {esc(c["企業名"])} {esc(domain(u))}">出典を開く<span class="source-domain">{esc(domain(u))}</span></a></li>' for u in c["_urls"])
-    source = f"""<section class="block source">
-  <h2>出典</h2>
-  {f'<ul class="source-links">{links}</ul>' if links else ''}
-  <dl class="source-meta">
-    {dl_row("出典の時期", esc(fmt_month(c.get("出典の時期"))))}
-    {dl_row("出典の種類", esc(c.get("出典の種類")))}
-    {dl_row("注意点", esc(c.get("出典の注意")))}
-    {dl_row("確認日", esc(fmt_date(c.get("確認日"))))}
-  </dl>
-</section>"""
-    missing_html = ""
-    if missing:
-        missing_html = f'<p class="missing">公開情報で確認できなかった項目：{esc("、".join(missing))}</p>'
+    source = f"""<section class="source">
+    <h2>出典</h2>
+    {f'<ul class="source-links">{links}</ul>' if links else ''}
+    <dl class="source-meta">
+      {dl_row("出典の時期", esc(fmt_month(c.get("出典の時期"))))}
+      {dl_row("出典の種類", esc(c.get("出典の種類")))}
+      {dl_row("注意点", esc(c.get("出典の注意")))}
+      {dl_row("確認日", esc(fmt_date(c.get("確認日"))))}
+    </dl>
+    {f'<p class="missing">公開情報で確認できなかった項目：{esc("、".join(missing))}</p>' if missing else ''}
+  </section>"""
     rel_html = ""
     if related:
         items = "".join(
-            f'<li><a href="../{esc(r["ID"])}/"><span class="rel-company">{esc(r["企業名"])}</span>{esc(r["_title"])}</a></li>'
+            f'<a class="rel" href="../{esc(r["ID"])}/"><small>{esc(r["企業名"])}</small><strong>{esc(r["_title"])}</strong></a>'
             for r in related
         )
-        rel_html = f'<section class="related"><h2>近い事例</h2><ul>{items}</ul></section>'
+        rel_html = f'<section class="related"><h2>近い事例</h2><div class="rel-strip">{items}</div></section>'
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
 <article class="case wrap">
@@ -917,28 +918,21 @@ def build_case(cfg, c, related, og_image=None):
   <header class="case-head">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{esc(c['_title'])}</h1>
-    {f'<p class="case-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
+    {f'<ul class="case-chips" aria-label="基本の情報">{chips}</ul>' if chips else ''}
+    {f'<ul class="case-purposes" aria-label="目的と活動の型">{purposes}{activities}</ul>' if purposes or activities else ''}
   </header>
-  <div class="case-grid">
-    <div class="case-main">
-      {''.join(blocks)}
-      {source}
-      {share_bar(cfg, c)}
-      <div class="feedback">
-        <div class="useful" id="useful" hidden>
-          <p>この事例は参考になりましたか。</p>
-          <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
-          <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
-          <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
-        </div>
-        {report_link(cfg, c)}
-      </div>
+  {lede}
+  {flow}
+  {source}
+  {share_bar(cfg, c)}
+  <div class="feedback">
+    <div class="useful" id="useful" hidden>
+      <p>この事例は参考になりましたか。</p>
+      <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
+      <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
+      <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
     </div>
-    <aside class="case-side">
-      <h2 class="visually-hidden">概要</h2>
-      <dl class="overview">{overview}</dl>
-      {missing_html}
-    </aside>
+    {report_link(cfg, c)}
   </div>
   {rel_html}
 </article>
@@ -1196,7 +1190,7 @@ def main():
     og_items = copy_og_items(cases)
     for c in cases:
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
-        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases), og))
+        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases, n=6), og))
     write("about/index.html", build_about(cfg, cases, updated))
     today = datetime.now(JST).date()
     new, updates, has_history = find_changes(cases, load_history(), today)
