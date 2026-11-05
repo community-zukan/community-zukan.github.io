@@ -402,15 +402,27 @@ def build_new(cfg, cases, new, updates, has_history, updated):
                 path="new/", body=body, depth=1)
 
 
-def build_feed(cfg, cases, new, updates):
+def build_feed(cfg, cases, new, updates, notes=()):
     """RSS 2.0。新着と更新を新しい順に50件まで。"""
     from email.utils import format_datetime
     by_id = {c["ID"]: c for c in cases}
     base = cfg["base_url"].rstrip("/")
     entries = [("新着", n) for n in new] + [("更新", u) for u in updates]
+    entries += [(NOTES_LABEL, {"date": n["published"], "id": "~" + n["slug"], "note": n}) for n in notes]
     entries.sort(key=lambda e: (e[1]["date"], e[1]["id"]), reverse=True)
     items = []
     for kind, e in entries[:50]:
+        if kind == NOTES_LABEL:
+            n = e["note"]
+            when = datetime(n["published"].year, n["published"].month, n["published"].day, 9, 0, tzinfo=JST)
+            items.append(f"""  <item>
+    <title>{esc(f"【{NOTES_LABEL}】{n['title']}")}</title>
+    <link>{esc(f"{base}/notes/{n['slug']}/")}</link>
+    <guid isPermaLink="false">{esc(f"note-{n['slug']}")}</guid>
+    <pubDate>{format_datetime(when)}</pubDate>
+    <description>{esc(n['description'])}</description>
+  </item>""")
+            continue
         c = by_id[e["id"]]
         url = f"{base}/cases/{c['ID']}/"
         when = datetime(e["date"].year, e["date"].month, e["date"].day, 9, 0, tzinfo=JST)
@@ -619,6 +631,223 @@ def build_combos_index(cfg, combos, cases):
                 path="combos/", body=body, depth=1)
 
 
+# ---------- 図鑑ノート（テーマごとに事例を読み比べる記事） ----------
+# 原稿は notes/<スラッグ>.md（名前が「_」で始まるファイルは読まない）。先頭の --- で囲んだ部分に題名などを書き、
+# 本文は次の書き方だけを使う。書き方の決めごとは notes/_guide.md。
+#   ## 見出し / ### 小見出し / 空行で段落 / 「- 」で箇条書き / [文字](URL) でリンク / **強調**
+#   :::case S75   ← 事例を1件差し込む（企業名・コミュニティ名・目的の札はデータから入る）
+#   黒田のひとこと（次の ::: までの段落）
+#   :::
+# 公開日（published）がない原稿と、draft: true の原稿は出さない。
+# 見た目は 2026-11-05 の見本で選んだもの：記事は「表から読み物へ」（案3）、冒頭と画像は薄い空色の地（案B）。
+NOTES_DIR = os.path.join(ROOT, "notes")
+NOTES_LABEL = "図鑑ノート"
+NOTES_PUBLIC = False   # 公開する記事が1本でもあれば True（メニューに「図鑑ノート」を出す）
+
+
+def parse_note_file(path):
+    with open(path, encoding="utf-8") as f:
+        text = f.read().replace("\r\n", "\n")
+    meta, body = {}, text
+    if text.startswith("---\n"):
+        head, _, body = text[4:].partition("\n---\n")
+        for line in head.split("\n"):
+            if ":" in line:
+                k, _, v = line.partition(":")
+                meta[k.strip()] = v.strip()
+    slug = os.path.splitext(os.path.basename(path))[0]
+    return {"slug": slug, "title": meta.get("title", slug), "description": meta.get("description", ""),
+            "kind": meta.get("kind", ""), "emoji": meta.get("emoji", "") or "1f4d3",
+            "published": to_date(meta.get("published", "")), "updated": to_date(meta.get("updated", "")),
+            "draft": meta.get("draft", "").lower() in ("true", "yes", "1"), "body": body,
+            "ids": re.findall(r"^:::case\s+(\S+)", body, re.M)}
+
+
+def load_notes(cases=None):
+    """公開する図鑑ノート（新しい順）。掲載していない事例を差し込んでいたら知らせる（記事からは外して出す）。"""
+    if not os.path.isdir(NOTES_DIR):
+        return []
+    known = {c["ID"] for c in cases} if cases is not None else None
+    notes = []
+    for name in sorted(os.listdir(NOTES_DIR)):
+        if not name.endswith(".md") or name.startswith("_"):
+            continue
+        n = parse_note_file(os.path.join(NOTES_DIR, name))
+        if n["draft"]:
+            continue
+        if not n["published"]:
+            print(f"注意: 図鑑ノート {name} に published（公開日）がないので公開しません")
+            continue
+        if known is not None:
+            for i in n["ids"]:
+                if i not in known:
+                    print(f"注意: 図鑑ノート {name} の事例 {i} は掲載していないので、記事から外して表示します")
+        notes.append(n)
+    notes.sort(key=lambda n: (n["published"], n["slug"]), reverse=True)
+    return notes
+
+
+def note_inline(text):
+    out = esc(text)
+    out = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", out)
+
+    def link(m):
+        label, url = m.group(1), m.group(2)
+        ext = url.startswith("http") and not url.startswith("https://community-zukan.github.io")
+        attrs = ' target="_blank" rel="noopener"' if ext else ""
+        mark = "\u2060↗" if ext else ""
+        return f'<a href="{url}"{attrs}>{label}{mark}</a>'
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, out)
+
+
+def note_blocks(text):
+    html_out = []
+    for block in re.split(r"\n\s*\n", text.strip()):
+        lines = [l for l in block.split("\n") if l.strip()]
+        if not lines:
+            continue
+        if lines[0].startswith("### "):
+            html_out.append(f"<h3>{note_inline(lines[0][4:].strip())}</h3>")
+            lines = lines[1:]
+        elif lines[0].startswith("## "):
+            title = lines[0][3:].strip()
+            html_out.append(f'<h2 id="{esc(title)}">{note_inline(title)}</h2>')
+            lines = lines[1:]
+        if not lines:
+            continue
+        if all(l.startswith("- ") for l in lines):
+            html_out.append("<ul>" + "".join(f"<li>{note_inline(l[2:].strip())}</li>" for l in lines) + "</ul>")
+        else:
+            html_out.append("<p>" + "<br>".join(note_inline(l.strip()) for l in lines) + "</p>")
+    return "\n".join(html_out)
+
+
+def note_pick(cfg, c, comment_html, num, rel):
+    icons = cfg.get("purpose_icons") or {}
+    chips = "".join(f'<span class="tl-purpose"><img src="{rel}assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="16" height="16">{esc(p)}</span>'
+                    for p in c["_purpose"][:2])
+    word = f'<div class="pick-word"><p class="pick-who">黒田のひとこと</p>{comment_html}</div>' if comment_html else ""
+    return (f'<section class="pick" id="pick-{esc(c["ID"])}"><a class="pick-card" href="{rel}cases/{esc(c["ID"])}/">'
+            f'<span class="pick-num" aria-hidden="true">{num:02d}</span><span class="pick-body">'
+            f'<span class="card-top">{type_badge(c.get("種別"))}<span class="card-company">{esc(c["企業名"])}</span></span>'
+            f'<strong>{esc(c["_title"])}</strong><span class="tl-purposes">{chips}</span></span></a>{word}</section>')
+
+
+def note_cases(n, by_id):
+    return [by_id[i] for i in n["ids"] if i in by_id]
+
+
+def note_html(cfg, n, by_id, rel):
+    parts = re.split(r"^:::case\s+(\S+)\s*\n(.*?)^:::\s*$", n["body"], flags=re.M | re.S)
+    out = [note_blocks(parts[0])]
+    num = 0
+    for i in range(1, len(parts), 3):
+        c = by_id.get(parts[i])
+        if c:
+            num += 1
+            out.append(note_pick(cfg, c, note_blocks(parts[i + 1]), num, rel))
+        out.append(note_blocks(parts[i + 2]))
+    return "\n".join(out)
+
+
+def note_title_html(t):
+    # 「。」「、」と閉じかっこのところで区切り、言葉の途中で折り返さないようにする（観測所と同じ）
+    return "".join(f"<span>{esc(x)}</span>" for x in re.findall(r"[^。、）」』]+[。、）」』]*", t))
+
+
+def note_emoji(n, rel):
+    code = n["emoji"] if os.path.exists(os.path.join(ROOT, "assets", "emoji", n["emoji"] + ".png")) else "1f4d3"
+    return f'<img src="{rel}assets/emoji/{code}.png" alt="" width="64" height="64">'
+
+
+def note_image(n, og_notes):
+    return f"og/note-{n['slug']}.png" if n["slug"] in og_notes else "assets/ogp.png"
+
+
+def note_list(notes, og_notes, rel):
+    def li(n):
+        meta = f"紹介する事例 {len(n['ids'])}件・{fmt_day(n['published'])}"
+        return (f'<li><a href="{rel}notes/{esc(n["slug"])}/"><img class="note-card-img" src="{rel}{note_image(n, og_notes)}" alt="" loading="lazy" width="1200" height="630">'
+                f'<span class="note-card-body"><strong>{esc(n["title"])}</strong><span>{esc(n["description"])}</span><small>{meta}</small></span></a></li>')
+    return '<ul class="note-grid">' + "".join(li(n) for n in notes) + "</ul>"
+
+
+def build_note(cfg, n, notes, by_id, og_notes):
+    rel = "../../"
+    cs = note_cases(n, by_id)
+    rows = "".join(
+        f'<tr><th scope="row"><a href="{rel}cases/{esc(c["ID"])}/"><span class="num">{i + 1:02d}</span>{esc(c["企業名"])}</a></th>'
+        f'<td>{esc(c.get("段階") or "—")}</td><td>{esc(c.get("場") or "—")}</td><td>{esc(c.get("規模") or c.get("規模の区分") or "—")}</td>'
+        f'<td>{esc(c.get("工夫のポイント") or "—")}</td></tr>' for i, c in enumerate(cs))
+    table = (f'<h2 class="note-table-head"><img src="{rel}assets/emoji/1f4c4.png" alt="" width="24" height="24">この記事で紹介する{len(cs)}件を並べると</h2>'
+             f'<div class="note-table-wrap"><table class="note-table"><thead><tr><th scope="col">事例</th><th scope="col">段階</th><th scope="col">場</th>'
+             f'<th scope="col">規模</th><th scope="col">工夫のポイント</th></tr></thead><tbody>{rows}</tbody></table></div>') if cs else ""
+    others = [o for o in notes if o is not n][:4]
+    more = f'<section class="note-more"><h2>ほかの{NOTES_LABEL}</h2>{note_list(others, og_notes, rel)}</section>' if others else ""
+    date = f"{fmt_day(n['published'])}公開" + (f"・{fmt_day(n['updated'])}更新" if n["updated"] else "")
+    operator = esc(cfg.get("operator_url", ""))
+    body = f"""
+<article class="wrap note-page">
+  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{rel}">事例一覧</a></li><li><a href="../">{NOTES_LABEL}</a></li><li aria-current="page">{esc(n['title'])}</li></ol></nav>
+  <header class="note-hero">
+    <span class="note-hero-emoji" aria-hidden="true">{note_emoji(n, rel)}</span>
+    <p class="note-pill">{NOTES_LABEL}{"｜" + esc(n["kind"]) if n["kind"] else ""}</p>
+    <h1>{note_title_html(n['title'])}</h1>
+    <p class="note-by">文：<a href="{operator}">黒田悠介</a>（コミュニティ研究家）<span>{date}</span></p>
+  </header>
+  {table}
+  <div class="note-body">
+{note_html(cfg, n, by_id, rel)}
+  </div>
+  <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。</p>
+  {more}
+</article>
+"""
+    base = cfg["base_url"].rstrip("/") + "/"
+    url = f"{base}notes/{n['slug']}/"
+    ld = {"@context": "https://schema.org", "@type": "Article", "headline": n["title"], "description": n["description"],
+          "inLanguage": "ja", "url": url, "image": base + note_image(n, og_notes),
+          "datePublished": n["published"].isoformat(), "dateModified": (n["updated"] or n["published"]).isoformat(),
+          "author": {"@type": "Person", "name": cfg.get("operator", "黒田悠介"), "jobTitle": "コミュニティ研究家", "url": cfg.get("operator_url", "")},
+          "publisher": {"@type": "Organization", "name": cfg["name"], "url": base}}
+    crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "事例一覧", "item": base},
+        {"@type": "ListItem", "position": 2, "name": NOTES_LABEL, "item": base + "notes/"},
+        {"@type": "ListItem", "position": 3, "name": n["title"], "item": url}]}
+    return page(cfg, title=n["title"], description=n["description"], path=f"notes/{n['slug']}/", body=body, depth=2,
+                og_image=note_image(n, og_notes), og_type="article", jsonld=[ld, crumbs])
+
+
+def build_notes_index(cfg, notes, og_notes):
+    rel = "../"
+    body = f"""
+<article class="wrap note-page">
+  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="{rel}">事例一覧</a></li><li aria-current="page">{NOTES_LABEL}</li></ol></nav>
+  <header class="note-hero note-hero-index">
+    <span class="note-hero-emoji" aria-hidden="true"><img src="{rel}assets/emoji/1f4d3.png" alt="" width="64" height="64"></span>
+    <h1>{NOTES_LABEL}</h1>
+    <p class="note-lead"><span>テーマごとに公開事例を読み比べて、</span><span>コミュニティ研究家の黒田悠介が</span><span>まとめた記事です。</span></p>
+    <p class="note-count"><b>{len(notes)}</b>本の記事</p>
+  </header>
+  {note_list(notes, og_notes, rel)}
+</article>
+"""
+    return page(cfg, title=NOTES_LABEL, description="テーマごとに企業コミュニティの公開事例を読み比べて、コミュニティ研究家の黒田悠介がまとめた記事です。",
+                path="notes/", body=body, depth=1)
+
+
+def copy_og_notes(notes):
+    """tools/make_og.py が作った図鑑ノートの画像（og-items/note-<スラッグ>.png）を /og/ に置く。"""
+    found = set()
+    for n in notes:
+        f = os.path.join(ROOT, "og-items", f"note-{n['slug']}.png")
+        if os.path.exists(f):
+            os.makedirs(os.path.join(OUT, "og"), exist_ok=True)
+            shutil.copy(f, os.path.join(OUT, "og", f"note-{n['slug']}.png"))
+            found.add(n["slug"])
+    return found
+
+
 # ---------- HTML の部品 ----------
 
 
@@ -629,7 +858,10 @@ def logo_mark(rel):
 
 def nav_links(rel, path):
     """ヘッダーのメニュー。いま開いているページには aria-current を付ける。"""
-    items = [("", "事例一覧"), ("new/", "新着"), ("combos/", "組み合わせ"), ("about/", "この図鑑について")]
+    items = [("", "事例一覧"), ("new/", "新着"), ("combos/", "組み合わせ")]
+    if NOTES_PUBLIC:
+        items.append(("notes/", NOTES_LABEL))
+    items.append(("about/", "この図鑑について"))
     out = []
     for href, label in items:
         here = (path == href) if href == "" else path.startswith(href)
@@ -942,7 +1174,7 @@ def tag_list(items):
     return '<ul class="tags">' + "".join(f"<li>{esc(t)}</li>" for t in items) + "</ul>" if items else ""
 
 
-def build_case(cfg, c, related, og_image=None):
+def build_case(cfg, c, related, og_image=None, notes=None):
     # 事例ページ（2026-11-05 の見本で選んだ「読み物」の形）：
     # 基本の情報を小さな札に → 「この事例のポイント」（工夫のポイント）を大きく → 何をしたか → どうなったか →
     # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
@@ -991,6 +1223,11 @@ def build_case(cfg, c, related, og_image=None):
             for r in related
         )
         rel_html = f'<section class="related"><h2>近い事例</h2><div class="rel-strip">{items}</div></section>'
+    note_html_ = ""
+    in_notes = [n for n in (notes or []) if c["ID"] in n["ids"]]
+    if in_notes:
+        lis = "".join(f'<li><a href="../../notes/{esc(n["slug"])}/">{esc(n["title"])}</a></li>' for n in in_notes)
+        note_html_ = f'<section class="case-notes"><h2><img src="../../assets/emoji/1f4d3.png" alt="" width="22" height="22">この事例を紹介している{NOTES_LABEL}</h2><ul>{lis}</ul></section>'
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
 <article class="case wrap">
@@ -1014,6 +1251,7 @@ def build_case(cfg, c, related, og_image=None):
     </div>
     {report_link(cfg, c)}
   </div>
+  {note_html_}
   {rel_html}
 </article>
 <script src="../../assets/case.js?v={ver('case.js')}" defer></script>
@@ -1209,12 +1447,13 @@ def build_404(cfg):
     <li><a href="/">事例一覧</a>：すべての事例を、目的・段階・活動の型で絞り込めます。</li>
     <li><a href="/new/">新着</a>：最近載った事例と、内容が変わった事例です。</li>
     <li><a href="/combos/">組み合わせ</a>：目的と段階、種別と活動の型の組み合わせから探せます。</li>
+    <li><a href="/notes/">図鑑ノート</a>：テーマごとに事例を読み比べた記事です。</li>
   </ul>
 </article>
 """
     return page(cfg, title="ページが見つかりません", description="", path="404.html", body=body).replace(
         'href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace(
-        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"').replace('href="combos/"', 'href="/combos/"').replace('href="saved/"', 'href="/saved/"')
+        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"').replace('href="combos/"', 'href="/combos/"').replace('href="saved/"', 'href="/saved/"').replace('href="notes/"', 'href="/notes/"')
 
 
 def copy_og_items(cases):
@@ -1262,6 +1501,10 @@ def main():
     cases = enrich(cfg, rows)
     updated = datetime.now(JST).strftime("%Y年%-m月%-d日")
 
+    global NOTES_PUBLIC
+    notes_list = load_notes(cases)
+    NOTES_PUBLIC = bool(notes_list)
+
     if os.path.exists(OUT):
         shutil.rmtree(OUT)
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(OUT, "assets"))
@@ -1270,12 +1513,19 @@ def main():
     og_items = copy_og_items(cases)
     for c in cases:
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
-        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases, n=6), og))
+        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, find_related(c, cases, n=6), og, notes_list))
     write("about/index.html", build_about(cfg, cases, updated))
     today = datetime.now(JST).date()
     new, updates, has_history = find_changes(cases, load_history(), today)
     write("new/index.html", build_new(cfg, cases, new, updates, has_history, updated))
-    write("feed.xml", build_feed(cfg, cases, new, updates))
+    write("feed.xml", build_feed(cfg, cases, new, updates, notes_list))
+    if notes_list:
+        by_id = {c["ID"]: c for c in cases}
+        og_notes = copy_og_notes(notes_list)
+        write("notes/index.html", build_notes_index(cfg, notes_list, og_notes))
+        for n in notes_list:
+            write(f"notes/{n['slug']}/index.html", build_note(cfg, n, notes_list, by_id, og_notes))
+        print(f"図鑑ノート {len(notes_list)}本")
     combos = find_combos(cases)
     notes, written = load_combo_notes()
     write("combos/index.html", build_combos_index(cfg, combos, cases))
@@ -1294,6 +1544,7 @@ def main():
                                   ensure_ascii=False, indent=1))
     base = cfg["base_url"].rstrip("/")
     urls = ([f"{base}/", f"{base}/new/", f"{base}/combos/", f"{base}/about/"]
+            + ([f"{base}/notes/"] + [f"{base}/notes/{n['slug']}/" for n in notes_list] if notes_list else [])
             + [f"{base}/{cb['path']}" for cb in combos] + [f"{base}/cases/{c['ID']}/" for c in cases])
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           + "".join(f"<url><loc>{esc(u)}</loc></url>\n" for u in urls) + "</urlset>\n")

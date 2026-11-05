@@ -4,10 +4,14 @@
   python3 tools/make_og.py                          # 公開用CSVから事例ごとの画像を作る
   python3 tools/make_og.py --csv testdata/public.csv  # 手元のCSVで作る
   python3 tools/make_og.py --site                   # サイト全体の画像 assets/ogp.png とファビコンの PNG を作り直す
+  python3 tools/make_og.py --notes                  # 図鑑ノートの画像だけを作る（記事を書いたときの確かめ用）
 
 - 事例ごとの画像は og-items/{ID}.png に書きます。build.py が見つけたら /og/{ID}.png として公開し、
   事例ページの og:image にします。画像がない事例は assets/ogp.png のままです。
 - og-items/ はリポジトリに入れません（毎日のビルドで作り直します）。
+- 図鑑ノートの記事ごとの画像は og-items/note-<スラッグ>.png に書きます（一覧のカード・SNSの共有画像に使う）。
+  薄い空色の地に、右上の円と絵文字、「図鑑ノート｜社内」の札、題名、署名（2026-11-05 の見本の案B）。
+  絵文字は Noto Emoji の 512px を tools/emoji/cache/ に取ってきて使い、取れないときは assets/emoji/ の 128px を使います。
 - 載せるのは種別・企業名・コミュニティ名だけです。企業のロゴや出典の画像は使いません。
 - 書体は Noto Sans CJK JP。Actions では apt の fonts-noto-cjk を使い、見つからないときは
   tools/fonts/ にダウンロードします（リポジトリには入れません）。
@@ -177,21 +181,104 @@ def make_case(cfg, c, path):
     img.save(path, optimize=True)
 
 
+NOTE_BG, NOTE_CIRCLE = "#e8eef5", "#d3e1ef"   # 図鑑ノートの画像：薄い空色の地（--chip-bg）と、右上の円
+EMOJI_CACHE = os.path.join(ROOT, "tools", "emoji", "cache")
+EMOJI_URL = "https://raw.githubusercontent.com/googlefonts/noto-emoji/main/2D/png/512/emoji_u%s.png"
+
+
+def emoji_image(code):
+    path = os.path.join(EMOJI_CACHE, code + ".png")
+    if not os.path.exists(path):
+        try:
+            os.makedirs(EMOJI_CACHE, exist_ok=True)
+            urllib.request.urlretrieve(EMOJI_URL % code, path)
+        except Exception:  # noqa: BLE001
+            path = os.path.join(ROOT, "assets", "emoji", code + ".png")
+    if not os.path.exists(path):
+        path = os.path.join(ROOT, "assets", "emoji", "1f4d3.png")
+    return Image.open(path).convert("RGBA")
+
+
+def title_lines(d, title, fnt, width, max_lines):
+    """題名を「。」「、」のところで区切って行に詰める。1つの区切りが長すぎるときだけ文字の途中で折り返す。"""
+    import re
+    lines, cur = [], ""
+    for seg in re.findall(r"[^。、）」』]+[。、）」』]*", title):
+        if d.textlength(cur + seg, font=fnt) <= width:
+            cur += seg
+            continue
+        if cur:
+            lines.append(cur)
+        cur = ""
+        if d.textlength(seg, font=fnt) <= width:
+            cur = seg
+        else:
+            parts = wrap(d, seg, fnt, width, 9)
+            lines += parts[:-1]
+            cur = parts[-1]
+    if cur:
+        lines.append(cur)
+    return lines if len(lines) <= max_lines else None
+
+
+def make_note(cfg, n, path):
+    img = Image.new("RGB", (W, H), NOTE_BG)
+    d = ImageDraw.Draw(img)
+    d.ellipse((W - 330, -170, W + 170, 330), fill=NOTE_CIRCLE)
+    d.ellipse((W - 260, 60, W - 80, 240), fill=SURFACE)
+    e = emoji_image(n["emoji"]).resize((128, 128), Image.LANCZOS)
+    img.paste(e, (W - 234, 86), e)
+    label = "図鑑ノート" + ("｜" + n["kind"] if n["kind"] else "")
+    pf = font("bold", 30)
+    tw = d.textlength(label, font=pf)
+    d.rounded_rectangle((72, 72, 72 + tw + 48, 128), radius=28, fill=ACCENT)
+    d.text((96, 112), label, font=pf, fill=SURFACE, anchor="ls")
+    # 題名は円にかからない幅で、3行までに収まる大きさを選ぶ
+    for size in (64, 60, 56, 50, 46):
+        tf = font("bold", size)
+        lines = title_lines(d, n["title"], tf, W - 72 - 330, 3)
+        if lines:
+            break
+    if not lines:
+        lines = wrap(d, n["title"], tf, W - 72 - 330, 3)
+    lh = int(size * 1.42)
+    y = 170 + size
+    for ln in lines:
+        d.text((72, y), ln, font=tf, fill=INK, anchor="ls")
+        y += lh
+    d.text((72, H - 64), "文：黒田悠介（コミュニティ研究家）", font=font("regular", 28), fill=INK2, anchor="ls")
+    d.text((W - 72, H - 64), cfg["name"], font=font("bold", 28), fill=INK2, anchor="rs")
+    img.save(path, optimize=True)
+
+
+def make_notes(cfg):
+    notes = build.load_notes()
+    os.makedirs(OUT, exist_ok=True)
+    for n in notes:
+        make_note(cfg, n, os.path.join(OUT, f"note-{n['slug']}.png"))
+    print(f"図鑑ノートの画像 {len(notes)}枚を {os.path.relpath(OUT, ROOT)}/ に作りました。")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", help="手元のCSVファイルを使う")
     ap.add_argument("--site", action="store_true", help="assets/ogp.png を作り直す")
+    ap.add_argument("--notes", action="store_true", help="図鑑ノートの画像だけを作る")
     args = ap.parse_args()
     cfg = build.load_config()
     if args.site:
         make_site(cfg)
         make_icons()
         return
+    if args.notes:
+        make_notes(cfg)
+        return
     cases = build.enrich(cfg, build.load_rows(cfg, args.csv))
     os.makedirs(OUT, exist_ok=True)
     for c in cases:
         make_case(cfg, c, os.path.join(OUT, f"{c['ID']}.png"))
     print(f"{len(cases)}件の共有画像を {os.path.relpath(OUT, ROOT)}/ に作りました。")
+    make_notes(cfg)
 
 
 if __name__ == "__main__":

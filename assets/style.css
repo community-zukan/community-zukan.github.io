@@ -19,6 +19,7 @@
   --hint: #fffaeb; --hint-line: #ecd68a;  /* AIによる提案の箱 */
   --heat-1: #e8eef5; --heat-2: #c4d8ec; --heat-3: #7fb0da; --heat-4: #1874b8;  /* 組み合わせの地図：事例が多いマスほど濃い */
   --heat-ink-3: #0b2a44; --heat-ink-4: #ffffff;
+  --note-circle: #d3e1ef;  /* 図鑑ノートの冒頭の右上の円（地は --chip-bg） */
   /* 文字 */
   /* 本文は端末の標準フォント（読み込みが要らず表示が速い）。見出しだけ Zen Kaku Gothic New を読み込む */
   --font-sans: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", system-ui, sans-serif;
@@ -39,6 +40,7 @@
   --fan-fg: #f5d86a;
   --hint: #26231a; --hint-line: #574c25;
   --heat-1: #233042; --heat-2: #2c4a6b; --heat-3: #3f73a3; --heat-4: #7cc0ee; --heat-ink-3: #f3f1ea; --heat-ink-4: #15181d;
+  --note-circle: #2c3d55;
   --shadow-card: 0 1px 2px rgba(0, 0, 0, .4);
   --shadow-lift: 0 10px 24px rgba(0, 0, 0, .45);
   color-scheme: dark;
@@ -553,3 +555,69 @@ main { flex: 1 0 auto; }
 /* 読み込んだとき、ポイント → 何をしたか → どうなったか…の順に、流れに沿ってふわっと出す（--i が順番） */
 .lede, .flow > li { animation: card-rise .5s ease both; animation-delay: calc(var(--i, 0) * .15s + .1s); }
 @media (prefers-reduced-motion: reduce) { .lede, .flow > li { animation: none; } }
+
+/* 図鑑ノート（2026-11-05 の見本：記事は「表から読み物へ」、冒頭と画像は薄い空色の地） */
+.note-page { max-width: 900px; padding-top: var(--space-6); padding-bottom: var(--space-16); }
+.note-hero { position: relative; overflow: hidden; background: var(--chip-bg); border-radius: var(--radius-lg); padding: var(--space-8) var(--space-8) var(--space-6); margin: 0 0 var(--space-8); }
+.note-hero::before { content: ""; position: absolute; width: 300px; height: 300px; right: -90px; top: -110px; border-radius: 50%; background: var(--note-circle); }
+.note-hero-emoji { position: absolute; right: 36px; top: 28px; width: 104px; height: 104px; border-radius: 50%; background: var(--card); display: grid; place-items: center; }
+.note-hero-emoji img { width: 64px; height: 64px; }
+.note-pill { position: relative; display: inline-block; margin: 0 0 var(--space-3); padding: 2px 14px; border-radius: var(--radius-pill); background: var(--sky); color: var(--on-sky); font-size: 13px; font-weight: 700; }
+.note-hero h1 { position: relative; font-size: clamp(24px, 4vw, 34px); line-height: 1.45; margin: 0 140px var(--space-3) 0; }
+.note-hero h1 span, .note-lead span { display: inline-block; }
+.note-by { position: relative; margin: 0; font-size: 13px; color: var(--text-body); }
+.note-by span { margin-left: var(--space-3); }
+.note-hero-index h1 { font-size: clamp(28px, 5vw, 40px); }
+.note-lead { position: relative; color: var(--text-body); margin: 0 140px var(--space-4) 0; }
+.note-count { position: relative; margin: 0; font-size: 14px; }
+.note-count b { font-family: var(--font-display); font-weight: 900; font-size: 28px; margin-right: var(--space-1); }
+.note-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); }
+.note-grid a { display: flex; flex-direction: column; height: 100%; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; text-decoration: none; color: var(--ink); box-shadow: var(--shadow-card); transition: border-color .15s, transform .18s ease, box-shadow .18s ease; }
+.note-grid a:hover { border-color: var(--sky); color: var(--ink); }
+@media (hover: hover) { .note-grid a:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); } }
+.note-card-img { display: block; width: 100%; height: auto; border-bottom: 1px solid var(--line); }
+.note-card-body { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3) var(--space-4) var(--space-4); }
+.note-card-body strong { font-family: var(--font-display); font-size: 16px; line-height: 1.5; }
+.note-card-body span { font-size: 13px; color: var(--text-body); line-height: 1.7; }
+.note-card-body small { font-size: 12px; color: var(--text-sub); }
+.note-table-head { display: flex; align-items: center; gap: var(--space-2); font-size: 18px; margin: 0 0 var(--space-3); }
+.note-table-wrap { overflow-x: auto; margin: 0 0 var(--space-8); }
+.note-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; background: var(--card); border: 1px solid var(--line); }
+.note-table th, .note-table td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.6; }
+.note-table thead th { background: var(--chip-bg); font-size: 13px; }
+.note-table tbody th, .note-table td:nth-child(2), .note-table td:nth-child(3) { white-space: nowrap; }
+.note-table td:nth-child(4) { min-width: 11em; }
+.note-table td:nth-child(5) { min-width: 18em; }
+.note-table tbody th a { color: var(--ink); text-decoration: none; font-weight: 700; }
+.note-table tbody th a:hover { color: var(--sky); text-decoration: underline; }
+.note-table .num { font-family: var(--font-display); font-weight: 900; color: var(--sky); margin-right: 6px; }
+.note-body { max-width: 40em; }
+.note-body h2 { font-size: 21px; line-height: 1.5; margin: var(--space-12) 0 var(--space-3); }
+.note-body h3 { font-size: 18px; margin: var(--space-8) 0 var(--space-2); }
+.note-body p, .note-body ul { margin: 0 0 var(--space-4); }
+.note-body ul { padding-left: 1.3em; }
+.note-body li { margin-bottom: var(--space-1); }
+.pick { margin: var(--space-4) 0 var(--space-8); }
+.pick-card { display: flex; gap: var(--space-4); align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); text-decoration: none; color: var(--ink); box-shadow: var(--shadow-card); transition: border-color .15s, transform .18s ease, box-shadow .18s ease; }
+.pick-card:hover { border-color: var(--sky); color: var(--ink); }
+@media (hover: hover) { .pick-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); } }
+.pick-num { font-family: var(--font-display); font-weight: 900; font-size: 40px; line-height: 1; color: var(--sky); flex: none; }
+.pick-body { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; }
+.pick-body strong { font-family: var(--font-display); font-size: 17px; line-height: 1.5; }
+.pick-word { margin-top: var(--space-2); padding-left: var(--space-4); }
+.pick-who { margin: 0 !important; font-size: 12px; font-weight: 700; color: var(--text-sub); }
+.pick-word p { margin: 0 0 var(--space-2); }
+.note-end { font-size: 13px; color: var(--text-sub); margin: var(--space-8) 0 0; max-width: 46em; }
+.note-more h2 { font-size: 19px; margin: var(--space-12) 0 var(--space-3); }
+.case-notes h2 { display: flex; align-items: center; gap: var(--space-2); font-size: 17px; margin: var(--space-8) 0 var(--space-2); }
+.case-notes ul { margin: 0; padding-left: 1.3em; }
+.case-notes li { margin-bottom: var(--space-1); }
+@media (max-width: 640px) {
+  .note-hero { padding: var(--space-6) var(--space-4) var(--space-4); }
+  .note-hero::before { width: 200px; height: 200px; right: -70px; top: -80px; }
+  .note-hero-emoji { right: 16px; top: 16px; width: 72px; height: 72px; }
+  .note-hero-emoji img { width: 44px; height: 44px; }
+  .note-hero h1, .note-lead { margin-right: 76px; }
+  .pick-num { font-size: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { .note-grid a:hover, .pick-card:hover { transform: none !important; } }
