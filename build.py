@@ -729,6 +729,35 @@ def facet_values(cases, key):
     return sorted(vals.items(), key=lambda kv: (kv[0] == "その他", -kv[1], kv[0]))
 
 
+def purpose_strip(cfg, cases):
+    """トップの「目的から探す」の帯。先頭に「すべて」、続けて目的を件数の多い順に並べる。
+
+    押すと目的の絞り込みをその1つにする（app.js）。JavaScript が動かないときは ?purpose= のリンクとして働く。
+    件数の数字は、読み込むと0から数え上がる。
+    """
+    icons = cfg.get("purpose_icons") or {}
+    opts = sorted(facet_values(cases, "purpose"), key=lambda x: -x[1])
+    if not opts:
+        return ""
+
+    def tile(href, purpose, code, n, name, current=False):
+        cur = ' aria-current="true"' if current else ""
+        return (f'<a class="tile" href="{href}" data-purpose="{esc(purpose)}"{cur}>'
+                f'<img src="assets/emoji/{code}.png" alt="" width="34" height="34" loading="lazy">'
+                f'<span class="tile-num" data-count="{n}">{n}</span><span class="tile-name">{esc(name)}</span></a>')
+
+    tiles = [tile("./", "", "1f4d6", len(cases), "すべて", current=True)]
+    tiles += [tile(f"?purpose={urllib.parse.quote(v)}", v, icons.get(v, "1f4cc"), n, v) for v, n in opts]
+    return f"""
+<section class="purposes wrap" aria-labelledby="purposes-title">
+  <div class="strip-head">
+    <h2 id="purposes-title">目的から探す</h2><small>横にすべらせて選べます</small>
+    <span class="strip-arrows" id="strip-arrows" hidden><button type="button" data-dir="-1" aria-label="前の目的へ">←</button><button type="button" data-dir="1" aria-label="次の目的へ">→</button></span>
+  </div>
+  <div class="strip-wrap"><div class="strip" id="purpose-strip">{''.join(tiles)}</div></div>
+</section>"""
+
+
 def build_index(cfg, cases, updated):
     n_int = sum(1 for c in cases if c.get("種別") == "社内")
     n_fan = len(cases) - n_int
@@ -760,6 +789,7 @@ def build_index(cfg, cases, updated):
     <p class="updated">{esc(updated)}更新</p>
   </div>
 </section>
+{purpose_strip(cfg, cases)}
 <section class="finder wrap" aria-label="事例を探す">
   <div class="search-row">
     <label class="visually-hidden" for="q">キーワード</label>

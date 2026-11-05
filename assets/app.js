@@ -176,6 +176,40 @@
     showSearchNote(words, terms);
     countSearch(shown);
     if (pushState) saveUrl(s);
+    markTiles(s);
+  }
+
+  // 目的から探すの帯：選んでいる目的のタイルを空色にする（何も選んでいなければ「すべて」）
+  var strip = document.getElementById('purpose-strip');
+  var tiles = strip ? Array.prototype.slice.call(strip.querySelectorAll('.tile')) : [];
+  function markTiles(s) {
+    var chosen = s.purpose || [];
+    tiles.forEach(function (t) {
+      var v = t.getAttribute('data-purpose');
+      var on = v ? chosen.indexOf(v) !== -1 : chosen.length === 0;
+      if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
+    });
+  }
+  // 押すと、目的の絞り込みをその1つにする（「すべて」は目的の絞り込みを外す）。ほかの条件や検索語はそのまま
+  tiles.forEach(function (t) {
+    t.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      var v = t.getAttribute('data-purpose');
+      boxes.forEach(function (b) { if (b.name === 'purpose') b.checked = !!v && b.value === v; });
+      apply(true);
+    });
+  });
+  // PC では帯の右上の矢印でも動かせる
+  var arrows = document.getElementById('strip-arrows');
+  if (arrows && strip && window.matchMedia('(min-width: 760px)').matches) {
+    arrows.hidden = false;
+    Array.prototype.forEach.call(arrows.querySelectorAll('button'), function (b) {
+      b.addEventListener('click', function () {
+        var dir = parseInt(b.getAttribute('data-dir'), 10);
+        var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        strip.scrollBy({ left: dir * strip.clientWidth * 0.8, behavior: smooth ? 'smooth' : 'auto' });
+      });
+    });
   }
 
   function doSort() {
@@ -317,7 +351,7 @@
   // 件数の大きな数字を0から数え上げる（動きを減らす設定の端末では、そのまま出す）
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion && window.requestAnimationFrame) {
-    Array.prototype.forEach.call(document.querySelectorAll('.stat-num[data-count]'), function (el) {
+    Array.prototype.forEach.call(document.querySelectorAll('.stat-num[data-count], .tile-num[data-count]'), function (el) {
       var to = parseInt(el.getAttribute('data-count'), 10);
       if (!to) return;
       var t0 = null;
