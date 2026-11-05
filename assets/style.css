@@ -621,3 +621,13 @@ main { flex: 1 0 auto; }
   .pick-num { font-size: 32px; }
 }
 @media (prefers-reduced-motion: reduce) { .note-grid a:hover, .pick-card:hover { transform: none !important; } }
+
+/* 事例ページの白い札のうち、押すと一覧を開くもの（段階・活動の型・場・業種・ほかにも使われているツール） */
+.case-chips li:has(> a) { padding: 0; }
+.case-chips a { display: block; padding: 2px 12px; border-radius: var(--radius-pill); color: inherit; text-decoration: none; }
+.case-chips a:hover { color: var(--sky-on-tint); background: var(--chip-bg); }
+.case-chips li:has(> a:hover) { border-color: var(--sky); }
+.case-chips a:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; }
+/* 一覧で、ツールの条件が入っているときの一言と「外す」 */
+.tool-note { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-2) 0 0; font-size: 14px; color: var(--text-body); }
+.tool-note[hidden] { display: none; }

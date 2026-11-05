@@ -168,6 +168,58 @@ def split_multi(v):
     return [t.strip() for t in re.split(r"[、,，]", v or "") if t.strip()]
 
 
+def split_tools(v):
+    """ツール列を1つずつに分ける（「、」「/」などで区切る。（ ）の中の区切りでは分けない）。"""
+    out, buf, depth = [], "", 0
+    for ch in v or "":
+        if ch in "（(":
+            depth += 1
+        elif ch in "）)":
+            depth = max(0, depth - 1)
+        if depth == 0 and ch in "、,，/／":
+            out.append(buf)
+            buf = ""
+        else:
+            buf += ch
+    out.append(buf)
+    return [t.strip() for t in out if t.strip()]
+
+
+def tool_base(t):
+    """ツールの名前から（ ）の中を外す。「Beach（クオン）」→「Beach」"""
+    return re.sub(r"\s*[（(].*$", "", t).strip()
+
+
+def assign_tools(cases):
+    """事例ごとのツールを [(札に出す文字, まとめた名前)] にして c["_tools"] に入れ、まとめた名前ごとの事例の数を返す。
+    （ ）の中を外し、大文字・小文字と全角・半角をそろえ、言い換え表（config/synonyms.json）の同じグループは1つにまとめる
+    （「commmune」と「Commune」など）。まとめた名前は、データの中でいちばん多い書き方にする。"""
+    groups = load_synonyms()
+    def key_of(base):
+        n = normalize(base)
+        for i, g in enumerate(groups):
+            if n in g["words"]:
+                return f"g{i}"
+        return n
+    spell = {}
+    for c in cases:
+        c["_tool_keys"] = []
+        for t in split_tools(c.get("ツール")):
+            base = tool_base(t)
+            if not base:
+                continue
+            k = key_of(base)
+            spell.setdefault(k, Counter())[base] += 1
+            c["_tool_keys"].append((t, k))
+    names = {k: sorted(cnt.items(), key=lambda kv: (-kv[1], kv[0]))[0][0] for k, cnt in spell.items()}
+    counts = Counter()
+    for c in cases:
+        c["_tools"] = [(t, names[k]) for t, k in c.pop("_tool_keys")]
+        for name in {n for _, n in c["_tools"]}:
+            counts[name] += 1
+    return counts
+
+
 def industry_group(cfg, v):
     if not v:
         return ""
@@ -236,7 +288,12 @@ def enrich(cfg, rows):
         c["_urls"] = split_urls(r.get("出典URL"))
         c["_title"] = r.get("コミュニティ名") or f"{r['企業名']}のコミュニティ"
         cases.append(c)
+    global TOOL_COUNTS
+    TOOL_COUNTS = assign_tools(cases)
     return cases
+
+
+TOOL_COUNTS = Counter()  # まとめたツールの名前ごとの事例の数（enrich で数える）。2件以上のものだけ札を押せるようにする
 
 
 # ---------- 新着と更新 ----------
@@ -1003,6 +1060,7 @@ def card(c, prefix=""):
         "place": c.get("場", ""),
         "industry": c["_industry"],
         "size": c.get("規模の区分", ""),
+        "tool": "|".join(dict.fromkeys(n for _, n in c.get("_tools", []))),
         "year": c.get("開始年", ""),
         "checked": date_key(c.get("確認日")),
         "score": score_value(c.get("観測スコア")),
@@ -1125,6 +1183,7 @@ def build_index(cfg, cases):
   <div class="result-bar">
     <p id="result-count" aria-live="polite">{len(cases)}件の事例</p>
     <p class="search-note" id="search-note" hidden></p>
+    <p class="tool-note" id="tool-note" hidden><span></span><button type="button" class="small-button" id="tool-clear">外す</button></p>
     <button type="button" id="reset" class="link-button" hidden>条件をすべて外す</button>
     <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>
     <div class="view-toggle" id="view-toggle" role="group" aria-label="表示のしかた" hidden>
@@ -1179,9 +1238,29 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     # 基本の情報を小さな札に → 「この事例のポイント」（工夫のポイント）を大きく → 何をしたか → どうなったか →
     # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
     icons = cfg.get("purpose_icons") or {}
-    facts = [c.get("業種"), c.get("開始年") and f"{c['開始年']}年開始", c.get("規模") or c.get("規模の区分"),
-             c.get("段階"), *c["_activity"], c.get("場"), c.get("ツール")]  # 白い札（基本の情報と活動の型）はまとめて1か所に
-    chips = "".join(f"<li>{esc(x)}</li>" for x in facts if x)
+    # 白い札（基本の情報と活動の型）はまとめて1か所に。押すと一覧を開く札と、押せない札がある：
+    # 段階・活動の型・場は絞り込み、業種は業種のまとめの絞り込み、ツールは「ツールにその名前がある事例」（ほかにも使っている事例があるものだけ）。
+    # 開始年と規模は、ほかの事例がうまく出ないので押せない札のまま
+    def fact_link(text, param, value, label):
+        href = f"../../?{param}={urllib.parse.quote(value)}"
+        return (f'<li><a href="{href}" title="{esc(label)}の事例を見る" '
+                f'data-goatcounter-click="fact/{esc(param)}/{esc(value)}">{esc(text)}</a></li>')
+    facts = []
+    if c.get("業種"):
+        facts.append(fact_link(c["業種"], "industry", c["_industry"], f"業種「{c['_industry']}」")
+                     if c.get("_industry") else f"<li>{esc(c['業種'])}</li>")
+    for x in [c.get("開始年") and f"{c['開始年']}年開始", c.get("規模") or c.get("規模の区分")]:
+        if x:
+            facts.append(f"<li>{esc(x)}</li>")
+    if c.get("段階"):
+        facts.append(fact_link(c["段階"], "stage", c["段階"], f"段階「{c['段階']}」"))
+    for a in c["_activity"]:
+        facts.append(fact_link(a, "activity", a, f"活動の型「{a}」"))
+    if c.get("場"):
+        facts.append(fact_link(c["場"], "place", c["場"], f"場「{c['場']}」"))
+    for t, name in c.get("_tools", []):
+        facts.append(fact_link(t, "tool", name, f"ツール「{name}」") if TOOL_COUNTS[name] >= 2 else f"<li>{esc(t)}</li>")
+    chips = "".join(facts)
     purposes = "".join(
         f'<li><a href="../../?purpose={urllib.parse.quote(p)}"><img src="../../assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="20" height="20">{esc(p)}</a></li>'
         for p in c["_purpose"])
@@ -1535,6 +1614,9 @@ def main():
     print(f"組み合わせのページ {len(combos)}件（解説なし {len(missing)}件）")
     for k in missing:
         print(f"  解説なし：{k}")
+    other = sum(1 for c in cases if c["_industry"] == "その他")
+    print(f"業種のまとめ「その他」 {other}件（増えてきたら config/site.json の industry_groups を見直す）")
+    print(f"ツールの札を押せるもの {sum(1 for n in TOOL_COUNTS.values() if n >= 2)}種類 / {len(TOOL_COUNTS)}種類")
     print(f"新着 {len(new)}件、更新 {len(updates)}件（履歴{'あり' if has_history else 'なし：確認日だけで判定'}）")
     write("404.html", build_404(cfg))
     write("saved/index.html", build_saved(cfg, cases))

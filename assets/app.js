@@ -24,8 +24,11 @@
   function idOf(c) { return (c.querySelector('a').getAttribute('href') || '').replace(/^cases\/|\/$/g, ''); }
   var limit = PAGE;
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.facet input'));
-  var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry', 'size'];
-  var multi = { purpose: true, activity: true };
+  var keys = ['type', 'purpose', 'stage', 'activity', 'place', 'industry', 'size', 'tool'];
+  var multi = { purpose: true, activity: true, tool: true };
+  // ツール（?tool=）は絞り込みの欄に出さない条件。事例ページのツールの札から開く。カードの data-tool と同じ名前で比べる
+  var toolSel = '';
+  var toolNote = document.getElementById('tool-note');
   cards.forEach(function (c, i) { c.dataset.order = i; });
 
   function selected() {
@@ -33,6 +36,7 @@
     boxes.forEach(function (b) {
       if (b.checked) (s[b.name] = s[b.name] || []).push(b.value);
     });
+    if (toolSel) s.tool = [toolSel];
     return s;
   }
 
@@ -91,6 +95,7 @@
         var s2 = {};
         keys.forEach(function (k2) { if (s[k2]) s2[k2] = s[k2].filter(function (y) { return k2 !== k || y !== x; }); if (s2[k2] && !s2[k2].length) delete s2[k2]; });
         options.push({ label: '「' + x + '」を外す', n: countWith(s2, terms, savedOnly), run: function () {
+          if (k === 'tool') toolSel = '';
           boxes.forEach(function (b) { if (b.name === k && b.value === x) b.checked = false; });
         } });
       });
@@ -177,6 +182,10 @@
     countSearch(shown);
     if (pushState) saveUrl(s);
     markTiles(s);
+    if (toolNote) {
+      toolNote.hidden = !toolSel;
+      toolNote.querySelector('span').textContent = toolSel ? 'ツール「' + toolSel + '」を使っている事例' : '';
+    }
   }
 
   // 目的から探すの帯：選んでいる目的のタイルを空色にする（何も選んでいなければ「すべて」）
@@ -263,6 +272,7 @@
       if (b.checked) any = true;
     });
     if (p.get('q')) q.value = p.get('q');
+    toolSel = p.get('tool') || '';
     if (p.get('saved') === '1' && saved.length) setSavedOnly(true);
     if (p.get('sort') && sort.querySelector('option[value="' + p.get('sort') + '"]')) sort.value = p.get('sort');
     if (any) details.open = true;
@@ -270,6 +280,7 @@
 
   function clearAll() {
     boxes.forEach(function (b) { b.checked = false; });
+    toolSel = '';
     setSavedOnly(false);
     q.value = '';
     apply(true);
@@ -410,6 +421,7 @@
   q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { apply(true); }, 150); });
   sort.addEventListener('change', function () { doSort(); apply(true); });
   reset.addEventListener('click', clearAll);
+  if (toolNote) document.getElementById('tool-clear').addEventListener('click', function () { toolSel = ''; apply(true); });
   reset2.addEventListener('click', clearAll);
   moreButton.addEventListener('click', function () {
     var first = limit;
