@@ -349,21 +349,43 @@
   }
 
   // 件数の大きな数字を0から数え上げる（動きを減らす設定の端末では、そのまま出す）
+  // ページの読み込み（並べ替え・画像・見出しの書体）と重なると数字の増え方がカクカクするので、
+  // 読み込みが終わってから始める。待っているあいだは数字を隠し、桁が増えても横にずれないよう幅を先に取っておく
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion && window.requestAnimationFrame) {
-    Array.prototype.forEach.call(document.querySelectorAll('.stat-num[data-count], .tile-num[data-count]'), function (el) {
-      var to = parseInt(el.getAttribute('data-count'), 10);
-      if (!to) return;
+  var counters = Array.prototype.filter.call(document.querySelectorAll('.stat-num[data-count], .tile-num[data-count]'), function (el) {
+    return parseInt(el.getAttribute('data-count'), 10) > 0;
+  });
+  if (!reduceMotion && window.requestAnimationFrame && counters.length) {
+    counters.forEach(function (el) {
+      el.style.minWidth = el.getAttribute('data-count').length + 'ch';
+      el.style.opacity = '0';
+    });
+    var started = false;
+    var startCount = function () {
+      if (started) return;
+      started = true;
       var t0 = null;
-      el.textContent = '0';
       var step = function (t) {
         if (t0 === null) t0 = t;
-        var p = Math.min(1, (t - t0) / 900);
-        el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
+        var p = Math.min(1, (t - t0) / 1000);
+        var e = 1 - Math.pow(1 - p, 3);
+        counters.forEach(function (el) {
+          el.textContent = String(Math.round(parseInt(el.getAttribute('data-count'), 10) * e));
+        });
         if (p < 1) requestAnimationFrame(step);
       };
+      counters.forEach(function (el) { el.textContent = '0'; el.style.opacity = ''; });
       requestAnimationFrame(step);
+    };
+    var whenLoaded = new Promise(function (ok) {
+      if (document.readyState === 'complete') ok(); else window.addEventListener('load', ok);
     });
+    var whenFonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.all([whenLoaded, whenFonts]).then(function () {
+      // 読み込みの直後のひと仕事が片づくのを2フレーム待ってから
+      requestAnimationFrame(function () { requestAnimationFrame(startCount); });
+    });
+    setTimeout(startCount, 2500);  // 読み込みに時間がかかっても、2.5秒たったら始める
   }
 
   if (window.matchMedia('(min-width: 900px)').matches) details.open = true;

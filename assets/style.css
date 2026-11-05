@@ -126,7 +126,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
 .stats { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2) var(--space-8); margin: 0 0 var(--space-2); }
-.stat-num { display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
+.stat-num { transition: opacity .2s; display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
 .stat-label { display: block; font-size: 13px; color: var(--text-sub); }
 .updated { font-size: 13px; color: var(--text-sub); margin: 0; }
 @media (max-width: 600px) { .stats { gap: var(--space-2) var(--space-6); } .stat-num { font-size: 36px; } }
@@ -145,7 +145,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .strip { display: flex; gap: var(--space-3); overflow-x: auto; padding: var(--space-1) 40px var(--space-3) var(--space-1); margin: 0 calc(-1 * var(--space-1)); scroll-snap-type: x proximity; scrollbar-width: thin; }
 .tile { flex: none; width: 132px; display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--space-4) var(--space-3); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--ink); text-decoration: none; scroll-snap-align: start; box-shadow: var(--shadow-card); }
 .tile img { width: 34px; height: 34px; margin-bottom: var(--space-1); }
-.tile-num { font-family: var(--font-display); font-weight: 900; font-size: 30px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.tile-num { transition: opacity .2s; font-family: var(--font-display); font-weight: 900; font-size: 30px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
 .tile-name { font-size: 13px; line-height: 1.4; min-height: 2.8em; display: flex; align-items: center; }
 .tile:hover { border-color: var(--sky); color: var(--ink); }
 .tile[aria-current="true"] { background: var(--sky); border-color: var(--sky); color: var(--on-sky); }
