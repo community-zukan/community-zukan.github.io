@@ -35,14 +35,14 @@ Claude Code はスプレッドシートに書き込みません。列を足す�
 | ファイル | 中身 |
 |---|---|
 | build.py | サイトを作るスクリプト。ページの文面、新着と更新・RSS、組み合わせのページ、JSON-LD もここで作る。標準ライブラリだけで動き、pykakasi があればひらがな検索用の読みを足す |
-| config/site.json | サイト名、CSVのURL、運営者、連絡フォーム、GoatCounter、Search Console、業種のまとめ方（industry_groups）、件数チェックの比率、検索欄の下の「検索の例」（search_examples）、リンク点検で「拒否」に分けるサイト（linkcheck_refusing_hosts） |
+| config/site.json | サイト名、CSVのURL、運営者、連絡フォーム、GoatCounter、Search Console、業種のまとめ方（industry_groups）、件数チェックの比率、検索欄の下の「検索の例」の候補（運営が選んだ search_examples と、実際に検索された searched_words）、リンク点検で「拒否」に分けるサイト（linkcheck_refusing_hosts） |
 | config/synonyms.json | 検索の言い換え表（Viva Engage と Yammer など） |
 | config/combo_notes.json | 組み合わせのページに添える解説（AIによる解釈）と、書いた日付 |
 | assets/style.css | 見た目。デザインシステム「黒田悠介」（観測所と同じ）。色・余白・角丸・影は先頭の :root に名前つきの値（--base・--sky・--space-4 など）でまとめ、暗い表示は :root[data-theme="dark"] で値だけを入れ替える |
 | assets/site.js | どのページでも使う仕組み：暗い表示の切り替え、ヘッダーのメニュー・虫めがね・あとで見るの件数、スマホで下に読むとヘッダーを隠す |
-| assets/app.js | 一覧の絞り込み・検索（ひらがな・言い換え）・並べ替え・「もっと見る」・あとで見るの切り替え（?saved=1 でも開く）・検索の例・0件のときの「外すと見つかる条件」・PC のカード／一覧の切り替え・検索語の記録（GoatCounter） |
+| assets/app.js | 一覧の絞り込み・検索（ひらがな・言い換え）・並べ替え・「もっと見る」・あとで見るの切り替え（?saved=1 でも開く）・検索の例（読み込むたびに候補から5つをランダムに選ぶ。searched_words からは2つまで。1件も見つからない言葉は出さない）・0件のときの「外すと見つかる条件」・PC のカード／一覧の切り替え・検索語の記録（GoatCounter） |
 | assets/case.js | 事例ページのあとで見る・URLのコピー・役に立った／いまひとつ |
-| assets/icon.svg・favicon-32.png・apple-touch-icon.png | ファビコン。本を開いた絵文字「📖」（Google の Noto Emoji の絵。Apache License 2.0。「この図鑑について」に表記）。ヘッダーのロゴも同じ icon.svg を build.py の logo_mark で読む。PNG は `tools/make_og.py --site` で作り直す |
+| assets/icon.svg・favicon-32.png・apple-touch-icon.png | ファビコン。本を開いた絵文字「📖」（Google の Noto Emoji の絵。Apache License 2.0。ライセンスは tools/emoji/LICENSE。サイトには表記しない（黒田さんの判断））。ヘッダーのロゴも同じ icon.svg を build.py の logo_mark で読む。PNG は `tools/make_og.py --site` で作り直す |
 | tools/emoji/ | 「📖」のもとの絵（Noto Emoji の 512px の PNG）とライセンス。共有画像とファビコンの PNG はここから作る |
 | assets/ogp.png | サイト全体の共有画像（1200×630）。左上と下の帯に「📖」。`tools/make_og.py --site` で作り直す |
 | tools/make_og.py | 事例ページごとの共有画像を og-items/ に作る（Pillow と Noto Sans CJK を使う。og-items/ はリポジトリに入れない） |
@@ -147,7 +147,7 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 | B5 ヘッダー | ロゴ・メニュー・あとで見る（しおりの絵と件数）・虫めがねの1段。スマホはメニューを押すと開く |
 | B6 パンくず | 事例ページと組み合わせのページに「事例一覧 › …」 |
 | B7 404 | 検索欄と、事例一覧・新着と更新・組み合わせへの入口 |
-| B8 検索の例 | 検索欄の下に config/site.json の search_examples を並べる |
+| B8 検索の例 | 検索欄の下に5つ並べる。2026-11-05 から、読み込むたびに search_examples（20語）と searched_words から選び直す |
 | B9 0件のとき | 条件やキーワードを1つ外すと見つかるものを件数つきで示す。言い換えで広げたときは一言そえる |
 | B10 ヘッダーを隠す | スマホで下に読むと隠し、上に戻すと出す。一覧では件数の帯をヘッダーの下に残す |
 | B11 カード／一覧 | PC だけ。件数の横の絵のボタンで切り替え、localStorage の zukan-view に残す |
@@ -167,7 +167,7 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 - **規模の区分（W）・検索用キーワード（X）**：2026-11-04 時点の実データはすべて空。Cowork 側の点検で埋まると、規模の区分の絞り込みが自動で出る。
 - **リンク点検で「拒否」に分けるサイト**：自動のアクセスを断るがブラウザでは開けるサイトが見つかったら、config/site.json の linkcheck_refusing_hosts に足す（Cowork がブラウザで確かめたものだけ）。本当に消えたページ（例：F93 の hrmos の募集終了）は足さない。
 - **リンク点検の結果**：Issue に出た要確認のURLは、データ側の定期実行が linkcheck.json を読んで直す（スキルへの組み込みは Cowork 側）。
-- **週次レポートからの依頼**：「〇〇を検索の例に足して」は config/site.json の search_examples に、言い換えの案は config/synonyms.json に足す。改善の提案は黒田さんが採用したものだけを行う。
+- **週次レポートからの依頼**：「〇〇を検索された言葉に足して」は config/site.json の searched_words に（運営が選ぶ言葉なら search_examples に）、言い換えの案は config/synonyms.json に足す。改善の提案は黒田さんが採用したものだけを行う。
 - **15 Google Search Console**：所有権の確認と sitemap.xml の送信は黒田さんの作業。
 
 ### 作らない（2026-11-04 黒田さんの判断）
@@ -206,4 +206,4 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 - 2026-11-04（同日、Claude Code）：このMacから clone して push できるようにした（workflow ファイルの push には GitHub の workflow 権限が要る）。「やること」の1〜14を1項目ずつコミットして公開し、Actions の成功を確かめた。手元で --csv を付けて試すと data/latest.csv が上書きされる不具合を直した。リンク点検の初回は GitHub の一時的なエラーで保存に失敗したため、保存を3回まで試し直すようにした。
 - 2026-11-04（夜、Claude Code）：16番を実装した。誤判定の4件は、取り直しても結果が変わらない「自動アクセスだけを断るサイト」だったので、「拒否」に分けるサイトの一覧に足した。
 - 2026-11-04（夜、Claude Code）：観測所の学びを28項目に分けて黒田さんに採否を選んでもらい、27項目を実装した（B12 は保留）。配色と書体は見本のページで種別の色を3案から選んでもらった（案2：空色と黄色）。デザインの変更は【デザイン】の名前で1つずつコミットし、戻し先のタグ zukan-before-design-2026-11-04 を付けた。週次レポートの定期タスクを作った。
-- 2026-11-05（Claude Code）：運営者の紹介を、プロフィール文（Googleドキュメント）のコミュニティに関わる部分から書き直した。ロゴとファビコン・共有画像の絵を、3つの点から本を開いた絵文字「📖」（Noto Emoji）に替えた（戻し先のタグ zukan-before-icon-2026-11-05）。
+- 2026-11-05（Claude Code）：運営者の紹介を、プロフィール文（Googleドキュメント）のコミュニティに関わる部分から書き直した。ロゴとファビコン・共有画像の絵を、3つの点から本を開いた絵文字「📖」（Noto Emoji）に替えた（戻し先のタグ zukan-before-icon-2026-11-05）。検索の例を、読み込むたびにランダムに選び直すようにし、実際に検索された言葉（searched_words）を混ぜられるようにした。

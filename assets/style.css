@@ -131,6 +131,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .search-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
 .examples { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-3); margin: 0; font-size: 13px; color: var(--text-sub); }
 .examples a { display: inline-block; padding: 6px 0; }
+.js .examples:not(.is-ready) { visibility: hidden; } /* 選び直す前の言葉が一瞬見えないように（場所は取っておく） */
 .search-note { flex-basis: 100%; font-size: 13px; color: var(--text-sub); }
 .relax { list-style: none; padding: 0; margin: var(--space-3) 0; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); }
 .relax[hidden] { display: none; }

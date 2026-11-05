@@ -556,13 +556,26 @@ def nav_links(rel, path):
     return "\n      ".join(out)
 
 
+EXAMPLES_SHOWN = 5  # 検索の例を一度に出す数
+
+
 def search_examples(cfg):
-    """検索欄の下に小さく並べる「検索の例」（config/site.json の search_examples）。週次レポートで実際に検索された言葉から足していく。"""
-    words = cfg.get("search_examples") or []
-    if not words:
+    """検索欄の下に小さく並べる「検索の例」。
+
+    候補は config/site.json の search_examples（運営が選んだ言葉）と searched_words（実際に検索された言葉。
+    週次レポートで GoatCounter の search/ から足す）。読み込むたびに app.js が候補から5つをランダムに選び、
+    今のデータで1件も見つからない言葉は出さない。JavaScript が動かないときは search_examples の先頭5つを出す。
+    """
+    picked = [w for w in (cfg.get("search_examples") or []) if w]
+    searched = [w for w in (cfg.get("searched_words") or []) if w and w not in picked]
+    if not picked and not searched:
         return ""
-    links = "".join(f'<a href="?q={urllib.parse.quote(w)}" data-q="{esc(w)}">{esc(w)}</a>' for w in words)
-    return f'<p class="examples"><span>検索の例</span>{links}</p>'
+    first = (picked + searched)[:EXAMPLES_SHOWN]
+    links = "".join(f'<a href="?q={urllib.parse.quote(w)}" data-q="{esc(w)}">{esc(w)}</a>' for w in first)
+    data = json.dumps({"picked": picked, "searched": searched, "shown": EXAMPLES_SHOWN}, ensure_ascii=False).replace("</", "<\\/")
+    return (f'<p class="examples" id="examples"><span>検索の例</span>{links}</p>'
+            f'<script type="application/json" id="examples-data">{data}</script>')
+
 
 def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
     rel = "../" * depth
@@ -1027,7 +1040,6 @@ def build_about(cfg, cases, updated):
 
   <h2>掲載内容について</h2>
   <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
-  <p>サイトのアイコン（本を開いた絵）は、Google の <a href="https://github.com/googlefonts/noto-emoji" rel="noopener" target="_blank">Noto Emoji</a> の絵を使っています（Apache License 2.0）。</p>
 
   <h2>運営者</h2>
   <div class="operator-card">

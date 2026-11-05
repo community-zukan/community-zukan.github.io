@@ -11,8 +11,10 @@
   "goatcounter": "communityzukan",
   "google_site_verification": "QfZTihD29VHshRbTilTzPcex8edTvSmGA6GJXm81WHs",
   "min_ratio": 0.5,
-  "_search_examples の説明": "事例一覧の検索欄の下に小さく並べる「検索の例」。週次レポートで実際に検索された言葉から足していく。",
-  "search_examples": ["Slack", "アルムナイ", "商品開発", "部活動", "Commune"],
+  "_search_examples の説明": "事例一覧の検索欄の下に小さく並べる「検索の例」の候補。読み込むたびに、search_examples と searched_words を合わせた候補から5つをランダムに出す（今のデータで1件も見つからない言葉は出さない）。search_examples は運営が選んだ言葉。",
+  "search_examples": ["Slack", "Teams", "Viva Engage", "アルムナイ", "商品開発", "部活動", "Commune", "アンバサダー", "ユーザー会", "ファンミーティング", "勉強会", "口コミ", "オンボーディング", "部門横断", "有志", "生成AI", "DX", "アプリ", "子育て", "地域"],
+  "_searched_words の説明": "実際に検索された言葉のうち、検索の例に出してよいもの。週次レポートが GoatCounter の search/（見つかった検索）から選び、黒田さんの確認を経て足す。search-zero/（0件）の言葉や、人名・個人を特定できる言葉は入れない。",
+  "searched_words": [],
   "_linkcheck_refusing_hosts の説明": "自動のアクセスを断る（応答しない・404を返す）が、ブラウザでは開けると確かめたサイト。開けなくても「要確認」ではなく「拒否」に分ける。サブドメインも含む。",
   "linkcheck_refusing_hosts": ["markezine.jp", "nikkei.com", "muji.net", "adobe.com", "freee.co.jp", "initial.inc"],
   "industry_groups": [

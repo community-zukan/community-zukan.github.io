@@ -253,6 +253,36 @@
     savedToggle.addEventListener('click', function () { setSavedOnly(!savedOnly); apply(false); });
   }
 
+  // 検索の例：読み込むたびに候補から選び直す。実際に検索された言葉（searched）は2つまで混ぜ、残りは運営が選んだ言葉（picked）から。
+  // 今のデータで1件も見つからない言葉は出さない
+  var examples = document.getElementById('examples');
+  var examplesData = document.getElementById('examples-data');
+  if (examples && examplesData) {
+    try {
+      var ex = JSON.parse(examplesData.textContent);
+      var hits = function (w) { return countWith({}, normalize(w).split(/\s+/).filter(Boolean).map(alternatives), false) > 0; };
+      var shuffle = function (a) {
+        a = a.slice();
+        for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+        return a;
+      };
+      var searched = shuffle((ex.searched || []).filter(hits)).slice(0, 2);
+      var rest = shuffle((ex.picked || []).filter(function (w) { return searched.indexOf(w) === -1 && hits(w); }));
+      var chosen = shuffle(searched.concat(rest.slice(0, ex.shown - searched.length)));
+      if (chosen.length) {
+        Array.prototype.slice.call(examples.querySelectorAll('a')).forEach(function (a) { a.remove(); });
+        chosen.forEach(function (w) {
+          var a = document.createElement('a');
+          a.href = '?q=' + encodeURIComponent(w);
+          a.setAttribute('data-q', w);
+          a.textContent = w;
+          examples.appendChild(a);
+        });
+      }
+    } catch (e) { /* 選び直せないときは、最初から並んでいる言葉のまま */ }
+    examples.classList.add('is-ready');
+  }
+
   // 検索の例：押すと検索欄に入れて探す（ページは読み込み直さない）
   Array.prototype.forEach.call(document.querySelectorAll('.examples a[data-q]'), function (a) {
     a.addEventListener('click', function (ev) {
