@@ -742,7 +742,8 @@ def purpose_strip(cfg, cases):
 
     def tile(href, purpose, code, n, name, current=False):
         cur = ' aria-current="true"' if current else ""
-        return (f'<a class="tile" href="{href}" data-purpose="{esc(purpose)}"{cur}>'
+        return (f'<a class="tile" href="{href}" data-purpose="{esc(purpose)}"{cur} '
+                f'data-goatcounter-click="purpose/{esc(name)}" data-goatcounter-title="目的から探す：{esc(name)}">'
                 f'<img src="assets/emoji/{code}.png" alt="" width="34" height="34" loading="lazy">'
                 f'<span class="tile-num" data-count="{n}">{n}</span><span class="tile-name">{esc(name)}</span></a>')
 
@@ -1069,7 +1070,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタンが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイルが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
