@@ -547,7 +547,7 @@ def logo_mark(rel):
 
 def nav_links(rel, path):
     """ヘッダーのメニュー。いま開いているページには aria-current を付ける。"""
-    items = [("", "事例一覧"), ("new/", "新着と更新"), ("combos/", "組み合わせ"), ("about/", "この図鑑について")]
+    items = [("", "事例一覧"), ("new/", "新着と更新"), ("combos/", "組み合わせ"), ("saved/", "あとで見る"), ("about/", "この図鑑について")]
     out = []
     for href, label in items:
         here = (path == href) if href == "" else path.startswith(href)
@@ -577,7 +577,7 @@ def search_examples(cfg):
             f'<script type="application/json" id="examples-data">{data}</script>')
 
 
-def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None):
+def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type="website", jsonld=None, noindex=False):
     rel = "../" * depth
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
     base = cfg["base_url"].rstrip("/")
@@ -587,6 +587,8 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     for obj in jsonld or []:
         text = json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
         extra += f'<script type="application/ld+json">{text}</script>\n'
+    if noindex:
+        extra += '<meta name="robots" content="noindex">\n'
     if cfg.get("google_site_verification"):
         extra += f'<meta name="google-site-verification" content="{esc(cfg["google_site_verification"])}">\n'
     if cfg.get("goatcounter"):
@@ -629,7 +631,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     <nav class="global-nav" id="global-nav" aria-label="サイト内">
       {nav_links(rel, path)}
     </nav>
-    <a class="icon-btn header-saved" id="header-saved" href="{rel or './'}?saved=1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="visually-hidden">あとで見る</span><span class="count" id="header-saved-count"></span></a>
+    <a class="icon-btn header-saved" id="header-saved" href="{rel}saved/" title="あとで見る"{' aria-current="page"' if path == "saved/" else ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="visually-hidden">あとで見る</span><span class="count" id="header-saved-count"></span></a>
     <a class="icon-btn" id="header-search-btn" href="{rel or './'}#q" aria-controls="header-search" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="visually-hidden">検索</span></a>
     <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-controls="global-nav" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="visually-hidden">メニュー</span></button>
   </div>
@@ -648,7 +650,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     {operator_line(cfg, rel)}
     <div class="footer-bottom">
       <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着と更新のRSS</a></p>
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>暗い表示にする</button>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>ダーク表示</button>
     </div>
   </div>
 </footer>
@@ -981,8 +983,7 @@ def share_bar(cfg, c):
     return f"""<div class="actions">
   <button type="button" class="action-button save" id="save" data-id="{esc(c['ID'])}" aria-pressed="false" data-goatcounter-click="save-{esc(c['ID'])}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>
   <div class="share">
-    <span class="share-head">共有</span>
-    <ul class="share-list">
+    <ul class="share-list" aria-label="共有">
       <li><button type="button" class="share-link" id="copy-url" data-url="{esc(url)}" data-goatcounter-click="share-copy-{esc(c['ID'])}" hidden>URLをコピー</button></li>
       {share}
     </ul>
@@ -1092,6 +1093,34 @@ def contact_text(cfg):
     return "運営者までお知らせください。"
 
 
+def build_saved(cfg, cases):
+    """あとで見る（/saved/）。事例ページで「あとで見る」に入れた事例を、入れた順の新しいものから並べる。
+
+    入れた事例はブラウザの localStorage（zukan-saved）にだけあるので、全事例のカードを隠して置き、
+    assets/saved.js が入れたものだけを出す。検索エンジンには載せない。
+    """
+    body = f"""
+<article class="wrap saved-page">
+  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../">事例一覧</a></li><li aria-current="page">あとで見る</li></ol></nav>
+  <h1>あとで見る</h1>
+  <p class="lead">事例ページで「あとで見る」を押した事例です。このブラウザの中にだけ保存していて、運営者には送られません。</p>
+  <p class="saved-count" id="saved-count" aria-live="polite"></p>
+  <ul class="cards" id="saved-cards">
+    {''.join(card(c, prefix="../").replace('<li class="card" ', '<li class="card" hidden ', 1) for c in cases)}
+  </ul>
+  <div class="empty" id="saved-empty" hidden>
+    <p>まだ「あとで見る」に入れた事例はありません。</p>
+    <p>事例ページの「あとで見る」を押すと、ここにたまります。</p>
+    <a class="button" href="../">事例一覧を見る</a>
+  </div>
+  <noscript><p>このページを使うには、JavaScript を有効にしてください。</p></noscript>
+</article>
+<script src="../assets/saved.js?v={ver('saved.js')}" defer></script>
+"""
+    return page(cfg, title="あとで見る", description="あとで見るために残した事例の一覧です。", path="saved/",
+                body=body, depth=1, noindex=True)
+
+
 def build_404(cfg):
     body = """
 <article class="prose wrap">
@@ -1111,7 +1140,7 @@ def build_404(cfg):
 """
     return page(cfg, title="ページが見つかりません", description="", path="404.html", body=body).replace(
         'href="assets/', 'href="/assets/').replace('src="assets/', 'src="/assets/').replace(
-        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"').replace('href="combos/"', 'href="/combos/"')
+        'href="./"', 'href="/"').replace('href="about/"', 'href="/about/"').replace('href="new/"', 'href="/new/"').replace('href="combos/"', 'href="/combos/"').replace('href="saved/"', 'href="/saved/"')
 
 
 def copy_og_items(cases):
@@ -1184,6 +1213,7 @@ def main():
         print(f"  解説なし：{k}")
     print(f"新着 {len(new)}件、更新 {len(updates)}件（履歴{'あり' if has_history else 'なし：確認日だけで判定'}）")
     write("404.html", build_404(cfg))
+    write("saved/index.html", build_saved(cfg, cases))
 
     public = [{k: v for k, v in c.items() if not k.startswith("_")} for c in cases]
     write("data.json", json.dumps({"updated": datetime.now(JST).isoformat(), "cases": public},

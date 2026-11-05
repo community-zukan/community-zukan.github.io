@@ -1,4 +1,4 @@
-// どのページでも使う小さな仕組み：暗い表示の切り替え
+// どのページでも使う小さな仕組み：ダーク表示とライト表示の切り替え
 (function () {
   var root = document.documentElement;
   var button = document.getElementById("theme-toggle");
@@ -7,7 +7,7 @@
     if (dark) root.setAttribute("data-theme", "dark");
     else root.removeAttribute("data-theme");
     button.setAttribute("aria-pressed", dark ? "true" : "false");
-    button.textContent = dark ? "明るい表示にする" : "暗い表示にする";
+    button.textContent = dark ? "ライト表示" : "ダーク表示";
   }
   apply(root.getAttribute("data-theme") === "dark");
   button.hidden = false;
@@ -52,7 +52,6 @@
     if (n) {
       document.getElementById("header-saved-count").textContent = n;
       saved.setAttribute("title", "あとで見る（" + n + "件）");
-      saved.hidden = false;
     }
   }
 })();

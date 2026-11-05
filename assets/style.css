@@ -94,6 +94,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .icon-btn[hidden] { display: none; }
 .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .icon-btn:hover, .icon-btn[aria-expanded="true"] { color: var(--sky); border-color: var(--sky); }
+.icon-btn .count:empty { display: none; }
+@media (max-width: 759px) { .header-inner { column-gap: var(--space-1); } }  /* しおり・虫めがね・メニューの3つとロゴを1段に収める */
 .icon-btn .count { position: absolute; top: -4px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--sky); color: var(--on-sky); font-size: 11px; line-height: 18px; font-weight: 700; text-align: center; }
 .menu-btn { order: 3; }
 .header-search { display: flex; gap: var(--space-2); padding-bottom: var(--space-3); }
@@ -281,7 +283,6 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .save[aria-pressed="true"] { background: var(--sky); color: var(--on-sky); }
 .save[aria-pressed="true"] .save-icon { opacity: 1; }
 .share { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 14px; }
-.share-head { color: var(--text-sub); }
 .share-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .share-link {
   display: inline-flex; align-items: center; font: inherit; font-size: 13px; color: var(--text-body); text-decoration: none;
@@ -455,3 +456,8 @@ main { flex: 1 0 auto; }
 .small-button[aria-pressed="true"] { opacity: 1; border-color: var(--sky); color: var(--sky); font-weight: 700; }
 .useful-thanks { flex-basis: 100%; }
 .useful-thanks:empty { display: none; }
+
+/* あとで見る（/saved/） */
+.saved-page { padding-top: var(--space-6); padding-bottom: var(--space-16); }
+.saved-page h1 { font-size: clamp(24px, 4vw, 30px); margin: var(--space-4) 0 var(--space-2); }
+.saved-count { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-3); }
