@@ -356,7 +356,7 @@ def build_new(cfg, cases, new, updates, has_history, updated):
         how = "新着の日付は、運営側で出典を確かめた日（確認日）です。"
     body = f"""
 <article class="prose wrap new-page">
-  <h1>新着と更新</h1>
+  <h1>新着</h1>
   <p>この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例です。{how}</p>
   <p class="feed-link"><a href="../feed.xml">RSSで受け取る</a></p>
   <h2>新着<small>{len(new)}件</small></h2>
@@ -365,7 +365,7 @@ def build_new(cfg, cases, new, updates, has_history, updated):
   {upd_html}
 </article>
 """
-    return page(cfg, title="新着と更新", description=f"{cfg['name']}に新しく載せた事例と、内容を更新した事例の一覧です。",
+    return page(cfg, title="新着", description=f"{cfg['name']}に新しく載せた事例と、内容を更新した事例の一覧です。",
                 path="new/", body=body, depth=1)
 
 
@@ -394,7 +394,7 @@ def build_feed(cfg, cases, new, updates):
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>{esc(cfg['name'])}｜新着と更新</title>
+  <title>{esc(cfg['name'])}｜新着</title>
   <link>{esc(base)}/new/</link>
   <atom:link href="{esc(base)}/feed.xml" rel="self" type="application/rss+xml"/>
   <description>{esc(cfg['description'])}</description>
@@ -547,7 +547,7 @@ def logo_mark(rel):
 
 def nav_links(rel, path):
     """ヘッダーのメニュー。いま開いているページには aria-current を付ける。"""
-    items = [("", "事例一覧"), ("new/", "新着と更新"), ("combos/", "組み合わせ"), ("saved/", "あとで見る"), ("about/", "この図鑑について")]
+    items = [("", "事例一覧"), ("new/", "新着"), ("combos/", "組み合わせ"), ("about/", "この図鑑について")]
     out = []
     for href, label in items:
         here = (path == href) if href == "" else path.startswith(href)
@@ -621,7 +621,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <script>document.documentElement.classList.add("js");try{{if(localStorage.getItem("zukan-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}}catch(e){{}}</script>
 <link rel="stylesheet" href="{rel}assets/style.css?v={ver('style.css')}">
 <script src="{rel}assets/site.js?v={ver('site.js')}" defer></script>
-<link rel="alternate" type="application/rss+xml" title="{esc(cfg['name'])}｜新着と更新" href="{esc(base)}/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="{esc(cfg['name'])}｜新着" href="{esc(base)}/feed.xml">
 {extra}</head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -649,7 +649,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     <p>{esc(cfg['subtitle'])}。掲載内容は各出典の公開情報の要約です。詳しくは出典をご覧ください。</p>
     {operator_line(cfg, rel)}
     <div class="footer-bottom">
-      <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着と更新のRSS</a></p>
+      <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着のRSS</a></p>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>ダーク表示</button>
     </div>
   </div>
@@ -1126,7 +1126,7 @@ def build_404(cfg):
   <h2>ほかの入口</h2>
   <ul class="entrances">
     <li><a href="/">事例一覧</a>：すべての事例を、目的・段階・活動の型で絞り込めます。</li>
-    <li><a href="/new/">新着と更新</a>：最近載った事例と、内容が変わった事例です。</li>
+    <li><a href="/new/">新着</a>：最近載った事例と、内容が変わった事例です。</li>
     <li><a href="/combos/">組み合わせ</a>：目的と段階、種別と活動の型の組み合わせから探せます。</li>
   </ul>
 </article>
