@@ -761,7 +761,7 @@ def purpose_strip(cfg, cases):
 </section>"""
 
 
-def build_index(cfg, cases, updated):
+def build_index(cfg, cases):
     n_int = sum(1 for c in cases if c.get("種別") == "社内")
     n_fan = len(cases) - n_int
     filters = []
@@ -785,7 +785,6 @@ def build_index(cfg, cases, updated):
       <div class="stat"><span class="stat-num" data-count="{n_fan}">{n_fan}</span><span class="stat-label">ファン・顧客</span></div>
       <div class="stat"><span class="stat-num" data-count="{n_int}">{n_int}</span><span class="stat-label">社内</span></div>
     </div>
-    <p class="updated">{esc(updated)}更新</p>
   </div>
 </section>
 {purpose_strip(cfg, cases)}
@@ -1186,7 +1185,7 @@ def main():
         shutil.rmtree(OUT)
     shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(OUT, "assets"))
 
-    write("index.html", build_index(cfg, cases, updated))
+    write("index.html", build_index(cfg, cases))
     og_items = copy_og_items(cases)
     for c in cases:
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None

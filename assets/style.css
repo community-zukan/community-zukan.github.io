@@ -131,7 +131,6 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); width: max-content; max-width: 100%; align-items: end; column-gap: var(--space-8); margin: 0 0 var(--space-2); }
 .stat-num { transition: opacity .2s; display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
 .stat-label { display: block; font-size: 13px; color: var(--text-sub); }
-.updated { font-size: 13px; color: var(--text-sub); margin: 0; }
 @media (max-width: 600px) { .stats { column-gap: var(--space-4); } .stat-num { font-size: 36px; } }
 
 /* 検索と絞り込み */
