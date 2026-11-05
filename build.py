@@ -550,20 +550,69 @@ def build_combo(cfg, combo, notes, written):
     return page(cfg, title=f"{title}の事例", description=desc, path=combo["path"], body=body, depth=3)
 
 
-def build_combos_index(cfg, combos):
-    sections = []
-    for a, b in COMBO_PAIRS:
-        items = [cb for cb in combos if cb["a"] == a and cb["b"] == b]
-        if not items:
-            continue
-        lis = "".join(f'<li><a href="{a}-{b}/{SLUG[cb["x"]]}-{SLUG[cb["y"]]}/"><span class="new-title">{esc(cb["x"])}×{esc(cb["y"])}</span>'
-                      f'<span class="rel-company">{len(cb["cases"])}件</span></a></li>' for cb in items)
-        sections.append(f'<h2>{esc(COMBO_LABEL[a])}×{esc(COMBO_LABEL[b])}</h2><ul class="new-list combo-index">{lis}</ul>')
+# 組み合わせの一覧で、段階・種別・活動の型に添える絵（Noto Emoji。assets/emoji/ のファイル名）。目的の絵は config の purpose_icons
+AXIS_ICONS = {"立ち上げ期": "1f680", "成長期": "1f4c8", "成熟期": "1f333", "転換期": "1f504",
+              "ファン・顧客": "1f64c", "社内": "1f3e2",
+              "ナレッジ共有型": "1f4ac", "プロジェクト型": "1f6e0", "趣味親睦型": "2615"}
+ACTIVITY_ORDER = ["ナレッジ共有型", "プロジェクト型", "趣味親睦型"]
+
+
+def build_combos_index(cfg, combos, cases):
+    # 組み合わせから探す（2026-11-05 の見本で選んだ案1）：目的×段階を地図（マス目）にし、件数が多いマスほど濃い空色にする。
+    # COMBO_MIN 件以上のマスは、その組み合わせのページへのリンク。足りないマスは点線で薄く出す。種別×活動の型は6つのタイル
+    icons = cfg.get("purpose_icons") or {}
+    paths = {(cb["x"], cb["y"]): cb["path"].removeprefix("combos/") for cb in combos}
+
+    def emoji(code, size):
+        return f'<img src="../assets/emoji/{code}.png" alt="" width="{size}" height="{size}">'
+
+    counts = Counter()
+    for c in cases:
+        for p in c["_purpose"]:
+            counts[(p, c.get("段階"))] += 1
+        for a in c["_activity"]:
+            counts[(c.get("種別"), a)] += 1
+    purposes = [p for p in sorted(PURPOSE_ORDER, key=lambda p: -sum(counts[(p, s)] for s in STAGE_ORDER))
+                if any(counts[(p, s)] for s in STAGE_ORDER)]
+    top = max([counts[(p, s)] for p in purposes for s in STAGE_ORDER] or [1])
+
+    head = "".join(f'<th scope="col">{emoji(AXIS_ICONS[s], 24)}<span>{esc(s)}</span></th>' for s in STAGE_ORDER)
+    rows = []
+    for i, p in enumerate(purposes):
+        cells = []
+        for s in STAGE_ORDER:
+            n = counts[(p, s)]
+            if (p, s) in paths:
+                lv = min(4, 1 + n * 4 // (top + 1))
+                cells.append(f'<td><a class="cell lv{lv}" href="{paths[(p, s)]}" aria-label="{esc(p)}×{esc(s)} {n}件"'
+                             f' data-goatcounter-click="combo/{esc(p)}×{esc(s)}">{n}</a></td>')
+            else:
+                cells.append(f'<td><span class="cell lv0">{n or ""}<span class="visually-hidden">{n}件</span></span></td>')
+        rows.append(f'<tr style="--i: {min(i, 10)}"><th scope="row">{emoji(icons.get(p, "1f4cc"), 22)}<span>{esc(p)}</span></th>{"".join(cells)}</tr>')
+
+    tiles = []
+    for t in ["ファン・顧客", "社内"]:
+        for a in ACTIVITY_ORDER:
+            n = counts[(t, a)]
+            inner = (f'<span class="ta-icons">{emoji(AXIS_ICONS[t], 28)}{emoji(AXIS_ICONS[a], 28)}</span>'
+                     f'<span class="ta-num">{n}</span><span class="ta-name">{esc(t)}<br>×{esc(a)}</span>')
+            if (t, a) in paths:
+                tiles.append(f'<a class="ta" href="{paths[(t, a)]}" data-goatcounter-click="combo/{esc(t)}×{esc(a)}">{inner}</a>')
+            else:
+                tiles.append(f'<span class="ta off">{inner}</span>')
     body = f"""
-<article class="prose wrap">
+<article class="wrap combos-page">
   <h1>組み合わせから探す</h1>
-  <p>目的と段階、種別と活動の型の組み合わせごとに、事例をまとめたページです。事例が{COMBO_MIN}件以上ある組み合わせだけを載せています。各ページには、事例のタグからAIがまとめた傾向の解説を添えています。</p>
-  {''.join(sections)}
+  <p class="lead">目的と段階を掛け合わせた地図です。色が濃いマスほど、事例が多い組み合わせです。数字を押すと、その組み合わせの事例と、事例のタグからAIがまとめた傾向の解説が開きます。</p>
+  <h2 class="combos-head">{emoji("1f5fa", 26)}目的×段階の地図</h2>
+  <div class="map-wrap"><table class="map">
+    <caption class="visually-hidden">目的と段階の組み合わせごとの事例の数</caption>
+    <thead><tr><td></td>{head}</tr></thead>
+    <tbody>{"".join(rows)}</tbody>
+  </table></div>
+  <p class="map-note">点線のマスは、事例がまだ{COMBO_MIN}件に満たない組み合わせです。</p>
+  <h2 class="combos-head">{emoji("1f64c", 26)}種別×活動の型</h2>
+  <div class="tas">{"".join(tiles)}</div>
 </article>
 """
     return page(cfg, title="組み合わせから探す", description="目的×段階、種別×活動の型の組み合わせごとに、企業コミュニティの事例をまとめています。",
@@ -1091,7 +1140,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイルが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマスが押された回数です。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
@@ -1229,7 +1278,7 @@ def main():
     write("feed.xml", build_feed(cfg, cases, new, updates))
     combos = find_combos(cases)
     notes, written = load_combo_notes()
-    write("combos/index.html", build_combos_index(cfg, combos))
+    write("combos/index.html", build_combos_index(cfg, combos, cases))
     for cb in combos:
         write(cb["path"] + "index.html", build_combo(cfg, cb, notes, written))
     missing = [cb["key"] for cb in combos if cb["key"] not in notes]
