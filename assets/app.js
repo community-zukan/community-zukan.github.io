@@ -371,6 +371,18 @@
   doSort();
   apply(false);
 
+  // 読み込んだときだけ、表示しているカードを上から順にふわっと出す（12件目以降は同時に）
+  if (!reduceMotion) {
+    Array.prototype.filter.call(list.children, function (c) { return !c.hidden; }).forEach(function (c, i) {
+      c.style.animationDelay = (Math.min(i, 12) * 0.05) + 's';
+    });
+    list.classList.add('is-entering');
+    setTimeout(function () {
+      list.classList.remove('is-entering');
+      Array.prototype.forEach.call(list.children, function (c) { c.style.animationDelay = ''; });
+    }, 1600);
+  }
+
   boxes.forEach(function (b) { b.addEventListener('change', function () { apply(true); }); });
   var timer;
   q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { apply(true); }, 150); });
