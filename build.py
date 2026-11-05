@@ -28,6 +28,7 @@ import subprocess
 import sys
 import urllib.parse
 import urllib.request
+from collections import Counter
 from datetime import datetime, timezone, timedelta
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -327,45 +328,74 @@ def fmt_day(d):
     return f"{d.year}年{d.month}月{d.day}日"
 
 
+STRIP_MAX = 10  # 日ごとの帯に出す事例の数。超えた分は「すべて見る」で開く
+
+
 def build_new(cfg, cases, new, updates, has_history, updated):
+    # 新着（2026-11-05 の見本で選んだ「日めくりのタイムライン」）：日付を日めくりの形にして縦の線でつなぎ、
+    # 日ごとに「○件を新しく載せ、○件を更新しました」→ その日に載せた事例の帯 → 更新した項目の札と、更新した事例の一覧（開く）
     by_id = {c["ID"]: c for c in cases}
+    icons = cfg.get("purpose_icons") or {}
 
     def item(cid, extra=""):
         c = by_id[cid]
         return (f'<li><a href="../cases/{esc(cid)}/">{type_badge(c.get("種別"))}'
                 f'<span class="rel-company">{esc(c["企業名"])}</span><span class="new-title">{esc(c["_title"])}</span></a>{extra}</li>')
 
-    def grouped(entries, render):
-        if not entries:
-            return ""
-        out, day = [], None
-        for e in entries:
-            if e["date"] != day:
-                if day is not None:
-                    out.append("</ul></section>")
-                day = e["date"]
-                out.append(f'<section class="day"><h3>{fmt_day(day)}</h3><ul class="new-list">')
-            out.append(render(e))
-        out.append("</ul></section>")
-        return "".join(out)
+    def card(cid):
+        c = by_id[cid]
+        chips = "".join(f'<span class="tl-purpose"><img src="../assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="16" height="16">{esc(p)}</span>'
+                        for p in c["_purpose"][:2])
+        return (f'<a class="rel tl-card" href="../cases/{esc(cid)}/">{type_badge(c.get("種別"))}'
+                f'<small>{esc(c["企業名"])}</small><strong>{esc(c["_title"])}</strong>'
+                f'{f"<span class=tl-purposes>{chips}</span>" if chips else ""}</a>')
 
-    new_html = grouped(new, lambda e: item(e["id"])) or "<p>この期間に新しく載せた事例はありません。</p>"
-    upd_html = grouped(updates, lambda e: item(e["id"], f'<p class="changed">更新した項目：{esc("、".join(e["fields"]))}</p>'))
-    if not upd_html:
-        upd_html = "<p>この期間に内容を更新した事例はありません。</p>"
+    days = {}
+    for e in new:
+        days.setdefault(e["date"], {"new": [], "upd": []})["new"].append(e)
+    for e in updates:
+        days.setdefault(e["date"], {"new": [], "upd": []})["upd"].append(e)
+    rows = []
+    for i, day in enumerate(sorted(days, reverse=True)):
+        nw, up = days[day]["new"], days[day]["upd"]
+        if nw and up:
+            summary = f'<b>{len(nw)}</b>件を新しく載せ、<b>{len(up)}</b>件を更新しました'
+        elif nw:
+            summary = f'<b>{len(nw)}</b>件を新しく載せました'
+        else:
+            summary = f'<b>{len(up)}</b>件を更新しました'
+        parts = []
+        if nw:
+            parts.append(f'<div class="tl-strip">{"".join(card(e["id"]) for e in nw[:STRIP_MAX])}</div>')
+            if len(nw) > STRIP_MAX:
+                parts.append(f'<details class="tl-more"><summary>この日に載せた事例をすべて見る（{len(nw)}件）</summary>'
+                             f'<ul class="new-list">{"".join(item(e["id"]) for e in nw)}</ul></details>')
+        if up:
+            counts = Counter(f for e in up for f in e["fields"])
+            chips = "".join(f'<span class="tl-field">{esc(f)}<b>{n}</b></span>' for f, n in counts.most_common(4))
+            parts.append(f'<p class="tl-fields"><img src="../assets/emoji/270f.png" alt="" width="18" height="18">更新した項目 {chips}</p>')
+            upd_items = "".join(item(e["id"], f'<p class="changed">更新した項目：{esc("、".join(e["fields"]))}</p>') for e in up)
+            parts.append(f'<details class="tl-more"><summary>更新した事例を見る（{len(up)}件）</summary><ul class="new-list">{upd_items}</ul></details>')
+        rows.append(f"""
+    <li style="--i: {min(i, 6)}">
+      <div class="tl-cal" aria-hidden="true"><span class="tl-m">{day.month}月</span><span class="tl-d">{day.day}</span></div>
+      <div class="tl-body">
+        <h2 class="tl-sum"><span class="visually-hidden">{fmt_day(day)}：</span>{summary}</h2>
+        {"".join(parts)}
+      </div>
+    </li>""")
+    timeline = (f'<ol class="timeline">{"".join(rows)}</ol>' if rows
+                else "<p>この期間に新しく載せた事例や、内容を更新した事例はありません。</p>")
     how = ("新しく載せた事例の日付は、運営側で出典を確かめた日（確認日）です。確認日がない事例は、サイトに初めて載った日にしています。"
            "内容を更新した事例は、毎日のデータの読み込みで前日と比べて、本文や出典などが変わったものです。")
     if not has_history:
         how = "新しく載せた事例の日付は、運営側で出典を確かめた日（確認日）です。"
     body = f"""
-<article class="prose wrap new-page">
+<article class="wrap new-page">
   <h1>新着</h1>
-  <p>この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例を、日付の新しい順に並べています。{how}</p>
+  <p class="lead">この{NEW_DAYS}日間に新しく載せた事例と、内容を更新した事例を、日ごとにまとめています。{how}</p>
   <p class="feed-link"><a href="../feed.xml">RSSで受け取る</a></p>
-  <h2>新しく載せた事例<small>{len(new)}件</small></h2>
-  {new_html}
-  <h2>内容を更新した事例<small>{len(updates)}件</small></h2>
-  {upd_html}
+  {timeline}
 </article>
 """
     return page(cfg, title="新着", description=f"{cfg['name']}に新しく載せた事例と、内容を更新した事例の一覧です。",
