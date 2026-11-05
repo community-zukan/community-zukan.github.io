@@ -925,18 +925,18 @@ def logo_mark(rel):
 
 
 def nav_links(rel, path):
-    """ヘッダーのメニュー。いま開いているページには aria-current を付ける。"""
+    """ヘッダーのメニュー。いま開いているページには aria-current を付ける。
+    「この図鑑について」はフッターにあるので、メニューには入れない（2026-11-06 黒田さんの判断）。"""
     items = [("", "事例一覧"), ("new/", "新着"), ("combos/", "組み合わせ")]
     if NOTES_PUBLIC:
         items.append(("notes/", NOTES_LABEL))
-    items.append(("about/", "この図鑑について"))
     out = []
     for href, label in items:
         here = (path == href) if href == "" else path.startswith(href)
         cur = ' aria-current="page"' if here else ""
         out.append(f'<a href="{(rel + href) or "./"}"{cur}>{label}</a>')
         if href == "notes/" or (href == "combos/" and not NOTES_PUBLIC):
-            ai = ai_link("コミュニティAIに相談", "nav", cls="nav-ai")
+            ai = ai_link("コミュニティAIに相談", "nav")
             if ai:
                 out.append(ai)
     return "\n      ".join(out)

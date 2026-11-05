@@ -674,7 +674,6 @@ main { flex: 1 0 auto; }
 .cards.is-list .card-top, .cards.is-list .card-title, .cards.is-list .card-meta { margin-right: 0; }
 
 /* コミュニティAIへの入口（2026-11-06 の見本で案B。build.py の ai_link）。色は空色だけで、黄色は増やさない */
-.global-nav .nav-ai { color: var(--sky); font-weight: 700; }
 .ai-top { margin: var(--space-3) 0 0; font-size: 15px; }
 .ai-top img, .ai-line img { vertical-align: -3px; margin-right: 6px; }
 .ai-top a { font-weight: 700; }
