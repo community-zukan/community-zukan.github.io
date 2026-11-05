@@ -631,3 +631,6 @@ main { flex: 1 0 auto; }
 /* 一覧で、ツールの条件が入っているときの一言と「外す」 */
 .tool-note { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-2) 0 0; font-size: 14px; color: var(--text-body); }
 .tool-note[hidden] { display: none; }
+/* 流れの段の頭に添える基本の情報（開始・規模・ツール） */
+.flow p.flow-meta { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-2); }
+.flow-meta span { display: inline-block; font-weight: 700; color: var(--text-body); margin-right: var(--space-2); }

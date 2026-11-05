@@ -1238,9 +1238,9 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     # 基本の情報を小さな札に → 「この事例のポイント」（工夫のポイント）を大きく → 何をしたか → どうなったか →
     # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
     icons = cfg.get("purpose_icons") or {}
-    # 白い札（基本の情報と活動の型）はまとめて1か所に。押すと一覧を開く札と、押せない札がある：
+    # 白い札（基本の情報と活動の型）はまとめて1か所に。どれも押すと近い事例の一覧を開く（押せない札は置かない。2026-11-05 黒田さんの判断）：
     # 段階・活動の型・場は絞り込み、業種は業種のまとめの絞り込み、ツールは「ツールにその名前がある事例」（ほかにも使っている事例があるものだけ）。
-    # 開始年と規模は、ほかの事例がうまく出ないので押せない札のまま
+    # 開始年・規模・ほかで使われていないツールは、下の流れの段に文章で添える
     def fact_link(text, param, value, label):
         href = f"../../?{param}={urllib.parse.quote(value)}"
         return (f'<li><a href="{href}" title="{esc(label)}の事例を見る" '
@@ -1249,17 +1249,18 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     if c.get("業種"):
         facts.append(fact_link(c["業種"], "industry", c["_industry"], f"業種「{c['_industry']}」")
                      if c.get("_industry") else f"<li>{esc(c['業種'])}</li>")
-    for x in [c.get("開始年") and f"{c['開始年']}年開始", c.get("規模") or c.get("規模の区分")]:
-        if x:
-            facts.append(f"<li>{esc(x)}</li>")
     if c.get("段階"):
         facts.append(fact_link(c["段階"], "stage", c["段階"], f"段階「{c['段階']}」"))
     for a in c["_activity"]:
         facts.append(fact_link(a, "activity", a, f"活動の型「{a}」"))
     if c.get("場"):
         facts.append(fact_link(c["場"], "place", c["場"], f"場「{c['場']}」"))
+    other_tools = []
     for t, name in c.get("_tools", []):
-        facts.append(fact_link(t, "tool", name, f"ツール「{name}」") if TOOL_COUNTS[name] >= 2 else f"<li>{esc(t)}</li>")
+        if TOOL_COUNTS[name] >= 2:
+            facts.append(fact_link(t, "tool", name, f"ツール「{name}」"))
+        else:
+            other_tools.append(t)
     chips = "".join(facts)
     purposes = "".join(
         f'<li><a href="../../?purpose={urllib.parse.quote(p)}"><img src="../../assets/emoji/{icons.get(p, "1f4cc")}.png" alt="" width="20" height="20">{esc(p)}</a></li>'
@@ -1270,12 +1271,21 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     <h2><img src="../../assets/emoji/1f4a1.png" alt="" width="20" height="20">この事例のポイント</h2>
     <p>{esc(c['工夫のポイント'])}</p>
   </section>"""
+    # 札にしない基本の情報（開始年・規模・ほかで使われていないツール）は、流れの段の頭に小さく添える
+    size = c.get("規模") or c.get("規模の区分")
+    tools_label = "ほかのツール" if len(other_tools) < len(c.get("_tools", [])) else "ツール"
+    metas = {
+        "主な施策": [("開始", c.get("開始年") and f"{c['開始年']}年")],
+        "公開されている成果": [("規模", size)],
+        "運営体制": [(tools_label, "、".join(other_tools))],
+    }
     steps = []
     for code, question, col in [("1f6e0", "何をしたか", "主な施策"), ("1f4c8", "どうなったか", "公開されている成果"),
                                 ("1f465", "だれが動かしているか", "運営体制")]:
-        if c.get(col):
+        meta = "".join(f'<p class="flow-meta"><span>{k}</span>{esc(v)}</p>' for k, v in metas[col] if v)
+        if c.get(col) or meta:
             steps.append(f'<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/{code}.png" alt="" width="26" height="26"></span>'
-                         f'<div><h2>{question}</h2><p>{esc(c[col])}</p></div></li>')
+                         f'<div><h2>{question}</h2>{meta}{f"<p>{esc(c[col])}</p>" if c.get(col) else ""}</div></li>')
     if c.get(HINT_COL):
         steps.append(f"""<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/1f914.png" alt="" width="26" height="26"></span><div><h2>あなたの会社なら</h2>
       <div class="hint"><p>{esc(c[HINT_COL])}</p><p class="hint-note">事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p></div></div></li>""")
