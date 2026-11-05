@@ -752,7 +752,7 @@ def purpose_strip(cfg, cases):
     return f"""
 <section class="purposes wrap" aria-labelledby="purposes-title">
   <div class="strip-head">
-    <h2 id="purposes-title">目的から探す</h2><small>横にすべらせて選べます</small>
+    <h2 id="purposes-title">目的から探す</h2>
     <span class="strip-arrows" id="strip-arrows" hidden><button type="button" data-dir="-1" aria-label="前の目的へ">←</button><button type="button" data-dir="1" aria-label="次の目的へ">→</button></span>
   </div>
   <div class="strip-wrap"><div class="strip" id="purpose-strip">{''.join(tiles)}</div></div>
@@ -794,7 +794,7 @@ def build_index(cfg, cases, updated):
 <section class="finder wrap" aria-label="事例を探す">
   <div class="search-row">
     <label class="visually-hidden" for="q">キーワード</label>
-    <input id="q" type="search" placeholder="企業名・ツールなどで検索（ひらがなでも）" autocomplete="off">
+    <input id="q" type="search" placeholder="企業名・ツールなどで検索" autocomplete="off">
     <label class="visually-hidden" for="sort">並び順</label>
     <select id="sort">
       <option value="score" selected>おすすめ順</option>
