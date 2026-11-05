@@ -122,9 +122,12 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .hero h1 { font-size: clamp(24px, 4.2vw, 34px); margin: 0 0 var(--space-3); }
 .mark { background: linear-gradient(transparent 70%, var(--marker) 70%, var(--marker) 90%, transparent 90%); padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
-.stats { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin: 0; font-size: 14px; color: var(--text-sub); }
-.stats b { font-size: 22px; color: var(--ink); margin-right: 2px; }
-.stats span:first-child { color: var(--ink); }
+/* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
+.stats { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2) var(--space-8); margin: 0 0 var(--space-2); }
+.stat-num { display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
+.stat-label { display: block; font-size: 13px; color: var(--text-sub); }
+.updated { font-size: 13px; color: var(--text-sub); margin: 0; }
+@media (max-width: 600px) { .stats { gap: var(--space-2) var(--space-6); } .stat-num { font-size: 36px; } }
 
 /* 検索と絞り込み */
 .finder { padding-bottom: var(--space-16); }

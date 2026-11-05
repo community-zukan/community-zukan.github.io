@@ -314,6 +314,24 @@
     });
   }
 
+  // 件数の大きな数字を0から数え上げる（動きを減らす設定の端末では、そのまま出す）
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && window.requestAnimationFrame) {
+    Array.prototype.forEach.call(document.querySelectorAll('.stat-num[data-count]'), function (el) {
+      var to = parseInt(el.getAttribute('data-count'), 10);
+      if (!to) return;
+      var t0 = null;
+      el.textContent = '0';
+      var step = function (t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / 900);
+        el.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
   if (window.matchMedia('(min-width: 900px)').matches) details.open = true;
   loadUrl();
   doSort();

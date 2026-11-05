@@ -752,7 +752,12 @@ def build_index(cfg, cases, updated):
   <div class="wrap">
     <h1>企業のコミュニティ運営を、<br class="sp"><span class="mark">公開事例から知る</span></h1>
     <p class="lead">ファンコミュニティと社内コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
-    <p class="stats"><span><b>{len(cases)}</b>件</span><span>ファン・顧客 {n_fan}件</span><span>社内 {n_int}件</span><span>{esc(updated)}更新</span></p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録している事例</span></div>
+      <div class="stat"><span class="stat-num" data-count="{n_fan}">{n_fan}</span><span class="stat-label">ファン・顧客</span></div>
+      <div class="stat"><span class="stat-num" data-count="{n_int}">{n_int}</span><span class="stat-label">社内</span></div>
+    </div>
+    <p class="updated">{esc(updated)}更新</p>
   </div>
 </section>
 <section class="finder wrap" aria-label="事例を探す">
