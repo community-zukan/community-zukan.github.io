@@ -129,6 +129,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 /* ヒーロー */
 .hero { padding: 40px 0 var(--space-6); }
 .hero h1 { font-size: clamp(24px, 4.2vw, 34px); margin: 0 0 var(--space-3); }
+/* スマホでは「企業のコミュニティ運営のすべて」が1行に収まる大きさにする */
+@media (max-width: 520px) { .hero h1 { font-size: max(19px, 5.6vw); } }
 .mark { background: linear-gradient(transparent 70%, var(--marker) 70%, var(--marker) 90%, transparent 90%); padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */

@@ -47,7 +47,9 @@ FACETS = [
     ("size", "規模の区分", "規模の区分"),
 ]
 STAGE_ORDER = ["立ち上げ期", "成長期", "成熟期", "転換期"]
-PLACE_ORDER = ["オンライン", "オフライン", "両方"]
+# 場の「両方」は、サイトでは「オンオフ両方」と出す（2026-11-05 黒田さんの判断。シートの値はそのまま）
+PLACE_RENAME = {"両方": "オンオフ両方"}
+PLACE_ORDER = ["オンライン", "オフライン", "オンオフ両方"]
 SIZE_ORDER = ["〜100人", "100〜1,000人", "1,000〜1万人", "1万人超"]
 PURPOSE_ORDER = [
     "ビジョン浸透", "エンゲージメント", "イノベーション", "ナレッジ共有",
@@ -282,8 +284,11 @@ def enrich(cfg, rows):
     cases = []
     for r in rows:
         c = dict(r)
+        c["_row"] = r   # シートのままの値（新着と更新の判定は、表示のための言い換えをする前の値で比べる）
         c["_purpose"] = [PURPOSE_RENAME.get(p, p) for p in split_multi(r.get("目的"))]
         c["_activity"] = split_multi(r.get("活動の型"))
+        if c.get("場"):
+            c["場"] = PLACE_RENAME.get(c["場"].strip(), c["場"].strip())
         c["_industry"] = industry_group(cfg, r.get("業種"))
         c["_urls"] = split_urls(r.get("出典URL"))
         c["_title"] = r.get("コミュニティ名") or f"{r['企業名']}のコミュニティ"
@@ -340,7 +345,7 @@ def find_changes(cases, history, today):
     """新しく出た事例と、内容が変わった事例を返す。
     新着の日付は確認日（U列）。確認日が空なら、履歴で初めて出た日。履歴がなければ確認日だけで新着を出す。"""
     by_id = {c["ID"]: c for c in cases}
-    snaps = history + [(today, {c["ID"]: c for c in cases})]
+    snaps = history + [(today, {c["ID"]: c.get("_row", c) for c in cases})]
     first_seen, updates = {}, []
     if len(snaps) >= 2:
         base_day, prev = snaps[0]
@@ -1150,7 +1155,7 @@ def build_index(cfg, cases):
     body = f"""
 <section class="hero">
   <div class="wrap">
-    <h1>企業のコミュニティ運営を、<br class="sp"><span class="mark">公開事例から知る</span></h1>
+    <h1><span class="mark">公開事例でみる</span><br class="sp">企業のコミュニティ運営のすべて</h1>
     <p class="lead">ファンコミュニティと社内コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
     <div class="stats">
       <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録している事例</span></div>
@@ -1423,7 +1428,7 @@ def build_about(cfg, cases, updated):
         ("目的（ファン・顧客）", "LTV・継続、共創・商品開発、サポート効率化、口コミ・認知、ブランド体験", "企業がファンコミュニティに期待していること。複数つけています。"),
         ("段階", "立ち上げ期／成長期／成熟期／転換期", "出典の時点での状態です。立ち上げ期は開始から1年程度、成長期は規模や活動が広がっている途中、成熟期は長く続いて仕組みが定着している状態、転換期は終了・統合・方針転換を指します。"),
         ("活動の型", "ナレッジ共有型、プロジェクト型、趣味親睦型", "ナレッジ共有型は学び合いや質問への回答、プロジェクト型は共創や企画、趣味親睦型は交流が中心の活動です。複数つけています。"),
-        ("場", "オンライン／オフライン／両方", "主な活動の場所です。"),
+        ("場", "オンライン／オフライン／オンオフ両方", "主な活動の場所です。"),
         ("出典の種類", "プレスリリース／インタビュー記事／登壇資料／公式note・サイト／広告・PR記事", "広告・PR記事は、ツールを提供する企業などが作った記事です。記事中の数値は、企業側の説明として扱っています。"),
     ]
     rows = "".join(f"<tr><th scope=\"row\">{esc(a)}</th><td>{esc(b)}</td><td>{esc(d)}</td></tr>" for a, b, d in defs)
