@@ -183,7 +183,8 @@ AB〜AE は既存の行がまだ空で、Cowork 側の点検で少しずつ埋�
 
 - 書き方の決めごとは notes/_guide.md、テーマの順番待ちは notes/_themes.md。黒田さんが記事を直したら、_guide.md の「黒田さんの直しから学んだこと」に1行ずつ足す。
 - 1本目は Claude Code が書いた「アルムナイ（退職者）コミュニティの始め方。公開事例4件に学ぶ」（notes/alumni-community.md）。
-- 残り：毎週水曜の定期タスク（デスクトップアプリ、community-zukan-notes。手順は観測所の tenki-kansoku-notes-draft を図鑑に合わせて写す）と、週次レポートに図鑑ノートの読まれ方を足すこと。
+- 定期タスク：Claude のデスクトップアプリの「community-zukan-notes」（毎週水曜 10:00ごろ、Auto モード）。手順は ~/.claude/scheduled-tasks/community-zukan-notes/SKILL.md（観測所の tenki-kansoku-notes-draft を図鑑に合わせて写したもの）。テーマ表の上から1本書いて、そのまま公開し、URLを知らせる。アプリが開いているときに動く。
+- 週次レポート（community-zukan-weekly-report）に、図鑑ノートの閲覧数と combo/ のクリックを読む手順を足した。
 
 ### 続けて見ること
 
