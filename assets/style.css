@@ -138,6 +138,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
 /* 列を同じ幅にして、数字の間隔をそろえる（列の幅はいちばん長い数字かラベルに合わせる） */
 .stats { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: max-content; max-width: 100%; align-items: end; column-gap: var(--space-8); margin: 0 0 var(--space-2); }  /* 列の幅をそろえ、数字が等間隔に並ぶようにする（2026-11-06 黒田さんの指摘） */
+.stat { text-align: center; }  /* 数字の下の名前を数字の中央にそろえる（2026-11-06 黒田さんの指摘）。列の幅は同じなので、数字の中心も等間隔になる */
 .stat-num { transition: opacity .2s; display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
 .stat-label { display: block; font-size: 13px; color: var(--text-sub); }
 @media (max-width: 600px) { .stats { column-gap: var(--space-4); } .stat-num { font-size: 30px; } .stat-label { font-size: 12px; white-space: nowrap; } }
