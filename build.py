@@ -1195,7 +1195,9 @@ def purpose_strip(cfg, cases):
 
 def build_index(cfg, cases):
     n_type = Counter(c.get("種別") for c in cases)
-    type_stats = "".join(f'\n      <div class="stat"><span class="stat-num" data-count="{n_type[t]}">{n_type[t]}</span><span class="stat-label">{esc(TYPE_LABEL[t])}</span></div>'
+    # トップの大きな件数の名前は短くする（2026-11-06 黒田さんの判断。札や絞り込みは「ファン・顧客」のまま）
+    STAT_LABEL = {"ファン・顧客": "顧客"}
+    type_stats = "".join(f'\n      <div class="stat"><span class="stat-num" data-count="{n_type[t]}">{n_type[t]}</span><span class="stat-label">{esc(STAT_LABEL.get(t, t))}</span></div>'
                          for t in TYPE_ORDER if n_type[t])
     filters = []
     def chip_list(key, opts):
@@ -1237,7 +1239,7 @@ def build_index(cfg, cases):
     <h1><span class="mark">公開事例でみる</span><br class="sp">企業のコミュニティ運営のすべて</h1>
     <p class="lead">企業が運営するファンコミュニティ、社内コミュニティ、多企業コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
     <div class="stats">
-      <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録している事例</span></div>
+      <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録事例</span></div>
 {type_stats}
     </div>
     {top_ai}
