@@ -620,8 +620,7 @@ main { flex: 1 0 auto; }
 .note-end { font-size: 13px; color: var(--text-sub); margin: var(--space-8) 0 0; max-width: 46em; }
 .note-more h2 { font-size: 19px; margin: var(--space-12) 0 var(--space-3); }
 .case-notes h2 { display: flex; align-items: center; gap: var(--space-2); font-size: 17px; margin: var(--space-8) 0 var(--space-2); }
-.case-notes ul { margin: 0; padding-left: 1.3em; }
-.case-notes li { margin-bottom: var(--space-1); }
+.case-notes .note-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 360px)); }  /* 1本でも横に広がりすぎないように */
 @media (max-width: 640px) {
   .note-hero { padding: var(--space-6) var(--space-4) var(--space-4); }
   .note-hero::before { width: 200px; height: 200px; right: -70px; top: -80px; }

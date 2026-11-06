@@ -1306,7 +1306,7 @@ def tag_list(items):
     return '<ul class="tags">' + "".join(f"<li>{esc(t)}</li>" for t in items) + "</ul>" if items else ""
 
 
-def build_case(cfg, c, related, og_image=None, notes=None):
+def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     # 事例ページ（2026-11-05 の見本で選んだ「読み物」の形）：
     # 基本の情報を小さな札に → 「この事例のポイント」（工夫のポイント）を大きく → 何をしたか → どうなったか →
     # だれが動かしているか → あなたの会社なら（AIによる提案）の流れ → 出典 → あとで見る・共有 → 近い事例。空欄の段は出さない
@@ -1406,8 +1406,9 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     note_html_ = ""
     in_notes = [n for n in (notes or []) if c["ID"] in n["ids"]]
     if in_notes:
-        lis = "".join(f'<li><a href="../../notes/{esc(n["slug"])}/">{esc(n["title"])}</a></li>' for n in in_notes)
-        note_html_ = f'<section class="case-notes"><h2><img src="../../assets/emoji/1f4d3.png" alt="" width="22" height="22">この事例を紹介している{NOTES_LABEL}</h2><ul>{lis}</ul></section>'
+        # 図鑑ノートの一覧と同じ画像つきのカードで出す（2026-11-06 黒田さんの判断：もっと目立たせる）
+        note_html_ = (f'<section class="case-notes"><h2><img src="../../assets/emoji/1f4d3.png" alt="" width="22" height="22">この事例を紹介している{NOTES_LABEL}</h2>'
+                      f'{note_list(in_notes, og_notes or set(), "../../")}</section>')
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
 <article class="case wrap">
@@ -1736,9 +1737,10 @@ def main():
 
     write("index.html", build_index(cfg, cases))
     og_items = copy_og_items(cases)
+    og_notes_case = copy_og_notes(notes_list) if notes_list else set()  # 事例ページの「この事例を紹介している図鑑ノート」の画像
     for c in cases:
         og = f"og/{c['ID']}.png" if c["ID"] in og_items else None
-        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, related_rows(cfg, c, cases), og, notes_list))
+        write(f"cases/{c['ID']}/index.html", build_case(cfg, c, related_rows(cfg, c, cases), og, notes_list, og_notes_case))
     write("about/index.html", build_about(cfg, cases, updated))
     today = datetime.now(JST).date()
     new, updates, has_history = find_changes(cases, load_history(), today)
