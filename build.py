@@ -56,11 +56,16 @@ PURPOSE_ORDER = [
     "ビジョン浸透", "エンゲージメント", "イノベーション", "ナレッジ共有",
     "部門横断", "オンボーディング",
     "LTV・継続", "共創・商品開発", "サポート効率化", "口コミ・認知", "ブランド体験",
+    "事業共創・協業", "起業・成長支援", "投資・資金調達", "採用・人材", "拠点・地域の活性化", "業界の学び合い",
 ]
 # サイトでの目的の名前。シートの値が長くタイルで2行になるものだけ短くする（2026-11-05 黒田さんの判断）。
 # 読み込むときに置き換えるので、絞り込み・URL・組み合わせのページもすべて短い名前になる。シートの値は変えない
 PURPOSE_RENAME = {"ナレッジ共有・継承": "ナレッジ共有", "定着・オンボーディング": "オンボーディング"}
-TYPE_LABEL = {"社内": "社内", "ファン・顧客": "ファン・顧客"}
+# 種別。2026-11-06 に「多企業」を足した。並び順は ファン・顧客 → 社内 → 多企業（黒田さんの判断）。
+# 種別は必ず B列で判断する。ID の頭文字（S／F／M）では決めない（ファン・顧客から多企業に移した行は F のまま）
+TYPE_ORDER = ["ファン・顧客", "社内", "多企業"]
+TYPE_LABEL = {"社内": "社内", "ファン・顧客": "ファン・顧客", "多企業": "多企業"}
+TYPE_CLASS = {"社内": "is-internal", "ファン・顧客": "is-fan", "多企業": "is-multi"}   # 知らない値は中立の札
 
 
 
@@ -361,6 +366,9 @@ def find_changes(cases, history, today):
                     first_seen[cid] = day
                 elif cid in prev:
                     changed = [f for f in UPDATE_FIELDS if f in row and f in prev[cid] and row[f] != prev[cid][f]]
+                    if row.get("種別") != prev[cid].get("種別"):
+                        # 種別を変えた行（2026-11-06 の多企業への移しかえ）は、同時に選び直した目的の差分を更新に数えない（黒田さんの判断）
+                        changed = [f for f in changed if f != "目的"]
                     if changed:
                         updates.append({"id": cid, "date": day, "fields": changed})
             prev = cur
@@ -527,8 +535,10 @@ SLUG = {
     "ナレッジ共有": "knowledge", "部門横断": "cross-functional", "オンボーディング": "onboarding",
     "LTV・継続": "ltv", "共創・商品開発": "co-creation", "サポート効率化": "support", "口コミ・認知": "awareness",
     "ブランド体験": "brand-experience",
+    "事業共創・協業": "business-collaboration", "起業・成長支援": "startup-support", "投資・資金調達": "investment",
+    "採用・人材": "hiring", "拠点・地域の活性化": "hub-and-region", "業界の学び合い": "industry-learning",
     "立ち上げ期": "launch", "成長期": "growth", "成熟期": "mature", "転換期": "transition",
-    "社内": "internal", "ファン・顧客": "fan",
+    "社内": "internal", "ファン・顧客": "fan", "多企業": "multi",
     "ナレッジ共有型": "knowledge-sharing", "プロジェクト型": "project", "趣味親睦型": "social",
 }
 
@@ -548,7 +558,7 @@ def find_combos(cases):
                 for y in combo_values(c, b):
                     if x in SLUG and y in SLUG:
                         groups.setdefault((x, y), []).append(c)
-        order_a = {"purpose": PURPOSE_ORDER, "type": ["ファン・顧客", "社内"]}[a]
+        order_a = {"purpose": PURPOSE_ORDER, "type": TYPE_ORDER}[a]
         order_b = {"stage": STAGE_ORDER, "activity": ["ナレッジ共有型", "プロジェクト型", "趣味親睦型"]}[b]
         for (x, y), cs in sorted(groups.items(), key=lambda kv: (order_a.index(kv[0][0]) if kv[0][0] in order_a else 99,
                                                                   order_b.index(kv[0][1]) if kv[0][1] in order_b else 99)):
@@ -594,7 +604,7 @@ def build_combo(cfg, combo, notes, written):
 </section>"""
     rows = []
     if a != "type" and b != "type":
-        rows.append(("種別", breakdown(cs, lambda c: [c.get("種別")], ["ファン・顧客", "社内"])))
+        rows.append(("種別", breakdown(cs, lambda c: [c.get("種別")], TYPE_ORDER)))
     if b != "stage":
         rows.append(("段階", breakdown(cs, lambda c: [c.get("段階")], STAGE_ORDER)))
     if b != "activity":
@@ -630,14 +640,14 @@ def build_combo(cfg, combo, notes, written):
 
 # 組み合わせの一覧で、段階・種別・活動の型に添える絵（Noto Emoji。assets/emoji/ のファイル名）。目的の絵は config の purpose_icons
 AXIS_ICONS = {"立ち上げ期": "1f680", "成長期": "1f4c8", "成熟期": "1f333", "転換期": "1f504",
-              "ファン・顧客": "1f64c", "社内": "1f3e2",
+              "ファン・顧客": "1f64c", "社内": "1f3e2", "多企業": "1f3d9",
               "ナレッジ共有型": "1f4ac", "プロジェクト型": "1f6e0", "趣味親睦型": "2615"}
 ACTIVITY_ORDER = ["ナレッジ共有型", "プロジェクト型", "趣味親睦型"]
 
 
 def build_combos_index(cfg, combos, cases):
     # 組み合わせから探す（2026-11-05 の見本で選んだ案1）：目的×段階を地図（マス目）にし、件数が多いマスほど濃い空色にする。
-    # COMBO_MIN 件以上のマスは、その組み合わせのページへのリンク。足りないマスは点線で薄く出す。種別×活動の型は6つのタイル
+    # COMBO_MIN 件以上のマスは、その組み合わせのページへのリンク。足りないマスは点線で薄く出す。種別×活動の型は9つのタイル（2026-11-06 から。種別3つ×活動の型3つ）
     icons = cfg.get("purpose_icons") or {}
     paths = {(cb["x"], cb["y"]): cb["path"].removeprefix("combos/") for cb in combos}
 
@@ -669,7 +679,7 @@ def build_combos_index(cfg, combos, cases):
         rows.append(f'<tr style="--i: {min(i, 10)}"><th scope="row">{emoji(icons.get(p, "1f4cc"), 22)}<span>{esc(p)}</span></th>{"".join(cells)}</tr>')
 
     tiles = []
-    for t in ["ファン・顧客", "社内"]:
+    for t in TYPE_ORDER:
         for a in ACTIVITY_ORDER:
             n = counts[(t, a)]
             inner = (f'<span class="ta-icons">{emoji(AXIS_ICONS[t], 28)}{emoji(AXIS_ICONS[a], 28)}</span>'
@@ -1087,7 +1097,7 @@ def operator_line(cfg, rel=""):
 
 
 def type_badge(t):
-    cls = "is-internal" if t == "社内" else "is-fan"
+    cls = TYPE_CLASS.get(t, "is-other")
     return f'<span class="badge {cls}">{esc(TYPE_LABEL.get(t, t))}</span>'
 
 
@@ -1147,7 +1157,7 @@ def facet_values(cases, key):
         for v in items:
             vals[v] = vals.get(v, 0) + 1
     order = {"stage": STAGE_ORDER, "place": PLACE_ORDER, "purpose": PURPOSE_ORDER, "size": SIZE_ORDER,
-             "type": ["ファン・顧客", "社内"]}.get(key)
+             "type": TYPE_ORDER}.get(key)
     if order:
         return sorted(vals.items(), key=lambda kv: (order.index(kv[0]) if kv[0] in order else 99, kv[0]))
     return sorted(vals.items(), key=lambda kv: (kv[0] == "その他", -kv[1], kv[0]))
@@ -1184,8 +1194,9 @@ def purpose_strip(cfg, cases):
 
 
 def build_index(cfg, cases):
-    n_int = sum(1 for c in cases if c.get("種別") == "社内")
-    n_fan = len(cases) - n_int
+    n_type = Counter(c.get("種別") for c in cases)
+    type_stats = "".join(f'\n      <div class="stat"><span class="stat-num" data-count="{n_type[t]}">{n_type[t]}</span><span class="stat-label">{esc(TYPE_LABEL[t])}</span></div>'
+                         for t in TYPE_ORDER if n_type[t])
     filters = []
     def chip_list(key, opts):
         return "".join(
@@ -1197,12 +1208,17 @@ def build_index(cfg, cases):
             continue
         chips = chip_list(key, opts)
         if key == "purpose":
-            # 目的は「社内」「ファン・顧客」の小見出しで分ける（2026-11-05 の見本で案A）。どちらに入れるかは、その目的を持つ事例の種別の多いほう
+            # 目的は種別の小見出しで分ける（2026-11-05 の見本で案A。2026-11-06 に多企業を足した）。どこに入れるかは、その目的を持つ事例の種別の多いほう。
+            # 種別が知らない値の事例ばかりの目的は「その他」に入れ、絞り込みから消えないようにする
             side = {}
             for c in cases:
                 for p in c["_purpose"]:
                     side.setdefault(p, Counter())[c.get("種別")] += 1
-            groups = [(t, [(v, n) for v, n in opts if side[v].most_common(1)[0][0] == t]) for t in ["社内", "ファン・顧客"]]
+            heads = ["社内", "ファン・顧客", "多企業"]
+            def head_of(v):
+                known = [(n, t) for t, n in side[v].items() if t in heads]
+                return max(known, key=lambda x: (x[0], -heads.index(x[1])))[1] if known else "その他"
+            groups = [(t, [(v, n) for v, n in opts if head_of(v) == t]) for t in heads + ["その他"]]
             chips = "".join(f'<p class="sublabel">{esc(TYPE_LABEL.get(t, t))}</p><div class="chips">{chip_list(key, g)}</div>' for t, g in groups if g)
             filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend>{chips}</fieldset>')
             continue
@@ -1219,11 +1235,10 @@ def build_index(cfg, cases):
 <section class="hero">
   <div class="wrap">
     <h1><span class="mark">公開事例でみる</span><br class="sp">企業のコミュニティ運営のすべて</h1>
-    <p class="lead">ファンコミュニティと社内コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
+    <p class="lead">企業が運営するファンコミュニティ、社内コミュニティ、多企業コミュニティについて、プレスリリースや記事などの公開情報から事例を集めています。目的・段階・活動の型で絞り込んで、自社に近い事例を探せます。</p>
     <div class="stats">
       <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録している事例</span></div>
-      <div class="stat"><span class="stat-num" data-count="{n_fan}">{n_fan}</span><span class="stat-label">ファン・顧客</span></div>
-      <div class="stat"><span class="stat-num" data-count="{n_int}">{n_int}</span><span class="stat-label">社内</span></div>
+{type_stats}
     </div>
     {top_ai}
   </div>
@@ -1573,9 +1588,10 @@ def find_related(c, cases, n=3):
 
 def build_about(cfg, cases, updated):
     defs = [
-        ("種別", "社内／ファン・顧客", "誰が集まるコミュニティか。社内は従業員（退職者のアルムナイを含む）、ファン・顧客は製品やブランドの利用者です。"),
+        ("種別", "社内／ファン・顧客／多企業", "誰が集まるコミュニティか。社内は従業員（退職者のアルムナイを含む）、ファン・顧客は製品やブランドの利用者です。多企業は、運営企業の社員や顧客に限らず、さまざまな企業・組織の人や企業が集まる多企業コミュニティです（スタートアップ・起業家、企業どうしの共創、業界・職種の担当者のコミュニティなど）。"),
         ("目的（社内）", "ビジョン浸透、エンゲージメント、イノベーション、ナレッジ共有、部門横断、オンボーディング", "企業が社内コミュニティに期待していること。出典に書かれている範囲で、複数つけています。"),
         ("目的（ファン・顧客）", "LTV・継続、共創・商品開発、サポート効率化、口コミ・認知、ブランド体験", "企業がファンコミュニティに期待していること。複数つけています。"),
+        ("目的（多企業）", "事業共創・協業、起業・成長支援、投資・資金調達、採用・人材、拠点・地域の活性化、業界の学び合い", "企業が多企業コミュニティに期待していること。事業共創・協業は企業どうしの協業や実証、起業・成長支援はスタートアップの立ち上げや成長の支援、投資・資金調達は投資や資金調達の機会、採用・人材は採用や人とのつながり、拠点・地域の活性化は施設やエリアの利用とにぎわい、業界の学び合いは同じ業界・職種の人どうしの情報交換です。複数つけています。"),
         ("段階", "立ち上げ期／成長期／成熟期／転換期", "出典の時点での状態です。立ち上げ期は開始から1年程度、成長期は規模や活動が広がっている途中、成熟期は長く続いて仕組みが定着している状態、転換期は終了・統合・方針転換を指します。"),
         ("活動の型", "ナレッジ共有型、プロジェクト型、趣味親睦型", "ナレッジ共有型は学び合いや質問への回答、プロジェクト型は共創や企画、趣味親睦型は交流が中心の活動です。複数つけています。"),
         ("場", "オンライン／オフライン／オンオフ両方", "主な活動の場所です。"),
@@ -1585,7 +1601,7 @@ def build_about(cfg, cases, updated):
     body = f"""
 <article class="prose wrap">
   <h1>この図鑑について</h1>
-  <p>コミュニティ図鑑は、企業が運営するファンコミュニティと社内コミュニティの事例を、公開情報から集めたものです。コミュニティを立ち上げたい人や、運営に行き詰まっている人が、自社に近い事例を探して読めるようにしています。</p>
+  <p>コミュニティ図鑑は、企業が運営するファンコミュニティ、社内コミュニティ、多企業コミュニティの事例を、公開情報から集めたものです。コミュニティを立ち上げたい人や、運営に行き詰まっている人が、自社に近い事例を探して読めるようにしています。</p>
 
   <h2>載せている情報</h2>
   <p>プレスリリース、メディアの記事、登壇資料、企業の公式サイトやnoteなど、誰でも読める情報だけを使っています。本文は転載せず、要点の要約とタグ、出典へのリンクでまとめています。</p>

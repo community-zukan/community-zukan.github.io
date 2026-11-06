@@ -16,6 +16,7 @@
   --footer-bg: #1a1d23; --footer-text: #d6d9de; --footer-strong: #fbfaf5; --footer-sub: #9aa0a8;  /* フッター（どちらの表示でも黒地） */
   --int-fg: var(--sky-on-tint); --int-bg: var(--chip-bg);   /* 種別：社内（空色） */
   --fan-fg: #6b4e00; --fan-bg: var(--base-yellow);          /* 種別：ファン・顧客（黄色） */
+  --multi-fg: #2e6b3c; --multi-bg: #e4f1e1;                  /* 種別：多企業（若草色。2026-11-06 の見本で案A） */
   --hint: #fffaeb; --hint-line: #ecd68a;  /* AIによる提案の箱 */
   --heat-1: #e8eef5; --heat-2: #c4d8ec; --heat-3: #7fb0da; --heat-4: #1874b8;  /* 組み合わせの地図：事例が多いマスほど濃い */
   --heat-ink-3: #0b2a44; --heat-ink-4: #ffffff;
@@ -38,6 +39,7 @@
   --base: #15181d; --card: #1f232a; --ink: #f3f1ea; --text-body: #c9cdd3; --text-sub: #a3a9b1; --line: #313640;
   --sky: #7cc0ee; --sky-on-tint: #7cc0ee; --chip-bg: #233042; --on-sky: #15181d; --base-yellow: #3a3320; --marker: rgba(245, 197, 24, .42); --footer-bg: #0e1013;
   --fan-fg: #f5d86a;
+  --multi-fg: #94d3a2; --multi-bg: #1f3327;
   --hint: #26231a; --hint-line: #574c25;
   --heat-1: #233042; --heat-2: #2c4a6b; --heat-3: #3f73a3; --heat-4: #7cc0ee; --heat-ink-3: #f3f1ea; --heat-ink-4: #15181d;
   --note-circle: #2c3d55;
@@ -135,10 +137,10 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
 /* 3つの列を同じ幅にして、数字の間隔をそろえる（列の幅はいちばん長いラベル「収録している事例」に合わせる） */
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); width: max-content; max-width: 100%; align-items: end; column-gap: var(--space-8); margin: 0 0 var(--space-2); }
+.stats { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-2) var(--space-8); margin: 0 0 var(--space-2); }  /* 種別が3つになり4つ並ぶ（2026-11-06）。とても狭い画面では折り返す */
 .stat-num { transition: opacity .2s; display: block; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1.1; letter-spacing: .02em; font-variant-numeric: tabular-nums; color: var(--ink); }
 .stat-label { display: block; font-size: 13px; color: var(--text-sub); }
-@media (max-width: 600px) { .stats { column-gap: var(--space-4); } .stat-num { font-size: 36px; } }
+@media (max-width: 600px) { .stats { column-gap: var(--space-4); } .stat-num { font-size: 30px; } .stat-label { font-size: 12px; white-space: nowrap; } }
 
 /* 検索と絞り込み */
 /* 目的から探す：横にすべらせる1段の帯。右端を少しぼかして、続きがあると分かるようにする */
@@ -245,6 +247,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 10px; border-radius: var(--radius-pill); line-height: 1.8; }
 .badge.is-fan { background: var(--fan-bg); color: var(--fan-fg); }
 .badge.is-internal { background: var(--int-bg); color: var(--int-fg); }
+.badge.is-multi { background: var(--multi-bg); color: var(--multi-fg); }
+.badge.is-other { background: var(--card); color: var(--text-body); border: 1px solid var(--line); }
 .tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { font-size: 12px; background: var(--base); border: 1px solid var(--line); color: var(--text-body); padding: 0 10px; border-radius: var(--radius-pill); line-height: 1.8; }
 

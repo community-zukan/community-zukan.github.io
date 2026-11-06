@@ -131,7 +131,7 @@
     do { i = Math.floor(Math.random() * deck.length); } while (i === last && deck.length > 1);
     last = i;
     var d = deck[i];
-    var cls = d.type === '社内' ? 'is-internal' : 'is-fan';
+    var cls = { '社内': 'is-internal', 'ファン・顧客': 'is-fan', '多企業': 'is-multi' }[d.type] || 'is-other';
     slot.innerHTML = '<a class="rel is-flip" href="../' + esc(d.id) + '/">' +
       '<span class="rel-emo"><img src="../../assets/emoji/' + esc(d.emoji) + '.png" alt="" width="28" height="28"></span>' +
       '<span class="rel-top"><span class="badge ' + cls + '">' + esc(d.type) + '</span></span><small>' + esc(d.co) + '</small>' +
