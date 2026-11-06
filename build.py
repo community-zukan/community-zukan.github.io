@@ -1807,7 +1807,11 @@ def main():
     lc = os.path.join(ROOT, "data", "linkcheck.json")
     if os.path.exists(lc):
         shutil.copy(lc, os.path.join(OUT, "linkcheck.json"))
-    write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
+    # AI の学習用のクローラーだけを断る（2026-11-06 黒田さんの判断）。検索用（OAI-SearchBot・Claude-SearchBot・PerplexityBot など）と
+    # ふつうの検索エンジンは通す。AI の検索の答えに図鑑が出典として出る道は残すため。robots.txt はお願いで、守らない相手は止められない
+    ai_training = ["GPTBot", "ClaudeBot", "anthropic-ai", "Google-Extended", "CCBot", "Applebot-Extended", "Meta-ExternalAgent", "Bytespider", "cohere-training-data-crawler"]
+    blocks = "".join(f"User-agent: {b}\nDisallow: /\n\n" for b in ai_training)
+    write("robots.txt", f"{blocks}User-agent: *\nAllow: /\n\nSitemap: {base}/sitemap.xml\n")
     write(".nojekyll", "")
 
     # 確認用に、使ったデータを残す（手元のCSVで試したときは書き換えない）

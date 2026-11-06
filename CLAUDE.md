@@ -71,6 +71,7 @@ Claude Code はスプレッドシートに書き込みません。列を足す�
 | /?tool=名前 | ツールの条件。3件以上の事例が使っているツールは「条件で絞り込む」の欄の「ツール」に並ぶ（build.py の TOOL_FACET_MIN。2026-11-05 黒田さんの判断）。2件のツールは欄に出さず、事例ページの札から開いたときだけ件数の下に「ツール「○○」を使っている事例」と「外す」を出す。ツールの名前は build.py の assign_tools でまとめる：（ ）の中を外し、大文字・小文字をそろえ、config/synonyms.json の同じグループは1つに（commmune と Commune など）。名前の書き方の揺れを見つけたら synonyms.json に足す。ビルドのログに「業種のまとめ「その他」○件」と「ツールの札を押せるもの」を出す。「その他」が増えたら industry_groups を見直す |
 | /saved/ | あとで見る。事例ページで「あとで見る」に入れた事例を、入れたのが新しい順に出す（assets/saved.js。検索エンジンには載せない）。ヘッダーのしおり（いつも表示、件数つき）から開く（メニューには入れない。2026-11-05 黒田さんの判断） |
 | /404.html | 見つからないページ。検索欄と入口を置く |
+| /robots.txt | AI の学習用のクローラー（GPTBot・ClaudeBot・Google-Extended・CCBot など。build.py の ai_training）だけを断る。検索用（OAI-SearchBot・Claude-SearchBot・PerplexityBot）とふつうの検索エンジンは通す（2026-11-06 黒田さんの判断。AI の検索の答えに出典として出る道を残すため） |
 | /feed.xml・/sitemap.xml・/data.json・/pick.json・/linkcheck.json | RSS、サイトマップ、公開データ、「ほかの事例をひく」が読む小さな一覧、リンク点検の結果 |
 
 ## 手元で試す
