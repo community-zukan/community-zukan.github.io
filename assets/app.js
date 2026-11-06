@@ -282,7 +282,17 @@
     if (toolSel && boxes.some(function (b) { return b.name === 'tool' && b.value === toolSel; })) toolSel = '';
     if (p.get('saved') === '1' && saved.length) setSavedOnly(true);
     if (p.get('sort') && sort.querySelector('option[value="' + p.get('sort') + '"]')) sort.value = p.get('sort');
-    if (any) details.open = true;
+    // 広い画面では絞り込みの欄をいつも開いている。スマホでは条件つきで開いても欄を閉じたままにし、結果の一覧を先に見せる（2026-11-06 黒田さんの判断。下の jumpToResults）
+    return any || !!p.get('q') || !!toolSel || p.get('saved') === '1';
+  }
+
+  // スマホで、事例ページの札などから条件つきで一覧を開いたとき：見出しや件数の帯を飛ばし、閉じた「条件で絞り込む」と結果の一覧が見える位置まで送る。
+  // 戻るボタンで戻ったときはブラウザが元の位置に戻すので、何もしない
+  function jumpToResults() {
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'back_forward') return;
+    var y = details.getBoundingClientRect().top + window.scrollY - 64;  // 64：ヘッダーの高さ
+    window.scrollTo(0, Math.max(0, y));
   }
 
   function clearAll() {
@@ -406,10 +416,12 @@
     setTimeout(startCount, 2500);  // 読み込みに時間がかかっても、2.5秒たったら始める
   }
 
-  if (window.matchMedia('(min-width: 900px)').matches) details.open = true;
-  loadUrl();
+  var wide = window.matchMedia('(min-width: 900px)').matches;
+  if (wide) details.open = true;
+  var fromLink = loadUrl();
   doSort();
   apply(false);
+  if (fromLink && !wide) jumpToResults();
 
   // 読み込んだときだけ、表示しているカードを上から順にふわっと出す（12件目以降は同時に）
   if (!reduceMotion) {
