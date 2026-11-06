@@ -1399,7 +1399,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
                     f'<span class="rel-top">{type_badge(o.get("種別"))}</span><small>{esc(o["企業名"])}</small>'
                     f'<strong>{esc(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}</a>')
             rows_html.append(
-                f'<div class="rel-row"><div class="rel-head"><h3><img src="../../assets/emoji/{r["emoji"]}.png" alt="" width="22" height="22">{esc(r["title"])}</h3>'
+                f'<div class="rel-row"><div class="rel-head"><h3><img src="../../assets/emoji/{r["emoji"]}.png" alt="" width="26" height="26">{esc(r["title"])}</h3>'
                 f'<a class="rel-all" href="../../{r["href"]}" data-goatcounter-click="related-all/{esc(r["kind"])}">すべて見る（{r["total"]}件）<span aria-hidden="true"> →</span></a></div>'
                 f'<div class="rel-strip">{"".join(cards)}</div></div>')
         rel_html = f'<section class="related"><h2>近い事例</h2>{"".join(rows_html)}</section>'

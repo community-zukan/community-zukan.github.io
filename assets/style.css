@@ -646,12 +646,12 @@ main { flex: 1 0 auto; }
 .flow-meta span { display: inline-block; font-weight: 700; color: var(--text-body); margin-right: var(--space-2); }
 
 /* 近い事例（2026-11-05 の見本で案C）：切り口ごとの帯と「すべて見る」 */
-.related h2 { margin-bottom: 0; }
-.rel-row { margin-top: var(--space-4); }
+.related h2 { margin-bottom: 0; font-size: clamp(26px, 4vw, 30px); }  /* 近い事例は回遊の入口なので、出典より大きく（2026-11-06 黒田さんの判断） */
+.rel-row { margin-top: var(--space-6); }
 .rel-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-2); }
-.rel-head h3 { display: flex; align-items: center; gap: 6px; font-size: 15px; margin: 0; }
-.rel-head h3 img { width: 22px; height: 22px; }
-.rel-all { font-size: 14px; font-weight: 700; color: var(--sky-on-tint); text-decoration: none; padding: var(--space-2) 0; }
+.rel-head h3 { display: flex; align-items: center; gap: var(--space-2); font-size: 18px; margin: 0; }
+.rel-head h3 img { width: 26px; height: 26px; }
+.rel-all { font-size: 15px; font-weight: 700; color: var(--sky-on-tint); text-decoration: none; padding: var(--space-2) 0; }
 .rel-all:hover { text-decoration: underline; }
 .related .rel { width: 230px; padding: var(--space-3) var(--space-4) var(--space-4); }
 .related .rel small { margin-top: var(--space-2); }
