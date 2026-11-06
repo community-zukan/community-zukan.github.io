@@ -18,6 +18,9 @@
       var on = load().indexOf(id) !== -1;
       save.setAttribute('aria-pressed', on ? 'true' : 'false');
       label.textContent = on ? 'あとで見るに入れました' : 'あとで見る';
+      // ヘッダーのしおりの件数も合わせる
+      var count = document.getElementById('header-saved-count');
+      if (count) { var n = load().length; count.textContent = n ? n : ''; }
     };
     save.hidden = false;
     render();

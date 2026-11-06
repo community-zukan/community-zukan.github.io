@@ -948,7 +948,6 @@ def nav_links(rel, path):
     return "\n      ".join(out)
 
 
-AI_NOTE = "Claudeにログインすると使えます（無料プランでも利用できます）。"
 
 
 def ai_link(label, where, anchor="", cls=""):
@@ -963,13 +962,12 @@ def ai_link(label, where, anchor="", cls=""):
             f'<span class="visually-hidden">（新しいタブで開く）</span></a>')
 
 
-def ai_line(rel, label, where, anchor="", note=False):
-    """1行の入口（💬 の絵＋リンク）。note=True ならログインの注記を下に添える。"""
+def ai_line(rel, label, where, anchor=""):
+    """1行の入口（💬 の絵＋リンク）。"""
     a = ai_link(label, where, anchor)
     if not a:
         return ""
-    return (f'<p class="ai-line"><img src="{rel}assets/emoji/1f4ac.png" alt="" width="18" height="18">{a}'
-            + (f'<small>{AI_NOTE}</small>' if note else "") + "</p>")
+    return (f'<p class="ai-line"><img src="{rel}assets/emoji/1f4ac.png" alt="" width="18" height="18">{a}</p>')
 
 
 EXAMPLES_SHOWN = 5  # 検索の例を一度に出す数
@@ -1214,7 +1212,7 @@ def build_index(cfg, cases):
     top_link = ai_link("コミュニティAIに相談する", "home")
     top_ai = (f'<p class="ai-top"><img src="assets/emoji/1f4ac.png" alt="" width="18" height="18">{top_link}'
               f'<span>立ち上げや運営の悩みを、事例をもとに一緒に考えます</span></p>') if top_link else ""
-    few_link = ai_link("コミュニティAIに相談する", "list-few", cls="button button-ghost ai-help-button")
+    few_link = ai_link("AIに相談する", "list-few", cls="button button-ghost ai-help-button")
     list_ai = (f'<aside class="ai-help" id="ai-help" data-few="5" hidden><p class="ai-help-title">うまく見つからないときは</p>'
                f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>') if few_link else ""
     body = f"""
@@ -1363,16 +1361,16 @@ def build_case(cfg, c, related, og_image=None, notes=None):
                          f'<div><h2>{question}</h2>{meta}{f"<p>{esc(c[col])}</p>" if c.get(col) else ""}</div></li>')
     # コミュニティAIへの入口（2026-11-06 の見本で案B）：「あなたの会社なら」の箱の中、提案のすぐ下に置く。
     # リンクの末尾に #事例ID を付けると、コミュニティAIがこの事例のカードを出して相談を始める。提案がない事例は流れの下に1行で置く
-    ai = ai_link("コミュニティAIに相談する", f"case/{c['ID']}", c["ID"], "ai-btn")
+    ai = ai_link("AIに相談する", f"case/{c['ID']}", c["ID"], "ai-btn")  # 狭い画面でも1行に収まるよう短く（箱の説明に「コミュニティAI」と書いてある）
     ai_box = (f'<div class="ai-box"><p class="ai-box-title"><img src="../../assets/emoji/1f4ac.png" alt="" width="20" height="20">自分の状況に合わせて考える</p>'
               f'<p class="ai-box-text">コミュニティAIが、この事例をふまえて相談に乗ります。いまの状況を書き足して送ってください。</p>'
-              f'{ai}<small>{AI_NOTE}</small></div>') if ai else ""
+              f'{ai}</div>') if ai else ""
     if c.get(HINT_COL):
         steps.append(f"""<li style="--i: {len(steps) + 1}"><span class="step"><img src="../../assets/emoji/1f914.png" alt="" width="26" height="26"></span><div><h2>あなたの会社なら</h2>
       <div class="hint"><p>{esc(c[HINT_COL])}</p><p class="hint-note">事例をもとにAIが考えた応用案です。出典に書かれている事実ではありません。</p>{ai_box}</div></div></li>""")
     flow = f'<ol class="flow">{"".join(steps)}</ol>' if steps else ""
     if not c.get(HINT_COL):
-        flow += ai_line("../../", "この事例を自分のコミュニティに生かすには？コミュニティAIに相談する", f"case/{c['ID']}", c["ID"], note=True)
+        flow += ai_line("../../", "この事例を自分のコミュニティに生かすには？コミュニティAIに相談する", f"case/{c['ID']}", c["ID"])
     missing_cols = ["規模", "開始年", "公開されている成果", "運営体制", "ツール", "段階", "場"]
     missing = [m for m in missing_cols if not c.get(m)]
     links = "".join(f'<li><a class="source-button" href="{esc(u)}" rel="noopener" target="_blank" data-goatcounter-click="source-{esc(c["ID"])}" '
@@ -1419,6 +1417,7 @@ def build_case(cfg, c, related, og_image=None, notes=None):
     <h1>{esc(c['_title'])}</h1>
     {f'<ul class="case-chips" aria-label="基本の情報">{chips}</ul>' if chips else ''}
     {f'<ul class="case-purposes" aria-label="目的">{purposes}</ul>' if purposes else ''}
+    {save_button(c)}
   </header>
   {lede}
   {flow}
@@ -1427,8 +1426,10 @@ def build_case(cfg, c, related, og_image=None, notes=None):
   <div class="feedback">
     <div class="useful" id="useful" hidden>
       <p>この事例は参考になりましたか。</p>
-      <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
-      <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
+      <span class="useful-buttons">
+        <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
+        <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
+      </span>
       <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
     </div>
     {report_link(cfg, c)}
@@ -1462,8 +1463,15 @@ def build_case(cfg, c, related, og_image=None, notes=None):
                 path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
 
 
+def save_button(c):
+    """あとで見る。読み終わる前に入れたい人のために、事例ページの見出しの札の下（最初に見える位置）に置く（2026-11-06 黒田さんの判断）。JavaScript が動くときだけ出す。"""
+    i = esc(c["ID"])
+    return (f'<button type="button" class="action-button save" id="save" data-id="{i}" aria-pressed="false" '
+            f'data-goatcounter-click="save-{i}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>')
+
+
 def share_bar(cfg, c):
-    """あとで見る・URLのコピー・SNSへの共有。あとで見るとコピーは JavaScript が動くときだけ出す。"""
+    """URLのコピー・SNSへの共有。コピーは JavaScript が動くときだけ出す（あとで見るは見出しの札の下。save_button）。"""
     url = f"{cfg['base_url'].rstrip('/')}/cases/{c['ID']}/"
     text = f"{c['企業名']} {c['_title']}｜{cfg['name']}"
     q = urllib.parse.quote
@@ -1475,7 +1483,6 @@ def share_bar(cfg, c):
     share = "".join(f'<li><a class="share-link" href="{esc(h)}" target="_blank" rel="noopener" '
                     f'data-goatcounter-click="share-{n.lower()}-{esc(c["ID"])}">{n}</a></li>' for n, h in links)
     return f"""<div class="actions">
-  <button type="button" class="action-button save" id="save" data-id="{esc(c['ID'])}" aria-pressed="false" data-goatcounter-click="save-{esc(c['ID'])}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>
   <div class="share">
     <ul class="share-list" aria-label="共有">
       <li><button type="button" class="share-link" id="copy-url" data-url="{esc(url)}" data-goatcounter-click="share-copy-{esc(c['ID'])}" hidden>URLをコピー</button></li>

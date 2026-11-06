@@ -158,7 +158,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .tile-name { font-size: 13px; line-height: 1.4; min-height: 2.8em; display: flex; align-items: center; }
 .tile:hover { border-color: var(--sky); color: var(--ink); }
 .tile[aria-current="true"] { background: var(--sky); border-color: var(--sky); color: var(--on-sky); }
-@media (max-width: 600px) { .tile { width: 132px; } }
+@media (max-width: 600px) { .tile { width: auto; min-width: 132px; } }
+.tile-name { white-space: nowrap; }  /* 文字を大きくした端末でも目的の名前を途中で割らない（タイルの幅を広げる） */
 @media (max-width: 759px) { .strip-arrows { display: none !important; } }
 
 .finder { padding-bottom: var(--space-16); }
@@ -285,6 +286,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 @media (min-width: 768px) { .case { padding: var(--space-6) var(--space-8) 80px; } }
 .case-head { margin-bottom: 28px; }
 .case-head h1 { font-size: clamp(24px, 4vw, 32px); margin: var(--space-2) 0 6px; }
+.case-head .save { margin-top: var(--space-4); }  /* あとで見るは見出しの札の下（最初に見える位置） */
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: var(--space-4); }
 .action-button {
   display: inline-flex; align-items: center; gap: var(--space-2); font: inherit; font-size: 14px; font-weight: 500;
@@ -518,6 +520,8 @@ main { flex: 1 0 auto; }
 .useful { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
 .useful[hidden] { display: none; }
 .useful p { margin: 0; }
+.useful-buttons { display: flex; flex-wrap: nowrap; gap: var(--space-2); }  /* 「役に立った」と「いまひとつ」を別の行に分けない */
+.small-button, .operator-link .button { white-space: nowrap; }
 .small-button { font: inherit; font-size: 13px; color: var(--text-body); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 4px 14px; min-height: 36px; cursor: pointer; }
 .small-button:hover { border-color: var(--sky); color: var(--sky); }
 .small-button:disabled { cursor: default; opacity: .6; }
@@ -684,7 +688,11 @@ main { flex: 1 0 auto; }
 .flow .ai-box .ai-box-text { margin: 2px 0 var(--space-3); font-size: 14px; color: var(--text-body); }
 .ai-btn { display: inline-block; background: var(--sky); color: var(--on-sky); font-weight: 700; font-size: 15px; border-radius: var(--radius-pill); padding: 10px 20px; text-decoration: none; }
 .ai-btn:hover { opacity: .9; }
-.ai-box small, .ai-line small { display: block; margin-top: var(--space-2); font-size: 12px; color: var(--text-sub); line-height: 1.6; }
+/* 文字を大きくした端末や狭い画面でもボタンの文字が2行に割れないように、スマホでは箱の幅いっぱいにして1行で出す */
+.ai-btn, .ai-help-button { white-space: nowrap; }
+@media (max-width: 600px) {
+  .ai-btn, .ai-help-button { display: block; text-align: center; padding-left: var(--space-3); padding-right: var(--space-3); }
+}
 .ai-line { margin: var(--space-6) 0 var(--space-8); font-size: 15px; }
 .ai-line a { font-weight: 700; }
 .ai-help { margin: var(--space-6) 0 0; padding: var(--space-4) 20px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
