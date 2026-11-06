@@ -688,8 +688,7 @@ main { flex: 1 0 auto; }
 .ai-line { margin: var(--space-6) 0 var(--space-8); font-size: 15px; }
 .ai-line a { font-weight: 700; }
 .ai-help { margin: var(--space-6) 0 0; padding: var(--space-4) 20px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
-.ai-help[hidden], .ai-bottom[hidden] { display: none; }
+.ai-help[hidden] { display: none; }
 .ai-help-title { margin: 0 0 var(--space-1); font-weight: 700; color: var(--ink); }
 .ai-help-text { margin: 0 0 var(--space-3); font-size: 14px; color: var(--text-body); }
 .ai-help-button { background: var(--card); color: var(--sky); border: 1px solid var(--sky); font-size: 14px; padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 700; }
-.ai-bottom { margin: var(--space-6) 0 0; font-size: 14px; text-align: center; }

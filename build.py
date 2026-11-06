@@ -1216,8 +1216,7 @@ def build_index(cfg, cases):
               f'<span>立ち上げや運営の悩みを、事例をもとに一緒に考えます</span></p>') if top_link else ""
     few_link = ai_link("コミュニティAIに相談する", "list-few", cls="button button-ghost ai-help-button")
     list_ai = (f'<aside class="ai-help" id="ai-help" data-few="5" hidden><p class="ai-help-title">うまく見つからないときは</p>'
-               f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>'
-               f'<p class="ai-bottom" id="ai-bottom" hidden>{ai_link("見つからないときは、コミュニティAIに相談する", "list")}</p>') if few_link else ""
+               f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>') if few_link else ""
     body = f"""
 <section class="hero">
   <div class="wrap">
