@@ -659,6 +659,47 @@ main { flex: 1 0 auto; }
 .rel-point { font-size: 13px; color: var(--text-body); line-height: 1.6; margin-top: var(--space-1); }
 @media (max-width: 560px) { .related .rel { width: 68vw; } }
 
+/* 近い事例のタブ（2026-11-06 の見本で案2）：切り口ごとの件数を大きな数字で。押すと4件のカードに切り替わる */
+.rel-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: var(--space-2); margin: var(--space-4) 0; }
+.rel-tab { font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: var(--space-3) var(--space-2); background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-card); transition: border-color .15s, transform .18s ease; }
+.rel-tab:hover { border-color: var(--sky); }
+@media (hover: hover) { .rel-tab:hover { transform: translateY(-2px); } }
+.rel-tab[aria-selected="true"] { background: var(--sky); border-color: var(--sky); color: var(--on-sky); }
+.rel-tab-axis { font-size: 11px; line-height: 1.4; opacity: .85; }
+.rel-tab-name { font-size: 13px; font-weight: 700; text-align: center; line-height: 1.4; word-break: keep-all; overflow-wrap: anywhere; }
+.rel-tab-num { font-family: var(--font-display); font-weight: 900; font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.rel-tab-num small { font-size: 12px; font-weight: 700; margin-left: 2px; }
+.rel-panel[hidden] { display: none; }
+.rel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+@media (max-width: 560px) { .rel-grid { grid-template-columns: 1fr; } .rel-tab { padding: var(--space-3) var(--space-1); } .rel-tab-name { font-size: 12px; } }
+.related .rel-grid .rel { position: relative; width: auto; padding: var(--space-3) var(--space-4) var(--space-4); }
+.rel-grid .rel.is-new { animation: rel-pop .35s ease both; }
+.rel-grid .rel.is-new:nth-child(2) { animation-delay: .05s; } .rel-grid .rel.is-new:nth-child(3) { animation-delay: .1s; } .rel-grid .rel.is-new:nth-child(4) { animation-delay: .15s; }
+@keyframes rel-pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.rel-emo { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; background: var(--chip-bg); display: grid; place-items: center; transition: transform .25s ease; }
+@media (hover: hover) { .rel:hover .rel-emo { transform: rotate(-12deg) scale(1.1); } }
+.related .rel .rel-top, .related .rel small { margin-right: 48px; }
+.rel-tags { list-style: none; margin: auto 0 0; padding: var(--space-2) 0 0; display: flex; flex-wrap: wrap; gap: 4px; }
+.rel-tags li { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; background: var(--chip-bg); color: var(--sky-on-tint); border-radius: var(--radius-pill); padding: 1px 8px 1px 5px; white-space: nowrap; }
+.rel-panel .rel-all { display: block; text-align: center; margin-top: var(--space-4); padding: var(--space-3); border: 1px solid var(--sky); border-radius: var(--radius-pill); background: var(--card); }
+.rel-panel .rel-all:hover { text-decoration: none; background: var(--chip-bg); }
+
+/* ほかの事例をひく（2026-11-06 の見本で案3）：図鑑の全体から1件をランダムにめくる */
+.rel-pick { margin-top: var(--space-8); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--space-4); align-items: center; background: var(--card); border: 1px dashed var(--sky); border-radius: var(--radius-lg); padding: var(--space-6); }
+.rel-pick[hidden] { display: none; }
+.rel-pick h3 { display: flex; align-items: center; gap: var(--space-2); font-size: 20px; margin: 0 0 var(--space-1); }
+.rel-pick p { margin: 0 0 var(--space-3); font-size: 14px; color: var(--text-body); }
+.rel-pick-button { font: inherit; font-weight: 700; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; gap: var(--space-2); background: var(--sky); color: var(--on-sky); border: 0; border-radius: var(--radius-pill); padding: 10px 22px; min-height: 44px; white-space: nowrap; }
+.rel-pick-button:hover { opacity: .92; }
+.rel-pick-button img { transition: transform .5s ease; }
+.rel-pick-button.is-rolling img { transform: rotate(360deg); }
+.rel-pick-card { perspective: 800px; }
+.related .rel-pick-card .rel { position: relative; width: 100%; min-height: 170px; }
+.rel-pick-card .rel.is-flip { animation: rel-flip .45s ease; }
+@keyframes rel-flip { from { transform: rotateY(90deg); opacity: .3; } to { transform: none; opacity: 1; } }
+@media (max-width: 640px) { .rel-pick { grid-template-columns: 1fr; padding: var(--space-4); } }
+@media (prefers-reduced-motion: reduce) { .rel-grid .rel.is-new, .rel-pick-card .rel.is-flip { animation: none; } .rel-pick-button img { transition: none; } }
+
 /* 目的の「社内」「ファン・顧客」の小見出しと、絞り込みの欄の上の「すべて外す」 */
 .sublabel { font-size: 12px; color: var(--text-sub); margin: 2px 0 var(--space-1); }
 .chips + .sublabel { margin-top: var(--space-3); }

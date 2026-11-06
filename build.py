@@ -1388,21 +1388,28 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
   </section>"""
     rel_html = ""
     if related:
-        # 近い事例（2026-11-05 の見本で案C）：「同じ目的」「同じ業種」「同じ段階」の帯ごとに4件と、一覧への「すべて見る」
-        rows_html = []
-        for r in related:
-            cards = []
-            for o in r["cases"]:
-                pt = shorten(o.get("工夫のポイント") or o.get("主な施策") or "", 40)
-                cards.append(
-                    f'<a class="rel" href="../{esc(o["ID"])}/" data-goatcounter-click="related/{esc(r["kind"])}">'
-                    f'<span class="rel-top">{type_badge(o.get("種別"))}</span><small>{esc(o["企業名"])}</small>'
-                    f'<strong>{esc(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}</a>')
-            rows_html.append(
-                f'<div class="rel-row"><div class="rel-head"><h3><img src="../../assets/emoji/{r["emoji"]}.png" alt="" width="26" height="26">{esc(r["title"])}</h3>'
-                f'<a class="rel-all" href="../../{r["href"]}" data-goatcounter-click="related-all/{esc(r["kind"])}">すべて見る（{r["total"]}件）<span aria-hidden="true"> →</span></a></div>'
-                f'<div class="rel-strip">{"".join(cards)}</div></div>')
-        rel_html = f'<section class="related"><h2>近い事例</h2>{"".join(rows_html)}</section>'
+        # 近い事例（2026-11-06 の見本で案2＋案3）：切り口（同じ目的・同じ業種・同じ種別で同じ段階）を件数つきのタブにし、
+        # 押すとその切り口の4件（絵つきのカード）に切り替える。下に図鑑の全体から1件をめくる「ほかの事例をひく」
+        tabs, panels = [], []
+        for i, r in enumerate(related):
+            cards = "".join(rel_card(o, f"related/{r['kind']}") for o in r["cases"])
+            # タブは「同じ目的」と値の2段。狭い画面で折り返すときは「・」の後ろだけで折り返す
+            value = esc(r["value"]).replace("・", "・<wbr>")
+            tabs.append(
+                f'<button type="button" class="rel-tab" role="tab" id="rel-tab-{i}" aria-controls="rel-panel-{i}" aria-selected="{"true" if i == 0 else "false"}" '
+                f'data-goatcounter-click="related-tab/{esc(r["kind"])}"><img src="../../assets/emoji/{r["emoji"]}.png" alt="" width="28" height="28">'
+                f'<span class="rel-tab-axis">{esc(r["axis"])}</span><span class="rel-tab-name">{value}</span><span class="rel-tab-num">{r["total"]}<small>件</small></span></button>')
+            panels.append(
+                f'<div class="rel-panel" role="tabpanel" id="rel-panel-{i}" aria-labelledby="rel-tab-{i}"{"" if i == 0 else " hidden"}>'
+                f'<div class="rel-grid">{cards}</div>'
+                f'<a class="rel-all" href="../../{r["href"]}" data-goatcounter-click="related-all/{esc(r["kind"])}" aria-label="{esc(r["title"])}をすべて見る（{r["total"]}件）">すべて見る（{r["total"]}件）<span aria-hidden="true"> →</span></a></div>')
+        pick = (f'<div class="rel-pick" id="rel-pick" data-id="{esc(c["ID"])}" hidden><div class="rel-pick-text">'
+                f'<h3><img src="../../assets/emoji/1f3b2.png" alt="" width="24" height="24">気分を変えて、ほかの事例を</h3>'
+                f'<p>図鑑にある事例から、1件をランダムにめくります。</p>'
+                f'<button type="button" class="rel-pick-button" id="rel-pick-button"><img src="../../assets/emoji/1f3b2.png" alt="" width="22" height="22">ほかの事例をひく</button></div>'
+                f'<div class="rel-pick-card" id="rel-pick-card" aria-live="polite"></div></div>')
+        rel_html = (f'<section class="related"><h2>近い事例</h2><div class="rel-tabs" role="tablist" aria-label="近い事例の切り口">{"".join(tabs)}</div>'
+                    f'{"".join(panels)}{pick}</section>')
     note_html_ = ""
     in_notes = [n for n in (notes or []) if c["ID"] in n["ids"]]
     if in_notes:
@@ -1464,6 +1471,19 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
                 path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
 
 
+def rel_card(o, click):
+    """近い事例のカード。一覧のカードと同じく、右上に最初の目的の絵を丸の中に置き、下に目的の札（絵つき、2つまで）。"""
+    icon = lambda p: PURPOSE_ICONS.get(p, "1f4cc")
+    pt = shorten(o.get("工夫のポイント") or o.get("主な施策") or "", 34)
+    p0 = o["_purpose"][0] if o["_purpose"] else ""
+    emo = f'<span class="rel-emo"><img src="../../assets/emoji/{icon(p0)}.png" alt="" width="28" height="28"></span>' if p0 else ""
+    tags = "".join(f'<li><img src="../../assets/emoji/{icon(p)}.png" alt="" width="14" height="14">{esc(p)}</li>' for p in o["_purpose"][:2])
+    return (f'<a class="rel" href="../{esc(o["ID"])}/" data-goatcounter-click="{esc(click)}">{emo}'
+            f'<span class="rel-top">{type_badge(o.get("種別"))}</span><small>{esc(o["企業名"])}</small>'
+            f'<strong>{esc(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}'
+            f'{f"<ul class=rel-tags>{tags}</ul>" if tags else ""}</a>')
+
+
 def save_button(c):
     """あとで見る。読み終わる前に入れたい人のために、事例ページの見出しの札の下（最初に見える位置）に置く（2026-11-06 黒田さんの判断）。JavaScript が動くときだけ出す。"""
     i = esc(c["ID"])
@@ -1519,22 +1539,22 @@ def related_rows(cfg, c, cases, per_row=4):
     if c["_purpose"]:
         p = c["_purpose"][0]
         rows.append(("purpose", icons.get(p, "1f4cc"), f"目的が「{p}」の事例", f"?purpose={q(p)}",
-                     [o for o in others if p in o["_purpose"]]))
+                     [o for o in others if p in o["_purpose"]], "同じ目的", p))
     if c["_industry"]:
         g = c["_industry"]
         rows.append(("industry", "1f3e2", f"業種が「{g}」の事例", f"?industry={q(g)}",
-                     [o for o in others if o["_industry"] == g]))
+                     [o for o in others if o["_industry"] == g], "同じ業種", g))
     if c.get("段階") and c.get("種別"):
         t, st = c["種別"], c["段階"]
         rows.append(("stage", AXIS_ICONS.get(st, "1f4c8"), f"{TYPE_LABEL.get(t, t)}で{st}の事例", f"?type={q(t)}&stage={q(st)}",
-                     [o for o in others if o.get("段階") == st and o.get("種別") == t]))
+                     [o for o in others if o.get("段階") == st and o.get("種別") == t], "同じ段階", st))  # 種別もそろえている（「すべて見る」の文言に出る）
     shown, out = set(), []
-    for kind, emoji, title, href, lst in rows:
+    for kind, emoji, title, href, lst, axis, value in rows:
         pick = [o for o in sorted(lst, key=rank) if o["ID"] not in shown][:per_row]
         if not pick:
             continue
         shown.update(o["ID"] for o in pick)
-        out.append({"kind": kind, "emoji": emoji, "title": title, "href": href, "total": len(lst) + 1, "cases": pick})  # 件数は開いた一覧と同じ数（この事例自身も含む）
+        out.append({"kind": kind, "emoji": emoji, "title": title, "href": href, "total": len(lst) + 1, "cases": pick, "axis": axis, "value": value})  # 件数は開いた一覧と同じ数（この事例自身も含む）
     return out
 
 
@@ -1769,6 +1789,11 @@ def main():
     write("404.html", build_404(cfg))
     write("saved/index.html", build_saved(cfg, cases))
 
+    # 事例ページの「ほかの事例をひく」が読む小さな一覧（data.json は大きいので別に作る）
+    write("pick.json", json.dumps([{"id": c["ID"], "type": c.get("種別", ""), "co": c["企業名"], "title": c["_title"],
+                                    "point": shorten(c.get("工夫のポイント") or c.get("主な施策") or "", 60),
+                                    "emoji": PURPOSE_ICONS.get(c["_purpose"][0], "1f4cc") if c["_purpose"] else "1f4cc"} for c in cases],
+                                  ensure_ascii=False, separators=(",", ":")))
     public = [{k: v for k, v in c.items() if not k.startswith("_")} for c in cases]
     write("data.json", json.dumps({"updated": datetime.now(JST).isoformat(), "cases": public},
                                   ensure_ascii=False, indent=1))

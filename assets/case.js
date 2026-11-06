@@ -96,3 +96,59 @@
     });
   }
 })();
+
+// 近い事例：切り口のタブ（押すとその切り口の4件に切り替え、カードをふわっと出す）と「ほかの事例をひく」
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.rel-tab'));
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (x) {
+        var on = x === t;
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+        var panel = document.getElementById(x.getAttribute('aria-controls'));
+        if (!panel) return;
+        panel.hidden = !on;
+        if (on) panel.querySelectorAll('.rel').forEach(function (r) {
+          r.classList.remove('is-new'); void r.offsetWidth; r.classList.add('is-new');
+        });
+      });
+    });
+  });
+
+  var box = document.getElementById('rel-pick');
+  if (!box || !window.fetch) return;
+  var me = box.getAttribute('data-id');
+  var btn = document.getElementById('rel-pick-button');
+  var slot = document.getElementById('rel-pick-card');
+  var deck = null, last = -1;
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function count(path, title) {
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true });
+  }
+  function draw() {
+    if (!deck || !deck.length) return;
+    var i;
+    do { i = Math.floor(Math.random() * deck.length); } while (i === last && deck.length > 1);
+    last = i;
+    var d = deck[i];
+    var cls = d.type === '社内' ? 'is-internal' : 'is-fan';
+    slot.innerHTML = '<a class="rel is-flip" href="../' + esc(d.id) + '/">' +
+      '<span class="rel-emo"><img src="../../assets/emoji/' + esc(d.emoji) + '.png" alt="" width="28" height="28"></span>' +
+      '<span class="rel-top"><span class="badge ' + cls + '">' + esc(d.type) + '</span></span><small>' + esc(d.co) + '</small>' +
+      '<strong>' + esc(d.title) + '</strong>' + (d.point ? '<span class="rel-point">' + esc(d.point) + '</span>' : '') + '</a>';
+    slot.querySelector('a').addEventListener('click', function () { count('related-pick-open/' + d.id, 'ほかの事例をひく（開いた）'); });
+  }
+  fetch('../../pick.json').then(function (r) { return r.json(); }).then(function (list) {
+    deck = list.filter(function (d) { return d.id !== me; });
+    if (!deck.length) return;
+    box.hidden = false;
+    draw();
+    btn.addEventListener('click', function () {
+      btn.classList.add('is-rolling');
+      setTimeout(function () { btn.classList.remove('is-rolling'); }, 500);
+      draw();
+      count('related-pick', 'ほかの事例をひく');
+    });
+  }).catch(function () { /* 読めないときは出さない */ });
+})();
+
