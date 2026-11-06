@@ -322,9 +322,10 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .hint-note { font-size: 13px; color: var(--text-sub); margin-top: 10px !important; line-height: 1.7; }
 .source { border-top: 1px solid var(--line); padding-top: 20px; }
 .source-links { list-style: none; padding: 0; margin: 0 0 var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.source-button { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 0 var(--space-2); font-weight: 700; font-size: 15px; color: var(--on-sky); background: var(--sky); border-radius: var(--radius-md); padding: 10px 18px; min-height: 46px; text-decoration: none; }
-.source-button:hover { filter: brightness(1.08); }
-.source-domain { font-size: 13px; font-weight: 400; opacity: .85; }
+/* 出典は控えめな白いボタン（2026-11-06 黒田さんの判断：外へ出るより、ほかの事例を見てもらうほうを優先する） */
+.source-button { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0 var(--space-2); font-weight: 500; font-size: 14px; color: var(--text-body); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 6px 14px; min-height: 40px; text-decoration: none; }
+.source-button:hover { border-color: var(--sky); color: var(--sky); }
+.source-domain { font-size: 13px; font-weight: 400; color: var(--text-sub); }
 .source-meta { margin: 0; font-size: 14px; }
 .source-meta div { display: grid; grid-template-columns: 6.5em 1fr; gap: var(--space-2); padding: var(--space-1) 0; }
 .source-meta dt { color: var(--text-sub); }
