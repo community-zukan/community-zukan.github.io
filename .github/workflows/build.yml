@@ -32,17 +32,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      # 共有画像に日本語の書体が要るので Noto Sans CJK を、ひらがな検索の読みを作るために pykakasi を入れる。
+      # 共有画像に使う日本語の書体（Noto Sans CJK）と絵文字の画像は、一度取ってきたらキャッシュに残し、毎回は取り直さない。
+      # 以前は apt で書体を入れていたが、apt が遅い日に更新が27分かかったため（2026-11-06）、make_og.py が tools/fonts/ に取る形にした
+      - name: 書体と絵文字のキャッシュを戻す
+        uses: actions/cache@v4
+        with:
+          path: |
+            tools/fonts
+            tools/emoji/cache
+            ~/.cache/pip
+          key: og-assets-v1
+      # ひらがな検索の読みを作る pykakasi と、共有画像を作る Pillow を入れる。
       # ここで失敗しても、共通の共有画像・ひらがな検索なしでサイトの更新は続ける
-      - name: 日本語の書体と Python のパッケージを入れる
+      - name: Python のパッケージを入れる
         continue-on-error: true
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk
-          python -m pip install --quiet --disable-pip-version-check "pillow==11.3.0" "pykakasi==2.3.0"
+        timeout-minutes: 5
+        run: python -m pip install --quiet --disable-pip-version-check "pillow==11.3.0" "pykakasi==2.3.0"
       # 事例ページごとの共有画像（1200×630）を作る。失敗してもサイト共通の画像のまま更新は続ける
       - name: 事例ページの共有画像を作る
         continue-on-error: true
+        timeout-minutes: 10
         run: python tools/make_og.py
       - name: サイトを作る
         run: |
@@ -51,6 +60,9 @@ jobs:
           else
             python build.py
           fi
+      # 作ったページを公開の前に点検する（事例ページ・title・共有画像・サイト内のリンク・サイトマップ）。おかしければここで止まり、公開もデータの記録もしない
+      - name: サイトを点検する
+        run: python tools/check_site.py
       - name: 使ったデータを記録する
         run: |
           git config user.name "github-actions[bot]"
