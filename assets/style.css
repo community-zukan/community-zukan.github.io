@@ -538,7 +538,12 @@ main { flex: 1 0 auto; }
 /* あとで見る（/saved/） */
 .saved-page { padding-top: var(--space-6); padding-bottom: var(--space-16); }
 .saved-page h1 { font-size: clamp(24px, 4vw, 30px); margin: var(--space-4) 0 var(--space-2); }
-.saved-count { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-3); }
+.saved-count { font-size: 14px; color: var(--text-sub); margin: 0; }
+.saved-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); margin: 0 0 var(--space-3); }
+.saved-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin: 0; }
+.saved-actions button { white-space: nowrap; }
+.saved-note { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-3); word-break: break-all; }
+.saved-note:empty { display: none; }
 
 /* 事例ページ：読み物の形（基本の情報の札 → この事例のポイント → 何をしたか・どうなったか・だれが動かしているか・あなたの会社なら） */
 .case.wrap { max-width: 800px; }

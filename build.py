@@ -1718,16 +1718,27 @@ def build_saved(cfg, cases):
 
     入れた事例はブラウザの localStorage（zukan-saved）にだけあるので、全事例のカードを隠して置き、
     assets/saved.js が入れたものだけを出す。検索エンジンには載せない。
+    全事例のカードはページに入れず saved/cards.html に分け、saved.js が読み込んでから出す（ページを軽くするため。2026-11-07）。
+    /saved/?ids=S01,F02 で開くと、送られてきたリストとして出し、自分の保存に入れることもできる（観測所と同じ。2026-11-07）。
     """
+    all_cards = "".join(card(c, prefix="../").replace('<li class="card" ', '<li class="card" hidden ', 1) for c in cases)
+    saved_ver = hashlib.sha1(all_cards.encode("utf-8")).hexdigest()[:8]
+    write("saved/cards.html", all_cards)
     body = f"""
 <article class="wrap saved-page">
   <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../">事例一覧</a></li><li aria-current="page">あとで見る</li></ol></nav>
   <h1>あとで見る</h1>
   <p class="lead">事例ページで「あとで見る」を押した事例です。このブラウザの中にだけ保存していて、運営者には送られません。</p>
-  <p class="saved-count" id="saved-count" aria-live="polite"></p>
-  <ul class="cards" id="saved-cards">
-    {''.join(card(c, prefix="../").replace('<li class="card" ', '<li class="card" hidden ', 1) for c in cases)}
-  </ul>
+  <div class="saved-bar">
+    <p class="saved-count" id="saved-count" aria-live="polite">読み込んでいます…</p>
+    <p class="saved-actions">
+      <button type="button" class="button" id="saved-import" hidden data-goatcounter-click="saved-list/import">自分の「あとで見る」に入れる</button>
+      <button type="button" class="small-button" id="saved-share" hidden data-goatcounter-click="saved-list/share">このリストを送る</button>
+    </p>
+  </div>
+  <p class="saved-note" id="saved-note" aria-live="polite"></p>
+  <h2 class="visually-hidden">事例の一覧</h2>
+  <ul class="cards" id="saved-cards" data-src="cards.html?v={saved_ver}"></ul>
   <div class="empty" id="saved-empty" hidden>
     <p>まだ「あとで見る」に入れた事例はありません。</p>
     <p>事例ページの「あとで見る」を押すと、ここにたまります。</p>
