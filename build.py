@@ -883,7 +883,7 @@ def build_note(cfg, n, notes, by_id, og_notes):
 {note_html(cfg, n, by_id, rel)}
   </div>
   {ai_line(rel, "自社で始めるなら？この記事の事例をもとに、コミュニティAIに相談する", "note/" + n["slug"], note_ai_anchor(n, cs))}
-  <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。</p>
+  <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。{note_contact(cfg, n)}</p>
   {more}
 </article>
 """
@@ -1093,6 +1093,8 @@ def operator_line(cfg, rel=""):
     if cfg.get("contact_url"):
         parts.append(f'<a href="{esc(cfg["contact_url"])}">掲載内容の修正のご連絡</a>')
     parts.append(f'<a href="{rel}about/">この図鑑について</a>')
+    if cfg.get("operator_url"):
+        parts.append(f'<a href="{esc(cfg["operator_url"])}" rel="noopener" target="_blank" data-goatcounter-click="contact-operator/footer">運営者に相談する</a>')
     return f"<p>{'　'.join(parts)}</p>" if parts else ""
 
 
@@ -1640,12 +1642,16 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマスが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマス・「運営者に相談する」のリンクが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
   <h2>掲載内容について</h2>
   <p>内容の誤りのお知らせや、事例のご提案は、{contact_text(cfg)}</p>
+
+  <h2>掲載されている企業の方へ</h2>
+  <p>この図鑑は、公開されている情報を要約し、出典へのリンクを添えて紹介しています。内容の訂正や、掲載の取り下げをご希望の場合は、{contact_text(cfg)}事例ページの「この事例の誤りを知らせる」から開くと、対象の事例が入った状態でフォームが開きます。</p>
+  <p>いただいたご連絡は、出典と照らして確かめたうえで、訂正または取り下げを行います。取り下げた事例は、サイトの毎日の更新で一覧と事例ページから外れます。</p>
 
   <h2>運営者</h2>
   <div class="operator-card">
@@ -1659,6 +1665,14 @@ def build_about(cfg, cases, updated):
 """
     return page(cfg, title="この図鑑について", description="コミュニティ図鑑の収録ルール、集め方、タグの意味を説明しています。",
                 path="about/", body=body, depth=1)
+
+
+def note_contact(cfg, n):
+    """図鑑ノートの最後に添える、運営者に相談する入口（aim-contact。2026-11-07 黒田さんの採用）。"""
+    if not cfg.get("operator_url"):
+        return ""
+    return (f'コミュニティの運営について、書き手の黒田に直接相談したいときは<a href="{esc(cfg["operator_url"])}" rel="noopener" target="_blank" '
+            f'data-goatcounter-click="contact-operator/note/{esc(n["slug"])}">運営者に相談する</a>からどうぞ。')
 
 
 def contact_text(cfg):
