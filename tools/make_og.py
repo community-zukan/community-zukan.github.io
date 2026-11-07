@@ -34,7 +34,7 @@ W, H = 1200, 630
 
 # サイトの配色（assets/style.css と同じ）
 # デザインシステム「黒田悠介」の色（assets/style.css と同じ）
-BG, SURFACE, INK, INK2, INK3 = "#fbfaf5", "#ffffff", "#1a1d23", "#4a4f57", "#5e636b"
+BG, SURFACE, INK, INK2, INK3 = "#f7f9fb", "#ffffff", "#1a1d23", "#4a4f57", "#5e636b"
 LINE, ACCENT, YELLOW = "#e3e6ea", "#1874b8", "#f5c518"
 TYPE_COLORS = {"社内": ("#1568a6", "#e8eef5"), "ファン・顧客": ("#6b4e00", "#fff3c4"), "多企業": ("#2e6b3c", "#e4f1e1")}
 

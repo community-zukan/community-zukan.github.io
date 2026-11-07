@@ -1,6 +1,8 @@
 :root {
   /* 色：デザインシステム「黒田悠介」（観測所と同じ）。黄色は1画面に1〜2か所まで */
-  --base: #fbfaf5;          /* 背景（生成りの白） */
+  --base: #f7f9fb;          /* 背景の地（青みのごく薄いグレー。入力欄や上に重なる帯もこの色） */
+  --bg-top: #ffffff;        /* 背景のグラデーションの上端（ページの上は白。2026-11-07 の見本で案B） */
+  --bg-bottom: #eef2f6;     /* 背景のグラデーションの下端（下へ行くほど少し青みのグレー） */
   --card: #ffffff;          /* カード・箱の地 */
   --ink: #1a1d23;           /* 見出しと本文の文字 */
   --text-body: #4a4f57;     /* 説明の文字 */
@@ -36,7 +38,7 @@
 }
 :root[data-theme="dark"] {
   /* 暗い表示：フッターのボタンで切り替える（既定は明るい表示）。名前はそのままに値だけを入れ替える */
-  --base: #15181d; --card: #1f232a; --ink: #f3f1ea; --text-body: #c9cdd3; --text-sub: #a3a9b1; --line: #313640;
+  --base: #15181d; --bg-top: #15181d; --bg-bottom: #15181d; --card: #1f232a; --ink: #f3f1ea; --text-body: #c9cdd3; --text-sub: #a3a9b1; --line: #313640;
   --sky: #7cc0ee; --sky-on-tint: #7cc0ee; --chip-bg: #233042; --on-sky: #15181d; --base-yellow: #3a3320; --marker: rgba(245, 197, 24, .42); --footer-bg: #0e1013;
   --fan-fg: #f5d86a;
   --multi-fg: #94d3a2; --multi-bg: #1f3327;
@@ -52,7 +54,9 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--base);
+  /* 背景：ページの上は白、420px あたりで地の色、下へ行くほど少し青みのグレー（2026-11-07 の見本で案B。暗い表示では一色） */
+  background-color: var(--base);
+  background-image: linear-gradient(180deg, var(--bg-top) 0, var(--base) 420px, var(--bg-bottom) 100%);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -87,7 +91,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 @media (min-width: 640px) { .sp { display: none; } }
 
 /* ヘッダー：1段。スマホはロゴ・あとで見る・虫めがね・メニュー（押すと下に開く）。広い画面はロゴ・メニュー・あとで見る・虫めがね */
-.site-header { background: var(--base); border-bottom: 1px solid var(--line); }
+.site-header { background: var(--bg-top); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); padding-top: var(--space-3); padding-bottom: var(--space-3); }
 .logo { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-weight: 900; font-size: 19px; letter-spacing: .06em; color: var(--ink); text-decoration: none; margin-right: auto; }
 .logo-mark { width: 30px; height: 30px; flex: none; }
