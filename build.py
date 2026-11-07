@@ -883,7 +883,7 @@ def build_note(cfg, n, notes, by_id, og_notes):
 {note_html(cfg, n, by_id, rel)}
   </div>
   {ai_line(rel, "自社で始めるなら？この記事の事例をもとに、コミュニティAIに相談する", "note/" + n["slug"], note_ai_anchor(n, cs))}
-  <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。{note_contact(cfg, n)}</p>
+  <p class="note-end">紹介した取り組みは、出典が公開された時点のものです。くわしくは各事例のページの出典をご覧ください。</p>
   {more}
 </article>
 """
@@ -1093,8 +1093,6 @@ def operator_line(cfg, rel=""):
     if cfg.get("contact_url"):
         parts.append(f'<a href="{esc(cfg["contact_url"])}">掲載内容の修正のご連絡</a>')
     parts.append(f'<a href="{rel}about/">この図鑑について</a>')
-    if cfg.get("operator_url"):
-        parts.append(f'<a href="{esc(cfg["operator_url"])}" rel="noopener" target="_blank" data-goatcounter-click="contact-operator/footer">運営者に相談する</a>')
     return f"<p>{'　'.join(parts)}</p>" if parts else ""
 
 
@@ -1658,8 +1656,8 @@ def build_about(cfg, cases, updated):
   <table class="defs compact">
     <thead><tr><th scope="col">項目</th><th scope="col">配点</th><th scope="col">決め方</th></tr></thead>
     <tbody>
-      <tr><th scope="row">知名度</th><td>30点</td><td>企業やコミュニティがどのくらい知られているかを、AIが5段階で推定しています。推定していない事例は12点です。</td></tr>
-      <tr><th scope="row">情報の厚み</th><td>30点</td><td>規模・成果・運営体制・開始年・ツールのうち、公開情報で分かった項目1つにつき6点です。</td></tr>
+      <tr><th scope="row">知名度</th><td>15点</td><td>企業やコミュニティがどのくらい知られているかを、AIが5段階で推定し、1段階を3点にしています。推定していない事例は6点です。</td></tr>
+      <tr><th scope="row">情報の厚み</th><td>45点</td><td>規模・成果・運営体制・開始年・ツールのうち、公開情報で分かった項目1つにつき9点です。</td></tr>
       <tr><th scope="row">鮮度</th><td>25点</td><td>出典の時期が12か月以内なら25点、24か月以内なら18点、48か月以内なら10点、それより前なら4点、分からなければ8点です。</td></tr>
       <tr><th scope="row">出典の確かさ</th><td>15点</td><td>広告・PR記事は6点、それ以外は15点です。</td></tr>
     </tbody>
@@ -1679,7 +1677,7 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマス・「運営者に相談する」のリンクが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマス・この図鑑についての運営者のリンクが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
   <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
@@ -1696,20 +1694,13 @@ def build_about(cfg, cases, updated):
     <p>2017年に、日本最大級の実名制フリーランスコミュニティ「FreelanceNow」と、問いでつながるコミュニティ「議論メシ」を立ち上げました。議論メシでは1,200回以上のイベントを開き、延べ13,000人以上が参加しています。スタートアップ、大企業、NPO、行政などとのコラボレーションは400回を超えます。</p>
     <p>2024年3月からは、コミューン株式会社のコミューンコミュニティラボ所長として、コミュニティの研究と社会実装に取り組みました。著書に、社会の変化とコミュニティの関係を書いた『コミュニティシフト』と、企業の経営や事業におけるコミュニティの役割を論じた『コミュニティ経営の教科書』があります。</p>
     <p>2026年10月からはフリーランスとして、コミュニティ研究家、キャリア研究家、ディスカッションパートナーを仕事にしています。同じ時期に FreelanceNow を、キャリアの転機をシェアするコミュニティ「あしたの転機」にリニューアルしました。メンバーは1.6万人を超えています。この図鑑のほか、「<a href="https://ashitano-tenki.github.io/">あしたの転機観測所</a>」も運営しています。</p>
-    <p class="operator-link"><a class="button" href="{esc(cfg.get('operator_url', ''))}" rel="noopener" target="_blank">黒田悠介のリンク集を見る</a><span>ほかの活動や発信をまとめています</span></p>
+    <p>企業でコミュニティを担当している方や、コミュニティを主宰している方の相談相手として、壁打ちや伴走も引き受けています。ご相談は、下のリンク集にある連絡先からお寄せください。</p>
+    <p class="operator-link"><a class="button" href="{esc(cfg.get('operator_url', ''))}" rel="noopener" target="_blank" data-goatcounter-click="contact-operator/about">黒田悠介のリンク集を見る</a><span>連絡先や、ほかの活動・発信をまとめています</span></p>
   </div>
 </article>
 """
     return page(cfg, title="この図鑑について", description="コミュニティ図鑑の収録ルール、集め方、タグの意味を説明しています。",
                 path="about/", body=body, depth=1)
-
-
-def note_contact(cfg, n):
-    """図鑑ノートの最後に添える、運営者に相談する入口（aim-contact。2026-11-07 黒田さんの採用）。"""
-    if not cfg.get("operator_url"):
-        return ""
-    return (f'コミュニティの運営について、書き手の黒田に直接相談したいときは<a href="{esc(cfg["operator_url"])}" rel="noopener" target="_blank" '
-            f'data-goatcounter-click="contact-operator/note/{esc(n["slug"])}">運営者に相談する</a>からどうぞ。')
 
 
 def contact_text(cfg):
