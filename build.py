@@ -1135,7 +1135,10 @@ def card(c, prefix="", order=None):
     # 企業名・コミュニティ名の読みを足して、ひらがなでも見つかるようにする
     yomi = reading(" ".join([c.get("企業名", ""), c.get("コミュニティ名", "")]))
     search = normalize(search) + (" " + yomi if yomi else "")
-    return f"""<li class="card" {attrs} data-search="{esc(search)}">
+    # キーワードで探したときの並び（企業名・コミュニティ名に合う → ツール・目的などに合う → 本文に合う）に使う。app.js の tierOf
+    name_key = normalize(" ".join([c.get("企業名", ""), c.get("コミュニティ名", "")])) + (" " + yomi if yomi else "")
+    tag_key = normalize(" ".join(c.get(k, "") for k in ["ツール", "目的", "活動の型", "業種", "検索用キーワード"]))
+    return f"""<li class="card" {attrs} data-search="{esc(search)}" data-name="{esc(name_key)}" data-tags="{esc(tag_key)}">
   <a href="{prefix}cases/{esc(c['ID'])}/">
     {emo}<div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h3 class="card-title">{esc(c['_title'])}</h3>

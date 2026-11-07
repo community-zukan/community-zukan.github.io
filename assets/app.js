@@ -189,6 +189,8 @@ function zukanListInit() {
 
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
+    // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）
+    if (lastSortKey !== sort.value + '|' + q.value.trim()) doSort();
     var s = selected();
     var words = normalize(q.value).split(/\s+/).filter(Boolean);
     var terms = words.map(alternatives);
@@ -257,10 +259,29 @@ function zukanListInit() {
     });
   }
 
+  // キーワードで探したときは、おすすめ順のなかで、企業名・コミュニティ名に合う事例 → ツール・目的などに合う事例 → 本文に合う事例の順にする
+  // （観測所と同じ考え方。2026-11-07）。並び順を自分で変えたときは、そちらに従う
+  function currentTerms() {
+    return normalize(q.value).split(/\s+/).filter(Boolean).map(alternatives);
+  }
+  function hitsAll(text, terms) {
+    return terms.every(function (alts) { return alts.some(function (w) { return text.indexOf(w) !== -1; }); });
+  }
+  function tierOf(c, terms) {
+    var name = c.dataset.name || '';
+    if (hitsAll(name, terms)) return 0;
+    if (hitsAll(name + ' ' + (c.dataset.tags || ''), terms)) return 1;
+    return 2;
+  }
+  var lastSortKey = '';
   function doSort() {
     var mode = sort.value;
+    var terms = mode === 'score' ? currentTerms() : [];
+    lastSortKey = mode + '|' + q.value.trim();
     var arr = cards.slice();
+    if (terms.length) cards.forEach(function (c) { c._tier = tierOf(c, terms); });
     arr.sort(function (a, b) {
+      if (terms.length && a._tier !== b._tier) return a._tier - b._tier;
       if (mode === 'year-desc' || mode === 'year-asc') {
         var ya = parseInt(a.dataset.year, 10), yb = parseInt(b.dataset.year, 10);
         var ea = isNaN(ya), eb = isNaN(yb);
