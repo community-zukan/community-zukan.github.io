@@ -1,4 +1,19 @@
 (function () {
+  // トップのHTMLには最初の24件だけが入っている。残り（data-rest）を読み込んで足してから、絞り込みなどを動かす。
+  // 読み込めなかったときは、入っている分だけで動かす
+  var listEl = document.getElementById('cards');
+  var restUrl = listEl && listEl.getAttribute('data-rest');
+  if (restUrl && window.fetch) {
+    fetch(restUrl).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (t) { listEl.insertAdjacentHTML('beforeend', t); })
+      .catch(function () { /* 入っている分だけで動かす */ })
+      .then(zukanListInit);
+  } else {
+    zukanListInit();
+  }
+})();
+
+function zukanListInit() {
   var cards = Array.prototype.slice.call(document.querySelectorAll('#cards .card'));
   if (!cards.length) return;
   var list = document.getElementById('cards');
@@ -31,7 +46,7 @@
   // ツール（?tool=）は絞り込みの欄に出さない条件。事例ページのツールの札から開く。カードの data-tool と同じ名前で比べる
   var toolSel = '';
   var toolNote = document.getElementById('tool-note');
-  cards.forEach(function (c, i) { c.dataset.order = i; });
+  cards.forEach(function (c, i) { if (c.dataset.order === undefined) c.dataset.order = i; });
 
   function selected() {
     var s = {};
@@ -465,4 +480,4 @@
     var next = shownCards[first] && shownCards[first].querySelector('a');
     if (next) next.focus({ preventScroll: true });
   });
-})();
+}

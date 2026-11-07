@@ -1103,7 +1103,7 @@ def type_badge(t):
     return f'<span class="badge {cls}">{esc(TYPE_LABEL.get(t, t))}</span>'
 
 
-def card(c, prefix=""):
+def card(c, prefix="", order=None):
     meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年〜", c.get("段階"), c.get("場")] if x]
     point = c.get("工夫のポイント") or c.get("主な施策")
     # 2026-11-05 の見本で案A：右上に最初の目的の絵を丸の中に置き、目的の札も絵つきにする（絵は config/site.json の purpose_icons）
@@ -1125,6 +1125,8 @@ def card(c, prefix=""):
         "checked": date_key(c.get("確認日")),
         "score": score_value(c.get("観測スコア")),
     }
+    if order is not None:
+        data["order"] = str(order)
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
     # 検索用キーワード（X列）は画面には出さず、検索の対象にだけ入れる
     search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型", "検索用キーワード"])
@@ -1195,6 +1197,9 @@ def purpose_strip(cfg, cases):
 </section>"""
 
 
+FIRST_CARDS = 24   # トップのHTMLに入れる件数（app.js の PAGE と同じ）
+
+
 def build_index(cfg, cases):
     n_type = Counter(c.get("種別") for c in cases)
     # トップの大きな件数の名前は短くする（2026-11-06 黒田さんの判断。札や絞り込みは「ファン・顧客」のまま）
@@ -1229,6 +1234,19 @@ def build_index(cfg, cases):
             filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend>{chips}</fieldset>')
             continue
         filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')
+    # トップを軽くする（c-light。2026-11-07 黒田さんの採用）：HTMLには最初に見える24件（おすすめ順）だけを入れ、
+    # 残りは cards.html に分けて、app.js が読み込んだあとに足す。絞り込み・検索・並べ替えは足し終わってから全件に効く。
+    # data-order は収録順（並べ替えの最後の決め手）。app.js の doSort の「おすすめ順」と同じ順に並べる
+    def default_key(i):
+        c = cases[i]
+        sc = score_value(c.get("観測スコア"))
+        ck = date_key(c.get("確認日"))
+        return (sc == "", -int(sc) if sc else 0, ck == "", "" if not ck else str(99999999 - int(ck)), i)
+    order = sorted(range(len(cases)), key=default_key)
+    first_cards = "".join(card(cases[i], order=i) for i in order[:FIRST_CARDS])
+    rest_html = "".join(card(cases[i], order=i) for i in order[FIRST_CARDS:])
+    rest_ver = hashlib.sha1(rest_html.encode("utf-8")).hexdigest()[:8]
+    write("cards.html", rest_html)
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     # コミュニティAIへの入口（2026-11-06 の見本で案B）：トップは大きな件数の下に1行。事例一覧は、結果が5件以下なら囲み、多いときは一番下に1行（app.js が切り替える）
     top_link = ai_link("コミュニティAIに相談する", "home")
@@ -1282,8 +1300,8 @@ def build_index(cfg, cases):
       <button type="button" class="view-btn" data-view="list" aria-pressed="false" title="一覧で表示"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="visually-hidden">一覧で表示</span></button>
     </div>
   </div>
-  <ul class="cards" id="cards">
-    {''.join(card(c) for c in cases)}
+  <ul class="cards" id="cards" data-rest="cards.html?v={rest_ver}" data-total="{len(cases)}">
+    {first_cards}
   </ul>
   <div class="empty" id="empty" hidden>
     <p>条件に合う事例はありませんでした。</p>
