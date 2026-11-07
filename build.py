@@ -1223,7 +1223,9 @@ def build_index(cfg, cases):
                 known = [(n, t) for t, n in side[v].items() if t in heads]
                 return max(known, key=lambda x: (x[0], -heads.index(x[1])))[1] if known else "その他"
             groups = [(t, [(v, n) for v, n in opts if head_of(v) == t]) for t in heads + ["その他"]]
-            chips = "".join(f'<p class="sublabel">{esc(TYPE_LABEL.get(t, t))}</p><div class="chips">{chip_list(key, g)}</div>' for t, g in groups if g)
+            # 種別を選んだら、その種別の小見出しの目的だけを出す（ux-purpose。2026-11-07 黒田さんの採用。app.js の narrowPurposes）
+            chips = "".join(f'<div class="purpose-group" data-type="{esc(t)}"><p class="sublabel">{esc(TYPE_LABEL.get(t, t))}</p>'
+                            f'<div class="chips">{chip_list(key, g)}</div></div>' for t, g in groups if g)
             filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend>{chips}</fieldset>')
             continue
         filters.append(f'<fieldset class="facet" data-facet="{key}"><legend>{esc(label)}</legend><div class="chips">{chips}</div></fieldset>')

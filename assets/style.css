@@ -708,7 +708,8 @@ main { flex: 1 0 auto; }
 
 /* 目的の「社内」「ファン・顧客」の小見出しと、絞り込みの欄の上の「すべて外す」 */
 .sublabel { font-size: 12px; color: var(--text-sub); margin: 2px 0 var(--space-1); }
-.chips + .sublabel { margin-top: var(--space-3); }
+.chips + .sublabel, .purpose-group + .purpose-group { margin-top: var(--space-3); }
+.purpose-group[hidden] { display: none; }
 .filters-body { position: relative; }
 .filters-reset { position: absolute; top: var(--space-2); right: var(--space-4); font-size: 13px; }
 

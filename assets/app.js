@@ -157,6 +157,18 @@
   }
 
   // 絞り込みと検索は全件に効かせ、当てはまった事例のうち先頭の limit 件だけを表示する
+  // 種別を選んだら、目的の絞り込みはその種別の小見出しのものだけを出す。種別を選んでいないときは全部。
+  // 「その他」の小見出しと、選んでいる目的がある小見出しは隠さない（隠れた条件が効いたままにならないように）
+  var purposeGroups = Array.prototype.slice.call(document.querySelectorAll('.purpose-group'));
+  function narrowPurposes(s) {
+    var types = s.type || [];
+    purposeGroups.forEach(function (g) {
+      var t = g.getAttribute('data-type');
+      var checked = !!g.querySelector('input:checked');
+      g.hidden = types.length > 0 && t !== 'その他' && types.indexOf(t) === -1 && !checked;
+    });
+  }
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     var s = selected();
@@ -185,6 +197,7 @@
     countSearch(shown);
     if (pushState) saveUrl(s);
     markTiles(s);
+    narrowPurposes(s);
     // コミュニティAIへの案内：結果が少ない（data-few の件数以下）ときだけ囲みで出す
     if (aiHelp) aiHelp.hidden = shown > (parseInt(aiHelp.getAttribute('data-few'), 10) || 5);
     if (toolNote) {
