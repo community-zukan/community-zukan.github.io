@@ -2,6 +2,7 @@ name: リンク切れの点検
 
 # 毎週、公開中の事例の出典URLを開いて「正常・移転・拒否・要確認」に分け、/linkcheck.json に出す。
 # サイトの掲載は自動では変えない（データ側の定期実行が linkcheck.json を読んで直す）。
+# 1回ですべては開かず、新しいものと前回問題があったものは毎週、残りは4週で一巡する（観測所と同じ。2026-11-07）。
 on:
   schedule:
     - cron: "30 21 * * 0"   # 毎週月曜 6:30（日本時間）。観測所の点検とずらしています
@@ -18,23 +19,21 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    # 新しく開くのは20分で打ち切り（tools/check_links.py の BUDGET）、そのあと取り直しの待ち時間がある
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7
 
       # 出典URLを開いて確かめ、data/linkcheck.json に書く。要確認があれば report.md もできる
       - name: 出典URLを開いて確かめる
-        run: python tools/check_links.py report.md
+        run: python3 tools/check_links.py report.md
 
       - name: 結果を保存する
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/linkcheck.json
+          git add data/linkcheck.json data/linkcheck_seen.json
           git diff --cached --quiet || git commit -m "リンク点検の結果 $(TZ=Asia/Tokyo date +%F)"
           # GitHub が一時的なエラーを返すことがあるので、30秒おきに3回まで試し直す
           for i in 1 2 3; do

@@ -11,6 +11,10 @@
   開けなかったときに「要確認」ではなく「拒否」に分ける。
 - 「要確認」があったときは、Issue 用の report.md も書く（引数で指定したとき）。
 - スプレッドシートやサイトの掲載は変えない。直すかどうかは、データ側の定期実行が linkcheck.json を読んで判断する。
+- 1回ですべてを開かない（観測所と同じ。2026-11-07）。毎回確かめるのは、まだ一度も確かめていないもの・前回「正常」以外だったもの・
+  残りのうち確かめた日が古いもの（全体の4分の1）。4週で全体を一巡する。確かめた日と結果は data/linkcheck_seen.json に残す。
+- 時間の上限（BUDGET 秒）を過ぎたら新しく開くのをやめ、そこまでの結果を保存する。残りは次回に回る。
+- linkcheck.json の items と summary は、今回確かめていないものも含めた「最後に確かめた結果」。
 """
 import argparse
 import collections
@@ -33,6 +37,10 @@ sys.path.insert(0, ROOT)
 import build  # noqa: E402  CSVの取得と設定は build.py と同じものを使う
 
 OUT = os.path.join(ROOT, "data", "linkcheck.json")
+SEEN = os.path.join(ROOT, "data", "linkcheck_seen.json")  # URLごとの、最後に確かめた日・結果
+BUDGET = int(os.environ.get("LINKCHECK_BUDGET", "1200"))  # 新しく開くのをやめるまでの秒数（取り直しは含まない）
+RETRY_BUDGET = 300                                       # 1回の取り直しに使ってよい秒数
+ROTATION = 4                                             # 何週で全体を一巡するか
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/126.0.0.0 Safari/537.36")
 HEADERS = {"User-Agent": UA, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -155,63 +163,109 @@ def main():
     cases = build.enrich(cfg, build.load_rows(cfg, args.csv))
     targets = [(c["ID"], c["企業名"], c["_title"], u) for c in cases for u in c["_urls"]]
 
-    def run(batch, timeout=TIMEOUT):
-        """ドメインごとにまとめ、ドメイン単位で並べて確かめる（同じドメインは順番に、間をあけて）。"""
+    key = lambda t: t[0] + " " + t[3]
+    targets = list({key(t): t for t in targets}.values())  # 同じ事例の同じURLは1回だけ
+    try:
+        with open(SEEN, encoding="utf-8") as f:
+            seen = json.load(f)
+    except (OSError, ValueError):
+        seen = {}
+    # 今回確かめるもの：一度も確かめていない・前回「正常」以外 は必ず。残りは確かめた日が古い順に全体の4分の1
+    must, rest = [], []
+    for t in targets:
+        old = seen.get(key(t))
+        (must if not old or old.get("status") != "正常" else rest).append(t)
+    rest.sort(key=lambda t: (seen[key(t)].get("date", ""), t[0]))
+    quota = -(-len(targets) // ROTATION)
+    todo = must + rest[:quota]
+
+    def run(batch, budget, timeout=TIMEOUT):
+        """ドメインごとにまとめ、ドメイン単位で並べて確かめる（同じドメインは順番に、間をあけて）。時間を過ぎたら開くのをやめる。"""
+        deadline = time.monotonic() + budget
         by_host = collections.defaultdict(list)
         for t in batch:
             by_host[host_of(t[3])].append(t)
         out = {}
 
         def work(group):
-            return [((t[0], t[3]), check_once(t[3], timeout)) for t in group]
+            done = []
+            for t in group:
+                if time.monotonic() > deadline:
+                    break
+                done.append((key(t), check_once(t[3], timeout)))
+            return done
         with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as pool:
             for results in pool.map(work, by_host.values()):
                 out.update(dict(results))
         return out
 
-    results = run(targets)
+    started = time.monotonic()
+    results = run(todo, BUDGET)
     # 応答なし・404・サーバーの不具合だったものは、時間をおいて取り直す。開けたらその結果を使う
     for i, wait in enumerate(RETRY_WAITS, 1):
-        retry = [t for t in targets if results[(t[0], t[3])][4]]
+        retry = [t for t in todo if key(t) in results and results[key(t)][4]]
         if not retry:
             break
         print("取り直し %d回目：%d件（%d秒待ちます）" % (i, len(retry), wait))
         time.sleep(wait)
-        results.update(run(retry, RETRY_TIMEOUT))
+        results.update(run(retry, RETRY_BUDGET, RETRY_TIMEOUT))
+
+    today = datetime.datetime.now(build.JST).date().isoformat()
+    for t in todo:
+        if key(t) in results:
+            status, code, final, note, again = results[key(t)]
+            if status == "要確認" and refusing(t[3], hosts):
+                status, note = "拒否", "自動アクセスを断るサイトです（壊れているとは限りません）"
+            elif status == "要確認" and again:
+                note += "（時間をおいて%d回取り直しても同じでした）" % len(RETRY_WAITS)
+            seen[key(t)] = {"date": today, "status": status, "http_status": code, "final_url": final, "note": note}
+    listed = {key(t) for t in targets}
+    seen = {k: v for k, v in sorted(seen.items()) if k in listed}  # 公開から外れたものは忘れる
+    with open(SEEN, "w", encoding="utf-8") as f:
+        json.dump(seen, f, ensure_ascii=False, indent=0)
+        f.write("\n")
 
     summary = {"正常": 0, "移転": 0, "拒否": 0, "要確認": 0}
-    items = []
+    items, unchecked = [], 0
     for cid, company, title, url in targets:
-        status, code, final, note, _ = results[(cid, url)]
-        if status == "要確認" and refusing(url, hosts):
-            status, note = "拒否", "自動アクセスを断るサイトです（壊れているとは限りません）"
+        rec = seen.get(cid + " " + url)
+        if not rec:
+            unchecked += 1
+            continue
+        status = rec["status"]
+        if status == "要確認" and refusing(url, hosts):   # 拒否に分けるサイトが後から足されたとき
+            status = "拒否"
         summary[status] += 1
         if status != "正常":
-            if status == "要確認" and results[(cid, url)][4]:
-                note += "（時間をおいて%d回取り直しても同じでした）" % len(RETRY_WAITS)
             items.append({"id": cid, "company": company, "title": title, "url": url, "status": status,
-                          "http_status": code, "final_url": final, "note": note})
+                          "http_status": rec.get("http_status"), "final_url": rec.get("final_url", ""), "note": rec.get("note", ""),
+                          "checked": rec["date"]})
     order = {"要確認": 0, "移転": 1, "拒否": 2}
     items.sort(key=lambda it: (order[it["status"]], it["id"]))
     now = datetime.datetime.now(build.JST).replace(microsecond=0)
     data = {"checked_at": now.isoformat(), "cases": len(cases), "urls": len(targets),
-            "summary": summary, "items": items}
+            "summary": summary,
+            "this_run": {"checked": sum(1 for t in todo if key(t) in results), "planned": len(todo),
+                         "minutes": round((time.monotonic() - started) / 60, 1)},
+            "unchecked": unchecked, "items": items}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
         f.write("\n")
-    print("点検 %d件（URL %d件）：%s" % (len(cases), len(targets), "、".join("%s %d" % kv for kv in summary.items())))
+    print("点検：今回 %d件（予定 %d件、%.1f分）、まだ一度も確かめていないもの %d件。最後に確かめた結果（URL %d件）：%s"
+          % (data["this_run"]["checked"], len(todo), data["this_run"]["minutes"], unchecked, len(targets),
+             "、".join("%s %d" % kv for kv in summary.items())))
 
     need = [it for it in items if it["status"] == "要確認"]
     if args.report and need:
         base = cfg["base_url"].rstrip("/")
-        lines = ["公開中の事例の出典URLを %s に自動で開いて確かめました（%d件）。" % (build.fmt_date(now.strftime("%Y/%m/%d")), len(targets)),
+        lines = ["公開中の事例の出典URLを %s に自動で開いて確かめました（今回 %d件。残りは週ごとに順番に確かめます）。" % (build.fmt_date(now.strftime("%Y/%m/%d")), data["this_run"]["checked"]),
                  "結果：" + "、".join("%s %d件" % kv for kv in summary.items()),
                  "くわしい結果は %s/linkcheck.json でも見られます。サイトの掲載は自動では変えていません。" % base, "",
                  "## 要確認（ブラウザで開いて確かめてください）", "",
                  "自動の点検は GitHub のサーバーから開くため、ブラウザでは見られるのに「見つかりません」と出るサイトもあります。", "",
-                 "| ID | 企業名 | URL | 内容 |", "|---|---|---|---|"]
-        lines += ["| %s | %s | %s | %s |" % (it["id"], it["company"], it["url"], it["note"]) for it in need]
+                 "| ID | 企業名 | URL | 内容 | 確かめた日 |", "|---|---|---|---|---|"]
+        lines += ["| %s | %s | %s | %s | %s |" % (it["id"], it["company"], it["url"], it["note"], it["checked"]) for it in need]
         with open(args.report, "w", encoding="utf-8") as f:
             f.write("\n".join(lines) + "\n")
 
