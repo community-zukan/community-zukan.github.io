@@ -135,7 +135,7 @@
     slot.innerHTML = '<a class="rel is-flip" href="../' + esc(d.id) + '/">' +
       '<span class="rel-emo"><img src="../../assets/emoji/' + esc(d.emoji) + '.png" alt="" width="28" height="28"></span>' +
       '<span class="rel-top"><span class="badge ' + cls + '">' + esc(d.type) + '</span></span><small>' + esc(d.co) + '</small>' +
-      '<strong>' + esc(d.title) + '</strong>' + (d.point ? '<span class="rel-point">' + esc(d.point) + '</span>' : '') + '</a>';
+      '<strong>' + esc(d.title) + '</strong><span class="rel-point">' + esc(d.point || '') + '</span></a>';  // ポイントが空でも高さをそろえるため枠は置く
     slot.querySelector('a').addEventListener('click', function () { count('related-pick-open/' + d.id, 'ほかの事例をひく（開いた）'); });
   }
   fetch('../../pick.json').then(function (r) { return r.json(); }).then(function (list) {

@@ -705,7 +705,11 @@ main { flex: 1 0 auto; }
 .rel-pick-button img { transition: transform .5s ease; }
 .rel-pick-button.is-rolling img { transform: rotate(360deg); }
 .rel-pick-card { perspective: 800px; }
-.related .rel-pick-card .rel { position: relative; width: 100%; min-height: 170px; }
+.related .rel-pick-card .rel { position: relative; width: 100%; }
+/* めくるたびに箱の高さが変わらないよう、カードの中の行数をそろえる（会社名1行・題名2行・ポイント3行ぶんの高さを取り、超えた分は…。2026-11-07 黒田さんの指摘） */
+.rel-pick-card .rel small { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-right: 48px; }
+.rel-pick-card .rel strong { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: 1.5; min-height: 3em; }
+.rel-pick-card .rel .rel-point { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; line-height: 1.6; min-height: 4.8em; }
 .rel-pick-card .rel.is-flip { animation: rel-flip .45s ease; }
 @keyframes rel-flip { from { transform: rotateY(90deg); opacity: .3; } to { transform: none; opacity: 1; } }
 @media (max-width: 640px) { .rel-pick { grid-template-columns: 1fr; padding: var(--space-4); } }
