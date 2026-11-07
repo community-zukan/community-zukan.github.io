@@ -485,6 +485,13 @@ def build_feed(cfg, cases, new, updates, notes=()):
     entries += [(NOTES_LABEL, {"date": n["published"], "id": "~" + n["slug"], "note": n}) for n in notes]
     entries.sort(key=lambda e: (e[1]["date"], e[1]["id"]), reverse=True)
     items = []
+
+    def enclosure(name):
+        """RSS の項目に添える画像（事例ごと・図鑑ノートごとの共有画像。観測所と同じ。2026-11-07）。画像がないときは付けない"""
+        f = os.path.join(OUT, "og", name)
+        if not os.path.exists(f):
+            return ""
+        return f'\n    <enclosure url="{esc(base)}/og/{esc(name)}" type="image/png" length="{os.path.getsize(f)}"/>'
     for kind, e in entries[:50]:
         if kind == NOTES_LABEL:
             n = e["note"]
@@ -494,7 +501,7 @@ def build_feed(cfg, cases, new, updates, notes=()):
     <link>{esc(f"{base}/notes/{n['slug']}/")}</link>
     <guid isPermaLink="false">{esc(f"note-{n['slug']}")}</guid>
     <pubDate>{format_datetime(when)}</pubDate>
-    <description>{esc(n['description'])}</description>
+    <description>{esc(n['description'])}</description>{enclosure(f"note-{n['slug']}.png")}
   </item>""")
             continue
         c = by_id[e["id"]]
@@ -508,7 +515,7 @@ def build_feed(cfg, cases, new, updates, notes=()):
     <link>{esc(url)}</link>
     <guid isPermaLink="false">{esc(f"{c['ID']}-{kind}-{e['date'].isoformat()}")}</guid>
     <pubDate>{format_datetime(when)}</pubDate>
-    <description>{esc(desc)}</description>
+    <description>{esc(desc)}</description>{enclosure(f"{c['ID']}.png")}
   </item>""")
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -1879,8 +1886,19 @@ def main():
     urls = ([f"{base}/", f"{base}/new/", f"{base}/combos/", f"{base}/about/"]
             + ([f"{base}/notes/"] + [f"{base}/notes/{n['slug']}/" for n in notes_list] if notes_list else [])
             + [f"{base}/{cb['path']}" for cb in combos] + [f"{base}/cases/{c['ID']}/" for c in cases])
+    # 各ページの更新日（lastmod）：事例ページは確認日、図鑑ノートは更新日（なければ公開日）。ほかは付けない（観測所と同じ。2026-11-07）
+    lastmod = {}
+    for c in cases:
+        k = date_key(c.get("確認日"))
+        if k:
+            lastmod[f"{base}/cases/{c['ID']}/"] = f"{k[:4]}-{k[4:6]}-{k[6:]}"
+    for n in notes_list:
+        d = n["updated"] or n["published"]
+        if d:
+            lastmod[f"{base}/notes/{n['slug']}/"] = d.isoformat()
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          + "".join(f"<url><loc>{esc(u)}</loc></url>\n" for u in urls) + "</urlset>\n")
+          + "".join(f"<url><loc>{esc(u)}</loc>" + (f"<lastmod>{lastmod[u]}</lastmod>" if u in lastmod else "") + "</url>\n" for u in urls)
+          + "</urlset>\n")
     # 毎週のリンク点検の結果（tools/check_links.py）をそのまま公開する
     lc = os.path.join(ROOT, "data", "linkcheck.json")
     if os.path.exists(lc):
