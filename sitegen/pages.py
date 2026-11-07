@@ -253,8 +253,8 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
                 f'<div class="rel-grid">{cards}</div>'
                 f'<a class="rel-all" href="../../{r["href"]}" data-goatcounter-click="related-all/{esc(r["kind"])}" aria-label="{esc(r["title"])}をすべて見る（{r["total"]}件）">すべて見る（{r["total"]}件）<span aria-hidden="true"> →</span></a></div>')
         pick = (f'<div class="rel-pick" id="rel-pick" data-id="{esc(c["ID"])}" hidden><div class="rel-pick-text">'
-                f'<h3><img src="../../assets/emoji/1f3b2.png" alt="" width="24" height="24">気分を変えて、ほかの事例を</h3>'
-                f'<p>図鑑にある事例から、1件をランダムにめくります。</p>'
+                f'<h3><img src="../../assets/emoji/1f3b2.png" alt="" width="24" height="24">ほかの事例をチェック</h3>'
+                f'<p>図鑑の事例からランダムに1件めくります。</p>'
                 f'<button type="button" class="rel-pick-button" id="rel-pick-button"><img src="../../assets/emoji/1f3b2.png" alt="" width="22" height="22">ほかの事例をひく</button></div>'
                 f'<div class="rel-pick-card" id="rel-pick-card" aria-live="polite"></div></div>')
         rel_html = (f'<section class="related"><h2>近い事例</h2><div class="rel-tabs" role="tablist" aria-label="近い事例の切り口">{"".join(tabs)}</div>'
