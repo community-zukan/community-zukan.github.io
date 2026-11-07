@@ -1447,6 +1447,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     {save_button(c)}
   </header>
   {lede}
+  {old_source_note(c)}
   {flow}
   {source}
   {share_bar(cfg, c)}
@@ -1488,6 +1489,22 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     }
     return page(cfg, title=f"{c['企業名']} {c['_title']}", description=desc, jsonld=[webpage, crumbs],
                 path=f"cases/{c['ID']}/", body=body, depth=2, og_image=og_image, og_type="article")
+
+
+OLD_SOURCE_YEARS = 3
+
+
+def old_source_note(c):
+    """出典の時期が3年以上前の事例に1行の注記を出す（c-old。2026-11-07 黒田さんの採用）。時期が空・読めないときは出さない。"""
+    v = (c.get("出典の時期") or "").strip().lstrip("'")
+    m = re.match(r"(\d{4})\s*[-/.年]\s*(\d{1,2})", v)
+    if not m:
+        return ""
+    now = datetime.now(JST)
+    months = (now.year - int(m.group(1))) * 12 + now.month - int(m.group(2))
+    if months < OLD_SOURCE_YEARS * 12:
+        return ""
+    return f'<p class="case-old">出典は{esc(fmt_month(v))}のもので、いまは変わっている可能性があります。</p>'
 
 
 def rel_card(o, click):

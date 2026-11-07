@@ -552,6 +552,7 @@ main { flex: 1 0 auto; }
 .lede h2 { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--text-sub); margin: 0 0 var(--space-2); }
 .lede h2 img { width: 20px; height: 20px; }
 .lede p { font-family: var(--font-display); font-weight: 700; font-size: clamp(19px, 2.6vw, 23px); line-height: 1.8; margin: 0; }
+.case-old { margin: calc(-1 * var(--space-4)) 0 var(--space-8); font-size: 14px; color: var(--text-sub); }
 .flow { list-style: none; margin: 0 0 var(--space-8); padding: 0; position: relative; }
 .flow::before { content: ""; position: absolute; left: 21px; top: 24px; bottom: 24px; width: 2px; background: var(--line); }
 .flow > li { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
