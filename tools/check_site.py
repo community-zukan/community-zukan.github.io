@@ -9,8 +9,15 @@
 - sitemap.xml のURLのページがあること
 
 1つでもおかしければ、内容を出して終了コード1で止まる（Actions では公開の前に止まる）。
-使い方：python3 tools/check_site.py [_site のパス]
+
+このほか、h1 が1つか・見出しの段が飛んでいないか（h2 の次がいきなり h4 など）・画像に alt があるか・同じ id が
+1ページに2つないかも確かめる（観測所の点検から。2026-11-07）。こちらは読み上げなどの使いやすさの問題なので公開は止めず、
+--report を付けたときに報告のファイルを書く（Actions はこれを Issue にする）。
+
+使い方：python3 tools/check_site.py [--report site-report.md] [_site のパス]
 """
+import collections
+import html.parser
 import json
 import os
 import re
@@ -18,10 +25,51 @@ import sys
 import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "_site")
+ARGS = sys.argv[1:]
+REPORT = None
+if "--report" in ARGS:
+    i = ARGS.index("--report")
+    REPORT = ARGS[i + 1]
+    del ARGS[i:i + 2]
+SITE = ARGS[0] if ARGS else os.path.join(ROOT, "_site")
+MAX_SHOW = 30
 BASE = json.load(open(os.path.join(ROOT, "config", "site.json"), encoding="utf-8"))["base_url"].rstrip("/") + "/"
 
 problems = []
+soft = collections.defaultdict(list)   # 公開は止めず、Issue で知らせるもの
+
+
+class Outline(html.parser.HTMLParser):
+    """見出し・id・alt を集める"""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.headings, self.ids, self.no_alt = [], [], 0
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if tag in ("h1", "h2", "h3", "h4", "h5", "h6"):
+            self.headings.append(int(tag[1]))
+        if a.get("id"):
+            self.ids.append(a["id"])
+        if tag == "img" and "alt" not in a:
+            self.no_alt += 1
+
+
+def soft_checks(page, rel):
+    o = Outline()
+    o.feed(read(page))
+    h1 = o.headings.count(1)
+    if h1 != 1 and not rel.endswith("404.html"):
+        soft["h1 が1つでないページ"].append(f"{rel}（{h1}個）")
+    for a, b in zip(o.headings, o.headings[1:]):
+        if b > a + 1:
+            soft["見出しの段が飛んでいるページ"].append(f"{rel}（h{a} の次が h{b}）")
+            break
+    dup = [i for i, n in collections.Counter(o.ids).items() if n > 1]
+    if dup:
+        soft["同じ id が2つ以上あるページ"].append(f"{rel}（{'、'.join(dup[:5])}）")
+    if o.no_alt:
+        soft["alt のない画像があるページ"].append(f"{rel}（{o.no_alt}枚）")
 
 
 def read(path):
@@ -47,6 +95,27 @@ def target_exists(page_dir, ref):
 
 def html_unescape(s):
     return s.replace("&amp;", "&").replace("&quot;", '"').replace("&#x27;", "'")
+
+
+def write_report():
+    total = sum(len(v) for v in soft.values())
+    if total:
+        print(f"直したほうがよいところ（公開は止めない）：{total}件" + "".join(f"\n  {k} {len(v)}件" for k, v in soft.items()))
+    if not REPORT:
+        return
+    if os.path.isfile(REPORT):
+        os.remove(REPORT)
+    if not total:
+        return
+    lines = [f"毎日の自動更新で、作ったサイトを点検しました。直したほうがよいところが {total}件ありました。サイトの公開は止めていません。", ""]
+    for kind, rows in soft.items():
+        lines += [f"## {kind}（{len(rows)}件）", ""]
+        lines += ["- " + r for r in rows[:MAX_SHOW]]
+        if len(rows) > MAX_SHOW:
+            lines.append(f"- ほか {len(rows) - MAX_SHOW}件")
+        lines.append("")
+    with open(REPORT, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
 
 def main():
@@ -90,9 +159,11 @@ def main():
                 continue
             page = os.path.join(dirpath, name)
             if name == "cards.html":
-                page_dir = SITE   # トップに差し込む断片なので、トップから見た相対の参照
+                # トップ（と /saved/）に差し込むカードの断片。置き場所のフォルダから見た相対の参照なので、そのまま確かめる
+                page_dir = dirpath
             else:
                 page_dir = dirpath
+                soft_checks(page, os.path.relpath(page, SITE))
             for ref in re.findall(r'(?:href|src)="([^"]+)"', read(page)):
                 if not target_exists(page_dir, ref):
                     broken.setdefault(os.path.relpath(page, SITE), set()).add(ref)
@@ -106,6 +177,7 @@ def main():
         if not target_exists(SITE, url):
             problems.append(f"サイトマップのページがない：{url}")
 
+    write_report()
     if problems:
         print(f"サイトの点検で {len(problems)}件の問題が見つかりました。公開を止めます。")
         for p in problems[:100]:
