@@ -162,6 +162,9 @@ function zukanListInit() {
     clearTimeout(searchTimer);
     var term = q.value.trim().replace(/\s+/g, ' ').slice(0, 50);
     if (!term) return;
+    // メールアドレス・電話番号・URLのような、個人につながりうる言葉は記録しない（観測所と同じ見分け方。2026-11-07）
+    var nf = term.normalize ? term.normalize('NFKC') : term;
+    if (/@|https?:|www\.|\d{2,4}[-‐－ー\s]?\d{2,4}[-‐－ー\s]?\d{3,4}|\d{7,}/.test(nf)) return;
     searchTimer = setTimeout(function () {
       if (term === lastSent || !window.goatcounter || !window.goatcounter.count) return;
       lastSent = term;

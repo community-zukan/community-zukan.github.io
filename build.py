@@ -1009,14 +1009,17 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     og_image = base + "/" + (og_image or "assets/ogp.png")
     extra = ""
     for obj in jsonld or []:
-        text = json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+        # 「<」をすべて置き換え、どんな文字が来ても埋め込みが壊れないようにする（観測所と同じ。2026-11-07）
+        text = json.dumps(obj, ensure_ascii=False).replace("<", "\\u003c")
         extra += f'<script type="application/ld+json">{text}</script>\n'
     if noindex:
         extra += '<meta name="robots" content="noindex">\n'
     if cfg.get("google_site_verification"):
         extra += f'<meta name="google-site-verification" content="{esc(cfg["google_site_verification"])}">\n'
     if cfg.get("goatcounter"):
-        extra += f'<script data-goatcounter="https://{esc(cfg["goatcounter"])}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>\n'
+        # count.js は GoatCounter の公式のものに手を加え、URLの「?」以降は来た元（ref・utm）だけを送る（観測所と同じ。2026-11-07）
+        count_v = ver("count.js")
+        extra += f'<script data-goatcounter="https://{esc(cfg["goatcounter"])}.goatcounter.com/count" async src="{rel}assets/count.js?v={count_v}"></script>\n'
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -1678,8 +1681,8 @@ def build_about(cfg, cases, updated):
   </div>
 
   <h2>アクセス解析</h2>
-  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマス・この図鑑についての運営者のリンクが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。コミュニティAIでは、返答の下の「役に立った」「立たなかった」が押された回数と、AIによる相談の分類（コミュニティの段階と種類）を同じ GoatCounter で数えます。相談の文章は運営者に届きません。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。</p>
-  <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。検索欄には、名前やメールアドレスなど個人を特定できる情報を入れないでください。</p>
+  <p>どのページがよく読まれているかを知るために、アクセス解析の GoatCounter を使っています。数えているのは、ページが開かれた回数と、出典へのリンク・「あとで見る」・共有・「役に立った」「いまひとつ」のボタン・事例一覧の「目的から探す」のタイル・「組み合わせから探す」の地図のマス・この図鑑についての運営者のリンクが押された回数です。コミュニティAIへのリンクが押されたときは、どのページのリンクから移ったか（メニュー、トップ、事例一覧、事例ページ、図鑑ノートのどれか。事例ページなら事例のID）も数えます。コミュニティAIでは、返答の下の「役に立った」「立たなかった」が押された回数と、AIによる相談の分類（コミュニティの段階と種類）を同じ GoatCounter で数えます。相談の文章は運営者に届きません。GoatCounter はクッキーを使わず、名前やメールアドレスなど個人を特定できる情報も集めません。ページのアドレスのうち「?」から後ろ（検索語や絞り込みの条件）は送らず、来た元を示す部分だけを送っています。</p>
+  <p>事例一覧の検索欄に入力された言葉と、その言葉で事例が見つかったかどうかも数えています。言い換えの表を増やしたり、集める事例のテーマを決めたりするのに使います。メールアドレス・電話番号・URLのような言葉は記録しません。検索欄には、名前など個人を特定できる情報を入れないでください。</p>
   <p>「あとで見る」に入れた事例は、お使いのブラウザの中だけに保存しています。運営者には送られません。</p>
 
   <h2>掲載内容について</h2>
