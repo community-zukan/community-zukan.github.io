@@ -529,7 +529,7 @@ function zukanListInit() {
     link.href = 'cases/' + encodeURIComponent(d.id) + '/';
     link.setAttribute('data-id', d.id);
     link.innerHTML = '<span class="today-emo"><img src="assets/emoji/' + esc(d.emoji) + '.png" alt="" width="32" height="32"></span>' +
-      '<span class="today-meta"><span class="badge ' + (cls[d.type] || 'is-other') + '">' + esc(label[d.type] || d.type) + '</span><span>' + esc(d.co) + '</span></span>' +
+      '<span class="today-meta"><span class="badge ' + (cls[d.type] || 'is-other') + '">' + esc(label[d.type] || d.type) + '</span><span class="today-co">' + esc(d.co) + '</span></span>' +
       '<strong>' + esc(d.title) + '</strong><span class="today-point">' + esc(d.point) + '</span><span class="today-more">事例を読む</span>';
     if (flip) { link.classList.remove('is-flip'); void link.offsetWidth; link.classList.add('is-flip'); }
   }

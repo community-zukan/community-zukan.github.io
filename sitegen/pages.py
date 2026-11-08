@@ -35,7 +35,7 @@ def today_card(pool):
             f'<button type="button" class="today-roll" id="today-roll" hidden><img src="assets/emoji/1f3b2.png" alt="" width="18" height="18">ほかの事例をひく</button></div>'
             f'<a class="today-link" id="today-link" href="cases/{esc(d["id"])}/" data-id="{esc(d["id"])}">'
             f'<span class="today-emo"><img src="assets/emoji/{esc(d["emoji"])}.png" alt="" width="32" height="32"></span>'
-            f'<span class="today-meta">{type_badge(d["type"])}<span>{esc(d["co"])}</span></span>'
+            f'<span class="today-meta">{type_badge(d["type"])}<span class="today-co">{esc(d["co"])}</span></span>'
             f'<strong>{esc(d["title"])}</strong><span class="today-point">{esc(d["point"])}</span>'
             f'<span class="today-more">事例を読む</span></a>'
             f'<script type="application/json" id="today-data">{data}</script></aside>')
