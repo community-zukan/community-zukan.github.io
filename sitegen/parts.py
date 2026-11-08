@@ -147,7 +147,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     <p class="footer-name">{esc(cfg['name'])}</p>
     <p>{esc(cfg['subtitle'])}。掲載内容は各出典の公開情報の要約です。詳しくは出典をご覧ください。</p>
     {operator_line(cfg, rel)}
-    <p>運営者のほかのサイト：<a href="https://ashitano-tenki.github.io/" rel="noopener" target="_blank" data-goatcounter-click="sister/kansoku">あしたの転機観測所</a></p>
+    <p>運営者のほかのサイト：<a href="https://ashitano-tenki.github.io/" rel="noopener" target="_blank" data-goatcounter-click="sister/kansoku">あしたの転機観測所</a>・<a href="https://gendai-aimai-tango-jiten.github.io/" rel="noopener" target="_blank" data-goatcounter-click="sister/jiten">現代曖昧単語辞典</a></p>
     <div class="footer-bottom">
       <p class="footer-meta"><a href="{esc(base)}/feed.xml">新着のRSS</a></p>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" hidden>ダーク表示</button>
