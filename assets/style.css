@@ -137,11 +137,10 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 
 /* ヒーロー */
 .hero { padding: 40px 0 var(--space-6); }
-.hero h1 { font-size: clamp(24px, 4.2vw, 34px); margin: 0 0 var(--space-3); }
-/* スマホでは「企業のコミュニティ運営のすべて」が1行に収まる大きさにする */
-@media (max-width: 520px) { .hero h1 { font-size: max(19px, 5.6vw); } }
-/* 1行目を小さな前置きにし、2行目を主役にする。マーカーは使わない（2026-11-08 黒田さん） */
-.hero-pre { display: block; font-size: .6em; color: var(--text-sub); letter-spacing: .04em; margin-bottom: 2px; }
+/* サイト名を大きく出し、いままでの見出しはその下に副題として置く（2026-11-08 見本の案B。観測所のトップと同じ考え方。戻し先のタグ zukan-before-hero-2026-11-08） */
+.hero h1 { font-size: clamp(34px, 8vw, 52px); font-weight: 700; line-height: 1.25; letter-spacing: -0.005em; word-break: keep-all; margin: 0; }
+.hero-catch { font-family: var(--font-display); font-weight: 700; font-size: clamp(17px, 2.4vw, 22px); line-height: 1.5; letter-spacing: .03em; color: var(--text-body); margin: 6px 0 var(--space-3); }
+.hero-catch span { display: inline-block; }  /* 「公開事例でみる」の後でだけ改行する（「すべて」だけが次の行に残らないように） */
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* リード文は言葉の切れ目（span）でだけ改行する（「プレスリリー／ス」のように語の途中で割らない。2026-11-08 黒田さんの指摘） */
 .hero .lead span { display: inline-block; }

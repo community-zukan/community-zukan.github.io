@@ -68,7 +68,8 @@ def build_index(cfg, cases):
     body = f"""
 <section class="hero">
   <div class="wrap">
-    <h1><span class="hero-pre">公開事例でみる</span>企業のコミュニティ運営のすべて</h1>
+    <h1>コミュニティ図鑑</h1>
+    <p class="hero-catch"><span>公開事例でみる</span><span>企業のコミュニティ運営のすべて</span></p>
     <p class="lead"><span>企業が運営するファンコミュニティ、</span><span>社内コミュニティ、</span><span>多企業コミュニティについて、</span><span>プレスリリースなどの公開情報から</span><span>事例を収集。</span><span>目的・段階・活動で絞り込んで</span><span>事例を探せます。</span></p>
     <div class="stats">
       <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録事例</span></div>
