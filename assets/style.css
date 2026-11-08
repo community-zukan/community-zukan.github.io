@@ -14,7 +14,6 @@
   --on-sky: #ffffff;        /* --sky の地の上の文字 */
   --base-yellow: #fff3c4;   /* 薄い黄色の地 */
   --yellow: #f5c518;        /* 差し色（フッターの線） */
-  --marker: #f5c518;        /* トップの見出しに引く蛍光ペン */
   --footer-bg: #1a1d23; --footer-text: #d6d9de; --footer-strong: #fbfaf5; --footer-sub: #9aa0a8;  /* フッター（どちらの表示でも黒地） */
   --int-fg: var(--sky-on-tint); --int-bg: var(--chip-bg);   /* 種別：社内（空色） */
   --fan-fg: #6b4e00; --fan-bg: var(--base-yellow);          /* 種別：ファン・顧客（黄色） */
@@ -40,7 +39,7 @@
 :root[data-theme="dark"] {
   /* 暗い表示：フッターのボタンで切り替える（既定は明るい表示）。名前はそのままに値だけを入れ替える */
   --base: #15181d; --bg-top: #15181d; --bg-bottom: #15181d; --card: #1f232a; --ink: #f3f1ea; --text-body: #c9cdd3; --text-sub: #a3a9b1; --line: #313640;
-  --sky: #7cc0ee; --sky-on-tint: #7cc0ee; --chip-bg: #233042; --on-sky: #15181d; --base-yellow: #3a3320; --marker: rgba(245, 197, 24, .42); --footer-bg: #0e1013;
+  --sky: #7cc0ee; --sky-on-tint: #7cc0ee; --chip-bg: #233042; --on-sky: #15181d; --base-yellow: #3a3320; --footer-bg: #0e1013;
   --fan-fg: #f5d86a;
   --multi-fg: #94d3a2; --multi-bg: #1f3327;
   --hint: #26231a; --hint-line: #574c25;
@@ -139,7 +138,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .hero h1 { font-size: clamp(24px, 4.2vw, 34px); margin: 0 0 var(--space-3); }
 /* スマホでは「企業のコミュニティ運営のすべて」が1行に収まる大きさにする */
 @media (max-width: 520px) { .hero h1 { font-size: max(19px, 5.6vw); } }
-.mark { background: linear-gradient(transparent 70%, var(--marker) 70%, var(--marker) 90%, transparent 90%); padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+/* 1行目を小さな前置きにし、2行目を主役にする。マーカーは使わない（2026-11-08 黒田さん） */
+.hero-pre { display: block; font-size: .6em; color: var(--text-sub); letter-spacing: .04em; margin-bottom: 2px; }
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
 /* 列を同じ幅にして、数字の間隔をそろえる（列の幅はいちばん長い数字かラベルに合わせる） */
