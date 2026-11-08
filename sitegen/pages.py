@@ -8,6 +8,37 @@ from .combos import *  # noqa: F401,F403
 
 
 FIRST_CARDS = 24   # トップのHTMLに入れる件数（app.js の PAGE と同じ）
+TODAY_MIN_SCORE = 90   # トップの「きょうの1件」の候補：観測スコアがこの点以上の事例（2026-11-08 黒田さんの決定。メジャーな事例を出したいが、知名度の列は公開していないので、まずは観測スコアで選ぶ）
+
+
+def today_pool(cases):
+    """「きょうの1件」の候補（ID順。毎日1件ずつ順に進めるので、並びは決まった順にしておく）。"""
+    pool = []
+    for c in sorted(cases, key=lambda c: c["ID"]):
+        sc = score_value(c.get("観測スコア"))
+        if sc and int(sc) >= TODAY_MIN_SCORE:
+            pool.append({"id": c["ID"], "type": c.get("種別", ""), "co": c["企業名"], "title": c["_title"],
+                         "point": shorten(c.get("工夫のポイント") or c.get("主な施策") or "", 60),
+                         "emoji": PURPOSE_ICONS.get(c["_purpose"][0], "1f4cc") if c["_purpose"] else "1f4cc"})
+    return pool
+
+
+def today_card(pool):
+    """トップの右（スマホでは件数の下）の「きょうの1件」。作った日（日本時間）の1件を入れておき、app.js が開いた日の1件に直す。"""
+    if not pool:
+        return ""
+    day = (datetime.now(JST).date() - datetime(1970, 1, 1).date()).days
+    d = pool[day % len(pool)]
+    data = json.dumps(pool, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return (f'<aside class="today" id="today" aria-labelledby="today-title">'
+            f'<div class="today-head"><h2 id="today-title">きょうの1件</h2>'
+            f'<button type="button" class="today-roll" id="today-roll" hidden><img src="assets/emoji/1f3b2.png" alt="" width="18" height="18">ほかの事例をひく</button></div>'
+            f'<a class="today-link" id="today-link" href="cases/{esc(d["id"])}/" data-id="{esc(d["id"])}">'
+            f'<span class="today-emo"><img src="assets/emoji/{esc(d["emoji"])}.png" alt="" width="32" height="32"></span>'
+            f'<span class="today-meta">{type_badge(d["type"])}<span>{esc(d["co"])}</span></span>'
+            f'<strong>{esc(d["title"])}</strong><span class="today-point">{esc(d["point"])}</span>'
+            f'<span class="today-more">事例を読む</span></a>'
+            f'<script type="application/json" id="today-data">{data}</script></aside>')
 
 
 def build_index(cfg, cases):
@@ -65,7 +96,8 @@ def build_index(cfg, cases):
                f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>') if few_link else ""
     body = f"""
 <section class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
+   <div class="hero-main">
     <h1>コミュニティ図鑑</h1>
     <p class="hero-catch"><span>公開事例でみる</span><span>企業のコミュニティ運営のすべて</span></p>
     <p class="lead"><span>企業が運営するファンコミュニティ、</span><span>社内コミュニティ、</span><span>多企業コミュニティについて、</span><span>プレスリリースなどの公開情報から</span><span>事例を収集。</span><span>目的・段階・活動で絞り込んで</span><span>事例を探せます。</span></p>
@@ -73,6 +105,8 @@ def build_index(cfg, cases):
       <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録事例</span></div>
 {type_stats}
     </div>
+   </div>
+   {today_card(today_pool(cases))}
   </div>
 </section>
 {purpose_strip(cfg, cases)}

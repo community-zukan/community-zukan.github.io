@@ -141,6 +141,28 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .hero h1 { font-size: clamp(34px, 8vw, 52px); font-weight: 700; line-height: 1.25; letter-spacing: -0.005em; word-break: keep-all; margin: 0; }
 .hero-catch { font-family: var(--font-display); font-weight: 700; font-size: clamp(17px, 2.4vw, 22px); line-height: 1.5; letter-spacing: .03em; color: var(--text-body); margin: 6px 0 var(--space-3); }
 .hero-catch span { display: inline-block; }  /* 「公開事例でみる」の後でだけ改行する（「すべて」だけが次の行に残らないように） */
+/* きょうの1件（2026-11-08 の見本で案D）：広い画面では見出しの右、狭い画面では件数の下。観測スコアの高い事例から日替わりで1件 */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6) var(--space-8); align-items: center; }
+@media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0, 1fr) 360px; } }
+.hero-main { min-width: 0; }
+.today { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px 20px 14px; min-width: 0; }
+.today-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin: 0 0 var(--space-2); }
+.today-head h2 { font-family: var(--font-sans); font-size: 13px; font-weight: 700; color: var(--text-sub); letter-spacing: .04em; margin: 0; }
+.today-roll { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 700; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 4px 12px; cursor: pointer; white-space: nowrap; }
+.today-roll[hidden] { display: none; }
+.today-roll:hover { border-color: var(--sky); color: var(--sky); }
+.today-roll img { transition: transform .5s ease; }
+.today-roll.is-rolling img { transform: rotate(360deg); }
+.today-link { display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-items: start; color: var(--ink); text-decoration: none; }
+.today-emo { grid-row: span 3; width: 52px; height: 52px; border-radius: 50%; background: var(--chip-bg); display: grid; place-items: center; }
+.today-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--space-2); font-size: 13px; color: var(--text-sub); min-width: 0; }
+.today-link strong { font-family: var(--font-display); font-size: 18px; line-height: 1.45; }
+.today-link:hover strong { color: var(--sky); }
+.today-point { font-size: 14px; line-height: 1.7; color: var(--text-body); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.today-more { grid-column: 1 / -1; margin-top: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--line); font-size: 14px; font-weight: 700; color: var(--sky); text-decoration: underline; text-underline-offset: .2em; }
+.today-link.is-flip { animation: today-in .35s ease; }
+@keyframes today-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .today-link.is-flip { animation: none; } .today-roll img { transition: none; } }
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
 /* リード文は言葉の切れ目（span）でだけ改行する（「プレスリリー／ス」のように語の途中で割らない。2026-11-08 黒田さんの指摘） */
 .hero .lead span { display: inline-block; }
@@ -766,3 +788,9 @@ main { flex: 1 0 auto; }
 .ai-help-title { margin: 0 0 var(--space-1); font-weight: 700; color: var(--ink); }
 .ai-help-text { margin: 0 0 var(--space-3); font-size: 14px; color: var(--text-body); }
 .ai-help-button { background: var(--card); color: var(--sky); border: 1px solid var(--sky); font-size: 14px; padding: 8px 16px; border-radius: var(--radius-pill); font-weight: 700; }
+
+/* とても狭い画面（320px など）：ロゴの文字を少し小さくし、ヘッダーを1段に収める（固定したヘッダーが2段になって画面をふさがないように。2026-11-08） */
+@media (max-width: 359px) {
+  .logo { font-size: 15px; letter-spacing: 0; gap: 6px; }
+  .logo-mark { width: 24px; height: 24px; }
+}

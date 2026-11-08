@@ -505,3 +505,45 @@ function zukanListInit() {
     if (next) next.focus({ preventScroll: true });
   });
 }
+
+
+// トップの「きょうの1件」（2026-11-08 の見本で案D）：観測スコアの高い事例を、日本時間の日付で1件ずつ順に出す（その日はだれが開いても同じ）。
+// 🎲を押すと候補の中からランダムに替える。押した数と、事例を開いた数を GoatCounter の today-roll・today/ID で数える
+(function () {
+  var box = document.getElementById('today');
+  var dataEl = document.getElementById('today-data');
+  if (!box || !dataEl) return;
+  var pool;
+  try { pool = JSON.parse(dataEl.textContent); } catch (e) { return; }
+  if (!pool || !pool.length) return;
+  var link = document.getElementById('today-link');
+  var btn = document.getElementById('today-roll');
+  var cls = { '社内': 'is-internal', 'ファン・顧客': 'is-fan', '多企業': 'is-multi' };
+  var label = { 'ファン・顧客': 'ファン・顧客' };
+  function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function count(path, title) { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true }); }
+  var day = Math.floor((Date.now() + 9 * 3600 * 1000) / 86400000);
+  var cur = day % pool.length;
+  function show(i, flip) {
+    var d = pool[i];
+    link.href = 'cases/' + encodeURIComponent(d.id) + '/';
+    link.setAttribute('data-id', d.id);
+    link.innerHTML = '<span class="today-emo"><img src="assets/emoji/' + esc(d.emoji) + '.png" alt="" width="32" height="32"></span>' +
+      '<span class="today-meta"><span class="badge ' + (cls[d.type] || 'is-other') + '">' + esc(label[d.type] || d.type) + '</span><span>' + esc(d.co) + '</span></span>' +
+      '<strong>' + esc(d.title) + '</strong><span class="today-point">' + esc(d.point) + '</span><span class="today-more">事例を読む</span>';
+    if (flip) { link.classList.remove('is-flip'); void link.offsetWidth; link.classList.add('is-flip'); }
+  }
+  if (link.getAttribute('data-id') !== pool[cur].id) show(cur, false);  // 作った日と開いた日がちがうときだけ入れ替える
+  link.addEventListener('click', function () { count('today/' + link.getAttribute('data-id'), 'きょうの1件（開いた）'); });
+  if (pool.length < 2) return;
+  btn.hidden = false;
+  btn.addEventListener('click', function () {
+    var i;
+    do { i = Math.floor(Math.random() * pool.length); } while (i === cur);
+    cur = i;
+    btn.classList.add('is-rolling');
+    setTimeout(function () { btn.classList.remove('is-rolling'); }, 500);
+    show(cur, true);
+    count('today-roll', 'きょうの1件（ほかの事例をひく）');
+  });
+})();
