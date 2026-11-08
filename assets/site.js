@@ -56,33 +56,13 @@
   }
 })();
 
-// スマホで読むとき：下に読むとヘッダーを隠し、上に戻すと出す（広い画面では何もしない）
+// ヘッダーは上に固定している（CSS）。その高さを --header-offset に入れ、一覧の件数の帯や絞り込みの欄がヘッダーの下に付くようにする
 (function () {
   var header = document.querySelector(".site-header");
-  if (!header || !window.matchMedia) return;
-  var narrow = window.matchMedia("(max-width: 759px)");
+  if (!header) return;
   var root = document.documentElement;
-  var lastY = window.scrollY;
-  var hidden = false;
-  function setHidden(h) {
-    if (h === hidden) return;
-    hidden = h;
-    header.classList.toggle("is-hidden", h);
-    // 一覧の件数の帯（.result-bar）が、出ているヘッダーの下に付くようにする
-    root.style.setProperty("--header-offset", h ? "0px" : header.offsetHeight + "px");
-  }
-  function busy() {
-    var nav = document.getElementById("global-nav");
-    var form = document.getElementById("header-search");
-    return (nav && nav.classList.contains("open")) || (form && !form.hidden) || header.contains(document.activeElement);
-  }
-  root.style.setProperty("--header-offset", header.offsetHeight + "px");
-  window.addEventListener("scroll", function () {
-    var y = window.scrollY;
-    if (!narrow.matches || busy()) { setHidden(false); lastY = y; return; }
-    if (y < 80) setHidden(false);
-    else if (y > lastY + 6) setHidden(true);
-    else if (y < lastY - 6) setHidden(false);
-    lastY = y;
-  }, { passive: true });
+  function update() { root.style.setProperty("--header-offset", header.offsetHeight + "px"); }
+  update();
+  if (window.ResizeObserver) new ResizeObserver(update).observe(header);
+  else window.addEventListener("resize", update);
 })();

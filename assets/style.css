@@ -93,6 +93,10 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 
 /* ヘッダー：1段。スマホはロゴ・あとで見る・虫めがね・メニュー（押すと下に開く）。広い画面はロゴ・メニュー・あとで見る・虫めがね */
 .site-header { background: var(--bg-top); border-bottom: 1px solid var(--line); }
+/* ヘッダーはどの画面幅でも上に固定し、後ろを少し透かす（現代曖昧単語辞典・観測所と同じ。2026-11-08 黒田さんの依頼） */
+.site-header { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg-top) 88%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); }
+/* ページ内リンクで飛んだ先がヘッダーの下に隠れないように（--header-offset は assets/site.js がヘッダーの高さを入れる） */
+html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .header-inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); padding-top: var(--space-3); padding-bottom: var(--space-3); }
 .logo { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-weight: 900; font-size: 19px; letter-spacing: .06em; color: var(--ink); text-decoration: none; margin-right: auto; }
 .logo-mark { width: 30px; height: 30px; flex: none; }
@@ -119,10 +123,8 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
   .menu-btn { display: none; }
 }
 
-/* スマホ：ヘッダーを上に付け、下に読むと隠す（assets/site.js）。一覧では件数の帯をヘッダーの下に残す */
+/* スマホ：一覧では件数の帯を、固定したヘッダーの下に付ける */
 @media (max-width: 759px) {
-  .site-header { position: sticky; top: 0; z-index: 20; transition: transform .2s ease; }
-  .site-header.is-hidden { transform: translateY(-100%); }
   .finder .result-bar { position: sticky; top: var(--header-offset, 0px); z-index: 10; background: var(--base); margin-left: calc(-1 * var(--space-4)); margin-right: calc(-1 * var(--space-4)); padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); transition: top .2s ease; }
 }
 
@@ -512,7 +514,7 @@ main { flex: 1 0 auto; }
 /* 広い画面では絞り込みを左側に置く */
 @media (min-width: 1000px) {
   .finder { display: grid; grid-template-columns: 320px minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: 24px; align-items: start; }
-  .finder .filters { grid-column: 1; grid-row: 1 / span 5; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+  .finder .filters { grid-column: 1; grid-row: 1 / span 5; position: sticky; top: calc(var(--header-offset, 64px) + 16px); max-height: calc(100vh - var(--header-offset, 64px) - 32px); overflow-y: auto; }
   .finder .search-row, .finder .result-bar, .finder .cards, .finder .empty, .finder .finder-foot { grid-column: 2; }
   .finder .finder-foot { grid-row: 4; }
   .finder .search-row { grid-row: 1; }
