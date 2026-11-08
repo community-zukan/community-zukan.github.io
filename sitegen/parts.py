@@ -265,9 +265,8 @@ def purpose_strip(cfg, cases):
     tiles = [tile("./", "", "1f4d6", len(cases), "すべて", current=True)]
     tiles += [tile(f"?purpose={urllib.parse.quote(v)}", v, icons.get(v, "1f4cc"), n, v) for v, n in opts]
     return f"""
-<section class="purposes wrap" aria-labelledby="purposes-title">
+<section class="purposes wrap" aria-label="目的から探す">
   <div class="strip-head">
-    <h2 id="purposes-title">目的から探す</h2>
     <span class="strip-arrows" id="strip-arrows" hidden><button type="button" data-dir="-1" aria-label="前の目的へ">←</button><button type="button" data-dir="1" aria-label="次の目的へ">→</button></span>
   </div>
   <div class="strip-wrap"><div class="strip" id="purpose-strip">{''.join(tiles)}</div></div>

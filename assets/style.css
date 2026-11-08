@@ -169,7 +169,7 @@ a[target="_blank"]::after { content: "\2060↗"; margin-left: .15em; font-size: 
 .tile[aria-current="true"] { background: var(--sky); border-color: var(--sky); color: var(--on-sky); }
 @media (max-width: 600px) { .tile { width: auto; min-width: 132px; } }
 .tile-name { white-space: nowrap; }  /* 文字を大きくした端末でも目的の名前を途中で割らない（タイルの幅を広げる） */
-@media (max-width: 759px) { .strip-arrows { display: none !important; } }
+@media (max-width: 759px) { .strip-arrows { display: none !important; } .strip-head { display: none; } }
 
 .finder { padding-bottom: var(--space-16); }
 .search-row { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
