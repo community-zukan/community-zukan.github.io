@@ -143,6 +143,8 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 /* 1行目を小さな前置きにし、2行目を主役にする。マーカーは使わない（2026-11-08 黒田さん） */
 .hero-pre { display: block; font-size: .6em; color: var(--text-sub); letter-spacing: .04em; margin-bottom: 2px; }
 .lead { color: var(--text-body); max-width: 42em; margin: 0 0 var(--space-4); }
+/* リード文は言葉の切れ目（span）でだけ改行する（「プレスリリー／ス」のように語の途中で割らない。2026-11-08 黒田さんの指摘） */
+.hero .lead span { display: inline-block; }
 /* 件数：大きな数字。読み込むと0から数え上がる（app.js） */
 /* 列を同じ幅にして、数字の間隔をそろえる（列の幅はいちばん長い数字かラベルに合わせる） */
 .stats { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; width: max-content; max-width: 100%; align-items: end; column-gap: var(--space-8); margin: 0 0 var(--space-2); }  /* 列の幅をそろえ、数字が等間隔に並ぶようにする（2026-11-06 黒田さんの指摘） */
