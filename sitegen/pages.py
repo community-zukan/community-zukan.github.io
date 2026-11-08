@@ -59,9 +59,7 @@ def build_index(cfg, cases):
     write("cards.html", rest_html)
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     # コミュニティAIへの入口（2026-11-06 の見本で案B）：トップは大きな件数の下に1行。事例一覧は、結果が5件以下なら囲み、多いときは一番下に1行（app.js が切り替える）
-    top_link = ai_link("コミュニティAIに相談する", "home")
-    top_ai = (f'<p class="ai-top"><img src="assets/emoji/1f4ac.png" alt="" width="18" height="18">{top_link}'
-              f'<span>立ち上げや運営の悩みを、事例をもとに一緒に考えます</span></p>') if top_link else ""
+    # トップの件数の下にあったコミュニティAIへの入口は、2026-11-08 黒田さんの判断で外した（まずは図鑑を使ってもらう）
     few_link = ai_link("AIに相談する", "list-few", cls="button button-ghost ai-help-button")
     list_ai = (f'<aside class="ai-help" id="ai-help" data-few="5" hidden><p class="ai-help-title">うまく見つからないときは</p>'
                f'<p class="ai-help-text">いまのコミュニティの状況を話すと、コミュニティAIが近い事例を一緒に探します。</p>{few_link}</aside>') if few_link else ""
@@ -75,7 +73,6 @@ def build_index(cfg, cases):
       <div class="stat"><span class="stat-num" data-count="{len(cases)}">{len(cases)}</span><span class="stat-label">収録事例</span></div>
 {type_stats}
     </div>
-    {top_ai}
   </div>
 </section>
 {purpose_strip(cfg, cases)}
