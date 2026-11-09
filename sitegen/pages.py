@@ -212,7 +212,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     other_tools = []
     for t, name in c.get("_tools", []):
         if TOOL_COUNTS[name] >= 2:
-            facts.append(fact_link(t, "tool", name, f"ツール「{name}」"))
+            facts.append(fact_link(name, "tool", name, f"ツール「{name}」"))  # 札は（ ）の補足を外した名前だけにする
         else:
             other_tools.append(t)
     chips = "".join(facts)
