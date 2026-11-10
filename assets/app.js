@@ -462,8 +462,9 @@ function zukanListInit() {
     });
     var whenFonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     Promise.all([whenLoaded, whenFonts]).then(function () {
-      // 読み込みの直後のひと仕事が片づくのを2フレーム待ってから
-      requestAnimationFrame(function () { requestAnimationFrame(startCount); });
+      // 読み込みの直後のひと仕事が片づくのを2フレーム待ち、さらに0.4秒おいてから始める
+      // （先にラベルと見出しに目が向いてから数字が動くように。2026-11-10 黒田さんの判断）
+      requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(startCount, 400); }); });
     });
     setTimeout(startCount, 2500);  // 読み込みに時間がかかっても、2.5秒たったら始める
   }
