@@ -116,7 +116,7 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
 <link rel="apple-touch-icon" href="{rel}assets/apple-touch-icon.png?v={ver('apple-touch-icon.png')}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js");try{{if(localStorage.getItem("zukan-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}}catch(e){{}}</script>
 <link rel="stylesheet" href="{rel}assets/style.css?v={ver('style.css')}">
 <script src="{rel}assets/site.js?v={ver('site.js')}" defer></script>
