@@ -41,6 +41,8 @@ TYPE_COLORS = {"社内": ("#1568a6", "#e8eef5"), "ファン・顧客": ("#6b4e00
 FONT_FILES = {
     "bold": ["/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", "NotoSansCJKjp-Bold.otf"],
     "regular": ["/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "NotoSansCJKjp-Regular.otf"],
+    # 図鑑ノートの題名用（2026-11-10 unslop の見直しでサイトの見出しを太さ500にしたので、画像もそろえる）
+    "medium": ["/usr/share/fonts/opentype/noto/NotoSansCJK-Medium.ttc", "NotoSansCJKjp-Medium.otf"],
 }
 FONT_URL = "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese/%s"
 NO_START = "、。，．・ー）」』】！？!?ぁぃぅぇぉっゃゅょゎァィゥェォッャュョヮ"
@@ -231,11 +233,11 @@ def make_note(cfg, n, path):
     label = "図鑑ノート" + ("｜" + n["kind"] if n["kind"] else "")
     pf = font("bold", 30)
     tw = d.textlength(label, font=pf)
-    d.rounded_rectangle((72, 72, 72 + tw + 48, 128), radius=28, fill=ACCENT)
+    d.rounded_rectangle((72, 72, 72 + tw + 48, 128), radius=12, fill=ACCENT)  # 札の角は小さく（サイトの札と同じ考え方。もとは丸い形の 28）
     d.text((96, 112), label, font=pf, fill=SURFACE, anchor="ls")
     # 題名は円にかからない幅で、3行までに収まる大きさを選ぶ
     for size in (64, 60, 56, 50, 46):
-        tf = font("bold", size)
+        tf = font("medium", size)  # 題名は Medium（もとは Bold）
         lines = title_lines(d, n["title"], tf, W - 72 - 330, 3)
         if lines:
             break

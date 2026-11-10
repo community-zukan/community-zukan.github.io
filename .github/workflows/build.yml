@@ -41,7 +41,7 @@ jobs:
             tools/fonts
             tools/emoji/cache
             ~/.cache/pip
-          key: og-assets-v1
+          key: og-assets-v2  # v2：図鑑ノートの題名用に Noto Sans CJK の Medium を足した（2026-11-10）
       # ひらがな検索の読みを作る pykakasi と、共有画像を作る Pillow を入れる（環境の Python 3.12 に .venv を作る）。
       # ここで失敗しても、共通の共有画像・ひらがな検索なしでサイトの更新は続ける
       - name: Python のパッケージを入れる
