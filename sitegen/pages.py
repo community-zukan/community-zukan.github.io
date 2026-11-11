@@ -24,21 +24,36 @@ def today_pool(cases):
 
 
 def today_card(pool):
-    """トップの右（スマホでは件数の下）の「きょうの1件」。作った日（日本時間）の1件を入れておき、app.js が開いた日の1件に直す。"""
+    """トップの右（スマホでは件数の下）の「きょうの1件」。候補を標本カードの扇に並べる（2026-11-11 の見本で案A）。
+    HTMLには作った日（日本時間）の1件だけを手前のカードとして入れておき、app.js が開いた日の1件を手前にして、
+    前後の候補を扇に足す（左右にめくれる）。JavaScript が動かないときは、この1件だけが見える。"""
     if not pool:
         return ""
     day = (datetime.now(JST).date() - datetime(1970, 1, 1).date()).days
-    d = pool[day % len(pool)]
+    i = day % len(pool)
     data = json.dumps(pool, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    nav = ""
+    if len(pool) > 1:
+        chev = lambda d: (f'<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="{d}" fill="none" '
+                          f'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+        nav = (f'<span class="today-nav" id="today-nav" hidden>'
+               f'<button type="button" class="today-step" id="today-prev" aria-label="前の事例" title="前の事例">{chev("M12.5 4.5 7 10l5.5 5.5")}</button>'
+               f'<button type="button" class="today-step" id="today-next" aria-label="次の事例" title="次の事例">{chev("M7.5 4.5 13 10l-5.5 5.5")}</button></span>')
     return (f'<aside class="today" id="today" aria-labelledby="today-title">'
-            f'<div class="today-head"><h2 id="today-title">きょうの1件</h2>'
-            f'<button type="button" class="today-roll" id="today-roll" hidden><img src="assets/emoji/1f3b2.png" alt="" width="18" height="18">ほかの事例をひく</button></div>'
-            f'<a class="today-link" id="today-link" href="cases/{esc(d["id"])}/" data-id="{esc(d["id"])}">'
-            f'<span class="today-emo"><img src="assets/emoji/{esc(d["emoji"])}.png" alt="" width="32" height="32"></span>'
-            f'<span class="today-meta">{type_badge(d["type"])}<span class="today-co">{esc(d["co"])}</span></span>'
-            f'<strong>{esc(d["title"])}</strong><span class="today-point">{esc(d["point"])}</span>'
-            f'<span class="today-more">事例を読む</span></a>'
+            f'<div class="today-head"><h2 id="today-title">きょうの1件</h2>{nav}</div>'
+            f'<div class="today-fan" id="today-fan">{today_slot(pool[i], True)}</div>'
+            f'<p class="today-back"><button type="button" id="today-back" hidden>きょうの1件に戻る</button></p>'
             f'<script type="application/json" id="today-data">{data}</script></aside>')
+
+
+def today_slot(d, front):
+    """扇の1枚。app.js の slot() と同じ形にしておく。"""
+    return (f'<a class="today-card{" is-front" if front else ""}" draggable="false" href="cases/{esc(d["id"])}/" data-id="{esc(d["id"])}">'
+            f'<span class="tc-top"><span class="tc-no">No.{esc(d["id"])}</span>'
+            f'<span class="tc-emo"><img src="assets/emoji/{esc(d["emoji"])}.png" alt="" width="28" height="28"></span></span>'
+            f'<span class="tc-meta">{type_badge(d["type"])}<span class="tc-co">{esc(d["co"])}</span></span>'
+            f'<strong class="tc-title">{esc(d["title"])}</strong><span class="tc-point">{esc(d["point"])}</span>'
+            f'<span class="tc-more">事例を読む</span></a>')
 
 
 def build_index(cfg, cases):

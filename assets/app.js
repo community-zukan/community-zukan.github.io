@@ -508,43 +508,136 @@ function zukanListInit() {
 }
 
 
-// トップの「きょうの1件」（2026-11-08 の見本で案D）：観測スコアの高い事例を、日本時間の日付で1件ずつ順に出す（その日はだれが開いても同じ）。
-// 🎲を押すと候補の中からランダムに替える。押した数と、事例を開いた数を GoatCounter の today-roll・today/ID で数える
+// トップの「きょうの1件」（2026-11-08 の見本で案D。2026-11-11 の見本で案A：候補を標本カードの扇にした。戻し先のタグ zukan-before-today-fan-2026-11-11）。
+// 観測スコアの高い事例を、日本時間の日付で1件ずつ順に手前に出す（その日はだれが開いても同じ）。左右にめくると前後の候補が手前に来る。
+// カードの姿勢はすべて「手前にある位置 p」だけで決まる。事例を開いた数を today/ID、めくった数を today-flip（1回の表示で1回だけ）で数える
 (function () {
   var box = document.getElementById('today');
   var dataEl = document.getElementById('today-data');
-  if (!box || !dataEl) return;
+  var fan = document.getElementById('today-fan');
+  if (!box || !dataEl || !fan) return;
   var pool;
   try { pool = JSON.parse(dataEl.textContent); } catch (e) { return; }
   if (!pool || !pool.length) return;
-  var link = document.getElementById('today-link');
-  var btn = document.getElementById('today-roll');
+  var n = pool.length;
   var cls = { '社内': 'is-internal', 'ファン・顧客': 'is-fan', '多企業': 'is-multi' };
-  var label = { 'ファン・顧客': 'ファン・顧客' };
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function esc(s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function count(path, title) { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true }); }
-  var day = Math.floor((Date.now() + 9 * 3600 * 1000) / 86400000);
-  var cur = day % pool.length;
-  function show(i, flip) {
-    var d = pool[i];
-    link.href = 'cases/' + encodeURIComponent(d.id) + '/';
-    link.setAttribute('data-id', d.id);
-    link.innerHTML = '<span class="today-emo"><img src="assets/emoji/' + esc(d.emoji) + '.png" alt="" width="32" height="32"></span>' +
-      '<span class="today-meta"><span class="badge ' + (cls[d.type] || 'is-other') + '">' + esc(label[d.type] || d.type) + '</span><span class="today-co">' + esc(d.co) + '</span></span>' +
-      '<strong>' + esc(d.title) + '</strong><span class="today-point">' + esc(d.point) + '</span><span class="today-more">事例を読む</span>';
-    if (flip) { link.classList.remove('is-flip'); void link.offsetWidth; link.classList.add('is-flip'); }
+  function slot(d) {  // pages.py の today_slot() と同じ形
+    return '<a class="today-card" draggable="false" href="cases/' + encodeURIComponent(d.id) + '/" data-id="' + esc(d.id) + '">' +
+      '<span class="tc-top"><span class="tc-no">No.' + esc(d.id) + '</span>' +
+      '<span class="tc-emo"><img src="assets/emoji/' + esc(d.emoji) + '.png" alt="" width="28" height="28"></span></span>' +
+      '<span class="tc-meta"><span class="badge ' + (cls[d.type] || 'is-other') + '">' + esc(d.type) + '</span><span class="tc-co">' + esc(d.co) + '</span></span>' +
+      '<strong class="tc-title">' + esc(d.title) + '</strong><span class="tc-point">' + esc(d.point) + '</span>' +
+      '<span class="tc-more">事例を読む</span></a>';
   }
-  if (link.getAttribute('data-id') !== pool[cur].id) show(cur, false);  // 作った日と開いた日がちがうときだけ入れ替える
-  link.addEventListener('click', function () { count('today/' + link.getAttribute('data-id'), 'きょうの1件（開いた）'); });
-  if (pool.length < 2) return;
-  btn.hidden = false;
-  btn.addEventListener('click', function () {
-    var i;
-    do { i = Math.floor(Math.random() * pool.length); } while (i === cur);
-    cur = i;
-    btn.classList.add('is-rolling');
-    setTimeout(function () { btn.classList.remove('is-rolling'); }, 500);
-    show(cur, true);
-    count('today-roll', 'きょうの1件（ほかの事例をひく）');
+  var day = Math.floor((Date.now() + 9 * 3600 * 1000) / 86400000);
+  var today = day % n;
+  var cur = today;
+  var wrap = n >= 8;   // 候補が少ないときは端で止める（輪にすると裏から回り込むのが見えるため）
+  fan.innerHTML = pool.map(slot).join('');
+  var cards = Array.prototype.slice.call(fan.children);
+
+  function offset(i, p) {
+    var d = i - p;
+    if (wrap) { d = ((d % n) + n) % n; if (d > n / 2) d -= n; }
+    return d;
+  }
+  function pose(p) {
+    var w = fan.clientWidth;
+    var g1 = w < 340 ? 40 : 52, g2 = 14;
+    cards.forEach(function (el, i) {
+      var d = offset(i, p), ad = Math.abs(d), sg = d < 0 ? -1 : 1;
+      var x = sg * (ad < 1 ? ad * g1 : g1 + (ad - 1) * g2);
+      var y = Math.pow(Math.min(ad, 3), 1.5) * 6;
+      var r = Math.max(-18, Math.min(18, d * 5));
+      var sc = 1 - Math.min(ad, 3) * .05;
+      el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) rotate(' + r.toFixed(2) + 'deg) scale(' + sc.toFixed(3) + ')';
+      el.style.zIndex = String(100 - Math.round(ad * 10));
+      el.style.visibility = ad > 3.2 ? 'hidden' : '';
+      var front = ad < .5;
+      el.classList.toggle('is-front', front);
+      el.tabIndex = front ? 0 : -1;
+      if (front) el.removeAttribute('aria-hidden'); else el.setAttribute('aria-hidden', 'true');
+    });
+  }
+  var flipped = false;
+  var back = document.getElementById('today-back');
+  function go(i, focus) {
+    cur = wrap ? ((i % n) + n) % n : Math.max(0, Math.min(n - 1, i));
+    fan.classList.remove('is-dragging');
+    pose(cur);
+    if (back) back.hidden = cur === today;
+    if (prev) prev.disabled = !wrap && cur === 0;
+    if (next) next.disabled = !wrap && cur === n - 1;
+    if (cur !== today && !flipped) { flipped = true; count('today-flip', 'きょうの1件（めくった）'); }
+    if (focus) cards[cur].focus({ preventScroll: true });
+  }
+  var nav = document.getElementById('today-nav');
+  var prev = document.getElementById('today-prev');
+  var next = document.getElementById('today-next');
+  if (nav && n > 1) {
+    nav.hidden = false;
+    prev.addEventListener('click', function () { go(cur - 1); });
+    next.addEventListener('click', function () { go(cur + 1); });
+  }
+  if (back) back.addEventListener('click', function () { go(today, true); });
+  if (reduce) fan.classList.add('is-still');
+  go(today);
+  fan.classList.add('is-ready');
+
+  // 手前のカードは事例ページへ。奥のカードを押すと、そのカードが手前に来る
+  var dragged = false;
+  fan.addEventListener('click', function (e) {
+    var a = e.target.closest('.today-card');
+    if (!a) return;
+    if (dragged) { e.preventDefault(); dragged = false; return; }
+    var i = cards.indexOf(a);
+    if (i !== cur) { e.preventDefault(); go(i); return; }
+    count('today/' + a.getAttribute('data-id'), 'きょうの1件（開いた）');
   });
+  fan.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { go(cur + 1, true); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(cur - 1, true); e.preventDefault(); }
+  });
+
+  // 横にドラッグしてめくる（縦のスクロールはそのまま）。リンクや絵をつかんで動かす標準の動きは止める（止めないとめくりが途中で切れる）
+  fan.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  if (n < 2) return;
+  var start = null;
+  fan.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;
+    start = { x: e.clientX, y: e.clientY, t: e.timeStamp, moving: false, id: e.pointerId };
+    dragged = false;
+  });
+  fan.addEventListener('pointermove', function (e) {
+    if (!start) return;
+    var dx = e.clientX - start.x, dy = e.clientY - start.y;
+    if (!start.moving) {
+      if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { start = null; return; }
+      if (Math.abs(dx) < 6) return;
+      start.moving = true;
+      fan.classList.add('is-dragging');
+      try { fan.setPointerCapture(start.id); } catch (err) {}
+    }
+    var p = cur - dx / 90;
+    if (!wrap) p = Math.max(-.4, Math.min(n - .6, p));
+    pose(p);
+    start.lastX = e.clientX; start.lastT = e.timeStamp;
+  });
+  function end(e) {
+    if (!start) return;
+    var s = start; start = null;
+    if (!s.moving) return;
+    dragged = true;
+    setTimeout(function () { dragged = false; }, 0);
+    var dx = e.clientX - s.x;
+    var v = s.lastT && e.timeStamp > s.t ? dx / (e.timeStamp - s.t) : 0;   // px/ms
+    var steps = Math.round(dx / 90 + (Math.abs(v) > .5 ? (v > 0 ? .5 : -.5) : 0));
+    go(cur - steps);
+  }
+  fan.addEventListener('pointerup', end);
+  fan.addEventListener('pointercancel', function () { if (start && start.moving) { start = null; go(cur); } else start = null; });
+  window.addEventListener('resize', function () { pose(cur); });
 })();
