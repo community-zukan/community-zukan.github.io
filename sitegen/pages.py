@@ -104,8 +104,8 @@ def build_index(cfg, cases):
     rest_ver = hashlib.sha1(rest_html.encode("utf-8")).hexdigest()[:8]
     write("cards.html", rest_html)
     # キーワードで探したとき、カードに見えていない項目に当たった箇所を出すための本文（2026-11-15 の見本で採用。app.js の showHits）。
-    # 検索した人だけが読み込むよう、カードには入れずに別のファイルにする。並びは [主な施策, 工夫のポイント, ツール, 検索用キーワード]
-    body_json = json.dumps({c["ID"]: [c.get(k, "") for k in ["主な施策", "工夫のポイント", "ツール", "検索用キーワード"]] for c in cases},
+    # 検索した人だけが読み込むよう、カードには入れずに別のファイルにする。並びは [主な施策, 工夫のポイント, ツール, 検索用キーワード, 公開されている成果, 運営体制]
+    body_json = json.dumps({c["ID"]: [c.get(k, "") for k in ["主な施策", "工夫のポイント", "ツール", "検索用キーワード", "公開されている成果", "運営体制"]] for c in cases},
                            ensure_ascii=False, separators=(",", ":"))
     body_ver = hashlib.sha1(body_json.encode("utf-8")).hexdigest()[:8]
     write("search-body.json", body_json)

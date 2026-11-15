@@ -209,7 +209,8 @@ def card(c, prefix="", order=None):
         data["order"] = str(order)
     attrs = " ".join(f'data-{k}="{esc(v)}"' for k, v in data.items())
     # 検索用キーワード（X列）は画面には出さず、検索の対象にだけ入れる
-    search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "目的", "活動の型", "検索用キーワード"])
+    # 2026-11-15：「公開されている成果」「運営体制」も探せるようにした（「NPS」「推進部」などで探しても出なかったため）
+    search = " ".join(c.get(k, "") for k in ["企業名", "コミュニティ名", "業種", "ツール", "主な施策", "工夫のポイント", "公開されている成果", "運営体制", "目的", "活動の型", "検索用キーワード"])
     # 企業名・コミュニティ名の読みを足して、ひらがなでも見つかるようにする
     yomi = reading(" ".join([c.get("企業名", ""), c.get("コミュニティ名", "")]))
     search = normalize(search) + (" " + yomi if yomi else "")

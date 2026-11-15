@@ -503,7 +503,7 @@ function zukanListInit() {
   // 本文は search-body.json にあり、初めてキーワードで探したときに読み込む。表示中のカードにだけ付ける
   var bodyUrl = list.getAttribute('data-body');
   var bodyData = null, bodyLoading = false, lastHitArgs = null;
-  var HIT_LABEL = ['本文に一致', '本文に一致', 'ツールに一致', 'キーワードに一致'];
+  var HIT_LABEL = ['本文に一致', '本文に一致', 'ツールに一致', 'キーワードに一致', '成果に一致', '運営体制に一致'];
   function loadBody() {
     if (bodyData || bodyLoading || !bodyUrl || !window.fetch) return;
     bodyLoading = true;
