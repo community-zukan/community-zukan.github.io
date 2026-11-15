@@ -461,7 +461,8 @@ def report_link(cfg, c):
 
 
 def useful_box(cfg, c, has_related):
-    """役に立った・いまひとつ（2026-11-15 の見本で採用）。「あなたの会社なら」を読み終えた直後、出典の前に白い箱で聞く。
+    """役に立った・いまひとつ（2026-11-15 の見本で採用）。「あなたの会社なら」を読み終えた直後、出典の前に聞く。
+    同じ日に黒田さんの「目立ちすぎる」で控えめにした（3案から案A：箱をやめ、灰色の一文と線だけの小さなボタンを1行に）。
     押すと、その場所にお礼と次の一歩（役に立った：あとで見るにも入れる・近い事例を見る／いまひとつ：足りない点を知らせる・近い事例を見る）を出す。
     押したことはこのブラウザに残す（case.js）。JavaScript が動くときだけ出す。GoatCounter は useful-ID・notuseful-ID は今までどおり"""
     i = esc(c["ID"])
@@ -469,10 +470,10 @@ def useful_box(cfg, c, has_related):
     report = (f'<a class="useful-link" id="useful-report" href="{esc(url)}" target="_blank" rel="noopener" '
               f'data-goatcounter-click="report-after-notuseful-{i}" hidden>足りない点を知らせる</a>') if url else ""
     to_rel = (f'<a class="useful-link" id="useful-to-rel" href="#related" data-goatcounter-click="related-after-useful-{i}">'
-              f'近い事例を見る<span aria-hidden="true">&nbsp;↓</span></a>') if has_related else ""
+              f'近い事例を見る</a>') if has_related else ""
     return f"""<section class="useful-box" id="useful" aria-labelledby="useful-title" hidden>
-    <h2 id="useful-title">この事例は参考になりましたか</h2>
     <div class="useful-choice" id="useful-choice">
+      <h2 class="useful-q" id="useful-title">この事例は参考になりましたか</h2>
       <span class="useful-buttons">
         <button type="button" class="useful-btn" id="useful-button" data-id="{i}" data-goatcounter-click="useful-{i}">役に立った</button>
         <button type="button" class="useful-btn" id="notuseful-button" data-id="{i}" data-goatcounter-click="notuseful-{i}">いまひとつ</button>
@@ -480,11 +481,11 @@ def useful_box(cfg, c, has_related):
     </div>
     <div class="useful-done" id="useful-done" hidden>
       <p class="useful-thanks" id="useful-thanks" tabindex="-1" role="status"></p>
-      <div class="useful-next">
-        <button type="button" class="action-button save useful-save" id="useful-save" aria-pressed="false" data-goatcounter-click="save-after-useful-{i}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見るにも入れる</span></button>
+      <span class="useful-next">
+        <button type="button" class="useful-link" id="useful-save" aria-pressed="false" data-goatcounter-click="save-after-useful-{i}" hidden><span class="save-label">あとで見るにも入れる</span></button>
         {report}
         {to_rel}
-      </div>
+      </span>
     </div>
   </section>"""
 

@@ -81,7 +81,7 @@
       usave.addEventListener('click', function () {
         var on = window.zukanSaved.toggle(cid);
         if (on === null) return;
-        if (on) window.zukanSaved.fly(usave.querySelector('.save-icon'), function () { window.zukanSaved.setHeader(true); });
+        if (on) window.zukanSaved.fly(usave, function () { window.zukanSaved.setHeader(true); });
         else window.zukanSaved.setHeader(false);
       });
       document.addEventListener('zukan-saved-change', renderSave);
