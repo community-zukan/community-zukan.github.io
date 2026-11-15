@@ -335,7 +335,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
 <article class="case wrap">
-  <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../">事例一覧</a></li><li aria-current="page">{esc(c['企業名'])}</li></ol></nav>
+  <div class="case-top"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../">事例一覧</a></li><li aria-current="page">{esc(c['企業名'])}</li></ol></nav><p class="trail-pos" id="trail-pos" hidden></p></div>
   <header class="case-head">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
     <h1>{phrase(c['_title'])}</h1>
@@ -352,6 +352,8 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
   <div class="feedback">
     {report_link(cfg, c)}
   </div>
+  <!-- 一覧の前後の事例（2026-11-15 の見本で採用）：一覧で絞り込んでから開いたときだけ case.js が出す -->
+  <nav class="trail" id="trail" aria-label="絞り込んだ結果の前後の事例" hidden></nav>
   {note_html_}
   {rel_html}
 </article>

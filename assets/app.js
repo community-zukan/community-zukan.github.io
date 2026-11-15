@@ -571,6 +571,27 @@ function zukanListInit() {
     });
   }
 
+  // 一覧の前後の事例（2026-11-15 の見本で採用）：カードを押して事例ページを開くとき、いまの条件に当てはまる事例の並び（最大200件）と、
+  // それぞれの企業名・題名、一覧の条件（URL の ?…）を sessionStorage に入れる。事例ページ（case.js）が読んで前後の事例を出す。
+  // 一覧を開き直したときは消す（ほかの入口から開いた事例ページには出さない）
+  var TRAIL_KEY = 'zukan-trail';
+  try { sessionStorage.removeItem(TRAIL_KEY); } catch (e) { /* 何もしない */ }
+  list.addEventListener('click', function (ev) {
+    var a = ev.target.closest('.card a');
+    if (!a) return;
+    var s = selected();
+    var terms = normalize(q.value).split(/\s+/).filter(Boolean).map(alternatives);
+    var ids = [], info = {};
+    Array.prototype.forEach.call(list.children, function (c) {
+      if (ids.length >= 200 || !matches(c, s, terms, savedOnly)) return;
+      var id = idOf(c);
+      ids.push(id);
+      info[id] = [(c.querySelector('.card-company') || {}).textContent || '', (c.querySelector('.card-title') || {}).textContent || ''];
+    });
+    var filtering = Object.keys(s).length > 0 || terms.length > 0 || savedOnly;
+    try { sessionStorage.setItem(TRAIL_KEY, JSON.stringify({ ids: ids, info: info, total: countWith(s, terms, savedOnly), filtering: filtering, search: location.search })); } catch (e) { /* 何もしない */ }
+  });
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）

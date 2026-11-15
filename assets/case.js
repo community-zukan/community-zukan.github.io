@@ -88,6 +88,41 @@
     }
   }
 
+  // 一覧の前後の事例（2026-11-15 の見本で採用）：一覧で事例を開いたとき（app.js が sessionStorage に並びを入れる）だけ、
+  // 見出しの上に「絞り込んだ結果 n件中 m件目」、ページの下に前と次の事例と「一覧に戻る（条件はそのまま）」を出す
+  (function () {
+    var nav = document.getElementById('trail');
+    var pos = document.getElementById('trail-pos');
+    var src = document.getElementById('save') || document.getElementById('useful-button');
+    var me = src && src.getAttribute('data-id');
+    if (!nav || !me) return;
+    var t = null;
+    try { t = JSON.parse(sessionStorage.getItem('zukan-trail') || 'null'); } catch (e) { t = null; }
+    if (!t || !t.ids) return;
+    var i = t.ids.indexOf(me);
+    if (i === -1) return;
+    var esc = function (x) { return String(x || '').replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); };
+    var count = function (path, title) { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true }); };
+    var label = t.filtering ? '絞り込んだ結果' : '一覧';
+    pos.textContent = label + ' ' + t.total + '件中 ' + (i + 1) + '件目';
+    pos.hidden = false;
+    var link = function (id, dir) {
+      if (!id) return '<span class="trail-card is-empty" aria-hidden="true"></span>';
+      var info = t.info[id] || ['', ''];
+      return '<a class="trail-card is-' + dir + '" href="../' + esc(id) + '/" data-trail="' + dir + '"><span class="trail-dir">' + (dir === 'prev' ? '← 前の事例' : '次の事例 →') + '</span>' +
+        '<small>' + esc(info[0]) + '</small><strong>' + esc(info[1]) + '</strong></a>';
+    };
+    nav.innerHTML = '<div class="trail-cards">' + link(t.ids[i - 1], 'prev') + link(t.ids[i + 1], 'next') + '</div>' +
+      '<a class="trail-back" href="../../' + esc(t.search || '') + '" data-trail="back">一覧に戻る（条件はそのまま）</a>';
+    nav.hidden = false;
+    nav.addEventListener('click', function (ev) {
+      var a = ev.target.closest('[data-trail]');
+      if (!a) return;
+      var d = a.getAttribute('data-trail');
+      count(d === 'back' ? 'case-back-list' : 'case-' + d, d === 'back' ? '一覧に戻る（前後の事例から）' : (d === 'next' ? '次の事例' : '前の事例'));
+    });
+  })();
+
   var copy = document.getElementById('copy-url');
   if (copy) {
     var status = document.getElementById('copy-status');
