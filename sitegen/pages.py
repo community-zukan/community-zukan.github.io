@@ -103,6 +103,12 @@ def build_index(cfg, cases):
     rest_html = "".join(card(cases[i], order=i) for i in order[FIRST_CARDS:])
     rest_ver = hashlib.sha1(rest_html.encode("utf-8")).hexdigest()[:8]
     write("cards.html", rest_html)
+    # キーワードで探したとき、カードに見えていない項目に当たった箇所を出すための本文（2026-11-15 の見本で採用。app.js の showHits）。
+    # 検索した人だけが読み込むよう、カードには入れずに別のファイルにする。並びは [主な施策, 工夫のポイント, ツール, 検索用キーワード]
+    body_json = json.dumps({c["ID"]: [c.get(k, "") for k in ["主な施策", "工夫のポイント", "ツール", "検索用キーワード"]] for c in cases},
+                           ensure_ascii=False, separators=(",", ":"))
+    body_ver = hashlib.sha1(body_json.encode("utf-8")).hexdigest()[:8]
+    write("search-body.json", body_json)
     synonyms_json = json.dumps(load_synonyms(), ensure_ascii=False).replace("</", "<\\/")
     # コミュニティAIへの入口（2026-11-06 の見本で案B）：トップは大きな件数の下に1行。事例一覧は、結果が5件以下なら囲み、多いときは一番下に1行（app.js が切り替える）
     # トップの件数の下にあったコミュニティAIへの入口は、2026-11-08 黒田さんの判断で外した（まずは図鑑を使ってもらう）
@@ -171,7 +177,7 @@ def build_index(cfg, cases):
     <!-- 選んでいる条件の札（2026-11-15 の見本で採用：スマホで欄を閉じても、何を選んでいるかが見え、× で1つずつ外せる。app.js の buildApplied） -->
     <div class="applied" id="applied" role="group" aria-label="選んでいる条件" hidden><ul class="applied-list" id="applied-list"></ul><button type="button" id="reset" class="link-button applied-clear" data-goatcounter-click="filter-chip-clear" data-goatcounter-title="条件の札をすべて外す">すべて外す</button></div>
   </div>
-  <ul class="cards" id="cards" data-rest="cards.html?v={rest_ver}" data-total="{len(cases)}">
+  <ul class="cards" id="cards" data-rest="cards.html?v={rest_ver}" data-body="search-body.json?v={body_ver}" data-total="{len(cases)}">
     {first_cards}
   </ul>
   <div class="empty" id="empty" hidden>

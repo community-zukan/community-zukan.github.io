@@ -494,6 +494,83 @@ function zukanListInit() {
     q.focus();
   });
 
+  // キーワードに当たった箇所（2026-11-15 の見本で採用）。題名・企業名に当たったときはその言葉を太さ600と下線に、
+  // カードに見えていない項目（主な施策・工夫のポイントの続き・ツール・検索用キーワード）に当たったときは、当たった箇所の前後を1行添える。
+  // 本文は search-body.json にあり、初めてキーワードで探したときに読み込む。表示中のカードにだけ付ける
+  var bodyUrl = list.getAttribute('data-body');
+  var bodyData = null, bodyLoading = false, lastHitArgs = null;
+  var HIT_LABEL = ['本文に一致', '本文に一致', 'ツールに一致', 'キーワードに一致'];
+  function loadBody() {
+    if (bodyData || bodyLoading || !bodyUrl || !window.fetch) return;
+    bodyLoading = true;
+    fetch(bodyUrl).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { bodyData = d; if (lastHitArgs) showHits(lastHitArgs[0], lastHitArgs[1]); })
+      .catch(function () { /* 読み込めなくても、題名・企業名の印だけは付く */ });
+  }
+  // 要素の中の文字に印を付ける（<wbr> などで分かれた文字をまたぐ当たりには付けない）。元に戻せるよう、最初の中身を覚えておく
+  function markIn(el, alts) {
+    if (!el) return;
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.parentNode.classList && node.parentNode.classList.contains('hit-word')) continue;
+      var t = node.nodeValue, nt = normalize(t);
+      if (nt.length !== t.length) continue;
+      for (var i = 0; i < alts.length; i++) {
+        var w = normalize(alts[i]), at = w ? nt.indexOf(w) : -1;
+        if (at === -1) continue;
+        if (el.getAttribute('data-orig') === null) el.setAttribute('data-orig', el.innerHTML);
+        var mid = node.splitText(at);
+        mid.splitText(w.length);
+        var b = document.createElement('b');
+        b.className = 'hit-word';
+        mid.parentNode.replaceChild(b, mid);
+        b.appendChild(mid);
+        return;
+      }
+    }
+  }
+  function unmark(el) {
+    if (el && el.getAttribute('data-orig') !== null) { el.innerHTML = el.getAttribute('data-orig'); el.removeAttribute('data-orig'); }
+  }
+  function showHits(words, terms) {
+    lastHitArgs = [words, terms];
+    if (words.length) loadBody();
+    Array.prototype.forEach.call(list.children, function (c) {
+      var titleEl = c.querySelector('.card-title'), coEl = c.querySelector('.card-company');
+      unmark(titleEl); unmark(coEl);
+      var old = c.querySelector('.card-hit');
+      if (old) old.parentNode.removeChild(old);
+      if (c.hidden || !words.length) return;
+      terms.forEach(function (alts) { markIn(titleEl, alts); markIn(coEl, alts); });
+      var fields = bodyData && bodyData[idOf(c)];
+      if (!fields) return;
+      var shown = normalize(c.querySelector('a').textContent);
+      for (var ti = 0; ti < terms.length; ti++) {
+        var alts = terms[ti].map(normalize);
+        if (alts.some(function (w) { return w && shown.indexOf(w) !== -1; })) continue;   // カードに見えている文字で当たっている
+        for (var fi = 0; fi < fields.length; fi++) {
+          var f = fields[fi] || '', nf = normalize(f);
+          if (nf.length !== f.length) continue;
+          for (var ai = 0; ai < alts.length; ai++) {
+            var w = alts[ai], at = w ? nf.indexOf(w) : -1;
+            if (at === -1) continue;
+            var from = Math.max(0, at - 14), to = Math.min(f.length, at + w.length + 22);
+            var text = (from > 0 ? '…' : '') + escHtml(f.slice(from, at)) + '<b class="hit-word">' + escHtml(f.slice(at, at + w.length)) + '</b>' +
+              escHtml(f.slice(at + w.length, to)) + (to < f.length ? '…' : '');
+            var label = HIT_LABEL[fi] + (w !== words[ti] ? '（言い換え：' + escHtml(f.slice(at, at + w.length)) + '）' : '');
+            var p = document.createElement('p');
+            p.className = 'card-hit';
+            p.innerHTML = '<span class="card-hit-label">' + label + '</span><span class="card-hit-text">' + text + '</span>';
+            var tags = c.querySelector('.tags');
+            c.querySelector('a').insertBefore(p, tags);
+            return;
+          }
+        }
+      }
+    });
+  }
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）
@@ -521,6 +598,7 @@ function zukanListInit() {
     empty.hidden = shown !== 0;
     if (shown === 0) showRelax(s, words, terms);
     showSearchNote(words, terms);
+    showHits(words, terms);
     countSearch(shown);
     if (pushState) saveUrl(s);
     markTiles(s);

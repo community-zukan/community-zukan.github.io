@@ -387,6 +387,11 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .card-meta { font-size: 13px; color: var(--text-sub); margin: 0 0 var(--space-2); line-height: 1.6; }
 .card-point { font-size: 14px; color: var(--text-body); margin: 0 0 var(--space-3); line-height: 1.75; }
 .card .tags { margin-top: auto; }
+/* キーワードに当たった箇所（2026-11-15 の見本で採用。app.js の showHits）。当たった言葉は太さ600と下線（マーカーは使わない） */
+.hit-word { font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.card-hit { margin: 0 0 var(--space-3); padding: var(--space-2) var(--space-3); font-size: 13px; line-height: 1.7; color: var(--text-body); background: var(--base); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.card-hit-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-sub); }
+.cards.is-list .card-hit { display: none; }
 
 .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 10px; border-radius: var(--radius-tag); line-height: 1.8; }
 .badge.is-fan { background: var(--fan-bg); color: var(--fan-fg); }
