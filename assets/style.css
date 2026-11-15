@@ -276,6 +276,20 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .result-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 var(--space-3); }
 .result-bar p { margin: 0; font-size: 14px; color: var(--text-body); }
 .link-button { font: inherit; font-size: 14px; background: none; border: 0; color: var(--sky); text-decoration: underline; cursor: pointer; padding: var(--space-1) 0; }
+/* 選んでいる条件の札（2026-11-15 の見本で採用）：件数の下の1行。札は選択中の札（.chip の checked）と同じ空色。
+   スマホは1行で横にすべらせ、はみ出しているときだけ右端を薄くする。広い画面では折り返して全部見せる */
+.applied { flex-basis: 100%; display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.applied[hidden] { display: none; }
+.applied-list { list-style: none; margin: 0; padding: 2px; flex: 1; min-width: 0; display: flex; gap: var(--space-2); overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.applied-list:empty { display: none; }
+.applied-list::-webkit-scrollbar { display: none; }
+.applied-list.is-overflow { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 24px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 24px), transparent); }
+.applied-list li { flex: none; }
+.applied-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 var(--space-2) 0 14px; border: 1px solid var(--sky); border-radius: var(--radius-md); background: var(--sky); color: var(--on-sky); font: inherit; font-size: 14px; line-height: 1.4; white-space: nowrap; cursor: pointer; }
+.applied-chip:hover { background: var(--sky-on-tint); border-color: var(--sky-on-tint); }
+.applied-chip svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.applied-clear { flex: none; white-space: nowrap; }
+@media (min-width: 760px) { .applied-list { flex-wrap: wrap; overflow: visible; } .applied-list.is-overflow { -webkit-mask-image: none; mask-image: none; } }
 .button {
   display: inline-block; font: inherit; font-size: 16px; font-weight: 500;
   background: var(--sky); color: var(--on-sky); border: 0; border-radius: var(--radius-md);

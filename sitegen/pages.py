@@ -150,12 +150,13 @@ def build_index(cfg, cases):
     <p id="result-count" aria-live="polite">{len(cases)}件の事例</p>
     <p class="search-note" id="search-note" hidden></p>
     <p class="tool-note" id="tool-note" hidden><span></span><button type="button" class="small-button" id="tool-clear">外す</button></p>
-    <button type="button" id="reset" class="link-button" hidden>条件をすべて外す</button>
     <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>
     <div class="view-toggle" id="view-toggle" role="group" aria-label="表示のしかた" hidden>
       <button type="button" class="view-btn" data-view="card" aria-pressed="true" title="カードで表示"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><span class="visually-hidden">カードで表示</span></button>
       <button type="button" class="view-btn" data-view="list" aria-pressed="false" title="一覧で表示"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span class="visually-hidden">一覧で表示</span></button>
     </div>
+    <!-- 選んでいる条件の札（2026-11-15 の見本で採用：スマホで欄を閉じても、何を選んでいるかが見え、× で1つずつ外せる。app.js の buildApplied） -->
+    <div class="applied" id="applied" role="group" aria-label="選んでいる条件" hidden><ul class="applied-list" id="applied-list"></ul><button type="button" id="reset" class="link-button applied-clear" data-goatcounter-click="filter-chip-clear" data-goatcounter-title="条件の札をすべて外す">すべて外す</button></div>
   </div>
   <ul class="cards" id="cards" data-rest="cards.html?v={rest_ver}" data-total="{len(cases)}">
     {first_cards}

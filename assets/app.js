@@ -32,6 +32,10 @@ function zukanListInit() {
   var PAGE = 24;          // 一度に表示する件数
   var savedToggle = document.getElementById('saved-toggle');
   var savedOnly = false;
+  var applied = document.getElementById('applied');
+  var appliedList = document.getElementById('applied-list');
+  // GoatCounter で数える（あとから作るボタンは count.js の data-goatcounter-click が効かないので、ここから送る）
+  function gc(path, title) { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title || path, event: true }); }
 
   // 事例ページで「あとで見る」に入れた事例（localStorage）。使えない環境では空として扱う
   function savedIds() {
@@ -187,6 +191,51 @@ function zukanListInit() {
     });
   }
 
+  // 選んでいる条件の札（2026-11-15 の見本で採用）。絞り込みの欄の札とキーワードを、件数の下に「名前 ×」で並べる。
+  // × で1つずつ外し、外したあとは隣の札（なければ「条件で絞り込む」）にフォーカスを移す。ツール（?tool=）は tool-note のまま
+  var FACET_LABEL = { type: '種別', purpose: '目的', stage: '段階', activity: '活動の型', place: '場', industry: '業種', size: '規模', tool: 'ツール' };
+  var X_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+  function escHtml(t) { return String(t).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+  function shownWords() { return q.value.trim() ? [q.value.trim()] : []; }
+  function buildApplied(filtering, words) {
+    if (!applied) return;
+    var html = '';
+    boxes.forEach(function (b) {
+      if (!b.checked) return;
+      html += '<li><button type="button" class="applied-chip" data-k="' + escHtml(b.name) + '" data-v="' + escHtml(b.value) + '" aria-label="' +
+        escHtml((FACET_LABEL[b.name] || '') + '「' + b.value + '」を外す') + '">' + escHtml(b.value) + X_ICON + '</button></li>';
+    });
+    words.forEach(function (w) {
+      html += '<li><button type="button" class="applied-chip" data-k="q" aria-label="' + escHtml('キーワード「' + w + '」を外す') + '">キーワード：' + escHtml(w) + X_ICON + '</button></li>';
+    });
+    if (appliedList.innerHTML !== html) appliedList.innerHTML = html;
+    applied.hidden = !filtering;
+    markOverflow();
+  }
+  // 札が横にはみ出しているときだけ右端を薄くし、続きがあると分かるようにする（スマホは1行で横にすべらせる）
+  function markOverflow() {
+    var over = appliedList.scrollWidth > appliedList.clientWidth + 1;
+    appliedList.classList.toggle('is-overflow', over && appliedList.scrollLeft + appliedList.clientWidth < appliedList.scrollWidth - 2);
+  }
+  if (applied) {
+    appliedList.addEventListener('scroll', markOverflow, { passive: true });
+    window.addEventListener('resize', markOverflow);
+    appliedList.addEventListener('click', function (ev) {
+      var chip = ev.target.closest('.applied-chip');
+      if (!chip) return;
+      var chips = Array.prototype.slice.call(appliedList.querySelectorAll('.applied-chip'));
+      var at = chips.indexOf(chip);
+      var k = chip.getAttribute('data-k');
+      if (k === 'q') q.value = '';
+      else boxes.forEach(function (b) { if (b.name === k && b.value === chip.getAttribute('data-v')) b.checked = false; });
+      gc('filter-chip-remove/' + (k === 'q' ? 'keyword' : FACET_LABEL[k] || k), '条件の札を外す：' + (k === 'q' ? 'キーワード' : FACET_LABEL[k] || k));
+      apply(true);
+      var rest = appliedList.querySelectorAll('.applied-chip');
+      if (rest.length) rest[Math.min(at, rest.length - 1)].focus();
+      else details.querySelector('summary').focus();
+    });
+  }
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）
@@ -209,8 +258,8 @@ function zukanListInit() {
     var filtering = n > 0 || words.length > 0 || savedOnly;
     count.textContent = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
     activeCount.textContent = n ? n + '件の条件' : '';
-    reset.hidden = !filtering;
     if (reset3) reset3.hidden = !filtering;
+    buildApplied(filtering, shownWords());
     empty.hidden = shown !== 0;
     if (shown === 0) showRelax(s, words, terms);
     showSearchNote(words, terms);
