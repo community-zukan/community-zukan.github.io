@@ -21,7 +21,7 @@ https://community-zukan.github.io/
 
 ## ファイル
 
-- `build.py` サイトを作るスクリプト（Python標準ライブラリのみ。pykakasi があればひらがな検索用の読みを足す）
+- `build.py` サイトを作るスクリプト（Python標準ライブラリのみ。pykakasi があればひらがな検索用の読みを足し、budoux があれば見出しやカードの題名を文節で改行する）
 - `config/` サイトの設定（site.json）、検索の言い換え表（synonyms.json）、組み合わせのページの解説（combo_notes.json）
 - `assets/` CSS・JavaScript・ファビコン・共有画像
 - `tools/make_og.py` 事例ページごとの共有画像を作る
