@@ -38,7 +38,68 @@
     emptyEl.hidden = isShared || shown > 0;
     importBtn.hidden = !isShared || !shown;
     shareBtn.hidden = isShared || !shown;
+    shownIds = ids.filter(function (id) { return !!list.querySelector('a[href="../cases/' + id + '/"]'); });
+    viewBox.hidden = !shown;
+    showView(false);
   }
+
+  // 表で比べる（2026-11-15 の見本で採用）。件数の横の切り替えで、カードと表を切り替える。表の中身は saved/table.json を
+  // 表に切り替えたときだけ読み込む。選んだ表示はこのブラウザに残す（zukan-saved-view）
+  var viewBox = document.getElementById('saved-view');
+  var tableBox = document.getElementById('saved-table');
+  var tbody = document.getElementById('saved-tbody');
+  var tableWrap = document.getElementById('saved-table-wrap');
+  var shownIds = [];
+  var tableData = null, tableLoading = false;
+  var view = 'card';
+  try { view = localStorage.getItem('zukan-saved-view') === 'table' ? 'table' : 'card'; } catch (e) { /* 何もしない */ }
+  var TYPE_CLASS = { '社内': 'is-internal', 'ファン・顧客': 'is-fan', '多企業': 'is-multi' };
+  function esc(t) { return String(t || '').replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+  function cell(v) { return v ? esc(v) : '<span aria-hidden="true">—</span><span class="visually-hidden">記載なし</span>'; }
+  function buildRows() {
+    tbody.innerHTML = shownIds.map(function (id, i) {
+      var r = tableData[id];
+      if (!r) return '';
+      var size = r[5] || r[6] ? (r[5] ? '<span class="st-band">' + esc(r[5]) + '</span>' : '') + (r[6] ? '<span class="st-raw">' + esc(r[6]) + '</span>' : '') : cell('');
+      var tools = r[9].length ? r[9].map(esc).join('<br>') : cell('');
+      var purposes = r[10].length ? '<ul class="tags">' + r[10].map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>' : cell('');
+      return '<tr style="--i:' + i + '"><th scope="row" class="st-name"><span class="st-co">' + esc(r[1]) + '</span><a href="../cases/' + esc(id) + '/">' + esc(r[2]) + '</a></th>' +
+        '<td class="st-type"><span class="badge ' + (TYPE_CLASS[r[0]] || 'is-other') + '">' + esc(r[0]) + '</span></td>' +
+        '<td class="st-ind">' + cell(r[3]) + '</td><td class="st-year">' + (r[4] ? esc(r[4]) + '年' : cell('')) + '</td>' +
+        '<td class="st-size">' + size + '</td><td class="st-stage">' + cell(r[7]) + '</td><td class="st-place">' + cell(r[8]) + '</td>' +
+        '<td class="st-tool">' + tools + '</td><td class="st-purpose">' + purposes + '</td><td class="st-point">' + cell(r[11]) + '</td></tr>';
+    }).join('');
+  }
+  function showView(animate) {
+    var table = view === 'table' && shownIds.length > 0;
+    Array.prototype.forEach.call(viewBox.querySelectorAll('.view-btn'), function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-view') === view ? 'true' : 'false');
+    });
+    if (table && !tableData) {
+      if (!tableLoading) {
+        tableLoading = true;
+        fetch(list.getAttribute('data-table')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(function (d) { tableData = d; showView(animate); })
+          .catch(function () { tableLoading = false; view = 'card'; showView(false); note.textContent = '表を読み込めませんでした。時間をおいて開き直してください。'; });
+      }
+      return;
+    }
+    list.hidden = table;
+    tableBox.hidden = !table;
+    if (table) {
+      buildRows();
+      tableBox.classList.remove('is-enter');
+      if (animate) { void tableBox.offsetWidth; tableBox.classList.add('is-enter'); }
+    }
+  }
+  Array.prototype.forEach.call(viewBox.querySelectorAll('.view-btn'), function (b) {
+    b.addEventListener('click', function () {
+      view = b.getAttribute('data-view');
+      try { localStorage.setItem('zukan-saved-view', view); } catch (e) { /* 何もしない */ }
+      showView(true);
+    });
+  });
+  tableWrap.addEventListener('scroll', function () { tableWrap.classList.toggle('is-scrolled', tableWrap.scrollLeft > 2); }, { passive: true });
 
   importBtn.addEventListener('click', function () {
     var mine = load();

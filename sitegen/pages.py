@@ -601,13 +601,27 @@ def build_saved(cfg, cases):
     all_cards = "".join(card(c, prefix="../").replace('<li class="card" ', '<li class="card" hidden ', 1) for c in cases)
     saved_ver = hashlib.sha1(all_cards.encode("utf-8")).hexdigest()[:8]
     write("saved/cards.html", all_cards)
+    # 表で比べる（2026-11-15 の見本で採用。saved.js）：表に使う項目だけを集めたもの。表に切り替えたときだけ読み込む。
+    # 並びは [種別, 企業名, 事例名, 業種, 開始年, 規模の区分, 規模, 段階, 場, ツール（まとめた名前）, 目的, この事例のポイント]
+    table = {c["ID"]: [c.get("種別", ""), c["企業名"], c["_title"], c.get("業種", ""), c.get("開始年", ""), c.get("規模の区分", ""),
+                       c.get("規模", ""), c.get("段階", ""), c.get("場", ""), list(dict.fromkeys(n for _, n in c.get("_tools", []))),
+                       c["_purpose"], shorten(c.get("工夫のポイント") or c.get("主な施策") or "", 120)] for c in cases}
+    table_json = json.dumps(table, ensure_ascii=False, separators=(",", ":"))
+    table_ver = hashlib.sha1(table_json.encode("utf-8")).hexdigest()[:8]
+    write("saved/table.json", table_json)
     body = f"""
 <article class="wrap saved-page">
   <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../">事例一覧</a></li><li aria-current="page">あとで見る</li></ol></nav>
   <h1>あとで見る</h1>
   <p class="lead">事例ページで「あとで見る」を押した事例です。このブラウザの中にだけ保存していて、運営者には送られません。</p>
   <div class="saved-bar">
-    <p class="saved-count" id="saved-count" aria-live="polite">読み込んでいます…</p>
+    <div class="saved-countrow">
+      <p class="saved-count" id="saved-count" aria-live="polite">読み込んでいます…</p>
+      <div class="view-toggle saved-view" id="saved-view" role="group" aria-label="表示のしかた" hidden>
+        <button type="button" class="view-btn" data-view="card" aria-pressed="true" title="カードで表示"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg><span class="visually-hidden">カードで表示</span></button>
+        <button type="button" class="view-btn" data-view="table" aria-pressed="false" title="表で比べる" data-goatcounter-click="saved-list/table" data-goatcounter-title="あとで見る：表で比べる"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M3.5 14.5h17M9.5 4.5v15"/></svg><span class="visually-hidden">表で比べる</span></button>
+      </div>
+    </div>
     <p class="saved-actions">
       <button type="button" class="button" id="saved-import" hidden data-goatcounter-click="saved-list/import">自分の「あとで見る」に入れる</button>
       <button type="button" class="small-button" id="saved-share" hidden data-goatcounter-click="saved-list/share">このリストを送る</button>
@@ -615,7 +629,17 @@ def build_saved(cfg, cases):
   </div>
   <p class="saved-note" id="saved-note" aria-live="polite"></p>
   <h2 class="visually-hidden">事例の一覧</h2>
-  <ul class="cards" id="saved-cards" data-src="cards.html?v={saved_ver}"></ul>
+  <ul class="cards" id="saved-cards" data-src="cards.html?v={saved_ver}" data-table="table.json?v={table_ver}"></ul>
+  <div class="saved-table" id="saved-table" hidden>
+    <p class="saved-table-hint">横にすべらせると、ほかの列を見られます。事例の名前を押すと、事例ページが開きます。</p>
+    <div class="saved-table-wrap" id="saved-table-wrap" tabindex="0" role="region" aria-label="あとで見るの事例の比較表">
+      <table class="saved-grid">
+        <caption class="visually-hidden">あとで見るに入れた事例を比べる表</caption>
+        <thead><tr><th scope="col" class="st-name">事例</th><th scope="col">種別</th><th scope="col">業種</th><th scope="col">開始年</th><th scope="col">規模</th><th scope="col">段階</th><th scope="col">場</th><th scope="col">ツール</th><th scope="col">目的</th><th scope="col">この事例のポイント</th></tr></thead>
+        <tbody id="saved-tbody"></tbody>
+      </table>
+    </div>
+  </div>
   <div class="empty" id="saved-empty" hidden>
     <p>まだ「あとで見る」に入れた事例はありません。</p>
     <p>事例ページの「あとで見る」を押すと、ここにたまります。</p>

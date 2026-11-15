@@ -36,6 +36,7 @@
   --shadow-card: 0 1px 2px rgba(26, 29, 35, .06);
   --shadow-lift: 0 10px 24px rgba(26, 29, 35, .10);  /* 指やマウスを乗せて浮き上がったとき */
   --shadow-fly: 0 2px 3px rgba(26, 29, 35, .25);     /* あとで見るに入れたとき、ヘッダーへ飛ぶしおりの影 */
+  --shadow-edge: rgba(26, 29, 35, .18);              /* 横にすべらせた表の1列目の右の影 */
   color-scheme: light;
 }
 :root[data-theme="dark"] {
@@ -51,6 +52,7 @@
   --shadow-card: 0 1px 2px rgba(0, 0, 0, .4);
   --shadow-lift: 0 10px 24px rgba(0, 0, 0, .45);
   --shadow-fly: 0 2px 3px rgba(0, 0, 0, .5);
+  --shadow-edge: rgba(0, 0, 0, .5);
   color-scheme: dark;
 }
 
@@ -703,7 +705,34 @@ main { flex: 1 0 auto; }
 .saved-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); margin: 0 0 var(--space-3); }
 .saved-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin: 0; }
 .saved-actions button { white-space: nowrap; }
+.saved-actions [hidden] { display: none; }  /* .button の display が hidden に勝って、送られてきたリストでなくても「入れる」が出ていた */
 .saved-note { font-size: 14px; color: var(--text-sub); margin: 0 0 var(--space-3); word-break: break-all; }
+/* 表で比べる（2026-11-15 の見本で採用。saved.js）：件数の横に「カード｜表」の切り替え。表は枠の中で縦と横にスクロールし、
+   見出しの行と1列目（事例の名前）は残る。ページ全体は横にはみ出さない */
+.saved-countrow { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.saved-view:not([hidden]) { display: flex; }
+.saved-table[hidden], .cards[hidden] { display: none; }
+.saved-table-hint { margin: 0 0 var(--space-2); font-size: 13px; color: var(--text-sub); }
+.saved-table-wrap { position: relative; overflow: auto; max-height: calc(100vh - var(--header-offset, 64px) - 120px); min-height: 240px; overscroll-behavior-x: contain; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
+.saved-grid { border-collapse: separate; border-spacing: 0; width: max-content; min-width: 100%; font-size: 14px; line-height: 1.7; }
+.saved-grid th, .saved-grid td { padding: var(--space-3); text-align: left; vertical-align: top; background: var(--card); border-bottom: 1px solid var(--line); color: var(--text-body); font-weight: 400; }
+.saved-grid tbody tr:last-child > * { border-bottom: 0; }
+.saved-grid thead th { position: sticky; top: 0; z-index: 2; background: var(--base); white-space: nowrap; font-size: 13px; font-weight: 600; color: var(--text-sub); padding-top: var(--space-2); padding-bottom: var(--space-2); }
+.saved-grid .st-name { position: sticky; left: 0; z-index: 1; width: 10em; box-shadow: inset -1px 0 0 var(--line); }
+.saved-grid thead .st-name { z-index: 3; }
+.saved-table-wrap.is-scrolled .st-name { box-shadow: inset -1px 0 0 var(--line), 6px 0 8px -6px var(--shadow-edge); }
+@media (min-width: 640px) { .saved-grid .st-name { width: 14em; } }
+.st-co { display: block; font-size: 13px; color: var(--text-body); }
+.st-name a { font-weight: 600; color: var(--sky); text-decoration: none; }
+.st-name a:hover { text-decoration: underline; }
+.st-type, .st-year, .st-stage, .st-place { white-space: nowrap; }
+.st-year { font-variant-numeric: tabular-nums; }
+.st-ind { width: 7em; } .st-size { width: 12em; } .st-tool { width: 10em; } .st-purpose { width: 9.5em; } .st-point { width: 20em; }
+.st-band { display: block; font-weight: 600; color: var(--ink); }
+.st-raw { display: block; font-size: 13px; color: var(--text-sub); line-height: 1.6; }
+.st-purpose .tags { gap: 4px; }
+.st-purpose .tags li { white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) { .saved-table.is-enter tbody tr { animation: card-rise .35s ease backwards; animation-delay: calc(var(--i, 0) * .05s); } }
 .saved-note:empty { display: none; }
 
 /* 事例ページ：読み物の形（基本の情報の札 → この事例のポイント → 何をしたか・どうなったか・だれが動かしているか・あなたの会社なら） */
