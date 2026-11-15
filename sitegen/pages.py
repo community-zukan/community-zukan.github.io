@@ -147,7 +147,8 @@ def build_index(cfg, cases):
     </div>
   </details>
   <div class="result-bar">
-    <p id="result-count" aria-live="polite">{len(cases)}件の事例</p>
+    <!-- 件数：数字が変わるとき1桁ずつめくれる（2026-11-15 の見本で採用。app.js の flipCount）。読み上げは隠した文字だけ -->
+    <p id="result-count" class="result-count" aria-live="polite"><span class="visually-hidden" id="result-say">{len(cases)}件の事例</span><span class="rc-show" aria-hidden="true"><span class="rc-pre" id="rc-pre" hidden>{len(cases)}件中&nbsp;</span><span class="rc-num" id="rc-num">{len(cases)}</span><span class="rc-unit">件の事例</span></span></p>
     <p class="search-note" id="search-note" hidden></p>
     <p class="tool-note" id="tool-note" hidden><span></span><button type="button" class="small-button" id="tool-clear">外す</button></p>
     <button type="button" id="saved-toggle" class="saved-toggle" aria-pressed="false" hidden>あとで見る</button>

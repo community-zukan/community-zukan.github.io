@@ -236,6 +236,43 @@ function zukanListInit() {
     });
   }
 
+  // 件数（2026-11-15 の見本で採用）：数字が変わるとき、替わった桁だけ縦にめくれる。増えたら下から、減ったら上から。
+  // 読み上げは隠した文字（#result-say）だけで、動く桁は aria-hidden。動きを減らす設定ではそのまま替える
+  var say = document.getElementById('result-say');
+  var rcPre = document.getElementById('rc-pre');
+  var rcNum = document.getElementById('rc-num');
+  var curCount = cards.length;
+  var flipTimer = 0;
+  var countReady = false;   // 読み込んだときの最初の件数はめくらない
+  var calmMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function digitsHtml(str) { return str.split('').map(function (d) { return '<span class="rc-d">' + d + '</span>'; }).join(''); }
+  function setCount(filtering, shown) {
+    var text = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
+    if (!rcNum) { count.textContent = text; return; }
+    if (say.textContent !== text) say.textContent = text;
+    rcPre.hidden = !filtering;
+    var from = curCount, to = shown;
+    curCount = to;
+    if (from === to && !flipTimer) return;
+    clearTimeout(flipTimer); flipTimer = 0;
+    if (calmMotion || from === to || !countReady) { countReady = true; rcNum.className = 'rc-num'; rcNum.innerHTML = digitsHtml(String(to)); return; }
+    var a = String(from), b = String(to), len = Math.max(a.length, b.length);
+    while (a.length < len) a = ' ' + a;
+    while (b.length < len) b = ' ' + b;
+    var html = '';
+    for (var i = 0; i < len; i++) {
+      if (a[i] === b[i]) { html += '<span class="rc-d">' + b[i] + '</span>'; continue; }
+      html += '<span class="rc-d is-flip" style="--rc-i:' + i + '"><span class="rc-o">' + (a[i] === ' ' ? '&nbsp;' : a[i]) +
+        '</span><span class="rc-n">' + (b[i] === ' ' ? '&nbsp;' : b[i]) + '</span></span>';
+    }
+    rcNum.className = 'rc-num ' + (to > from ? 'is-up' : 'is-down');
+    rcNum.innerHTML = '';
+    void rcNum.offsetWidth;   // 付け直して、続けて押されたときも最初から動かす
+    rcNum.innerHTML = html;
+    // 動き終わったら、ふつうの数字に戻す（空いた桁はここで詰まる）
+    flipTimer = setTimeout(function () { flipTimer = 0; rcNum.className = 'rc-num'; rcNum.innerHTML = digitsHtml(String(curCount)); }, 350 + len * 30 + 60);
+  }
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）
@@ -256,7 +293,7 @@ function zukanListInit() {
     moreButton.textContent = 'もっと見る（残り' + rest + '件）';
     var n = Object.keys(s).reduce(function (a, k) { return a + s[k].length; }, 0);
     var filtering = n > 0 || words.length > 0 || savedOnly;
-    count.textContent = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
+    setCount(filtering, shown);
     activeCount.textContent = n ? n + '件の条件' : '';
     if (reset3) reset3.hidden = !filtering;
     buildApplied(filtering, shownWords());

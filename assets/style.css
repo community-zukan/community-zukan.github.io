@@ -275,6 +275,24 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 
 .result-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin: var(--space-6) 0 var(--space-3); }
 .result-bar p { margin: 0; font-size: 14px; color: var(--text-body); }
+/* 件数（2026-11-15 の見本で採用）：数字だけ少し大きく。数字が変わるとき替わった桁だけ縦にめくれる（app.js の setCount） */
+.result-count .rc-show { display: inline-flex; align-items: baseline; white-space: nowrap; }
+.rc-num { display: inline-block; margin-right: 2px; font-family: var(--font-display); font-weight: 500; font-size: 20px; line-height: 1.4; color: var(--ink); font-variant-numeric: tabular-nums; }
+.rc-d { display: inline-block; position: relative; width: 1ch; text-align: center; }
+.rc-d.is-flip { clip-path: inset(0 -2px); }
+.rc-n { display: inline-block; }
+.rc-o { position: absolute; inset: 0 0 auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .rc-num.is-up .rc-o { animation: rc-up-out .35s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(var(--rc-i, 0) * 30ms); }
+  .rc-num.is-up .rc-n { animation: rc-up-in .35s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(var(--rc-i, 0) * 30ms); }
+  .rc-num.is-down .rc-o { animation: rc-down-out .35s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(var(--rc-i, 0) * 30ms); }
+  .rc-num.is-down .rc-n { animation: rc-down-in .35s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(var(--rc-i, 0) * 30ms); }
+}
+@media (prefers-reduced-motion: reduce) { .rc-o { display: none; } }
+@keyframes rc-up-out { to { transform: translateY(-100%); } }
+@keyframes rc-up-in { from { transform: translateY(100%); } }
+@keyframes rc-down-out { to { transform: translateY(100%); } }
+@keyframes rc-down-in { from { transform: translateY(-100%); } }
 .link-button { font: inherit; font-size: 14px; background: none; border: 0; color: var(--sky); text-decoration: underline; cursor: pointer; padding: var(--space-1) 0; }
 /* 選んでいる条件の札（2026-11-15 の見本で採用）：件数の下の1行。札は選択中の札（.chip の checked）と同じ空色。
    スマホは1行で横にすべらせ、はみ出しているときだけ右端を薄くする。広い画面では折り返して全部見せる */
