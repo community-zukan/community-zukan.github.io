@@ -397,7 +397,7 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .card-hit-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-sub); }
 .cards.is-list .card-hit { display: none; }
 
-.badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 10px; border-radius: var(--radius-tag); line-height: 1.8; }
+.badge { display: inline-block; flex: none; white-space: nowrap; font-size: 12px; font-weight: 600; padding: 1px 10px; border-radius: var(--radius-tag); line-height: 1.8; }  /* 札は割らない（一覧表示で企業名が長いと縦に割れていた） */
 .badge.is-fan { background: var(--fan-bg); color: var(--fan-fg); }
 .badge.is-internal { background: var(--int-bg); color: var(--int-fg); }
 .badge.is-multi { background: var(--multi-bg); color: var(--multi-fg); }
