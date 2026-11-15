@@ -584,6 +584,16 @@ main { flex: 1 0 auto; }
   .cards.is-list .card a:hover { transform: none; box-shadow: none; }
 }
 .cards.is-entering .card:not([hidden]) { animation: card-rise .5s ease both; }
+/* 条件を変えたとき、カードが新しい位置へ動いて見える（2026-11-15 の見本で採用。app.js の withTransition が名前 card-ID を付ける）。
+   Safari 18.0〜18.1 は view-transition-class に対応しないので、ブラウザの標準の動き（位置の移動と重ねて切り替え）になる */
+.card { view-transition-class: card; }
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(*.card) { animation-duration: .3s; animation-timing-function: cubic-bezier(.2, 0, 0, 1); }
+  ::view-transition-old(*.card):only-child { animation: card-vt-out .2s ease-in both; }
+  ::view-transition-new(*.card):only-child { animation: card-vt-in .3s cubic-bezier(.2, 0, 0, 1) .08s both; }
+}
+@keyframes card-vt-out { to { opacity: 0; transform: scale(.94); } }
+@keyframes card-vt-in { from { opacity: 0; transform: translateY(12px) scale(.98); } }
 @keyframes card-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {

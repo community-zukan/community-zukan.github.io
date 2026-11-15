@@ -32,6 +32,7 @@ function zukanListInit() {
   var PAGE = 24;          // 一度に表示する件数
   var savedToggle = document.getElementById('saved-toggle');
   var savedOnly = false;
+  var calmMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;  // 動きを減らす設定
   var applied = document.getElementById('applied');
   var appliedList = document.getElementById('applied-list');
   // GoatCounter で数える（あとから作るボタンは count.js の data-goatcounter-click が効かないので、ここから送る）
@@ -191,6 +192,32 @@ function zukanListInit() {
     });
   }
 
+  // 条件を変えたとき、カードが新しい位置へ動いて見える（2026-11-15 の見本で採用。同じページ内の View Transitions）。
+  // 残るカードはすっと動き、外れるカードは薄くなって消え、入るカードはふわっと出る。名前（card-ID）は表示中の先頭24件にだけ付け、終わったら外す。
+  // 対応していないブラウザ・動きを減らす設定・キーワードの入力・「もっと見る」では、今までどおりそのまま切り替える
+  var vtCur = null;
+  function clearCardNames() { cards.forEach(function (c) { if (c.style.viewTransitionName) c.style.viewTransitionName = ''; }); }
+  function nameCards() {
+    clearCardNames();
+    var n = 0;
+    Array.prototype.forEach.call(list.children, function (c) {
+      if (c.hidden || n >= PAGE) return;
+      c.style.viewTransitionName = 'card-' + idOf(c).replace(/[^A-Za-z0-9_-]/g, '');
+      n++;
+    });
+  }
+  function withTransition(update) {
+    if (calmMotion || !document.startViewTransition || document.hidden) { update(); return; }
+    if (vtCur) vtCur.skipTransition();
+    nameCards();
+    var t = document.startViewTransition(function () { update(); nameCards(); });
+    vtCur = t;
+    if (t.ready) t.ready.catch(function () {});
+    var done = function () { if (vtCur === t) { vtCur = null; clearCardNames(); } };
+    t.finished.then(done, done);
+    setTimeout(function () { if (vtCur === t) t.skipTransition(); }, 1200);  // 何かで動きが止まっても、操作できない時間を残さない
+  }
+
   // 選んでいる条件の札（2026-11-15 の見本で採用）。絞り込みの欄の札とキーワードを、件数の下に「名前 ×」で並べる。
   // × で1つずつ外し、外したあとは隣の札（なければ「条件で絞り込む」）にフォーカスを移す。ツール（?tool=）は tool-note のまま
   var FACET_LABEL = { type: '種別', purpose: '目的', stage: '段階', activity: '活動の型', place: '場', industry: '業種', size: '規模', tool: 'ツール' };
@@ -229,7 +256,7 @@ function zukanListInit() {
       if (k === 'q') q.value = '';
       else boxes.forEach(function (b) { if (b.name === k && b.value === chip.getAttribute('data-v')) b.checked = false; });
       gc('filter-chip-remove/' + (k === 'q' ? 'keyword' : FACET_LABEL[k] || k), '条件の札を外す：' + (k === 'q' ? 'キーワード' : FACET_LABEL[k] || k));
-      apply(true);
+      withTransition(function () { apply(true); });
       var rest = appliedList.querySelectorAll('.applied-chip');
       if (rest.length) rest[Math.min(at, rest.length - 1)].focus();
       else details.querySelector('summary').focus();
@@ -244,7 +271,6 @@ function zukanListInit() {
   var curCount = cards.length;
   var flipTimer = 0;
   var countReady = false;   // 読み込んだときの最初の件数はめくらない
-  var calmMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function digitsHtml(str) { return str.split('').map(function (d) { return '<span class="rc-d">' + d + '</span>'; }).join(''); }
   function setCount(filtering, shown) {
     var text = filtering ? cards.length + '件中 ' + shown + '件の事例' : cards.length + '件の事例';
@@ -329,7 +355,7 @@ function zukanListInit() {
       ev.preventDefault();
       var v = t.getAttribute('data-purpose');
       boxes.forEach(function (b) { if (b.name === 'purpose') b.checked = !!v && b.value === v; });
-      apply(true);
+      withTransition(function () { apply(true); });
     });
   });
   // PC では帯の右上の矢印でも動かせる
@@ -438,7 +464,7 @@ function zukanListInit() {
     toolSel = '';
     setSavedOnly(false);
     q.value = '';
-    apply(true);
+    withTransition(function () { apply(true); });
     q.focus();
   }
 
@@ -574,10 +600,10 @@ function zukanListInit() {
     }, 1600);
   }
 
-  boxes.forEach(function (b) { b.addEventListener('change', function () { apply(true); }); });
+  boxes.forEach(function (b) { b.addEventListener('change', function () { withTransition(function () { apply(true); }); }); });
   var timer;
   q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { apply(true); }, 150); });
-  sort.addEventListener('change', function () { doSort(); apply(true); });
+  sort.addEventListener('change', function () { withTransition(function () { doSort(); apply(true); }); });
   reset.addEventListener('click', clearAll);
   if (toolNote) document.getElementById('tool-clear').addEventListener('click', function () { toolSel = ''; apply(true); });
   reset2.addEventListener('click', clearAll);
