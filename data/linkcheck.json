@@ -1,20 +1,119 @@
 {
-  "checked_at": "2026-11-09T07:29:50+09:00",
-  "cases": 522,
-  "urls": 1187,
+  "checked_at": "2026-11-16T07:38:17+09:00",
+  "cases": 784,
+  "urls": 1733,
   "summary": {
-    "正常": 1115,
-    "移転": 0,
-    "拒否": 58,
-    "要確認": 14
+    "正常": 1606,
+    "移転": 2,
+    "拒否": 76,
+    "要確認": 49
   },
   "this_run": {
-    "checked": 1187,
-    "planned": 1187,
-    "minutes": 22.2
+    "checked": 1059,
+    "planned": 1059,
+    "minutes": 29.6
   },
   "unchecked": 0,
   "items": [
+    {
+      "id": "F117",
+      "company": "やまやコミュニケーションズ",
+      "title": "わいわいやまや",
+      "url": "https://www.yamaya.com/corporate/news/detail/856",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F117",
+      "company": "やまやコミュニケーションズ",
+      "title": "わいわいやまや",
+      "url": "https://www.yamaya.com/corporate/news/detail/609",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F117",
+      "company": "やまやコミュニケーションズ",
+      "title": "わいわいやまや",
+      "url": "https://www.yamaya.com/corporate/news/detail/875",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F140",
+      "company": "濵田酒造",
+      "title": "海童ファン蔵部",
+      "url": "https://www.hamadasyuzou.co.jp/denzouin/news/20250122.html",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F140",
+      "company": "濵田酒造",
+      "title": "海童ファン蔵部",
+      "url": "https://www.hamadasyuzou.co.jp/denzouin/news/post_2024100115.html",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F140",
+      "company": "濵田酒造",
+      "title": "海童ファン蔵部",
+      "url": "https://www.hamadasyuzou.co.jp/denzouin/news/post_20240918.html",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F141",
+      "company": "ひかり味噌",
+      "title": "ひかり味噌アンバサダー",
+      "url": "https://www.hikarimiso.co.jp/hmwp/wp-content/uploads/collaboration.pdf",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F141",
+      "company": "ひかり味噌",
+      "title": "ひかり味噌アンバサダー",
+      "url": "https://www.hikarimiso.co.jp/ambassador/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F151",
+      "company": "プレイド",
+      "title": "KARTE Friends（KARTE利用企業のコミュニティ）",
+      "url": "https://cxclip.karte.io/events/meetup_report/meetup-43/",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
     {
       "id": "F158",
       "company": "三起商行（ミキハウス）",
@@ -24,7 +123,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F159",
@@ -35,7 +134,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F167",
@@ -46,7 +145,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F168",
@@ -57,7 +156,18 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F20",
+      "company": "カインズ",
+      "title": "CAINZ DIY Square",
+      "url": "https://www.commercepick.com/?p=74400",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
     },
     {
       "id": "F203",
@@ -65,10 +175,142 @@
       "title": "おうちde街中華コミュニティ",
       "url": "https://www.eat-and.jp/foods/news/491.html",
       "status": "要確認",
-      "http_status": 503,
+      "http_status": null,
       "final_url": "",
-      "note": "サーバーの不具合（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F205",
+      "company": "ニチレイフーズ",
+      "title": "ニチレイほほえみテラス",
+      "url": "https://shokuhin.net/159182/2026/10/28/kakou/reishoku/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F205",
+      "company": "ニチレイフーズ",
+      "title": "ニチレイほほえみテラス",
+      "url": "https://shokuhin.net/136594/2025/12/17/kakou/reishoku/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F21",
+      "company": "コメダ",
+      "title": "さんかく屋根の下",
+      "url": "https://www.zaikei.co.jp/releases/3068045/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F21",
+      "company": "コメダ",
+      "title": "さんかく屋根の下",
+      "url": "https://zaikei.co.jp/releases/3438130/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F237",
+      "company": "ウェルカム",
+      "title": "LIG DEAN & DELUCA",
+      "url": "https://www.commercepick.com/archives/46043",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F239",
+      "company": "文化通信社",
+      "title": "ほんのもり",
+      "url": "https://www.bunkanews.jp/article/474087/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F246",
+      "company": "ヘリテージ",
+      "title": "趣味文CLUB",
+      "url": "https://shumibun.jp/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F260",
+      "company": "セールスフォース・ジャパン（Tableau）",
+      "title": "JTUG（Japan Tableau User Group）",
+      "url": "https://jtug.jp/2026/03/14/soukai2025matome/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F260",
+      "company": "セールスフォース・ジャパン（Tableau）",
+      "title": "JTUG（Japan Tableau User Group）",
+      "url": "http://jtug.jp/2023/10/09/202310jtug10thzadankai/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F266",
+      "company": "サラダクラブ",
+      "title": "サラダクラブパートナー",
+      "url": "https://www.saladclub.jp/health/health02/event20250830.html",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F271",
+      "company": "ドリーム・アーツ",
+      "title": "デジ民コネクト",
+      "url": "https://hibiki.dreamarts.co.jp/smartdb/dejimin-connect/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F271",
+      "company": "ドリーム・アーツ",
+      "title": "デジ民コネクト",
+      "url": "https://hibiki.dreamarts.co.jp/smartdb/learning/le260416/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
     },
     {
       "id": "F40",
@@ -79,7 +321,7 @@
       "http_status": null,
       "final_url": "",
       "note": "つながりません（[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)）（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F40",
@@ -90,7 +332,29 @@
       "http_status": null,
       "final_url": "",
       "note": "つながりません（[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)）（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M103",
+      "company": "一般社団法人保険健全化推進機構 結心会",
+      "title": "結心会（定例会・部会）",
+      "url": "https://www.kessin.or.jp/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M103",
+      "company": "一般社団法人保険健全化推進機構 結心会",
+      "title": "結心会（定例会・部会）",
+      "url": "https://www.kessin.or.jp/about/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
     },
     {
       "id": "M17",
@@ -101,7 +365,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "M17",
@@ -112,7 +376,106 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M175",
+      "company": "一般社団法人百番地",
+      "title": "100BANCH",
+      "url": "https://100banch.com/about/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M176",
+      "company": "一般社団法人サステナブルコミュニティ",
+      "title": "サステナブルコミュニティ（サスコミュ）",
+      "url": "https://coki.jp/sustainable/esg/38130/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M176",
+      "company": "一般社団法人サステナブルコミュニティ",
+      "title": "サステナブルコミュニティ（サスコミュ）",
+      "url": "https://coki.jp/sustainable/esg/31961",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M183",
+      "company": "一般社団法人エステティックグランプリ",
+      "title": "エステティックグランプリ（会員の勉強会・地域支部）",
+      "url": "https://esgra.jp/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M81",
+      "company": "一般社団法人アップサイクル",
+      "title": "アップサイクル 会員コミュニティサイト",
+      "url": "https://upcycle.or.jp/benefits/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M87",
+      "company": "OPTEMO",
+      "title": "インサイドセールス研究会",
+      "url": "https://optemo.co.jp/lp/is_ken/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M87",
+      "company": "OPTEMO",
+      "title": "インサイドセールス研究会",
+      "url": "https://optemo.co.jp/knowhow/inside_comunity_20250630/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M92",
+      "company": "エニシャ",
+      "title": "女性起業家支援協会（FEA）",
+      "url": "https://f-e-a.jp/com.php",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M99",
+      "company": "Hub Tokyo株式会社",
+      "title": "Impact HUB Tokyo",
+      "url": "https://luma.com/8fs5eeww",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
     },
     {
       "id": "S138",
@@ -123,7 +486,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S146",
@@ -134,7 +497,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S168",
@@ -145,7 +508,7 @@
       "http_status": null,
       "final_url": "",
       "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S168",
@@ -156,7 +519,29 @@
       "http_status": null,
       "final_url": "",
       "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S181",
+      "company": "キリンホールディングス（キリングループ）",
+      "title": "キリン・アライズ（KAZ）",
+      "url": "https://tokyopride2025.trparchives.com/festival/sponsor/kirin/",
+      "status": "要確認",
+      "http_status": null,
+      "final_url": "",
+      "note": "応答がありません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S269",
+      "company": "オーイーシー",
+      "title": "DX塾",
+      "url": "https://www.oec.co.jp/dx/img/torikumi_2024.pdf",
+      "status": "要確認",
+      "http_status": 404,
+      "final_url": "",
+      "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
+      "checked": "2026-11-16"
     },
     {
       "id": "S60",
@@ -167,7 +552,29 @@
       "http_status": 404,
       "final_url": "",
       "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F288",
+      "company": "山田養蜂場",
+      "title": "山田養蜂場コミュニティ",
+      "url": "https://www.beach.jp/community/38FAN",
+      "status": "移転",
+      "http_status": 200,
+      "final_url": "https://sp.beach.jp/38FAN/close/",
+      "note": "開き先のドメインが変わっています",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F290",
+      "company": "イーガイア",
+      "title": "あさひにっき さんぽの会（旧称：働く時間 × 自分らしさコミュニティ）",
+      "url": "https://www.beach.jp/circle/af12306",
+      "status": "移転",
+      "http_status": 200,
+      "final_url": "https://sp.beach.jp/ASAHINIKKI/close/",
+      "note": "開き先のドメインが変わっています",
+      "checked": "2026-11-16"
     },
     {
       "id": "F04",
@@ -178,7 +585,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F04",
@@ -189,7 +596,7 @@
       "http_status": null,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F04",
@@ -200,7 +607,7 @@
       "http_status": 503,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F06",
@@ -211,7 +618,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F06",
@@ -222,7 +629,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F08",
@@ -233,7 +640,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F104",
@@ -244,7 +651,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F11",
@@ -255,7 +662,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F110",
@@ -266,7 +673,7 @@
       "http_status": 405,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F125",
@@ -277,7 +684,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F138",
@@ -288,7 +695,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F14",
@@ -299,7 +706,18 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F151",
+      "company": "プレイド",
+      "title": "KARTE Friends（KARTE利用企業のコミュニティ）",
+      "url": "https://karte.io/seminar/live/thanksday_2026_special/",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "F151",
@@ -310,7 +728,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F17",
@@ -321,7 +739,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F170",
@@ -332,7 +750,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F185",
@@ -343,7 +761,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F202",
@@ -354,7 +772,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F22",
@@ -365,7 +783,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F235",
@@ -376,7 +794,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F24",
@@ -387,7 +805,18 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F245",
+      "company": "損害保険ジャパン",
+      "title": "SOMPO Parkコミュニティ",
+      "url": "https://www.sompo-japan.co.jp/-/media/SJNK/files/topics/2023/20230406_1.pdf?la=ja-JP",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "F250",
@@ -398,7 +827,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F250",
@@ -409,18 +838,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
-    },
-    {
-      "id": "F250",
-      "company": "日本航空（JAL）",
-      "title": "JALの旅コミュニティ trico（トリコ）",
-      "url": "https://press.jal.co.jp/ja/release/201902/005045.html",
-      "status": "拒否",
-      "http_status": 403,
-      "final_url": "",
-      "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F251",
@@ -431,7 +849,40 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F260",
+      "company": "セールスフォース・ジャパン（Tableau）",
+      "title": "JTUG（Japan Tableau User Group）",
+      "url": "https://www.tableau.com/ja-jp/blog/japan-tableau-user-community",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F313",
+      "company": "KADOKAWA",
+      "title": "ブックラブ（読んでつながる読書会 ブックラブ）",
+      "url": "https://ddnavi.com/booklove_k/",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "F334",
+      "company": "弁護士ドットコム",
+      "title": "Re:Change（クラウドサインのユーザーコミュニティ）",
+      "url": "https://markezine.jp/article/detail/56781",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "F48",
@@ -442,7 +893,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F55",
@@ -453,7 +904,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F58",
@@ -464,7 +915,7 @@
       "http_status": 404,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F68",
@@ -475,7 +926,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F86",
@@ -486,7 +937,7 @@
       "http_status": null,
       "final_url": "",
       "note": "自動アクセスを断るサイトです（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "F86",
@@ -497,7 +948,29 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M107",
+      "company": "一般社団法人デサイロ",
+      "title": "In-house Researcher's Hub（インハウスリサーチャーズ・ハブ）",
+      "url": "https://desilo.substack.com/p/irh-meetup-02-0605",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M107",
+      "company": "一般社団法人デサイロ",
+      "title": "In-house Researcher's Hub（インハウスリサーチャーズ・ハブ）",
+      "url": "https://desilo.substack.com/p/activity-report-202606",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "M11",
@@ -508,7 +981,18 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M125",
+      "company": "レノボ・ジャパン",
+      "title": "Lenovo Copilot Lab",
+      "url": "https://smbcommunity.lenovo.com/japan/post/copilot-event-09252026-0fQyQjJb1F4xRgK",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "M13",
@@ -519,7 +1003,40 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M158",
+      "company": "90s",
+      "title": "90s（ナインティーズ）",
+      "url": "https://webtan.impress.co.jp/r/prtimes/items/000000002.000097873",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M168",
+      "company": "東日本旅客鉄道（JR東日本）",
+      "title": "LiSH（TAKANAWA GATEWAY Link Scholars' Hub）の会員コミュニティ",
+      "url": "https://www.jreast.co.jp/press/2026/20261006_ho02.pdf",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M168",
+      "company": "東日本旅客鉄道（JR東日本）",
+      "title": "LiSH（TAKANAWA GATEWAY Link Scholars' Hub）の会員コミュニティ",
+      "url": "https://www.jreast.co.jp/press/2025/20260226_ho02.pdf",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "M17",
@@ -530,7 +1047,18 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "M180",
+      "company": "100",
+      "title": "JapanHUG（HubSpotユーザーグループ）",
+      "url": "https://webtan.impress.co.jp/r/prtimes/items/000000072.000052511",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "M27",
@@ -541,7 +1069,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "M35",
@@ -552,7 +1080,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "M43",
@@ -563,7 +1091,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "M48",
@@ -574,7 +1102,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "M50",
@@ -585,7 +1113,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S01",
@@ -596,7 +1124,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S05",
@@ -607,7 +1135,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S100",
@@ -618,7 +1146,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S100",
@@ -629,7 +1157,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S100",
@@ -640,7 +1168,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S102",
@@ -651,7 +1179,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S107",
@@ -662,7 +1190,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S167",
@@ -673,7 +1201,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S167",
@@ -684,7 +1212,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S170",
@@ -695,7 +1223,7 @@
       "http_status": 429,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S180",
@@ -706,18 +1234,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
-    },
-    {
-      "id": "S181",
-      "company": "キリンホールディングス（キリングループ）",
-      "title": "キリン・アライズ（KAZ）",
-      "url": "https://tokyopride2025.trparchives.com/festival/sponsor/kirin/",
-      "status": "拒否",
-      "http_status": 403,
-      "final_url": "",
-      "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S189",
@@ -728,7 +1245,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S189",
@@ -739,7 +1256,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S195",
@@ -750,7 +1267,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S195",
@@ -761,7 +1278,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S202",
@@ -772,7 +1289,95 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S210",
+      "company": "みずほフィナンシャルグループ",
+      "title": "みずほアルムナイネットワーク",
+      "url": "https://www.mizuho-fg.co.jp/release/20230707release_jp.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S210",
+      "company": "みずほフィナンシャルグループ",
+      "title": "みずほアルムナイネットワーク",
+      "url": "https://www.mizuho-fg.co.jp/release/20230928release_jp.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S210",
+      "company": "みずほフィナンシャルグループ",
+      "title": "みずほアルムナイネットワーク",
+      "url": "https://www.mizuho-fg.co.jp/sustainability/social/employee/dei/index.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S211",
+      "company": "みずほフィナンシャルグループ",
+      "title": "M-WIN（Mizuho Women's Initiatives Network）",
+      "url": "https://www.mizuho-fg.co.jp/sustainability/report/pdf/hc_report_2024.pdf",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S211",
+      "company": "みずほフィナンシャルグループ",
+      "title": "M-WIN（Mizuho Women's Initiatives Network）",
+      "url": "https://www.mizuho-fg.co.jp/saiyou/women-empowerment",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S216",
+      "company": "エーザイ",
+      "title": "エーザイアルムナイ・ネットワーク",
+      "url": "https://www.eisai.co.jp/sustainability/society/employee/alumni/index.html",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S270",
+      "company": "日立製作所",
+      "title": "Success Lounge",
+      "url": "https://markezine.jp/article/detail/58573",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
+    },
+    {
+      "id": "S277",
+      "company": "デンソー",
+      "title": "Life Talk",
+      "url": "https://www.denso.com/jp/ja/driven-base/career-life/life-talk/",
+      "status": "拒否",
+      "http_status": 403,
+      "final_url": "",
+      "note": "自動アクセスを断られました（壊れているとは限りません）",
+      "checked": "2026-11-16"
     },
     {
       "id": "S64",
@@ -783,7 +1388,7 @@
       "http_status": 429,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S66",
@@ -794,7 +1399,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     },
     {
       "id": "S93",
@@ -805,7 +1410,7 @@
       "http_status": 403,
       "final_url": "",
       "note": "自動アクセスを断られました（壊れているとは限りません）",
-      "checked": "2026-11-09"
+      "checked": "2026-11-16"
     }
   ]
 }

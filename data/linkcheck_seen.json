@@ -1,3282 +1,4500 @@
 {
 "F01 https://prtimes.jp/main/html/rd/p/000001640.000030525.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F01 https://www.advertimes.com/20231201/article441916/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F02 https://www.advertimes.com/?p=263350": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F02 https://yohobrewing.com/news_release/cho-utage2026/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F03 https://diamond.jp/articles/-/322606": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F03 https://www.advertimes.com/20231221/article440298/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F03 https://www.businessinsider.jp/article/2503-workman-no-tvcm-strategy/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F04 https://idea.muji.net/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 503,
 "final_url": "",
 "note": "自動アクセスを断るサイトです（壊れているとは限りません）"
 },
 "F04 https://markezine.jp/article/detail/20386": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F04 https://www.muji.net/lab/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": null,
 "final_url": "",
 "note": "自動アクセスを断るサイトです（壊れているとは限りません）"
 },
 "F05 https://ascii.jp/serialarticles/3000455/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F05 https://news.mynavi.jp/techplus/article/20150528-kintone/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F05 https://news.mynavi.jp/techplus/article/20250606-3345987/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F06 https://www.freee.co.jp/blog/freee-bu-17909.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 404,
 "final_url": "",
 "note": "自動アクセスを断るサイトです（壊れているとは限りません）"
 },
 "F06 https://www.freee.co.jp/blog/freeebu_party_2020.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 404,
 "final_url": "",
 "note": "自動アクセスを断るサイトです（壊れているとは限りません）"
 },
 "F06 https://www.freee.co.jp/freee-bu/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F07 https://www.businessinsider.jp/article/235466/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F07 https://www.snowpeak.co.jp/news/p20260105-0/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F08 https://www.advertimes.com/?p=235543": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F08 https://www.excite.co.jp/news/article/Shokuhin_shokuhin121518/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F08 https://www.nestle.co.jp/media/newsandfeatures/201808-nescafe-ambassador": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F09 https://prtimes.jp/main/html/rd/p/000000195.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F10 https://community.subaru.jp/announcements/i3sjvk7vwxd3frj2": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F10 https://gentosha-go.com/articles/-/62798": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F10 https://www.subaru.co.jp/pdf/news/2023_1120_1_2023-11-17-112556.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F100 https://prtimes.jp/main/html/rd/p/000000069.000021562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F100 https://www.elife.co.jp/interview/interview-kodawarisakaba-fan/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F101 https://coorum.jp/award/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F101 https://prtimes.jp/main/html/rd/p/000000222.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F101 https://sakurahime.coorum.jp/announcements/rdcsufiiwdndu3ci": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F102 https://clageplaza.cloudgate.jp/announcements/rvubfb5ovonncqlg": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F102 https://prtimes.jp/main/html/rd/p/000000222.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F102 https://www.cloudgate.jp/news/2022/11/onlinecomunity-platform-clageplaza-lanch-dec1": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F103 https://prtimes.jp/main/html/rd/p/000000176.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F103 https://www.beach.jp/community/PETLINE": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F104 https://prtimes.jp/main/html/rd/p/000000185.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F104 https://www.beach.jp/community/CHALLENGEDSPORTS": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F104 https://www.suntory.co.jp/culture-sports/challengedsports/news/news/2025/202510264272.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F105 https://prtimes.jp/main/html/rd/p/000000189.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F105 https://www.beach.jp/community/MPANDC-BASEBALL": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F106 https://prtimes.jp/main/html/rd/p/000000196.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F106 https://www.beach.jp/community/ESTHEPROLABO": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F107 https://prtimes.jp/main/html/rd/p/000000197.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F107 https://www.beach.jp/community/DAISHO": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F108 https://ascii.jp/elem/000/004/447/4447595/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F108 https://prtimes.jp/main/html/rd/p/000000005.000134634.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F109 https://prtimes.jp/main/html/rd/p/000000246.000038460.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F11 https://ascii.jp/elem/000/004/226/4226040/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F11 https://note.com/lumix_magazine/n/n8bb22e398846": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F11 https://www.panasonic.com/jp/about/news/20261009.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F110 https://prtimes.jp/main/html/rd/p/000000326.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F110 https://www.kelloggs.com/content/dam/Asia/kelloggs_jp/pdfs/2025/04122025.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 405,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F111 https://callcenter-japan.com/image/pdf/2511-award-4.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F111 https://koubo.jp/contest/371134": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F111 https://prtimes.jp/main/html/rd/p/000000308.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F112 https://prtimes.jp/main/html/rd/p/000000069.000122395.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F112 https://prtimes.jp/main/html/rd/p/000000302.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F113 https://digitalpr.jp/r/131049": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F113 https://prtimes.jp/main/html/rd/p/000000335.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F113 https://www.meiji.co.jp/oligostyle/notice/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F114 https://prtimes.jp/main/html/rd/p/000000279.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F114 https://prtimes.jp/main/html/rd/p/000000658.000015099.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F114 https://www.lixil.co.jp/lineup/s/catwall/news/6688/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F115 https://prtimes.jp/main/html/rd/p/000000404.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F115 https://prtimes.jp/main/html/rd/p/000008310.000002535.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F116 https://prtimes.jp/main/html/rd/p/000000256.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F116 https://prtimes.jp/main/html/rd/p/000001910.000030525.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F116 https://prtimes.jp/main/html/rd/p/000001936.000030525.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F117 https://www.yamaya.com/corporate/news/detail/609": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F117 https://www.yamaya.com/corporate/news/detail/856": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F117 https://www.yamaya.com/corporate/news/detail/875": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F118 https://prtimes.jp/main/html/rd/p/000000057.000077127.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F118 https://prtimes.jp/main/html/rd/p/000000280.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F118 https://prtimes.jp/main/html/rd/p/000000340.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F119 https://coorum.jp/case/manufacturer/kyocera/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F119 https://kyodonewsprwire.jp/release/202610087564": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F119 https://prtimes.jp/main/html/rd/p/000000173.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F12 https://prtimes.jp/main/html/rd/p/000000639.000029736.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F12 https://www.refa.net/community/faq/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F120 https://coorum.jp/case/manufacturer/sharp/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F120 https://corporate.jp.sharp/news/231117-a.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F120 https://robohon.com/anniversaryevent/10th/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F121 https://coorum.jp/case/manufacturer/nippn/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F121 https://prtimes.jp/main/html/rd/p/000000173.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F121 https://www.nippn.co.jp/news/detail/__icsFiles/afieldfile/2026/03/02/no60_orangest.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F122 https://ascii.jp/elem/000/004/217/4217564/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F122 https://commune.co.jp/magazine/commune-marche-in-summer2025/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F122 https://www.atpress.ne.jp/news/603953": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F123 https://ascii.jp/elem/000/004/229/4229261/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F123 https://commune.co.jp/magazine/commune-marche-in-summer2025/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F123 https://resemom.jp/release/prtimes/20260817/205047.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F124 https://coorum.jp/case/apparel/onepeace/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F124 https://prtimes.jp/main/html/rd/p/000000099.000064227.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F124 https://prtimes.jp/main/html/rd/p/000000126.000064227.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F125 https://community.dmm-boost.com/announcements/hvyumpsv9z7zk1u8": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F125 https://webtan.impress.co.jp/e/2025/12/02/50311": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F126 https://ascii.jp/elem/000/004/221/4221271/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F126 https://coorum.jp/case/furniture-home-appliances/rinnai/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F126 https://www.community.rinnai.co.jp/menus/ugdj9y2zilnzlhmx/announcements": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F127 https://coorum.jp/case/store/maruko/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F127 https://mbms-healthtown.com/menus/8jeu9zgfwf9wycqa/announcements": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F128 https://coorum.jp/case/store/tokyustore/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F128 https://www.community.tokyu-store.co.jp/page/newmembers": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F128 https://www.tokyu-store.co.jp/Portals/0/PDF/newsrelease/2024/2024.9.30--Fan%20Fun%20Town.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F129 https://prtimes.jp/main/html/rd/p/000000015.000141332.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F129 https://prtimes.jp/main/html/rd/p/000000022.000141332.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F129 https://prtimes.jp/main/html/rd/p/000000655.000004635.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F13 https://www.advertimes.com/20240109/article443709/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F13 https://www.kewpie.com/newsrelease/2025/3806/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F130 https://coorum.jp/news/service/apholdings_20240927/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F130 https://prtimes.jp/main/html/rd/p/000000655.000004635.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F130 https://www.itmedia.co.jp/business/spv/2505/13/news107.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F131 https://prtimes.jp/main/html/rd/p/000000170.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F131 https://www.beach.jp/circleboard/af13150/topic/1100222648400": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F131 https://www.beach.jp/community/KRACIE": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F132 https://prtimes.com/story/detail/px195mtk6kx": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F132 https://www.softcreate.co.jp/365club": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F133 https://cravia.jp/pr/ninben251128.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F133 https://prtimes.jp/main/html/rd/p/000000237.000037149.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F133 https://www.ninben.co.jp/news/20250219_5525/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F134 https://coorum.jp/case/serviceindustry/kyoritsumaintenance/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F134 https://dormy-hotels.com/dormyinn/news/article/699/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F134 https://www.kyoritsugroup.co.jp/kyomo/kyomo-8821/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F135 https://agenda-note.com/brands/detail/id=8556": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F135 https://jpn.nec.com/nec-community/index.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F136 https://coorum.jp/case/foodmanufacture/pietoro/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F136 https://coorum.jp/cxin/column/pietro-fan/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F136 https://prtimes.jp/main/html/rd/p/000000154.000044322.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F137 https://a-musubi.net/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F137 https://coorum.jp/case/store/zennoh/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F137 https://www.zennoh.or.jp/operation/kurashi/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F138 https://coorum.jp/case/it/ifs/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F138 https://enterprisezine.jp/news/detail/24417": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F138 https://ifs-usergroupjapan.coorum.jp/announcements/1lerzd2vjiza7x3n": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F139 https://note.minna-no-ginko.com/n/n8ec1ca2923c9": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F139 https://prtimes.jp/main/html/rd/p/000000192.000072105.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F139 https://prtimes.jp/main/html/rd/p/000000277.000072105.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F14 https://markezine.jp/article/detail/50262": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F14 https://park.ajinomoto.co.jp/faq/talk/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F140 https://www.hamadasyuzou.co.jp/denzouin/news/20250122.html": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F140 https://www.hamadasyuzou.co.jp/denzouin/news/post_20240918.html": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F140 https://www.hamadasyuzou.co.jp/denzouin/news/post_2024100115.html": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F141 https://prtimes.jp/main/html/rd/p/000000050.000144091.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F141 https://www.hikarimiso.co.jp/ambassador/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F141 https://www.hikarimiso.co.jp/hmwp/wp-content/uploads/collaboration.pdf": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F142 https://coorum.jp/case/cs/advantage/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F142 https://prtimes.jp/main/html/rd/p/000000278.000024618.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F142 https://prtimes.jp/main/html/rd/p/000000330.000024618.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F142 https://prtimes.jp/main/html/rd/p/000000347.000024618.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F143 https://av-triathlonclub.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F143 https://direct.ajinomoto.co.jp/sp/cp/us/av220cp/index.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F143 https://prtimes.jp/main/html/rd/p/000000164.000092524.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F144 https://prtimes.jp/main/html/rd/p/000000048.000100644.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F144 https://www.legalontech.com/jp/support": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F145 https://goma-lab.kadoya.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F145 https://prtimes.jp/main/html/rd/p/000000008.000073243.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F145 https://prtimes.jp/main/html/rd/p/000000058.000021562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F146 https://club.umios.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F146 https://prtimes.jp/main/html/rd/p/000000046.000021562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F146 https://prtimes.jp/main/html/rd/p/000000060.000021562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F147 https://prtimes.jp/main/html/rd/p/000000065.000021562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F147 https://prtimes.jp/main/html/rd/p/000001343.000006976.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F148 https://ascii.jp/elem/000/004/428/4428657/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F148 https://news.mynavi.jp/techplus/article/20250226-3126053/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F148 https://www.itmedia.co.jp/enterprise/articles/2601/09/news003.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F149 https://mnb.macnica.co.jp/2026/06/community/Tanevavol2.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F149 https://scan.netsecurity.ne.jp/article/2025/09/29/53691.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F149 https://scan.netsecurity.ne.jp/article/2026/03/30/54934.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F149 https://www.itmedia.co.jp/enterprise/articles/2603/10/news001.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F15 https://comeon-house.jp/activity/tongari-fanmtg2026/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F15 https://prtimes.jp/main/html/rd/p/000000604.000036263.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F150 https://prtimes.jp/main/html/rd/p/000000152.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F150 https://www.beach.jp/circleboard/af14152/topictree/1100220202550": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F150 https://www.beach.jp/community/BAMIYAN": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F151 https://cxclip.karte.io/events/meetup_report/meetup-43/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": 404,
 "final_url": "",
-"note": ""
+"note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "F151 https://karte.io/seminar/live/thanksday_2026_special/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
 "final_url": "",
-"note": ""
+"note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F151 https://markezine.jp/article/detail/45936?mode=print": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F152 https://prtimes.jp/main/html/rd/p/000000192.000006034.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F152 https://prtimes.jp/main/html/rd/p/000000279.000006034.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F153 https://prtimes.jp/main/html/rd/p/000000010.000136231.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F153 https://prtimes.jp/main/html/rd/p/000000029.000136231.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F154 https://community.thebase.com/blog/eventreport_0019": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F154 https://community.thebase.com/blog/news_0010": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F154 https://prtimes.jp/main/html/rd/p/000000243.000030814.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F155 https://prtimes.jp/main/html/rd/p/000000046.000145240.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F155 https://prtimes.jp/main/html/rd/p/000000055.000145240.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F155 https://prtimes.jp/main/html/rd/p/000000060.000145240.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F156 https://discord.com/servers/vrc-jp-1056533629314011178": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F156 https://prtimes.jp/main/html/rd/p/000000069.000049339.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F156 https://prtimes.jp/main/html/rd/p/000000174.000049339.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F157 https://connexy-inc.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F157 https://www.connexy.ai/bcl": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F158 https://commune.co.jp/case/20250717_9211/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
 "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "F159 https://commune.co.jp/case/20250218_7829/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
 "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "F16 https://prtimes.jp/main/html/rd/p/000000331.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F16 https://prtimes.jp/main/html/rd/p/000000349.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F16 https://prtimes.jp/main/html/rd/p/000000732.000021119.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F160 https://magazineworld.jp/newsletter/team-tarzan-202005/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F160 https://tarzanweb.jp/post-357220": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F160 https://www.wwdjapan.com/articles/1699802": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F161 https://commune.co.jp/magazine/cmc-koushien-4inning": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F161 https://dime.jp/genre/2090686/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F161 https://jpn.mizuno.com/andmizuno": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F162 https://prtimes.jp/main/html/rd/p/000002273.000009214.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F162 https://www.advertimes.com/?p=266588": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F163 https://prtimes.jp/main/html/rd/p/000000142.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F163 https://prtimes.jp/main/html/rd/p/000000317.000006391.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F164 https://help.zoho.com/portal/ja/community/topic/zoho-japan-community-%e5%88%a9%e7%94%a8%e8%a6%8f%e7%b4%84%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F164 https://help.zoho.com/portal/ja/community/zoho-japan-community": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F165 https://prtimes.jp/main/html/rd/p/000000318.000004500.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F165 https://prtimes.jp/main/html/rd/p/000000345.000004500.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F166 https://commune.co.jp/magazine/cmc-koushien-2inning/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F166 https://kyodonewsprwire.jp/release/202601122277": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F167 https://commune.co.jp/case/20250826_9646/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
 "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "F167 https://jp.sharp/hotcook/10th/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F168 https://commune.co.jp/case/20250321_7912/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
 "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "F168 https://prtimes.jp/main/html/rd/p/000000239.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F168 https://prtimes.jp/main/html/rd/p/000001205.000016166.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F169 https://fan.bookoff.co.jp/announcements/fvnxd5zzimwfjr0j": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F169 https://fan.bookoff.co.jp/announcements/galnnabsbsgq5yxv": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F17 https://koubo.jp/contest/353178": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F17 https://markezine.jp/article/detail/41043": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F17 https://www.beach.jp/community/ATTENIR/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F170 https://lovegreen.net/report/p350390/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F170 https://sunsungarden.jp/announcements/vzfhznjp65diijz4": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F170 https://suntoryflowers.blog.suntory.co.jp/009865.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F171 https://dev.classmethod.jp/articles/20250310-notion-champions-community-award-2024-report/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F171 https://dev.classmethod.jp/articles/joined-notion-champions-community/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F171 https://www.notion.com/ja/blog/notion-champions-japanese": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F171 https://www.notion.com/ja/blog/notion-japan-champions-award-2025": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F172 https://prtimes.jp/main/html/rd/p/000000265.000116644.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F172 https://shift-ai.co.jp/blog/18987/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F172 https://shift-ai.co.jp/event/off-meet/osaka-meetup-2602/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F173 https://tabippo.net/event/20250716poolo/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F173 https://tabippo.net/info/poolo-life-11-gasshuku/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F173 https://tabippo.net/poolo/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F174 https://corp.newspicks.com/info/20260602": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F174 https://rtbsquare.work/archives/60545": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F175 https://blog.microcms.io/microcms-meetup-2026/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F175 https://microcms.io/en/community": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F175 https://prtimes.jp/main/html/rd/p/000002756.000001348.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F176 https://forum.asana.com/t/7-asana/1145649": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F176 https://forum.asana.com/t/asana-2024/1006859": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F176 https://forum.asana.com/t/asana/1074416": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F177 https://prtimes.jp/main/html/rd/p/000000558.000016236.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F177 https://tree.infirmiere.co.jp/announcements/bd7ttzdbahtolkpg": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F178 https://jedai.connpass.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
-"http_status": 200,
+"http_status": 202,
 "final_url": "",
 "note": ""
 },
 "F178 https://speakerdeck.com/databricksjapan/jedai-meetup-data-ai-world-tour-tokyo-2025": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F178 https://speakerdeck.com/databricksjapan/jedai-order-2026-entry": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F179 https://prtimes.jp/main/html/rd/p/000000486.000013298.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F18 https://prtimes.jp/main/html/rd/p/000000309.000002987.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F180 https://clila.anamne.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F180 https://prtimes.jp/main/html/rd/p/000000046.000027080.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F180 https://prtimes.jp/main/html/rd/p/000000102.000027080.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F181 https://koubo.jp/contest/341556": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F181 https://prtimes.jp/main/html/rd/p/000000091.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F181 https://www.beach.jp/community/LUNA": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F182 https://commune.co.jp/magazine/port2026_001/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F182 https://note.com/kanekomunefumi/n/nc5841d50c2b6": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F182 https://prtimes.jp/main/html/rd/p/000000156.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F183 https://bestcalendar.jp/press/161486": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F183 https://prtimes.jp/main/html/rd/p/000002521.000000496.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F184 https://prtimes.jp/main/html/rd/p/000001261.000025003.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F184 https://www.beach.jp/community/DMDEPART": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F185 https://prtimes.jp/main/html/rd/p/000000071.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F185 https://www.beach.jp/community/SUNBIRDS": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F185 https://www.suntory.co.jp/sports/about.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F186 https://prtimes.jp/main/html/rd/p/000000092.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F186 https://www.beach.jp/community/EGAO-ELLEAIR": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F187 https://prtimes.jp/main/html/rd/p/000000165.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F187 https://www.beach.jp/community/AEONCINEMA": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F188 https://prtimes.jp/main/html/rd/p/000000166.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F188 https://www.beach.jp/community/SONOMAMA-HONEY": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F189 https://prtimes.jp/main/html/rd/p/000000193.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F189 https://www.otafuku.co.jp/news/press/2025/20250908-01.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F189 https://www.otafuku.co.jp/otafuclub/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F19 https://prtimes.jp/main/html/rd/p/000000114.000039955.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F19 https://prtimes.jp/main/html/rd/p/000000248.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F19 https://prtimes.jp/main/html/rd/p/000000330.000039955.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F190 https://prtimes.jp/main/html/rd/p/000000173.000054301.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F190 https://prtimes.jp/main/html/rd/p/000000243.000054301.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F191 https://prtimes.jp/main/html/rd/p/000000102.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F191 https://www.beach.jp/community/NOSAN": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F192 https://prtimes.jp/main/html/rd/p/000000084.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F192 https://www.beach.jp/community/NATUREMADE": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F193 https://prtimes.jp/main/html/rd/p/000000122.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F193 https://www.beach.jp/community/ORTHO": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F194 https://prtimes.jp/main/html/rd/p/000000061.000004031.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F195 https://tspark.teamspirit.com/1294": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F195 https://tspark.teamspirit.com/1404": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F195 https://tspark.teamspirit.com/1420": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F196 https://prtimes.jp/main/html/rd/p/000000114.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F196 https://www.beach.jp/circleboard/af11755/topictitle": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F197 https://www.beach.jp/community/NEWOTANI": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F197 https://www.newotani.co.jp/tokyo/press-release/2025/1001-01/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F198 https://prtimes.jp/main/html/rd/p/000000151.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F198 https://www.beach.jp/circleboard/af12566/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F199 https://prtimes.jp/main/html/rd/p/000000014.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F199 https://www.beach.jp/community/TAKARA/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F20 https://prtimes.jp/main/html/rd/p/000000550.000008255.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F20 https://www.advertimes.com/20241125/article481654/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F20 https://www.commercepick.com/?p=74400": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F200 https://prtimes.jp/main/html/rd/p/000000028.000076174.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F200 https://prtimes.jp/main/html/rd/p/000000061.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F200 https://www.beach.jp/community/OILLIO/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F201 https://prtimes.jp/main/html/rd/p/000000075.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F201 https://www.asahiinryo.co.jp/company/newsrelease/2025/pick_0319.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F201 https://www.beach.jp/community/CALPIS": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F202 https://from.sonysonpo.co.jp/topics/news/2025/08/20250812.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F202 https://www.beach.jp/community/GOODDRIVE": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F203 https://www.beach.jp/circleboard/af11547/topic/1100221983893": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F203 https://www.eat-and.jp/foods/news/491.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
-"http_status": 503,
+"http_status": null,
 "final_url": "",
-"note": "サーバーの不具合（時間をおいて2回取り直しても同じでした）"
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F204 https://prtimes.jp/main/html/rd/p/000000108.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F204 https://www.beach.jp/circleboard/af11589/topic/1100222659266": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F205 https://prtimes.jp/main/html/rd/p/000000099.000079554.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F205 https://shokuhin.net/136594/2025/12/17/kakou/reishoku/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F205 https://shokuhin.net/159182/2026/10/28/kakou/reishoku/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F206 https://domobuddies.doorkeeper.jp/events/189360": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F206 https://prtimes.jp/main/html/rd/p/000000196.000026007.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F206 https://www.domo.com/jp/campaign/domo-buddies": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F207 https://prtimes.jp/main/html/rd/p/000000390.000021555.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F207 https://www.dydo.co.jp/info/detail/20261009144628.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F207 https://www.dydo.co.jp/news/detail/20260901100000.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F208 https://prtimes.jp/main/html/rd/p/000000320.000027446.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F208 https://www.kenmin.co.jp/community.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F208 https://www.kenmin.co.jp/newsrelease/62289.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F209 https://successjp.salesforce.com/trailblazer/sfugcup2026": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F209 https://successjp.salesforce.com/trailblazersjp": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F209 https://www.salesforce.com/jp/blog/jp-sfud-cup-2025-winner/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F21 https://www.advertimes.com/20240322/article452889/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F21 https://www.zaikei.co.jp/releases/3068045/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F21 https://zaikei.co.jp/releases/3438130/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": ""
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "F210 https://prtimes.jp/main/html/rd/p/000000137.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F210 https://www.beach.jp/circleboard/af12247/topic/1100220556509": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F211 https://prtimes.jp/main/html/rd/p/000000008.000113331.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F211 https://www.beach.jp/circleboard/af12805/topic/1100220625041": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F211 https://www.beach.jp/circleboard/af12805/topic/1100222054496": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F212 https://prtimes.jp/main/html/rd/p/000000097.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F212 https://www.beach.jp/circleboard/af11439/topic/1100217182284": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F212 https://www.beach.jp/circleboard/af11439/topic/1100220650087": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F213 https://prtimes.jp/main/html/rd/p/000000187.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F213 https://www.beach.jp/circleboard/af18523/topic/1100222546535": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F213 https://www.beach.jp/circleboard/af18523/topic/1100222586337": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F214 https://prtimes.jp/main/html/rd/p/000000191.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F214 https://www.beach.jp/circleboard/af18574/topic/1100222302963": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F214 https://www.beach.jp/circleboard/af18574/topic/1100222554690": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F215 https://prtimes.jp/main/html/rd/p/000000167.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F215 https://www.beach.jp/circleboard/af13543/topic/1100220072254": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F215 https://www.beach.jp/circleboard/af13543/topic/1100221336337": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F216 https://ascii.jp/elem/000/004/266/4266476/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F216 https://www.keycoffee.co.jp/community": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F216 https://www.keycoffee.co.jp/community/talk/detail/2026oct4": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F217 https://prtimes.jp/main/html/rd/p/000000063.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F217 https://www.beach.jp/circleboard/af10130/topic/1100222075099": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F217 https://www.beach.jp/circleboard/af10130/topic/1100222626307": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F218 https://prtimes.jp/main/html/rd/p/000000043.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F218 https://www.beach.jp/circleboard/af08542/topic/1100222608005": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F218 https://www.pressnet.or.jp/news/headline/260401_16237.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F219 https://prtimes.jp/main/html/rd/p/000000193.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F219 https://www.beach.jp/circleboard/af18576/topic/1100222175241": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F219 https://www.beach.jp/circleboard/af18576/topic/1100222637477": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F22 https://jp.corp-sansan.com/news/2021/community.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F22 https://markezine.jp/article/detail/50289": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F22 https://sic.sansan.com/suf/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F220 https://www.beach.jp/circleboard/af12530/topic/1100220003412": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F220 https://www.beach.jp/circleboard/af12530/topic/1100221147065": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F220 https://www.ysmf.or.jp/community/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F221 https://biz.moneyforward.com/blog/36178/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F221 https://biz.moneyforward.com/blog/57124/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F222 https://www.sony.jp/feature/mysony/story/aibo_2509/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F223 https://www.autoby.jp/_ct/17811728": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F223 https://www.autoby.jp/_ct/17834676": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F224 https://personal.canon.jp/event/photoclub/gifu": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F224 https://personal.canon.jp/event/photographyexhibition/gallery/cpc-70th": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F224 https://personal.canon.jp/membership-id/cpc": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F225 https://harley-davidson.com/jp/ja/owners/hog.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F225 https://www.harley-davidson.com/jp/ja/content/hog/local-chapters.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F225 https://young-machine.com/with-harley/2023/04/18/448090/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F226 https://techlog.iij.ad.jp/archives/1245": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F226 https://www.iijmio.jp/event/miomeeting.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F227 https://aws.amazon.com/jp/builders-flash/202302/user-community-4-pillar/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F227 https://aws.amazon.com/jp/builders-flash/202605/aws-samurai-2025/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F227 https://jaws-ug.jp/about-us/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F228 https://kincom.cybozu.co.jp/announcements/oosllrntadinep8z": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F228 https://topics.cybozu.co.jp/news/2014/10/23-807.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F228 https://www.kintonecafe.com/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F229 https://news.sap.com/japan/2023/07/jsug_sapj_business_book/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F229 https://www.jsug.org/aboutjsug": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F229 https://www.jsug.org/ccke6h9d33-1/%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3sap%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97(jsug)-%E6%A6%82%E8%A6%81": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F23 https://ec-force.com/lp?u=ecforce_compass": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F23 https://prtimes.jp/main/html/rd/p/000000057.000016245.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F23 https://prtimes.jp/main/html/rd/p/000000298.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F230 https://blog.soracom.com/ja-jp/2023/12/18/soracom-ug-iot-community/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F230 https://blog.soracom.com/ja-jp/2025/10/21/soracomug-explorer-2025/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F230 https://prtimes.jp/main/html/rd/p/000000035.000034562.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F231 https://developers.line.biz/ja/community/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F231 https://developers.line.biz/ja/news/2026/10/15/line-api-expert-program-in-japan-will-be-discontinued/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F231 https://note.com/linedc/n/ne1ec9eb84e2d": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F232 https://jdd-ug.github.io/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F232 https://www.datadoghq.com/blog/datadog-summit-tokyo-2025/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F232 https://www.datadoghq.com/user-groups/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F233 https://prtimes.jp/main/html/rd/p/000000212.000015718.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F233 https://satori.marketing/marketing-blog/userconf-20250214-report/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F233 https://satori.marketing/user-event-20200619/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F234 https://www.zeroboard.jp/allaboard": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F234 https://www.zeroboard.jp/news/3536": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F234 https://www.zeroboard.jp/news/4767": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F235 https://digitalpr.jp/r/89323": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F235 https://prtimes.jp/main/html/rd/p/000000213.000062252.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F235 https://www.freee.co.jp/blog/freee_meetuptokyo_10.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 404,
 "final_url": "",
 "note": "自動アクセスを断るサイトです（壊れているとは限りません）"
 },
-"F236 https://ascii.jp/elem/000/004/207/4207864/": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
-"final_url": "",
-"note": ""
-},
-"F236 https://dc.watch.impress.co.jp/docs/news/1605295.html": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
-"final_url": "",
-"note": ""
-},
-"F236 https://osiro.it/news/12826": {
-"date": "2026-11-09",
-"status": "正常",
-"http_status": 200,
-"final_url": "",
-"note": ""
-},
 "F237 https://osiro.it/news/13623": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
-"F237 https://www.businessinsider.jp/article/273605/": {
-"date": "2026-11-09",
+"F237 https://prtimes.jp/main/html/rd/p/000000682.000036230.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F237 https://www.commercepick.com/archives/46043": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F238 https://osiro.it/news/14245": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
-"F238 https://osiro.it/news/14245": {
-"date": "2026-11-09",
+"F238 https://prtimes.jp/main/html/rd/p/000000012.000049917.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F238 https://prtimes.jp/main/html/rd/p/000000125.000053812.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F239 https://osiro.it/news/14324": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F239 https://prtimes.jp/main/html/rd/p/000000084.000053812.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
+"F239 https://www.bunkanews.jp/article/474087/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
 "F24 https://codezine.jp/news/detail/27165": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F24 https://nulab.com/ja/press/pr2610-backlog-world-2026/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F24 https://speakerdeck.com/nishiuma/user-community": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F240 https://prtimes.jp/main/html/rd/p/000000268.000134758.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F241 https://prtimes.jp/main/html/rd/p/000000033.000125767.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F241 https://www.kodansha.co.jp/notices/701": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F241 https://www.kodansha.com/notice/20260420.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F242 https://discord.com/invite/gits-official": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F242 https://lp.p.pia.jp/article/news/515421/index.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F242 https://prtimes.jp/main/html/rd/p/000000043.000125767.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
-"F243 https://prtimes.jp/main/html/rd/p/000000102.000065007.html": {
-"date": "2026-11-09",
+"F243 https://prtimes.jp/main/html/rd/p/000000077.000065007.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F243 https://prtimes.jp/main/html/rd/p/000000107.000065007.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F243 https://prtimes.jp/main/html/rd/p/000000119.000065007.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F244 https://prtimes.jp/main/html/rd/p/000000103.000041514.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F244 https://sakarionline.net/ambassador": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F244 https://sakarionline.net/ambassador/event": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F245 https://prtimes.jp/main/html/rd/p/000000083.000023406.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
+"F245 https://www.sompo-japan.co.jp/-/media/SJNK/files/topics/2023/20230406_1.pdf?la=ja-JP": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
 "F246 https://heritage-onlineshop.com/pages/shumibun-mate": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F246 https://prtimes.jp/main/html/rd/p/000000001.000022918.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F246 https://shumibun.jp/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F247 https://prtimes.jp/main/html/rd/p/000002534.000001348.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F247 https://prtimes.jp/main/html/rd/p/000002685.000001348.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F248 https://note.com/fanbasecompany/n/ne16f2e408e7b": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F248 https://prtimes.jp/main/html/rd/p/000000004.000122214.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F249 https://kincom.cybozu.co.jp/chats/dj9adzrkngclysbf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F249 https://kintone-blog.cybozu.co.jp/community/000771.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F249 https://topics.cybozu.co.jp/news/2020/10/08-8864.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F25 https://prtimes.jp/main/html/rd/p/000000410.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F25 https://www.suzuki.co.jp/release/d/2026/0928c/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F25 https://www.suzuki.co.jp/release/d/2026/1009/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F250 https://markezine.jp/article/detail/36149": {
-"date": "2026-11-09",
-"status": "拒否",
-"http_status": 403,
-"final_url": "",
-"note": "自動アクセスを断られました（壊れているとは限りません）"
-},
-"F250 https://press.jal.co.jp/ja/release/201902/005045.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F250 https://press.jal.co.jp/ja/release/202012/005900.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
-"F251 https://ap.morinaga.co.jp/about-site02/": {
-"date": "2026-11-09",
+"F250 https://prtimes.jp/main/html/rd/p/000000056.000021562.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F251 https://kyodonewsprwire.jp/release/201311076108": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F251 https://pricey.jp/web/articles/4373": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F251 https://webtan.impress.co.jp/e/2019/06/05/32690": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "F252 https://prtimes.jp/main/html/rd/p/000000266.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F252 https://www.treasure.ai/ja/blog/user-meetup2024/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F252 https://www.treasure.ai/ja/press-releases/20240304_tdcommunity/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F253 https://osiro.it/news/13717": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F253 https://prtimes.jp/main/html/rd/p/000000047.000053812.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F254 https://prtimes.jp/main/html/rd/p/000000143.000053812.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F254 https://www.mirairo.co.jp/information/20260917": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F255 https://prtimes.jp/main/html/rd/p/000001259.000007414.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F257 https://biz.moneyforward.com/blog/57094/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F258 https://mktg.workato.com/JPN-LE-2026-10-23-JWUG-Meetup": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F258 https://note.com/demae_can/n/n5a80d27a501b": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F258 https://note.com/workato/n/n564079d929ad": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F259 https://note.com/hatoyaru/n/ncde845fd8eb4": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F259 https://usergroups.snowflake.com/snowvillage/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F259 https://zenn.dev/dataheroes/articles/92ed4c13103eda": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F26 https://prtimes.jp/main/html/rd/p/000000047.000120309.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F26 https://www.autoby.jp/_ct/17714641": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F260 http://jtug.jp/2023/10/09/202310jtug10thzadankai/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F260 https://jtug.jp/2026/03/14/soukai2025matome/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F260 https://www.tableau.com/ja-jp/blog/japan-tableau-user-community": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"F261 https://newrelic.com/jp/blog/nerd-life/nrug-0": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F261 https://newrelic.com/jp/blog/nerdlog/nrug-sre-vol-1": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F261 https://newrelic.com/node/8001": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F262 https://friends.figma.com/become-a-user-group-leader/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F262 https://friends.figma.com/events/details/figma-tokyo-jp-presents-1-kick-off-meet-figma-emea-designers-advocates/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F262 https://friends.figma.com/tokyo/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F263 https://prtimes.jp/main/html/rd/p/000000082.000025299.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F263 https://prtimes.jp/main/html/rd/p/000000396.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F264 https://prtimes.jp/main/html/rd/p/000000163.000015650.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F264 https://service.fanicon.net/casestudy/kento-miyahara": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F264 https://www.all-japan.co.jp/news/funclub/14418/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F265 https://discord.com/invite/2bgWHdSTQ4": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F265 https://prtimes.jp/main/html/rd/p/000000010.000182591.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F265 https://www.famitsu.com/article/202606/78084": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F266 https://www.saladclub.jp/company/press/release_20230217.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F266 https://www.saladclub.jp/health/health01/event20260515.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F266 https://www.saladclub.jp/health/health02/event20250830.html": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": 404,
+"final_url": "",
+"note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
+},
+"F267 https://note.com/upsider_inc/n/nbf863ef151c8": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F267 https://prtimes.jp/main/html/rd/p/000000233.000076272.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F268 https://prtimes.jp/main/html/rd/p/000000053.000014741.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F268 https://www.canon-its.co.jp/corporate/newsrelease/2023/pr-20230825ssi": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F268 https://www.canon-its.co.jp/solution/industry/cross-industry/superstream/users-comunity": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F269 https://prtimes.jp/main/html/rd/p/000000233.000143384.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F269 https://prtimes.jp/main/html/rd/p/000000403.000036356.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F27 https://bunshun.jp/articles/-/88974": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F27 https://prtimes.jp/main/html/rd/p/000000388.000036356.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F271 https://hibiki.dreamarts.co.jp/smartdb/dejimin-connect/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F271 https://hibiki.dreamarts.co.jp/smartdb/learning/le260416/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"F271 https://prtimes.jp/main/html/rd/p/000000300.000025071.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F272 https://prtimes.jp/main/html/rd/p/000000270.000050415.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F273 https://prtimes.jp/main/html/rd/p/000000225.000025288.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F274 https://prtimes.jp/main/html/rd/p/000000196.000023289.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F274 https://prtimes.jp/main/html/rd/p/000000214.000023289.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F275 https://cloudbase.ink/news/20260424": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F275 https://prtimes.jp/main/html/rd/p/000000085.000056572.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F276 https://teamcompass.jp/company/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F276 https://teamcompass.jp/news/%E3%80%90%E9%96%8B%E5%82%AC%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88%E3%80%91%E7%B4%84260%E5%90%8D%E3%81%8C%E5%8F%82%E5%8A%A0%EF%BC%81%E7%AC%AC1%E5%9B%9E%E3%80%8C%E3%83%81%E3%83%BC%E3%83%A0%E3%82%B3/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F278 https://prtimes.jp/main/html/rd/p/000000021.000035719.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F278 https://prtimes.jp/main/html/rd/p/000000029.000035719.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F279 https://prtimes.jp/main/html/rd/p/000000008.000057533.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F28 https://prtimes.jp/main/html/rd/p/000000246.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F280 https://prtimes.jp/main/html/rd/p/000000031.000086220.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F281 https://prtimes.jp/main/html/rd/p/000000038.000140235.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F282 https://pca.jp/p-tips/articles/usermeetup-04-report.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F282 https://prtimes.jp/main/html/rd/p/000000150.000068180.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F283 https://prtimes.jp/main/html/rd/p/000000038.000101675.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F283 https://www.pagerduty.co.jp/blog/japan-community-meetup-vol2": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F284 https://prtimes.jp/main/html/rd/p/000000026.000132196.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F284 https://prtimes.jp/main/html/rd/p/000000089.000132196.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F285 https://prtimes.jp/main/html/rd/p/000000003.000188370.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F286 https://community.nitori-net.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F286 https://prtimes.jp/main/html/rd/p/000000205.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F287 https://discord.com/invite/4R4n2AcjVx": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F287 https://prtimes.jp/main/html/rd/p/000000118.000121822.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F288 https://prtimes.jp/main/html/rd/p/000000087.000023406.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F288 https://www.beach.jp/community/38FAN": {
+"date": "2026-11-16",
+"status": "移転",
+"http_status": 200,
+"final_url": "https://sp.beach.jp/38FAN/close/",
+"note": "開き先のドメインが変わっています"
+},
+"F289 https://prtimes.jp/main/html/rd/p/000000150.000023406.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F289 https://www.disney.co.jp/shopping/eventnews/20250305_01": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F289 https://www.disney.co.jp/shopping/itemnews/20251110_01": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F290 https://prtimes.jp/main/html/rd/p/000000143.000023406.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F290 https://www.beach.jp/circle/af12306": {
+"date": "2026-11-16",
+"status": "移転",
+"http_status": 200,
+"final_url": "https://sp.beach.jp/ASAHINIKKI/close/",
+"note": "開き先のドメインが変わっています"
+},
+"F291 https://prtimes.jp/main/html/rd/p/000000020.000049339.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F291 https://prtimes.jp/main/html/rd/p/000000160.000004642.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F291 https://www.gamespark.jp/article/2024/10/01/145608.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F292 https://prtimes.jp/main/html/rd/p/000000197.000069446.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F292 https://prtimes.jp/main/html/rd/p/000000207.000033025.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F292 https://prtimes.jp/main/html/rd/p/000000211.000033025.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F293 https://prtimes.jp/main/html/rd/p/000000401.000015757.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F293 https://prtimes.jp/main/html/rd/p/000000427.000015757.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F293 https://vaz.co.jp/cosmewota_club_rules/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F294 https://prtimes.jp/main/html/rd/p/000000397.000002151.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F294 https://sg.wantedly.com/companies/invast/post_articles/1037058": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F295 https://prtimes.jp/main/html/rd/p/000000143.000018508.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F295 https://prtimes.jp/main/html/rd/p/000000149.000018508.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F295 https://prtimes.jp/main/html/rd/p/000000185.000018508.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F296 https://financie.jp/users/tokyodomecity": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F296 https://prtimes.jp/main/html/rd/p/000000330.000077656.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F296 https://prtimes.jp/main/html/rd/p/000000521.000042665.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F297 https://www.pfu.ricoh.com/news/2018/new180801.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F297 https://www.pfu.ricoh.com/scansnap/ambassador/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F298 https://help.loilonote.app/--5d959be8a9a04400173e57fa": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F298 https://resemom.jp/release/prtimes/20180921/47005.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F298 https://resemom.jp/release/prtimes/20181221/50547.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F299 https://prtimes.jp/main/html/rd/p/000000100.000140975.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F30 https://antlers.coorum.jp/menus/r1hmqyxtpmzbnmsl/announcements": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F30 https://prtimes.jp/main/html/rd/p/000000118.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F300 https://prtimes.jp/main/html/rd/p/000000004.000118791.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F300 https://www.softs.co.jp/news/news_2026_user_u.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F301 https://hubble-docs.com/event/2025-summer-report": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F301 https://prtimes.jp/main/html/rd/p/000000243.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F302 https://cross-graph.com/community": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F302 https://prtimes.jp/main/html/rd/p/000000025.000005874.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F303 https://cheersfrontier.kirin.co.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F303 https://prtimes.jp/main/html/rd/p/000000245.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F304 https://gaming-nation.jp.ext.hp.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F304 https://prtimes.jp/main/html/rd/p/000000165.000068112.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F305 https://prtimes.jp/main/html/rd/p/000000102.000115234.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F306 https://gamebiz.jp/news/411858": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F306 https://gamebiz.jp/news/432190": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F306 https://prtimes.jp/main/html/rd/p/000000109.000115234.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F308 https://prtimes.jp/main/html/rd/p/000000353.000009812.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F309 https://365.alpsoutdoorsummit.jp/about": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F309 https://prtimes.jp/main/html/rd/p/000000057.000053812.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F31 https://prtimes.jp/main/html/rd/p/000000140.000082301.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F310 https://prtimes.jp/main/html/rd/p/000000007.000140975.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F310 https://teenage-salon.fants.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F311 https://butaiura.fan/community/btbbase/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F311 https://prtimes.jp/main/html/rd/p/000000061.000037329.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F312 https://prtimes.jp/main/html/rd/p/000000137.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F313 https://ddnavi.com/booklove_k/": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"F313 https://prtimes.jp/main/html/rd/p/000007105.000007006.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F314 https://oggi.jp/7812271": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F314 https://prtimes.jp/main/html/rd/p/000000724.000013640.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F316 https://animeanime.jp/article/2026/06/15/100076.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F316 https://discord.com/invite/cYxCUr9jN6": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F316 https://prtimes.jp/main/html/rd/p/000001615.000036635.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F317 https://prtimes.jp/main/html/rd/p/000000666.000036635.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F318 https://discord.com/invite/76Yv3xssUH": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F318 https://prtimes.jp/main/html/rd/p/000000032.000098447.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F319 https://www.rohm.co.jp/news-detail?news-title=2024-07-01_news&defaultGroupId=false": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F319 https://www.rohm.com/news-detail?news-title=2026-07-30_news&defaultGroupId=false": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F32 https://prtimes.jp/main/html/rd/p/000000143.000034286.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F32 https://www.value-press.com/pressrelease/286294": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F320 https://note.com/fukugyou_comm": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F320 https://prtimes.jp/main/html/rd/p/000000241.000027440.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F320 https://prtimes.jp/main/html/rd/p/000000245.000027440.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F321 https://prtimes.jp/main/html/rd/p/000000029.000053812.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F322 https://prtimes.jp/main/html/rd/p/000000526.000010826.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F322 https://www.gs9club.jp/faq": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F323 https://prtimes.jp/main/html/rd/p/000000091.000065430.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F324 https://www.fanbasecompany.com/casestudy/case_009/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F325 https://ascii.jp/elem/000/004/244/4244122/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F326 https://prtimes.jp/main/html/rd/p/000000008.000140276.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F326 https://www.businessinsider.jp/article/2509-death-fes/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F327 https://tokimeki-ekiben-terminal.com": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F327 https://www.afpbb.com/articles/-/3655281": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F328 https://gourmet.watch.impress.co.jp/docs/news/2109518.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F328 https://prtimes.jp/main/html/rd/p/000000241.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F329 https://prtimes.jp/main/html/rd/p/000000240.000030943.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F33 https://prtimes.jp/main/html/rd/p/000000635.000015650.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F330 https://prtimes.jp/main/html/rd/p/000000256.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F331 https://netshop.impress.co.jp/n/2026/09/08/16696": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F331 https://netshop.impress.co.jp/r/prtimes/items/000000204.000023406": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F332 https://biz.teachme.jp/support/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F332 https://prtimes.jp/main/html/rd/p/000000287.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F332 https://studist.jp/news/news_20261009": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F333 https://internet.watch.impress.co.jp/docs/news/2147291.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F333 https://netshop.impress.co.jp/r/prtimes/items/000001634.000003039": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F333 https://prtimes.jp/main/html/rd/p/000001575.000003039.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F334 https://cs.cloudsign.jp/rechangeJapan2024spring": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F334 https://markezine.jp/article/detail/56781": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"F334 https://www.bengo4.com/corporate/news/article/cugon8iguy/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F335 https://jp.sunstar.com/notice/docs/a78b2c5bcbbf7a77d07411ce2ceaddf64232d3d8.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F335 https://prtimes.jp/main/html/rd/p/000000132.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F335 https://www.club-sunstar.jp/content/clubsunstarcafe/healthcare/10688/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F336 https://prtimes.jp/main/html/rd/p/000000359.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F336 https://yasai-isan.com/news/300/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F336 https://yasai-isan.com/news/302/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F337 https://prtimes.jp/main/html/rd/p/000000354.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F337 https://www.rarejob.co.jp/news/information/2025/1029/35975/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F338 https://prtimes.jp/main/html/rd/p/000000210.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F338 https://www.jtbcorp.jp/jp/newsroom/2024/05/27_jtb_unitri.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"F338 https://www.jtbcorp.jp/jp/newsroom/2025/07/31_jtb_unitri.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F34 https://paymentnavi.com/paymentnews/151673.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F34 https://prtimes.jp/main/html/rd/p/000000101.000036389.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F34 https://www.luxurycard.co.jp/column/lc-circle-community-guide/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
 "F36 https://prtimes.jp/main/html/rd/p/000000238.000030943.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -3339,14 +4557,14 @@
 "note": ""
 },
 "F40 https://www.wingarc.com/nest/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": null,
 "final_url": "",
 "note": "つながりません（[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)）（時間をおいて2回取り直しても同じでした）"
 },
 "F40 https://www.wingarc.com/nest/conference26/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": null,
 "final_url": "",
@@ -3465,7 +4683,7 @@
 "note": ""
 },
 "F48 https://bridge-salon.jp/upload/tekiji_pdf/T~~38530~000000~1402~0~20240516~1130~20240516599484G.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -3612,7 +4830,7 @@
 "note": ""
 },
 "F55 https://webtan.impress.co.jp/e/2024/02/13/46422": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -3640,7 +4858,7 @@
 "note": ""
 },
 "F58 https://initial.inc/enterprise/circle": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 404,
 "final_url": "",
@@ -3801,7 +5019,7 @@
 "note": ""
 },
 "F68 https://www.am.mufg.jp/fund/topics/__icsFiles/afieldfile/2025/07/17/253425s_250717.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -4144,7 +5362,7 @@
 "note": ""
 },
 "F86 https://business.adobe.com/jp/blog/the-latest/2026-japan-adobe-advocates": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": null,
 "final_url": "",
@@ -4158,7 +5376,7 @@
 "note": ""
 },
 "F86 https://webtan.impress.co.jp/n/2023/04/21/44721": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -4549,6 +5767,195 @@
 "final_url": "",
 "note": ""
 },
+"M100 https://nextvalue-asahikawa.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M100 https://nextvalue-asahikawa.com/service/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M100 https://nextvalue-asahikawa.com/vase/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M101 https://official-alumni.com/alumnavi/article/trading-company": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M101 https://www.businessinsider.jp/article/294102/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M101 https://www.businessinsider.jp/post-295715": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M102 https://note.com/kepple_inc/n/n015e9fff90ed": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M102 https://note.com/kepple_inc/n/n411328267ca6": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M102 https://note.com/kepple_inc/n/nc2fb263587bd": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M103 https://prtimes.jp/main/html/rd/p/000000272.000059559.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M103 https://www.kessin.or.jp/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M103 https://www.kessin.or.jp/about/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M104 https://prtimes.jp/main/html/rd/p/000000005.000140314.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M104 https://prtimes.jp/main/html/rd/p/000000071.000029825.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M104 https://prtimes.jp/main/html/rd/p/000000136.000029825.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M105 https://prtimes.jp/main/html/rd/p/000000273.000005122.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M105 https://prtimes.jp/main/html/rd/p/000000320.000005122.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M105 https://sms-consortium.antenna.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M106 https://monoxaward.jma.or.jp/study/index.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M106 https://prtimes.jp/main/html/rd/p/000000064.000080217.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M107 https://desilo.substack.com/p/activity-report-202606": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M107 https://desilo.substack.com/p/irh-meetup-02-0605": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M107 https://prtimes.jp/main/html/rd/p/000000020.000109034.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M108 https://prtimes.jp/main/html/rd/p/000000262.000038409.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M109 https://blog.buscatch.com/2024/05/28/13549": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M109 https://prtimes.jp/main/html/rd/p/000000143.000042253.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M109 https://www.value-press.com/pressrelease/343102": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "M11 https://prtimes.jp/main/html/rd/p/000000396.000033386.html": {
 "date": "2026-11-09",
 "status": "正常",
@@ -4564,11 +5971,137 @@
 "note": ""
 },
 "M11 https://www.excite.co.jp/news/article/Prtimes_2025-07-11-33386-340/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M110 https://cdoclub.jp/cdo-club-japan/about-cdoclub/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M110 https://prtimes.jp/main/html/rd/p/000000023.000070879.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M110 https://prtimes.jp/main/html/rd/p/000000025.000070879.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M111 https://zenn.dev/openlogi/articles/57115d2250faa8": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M112 https://prtimes.jp/main/html/rd/p/000000013.000158518.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M112 https://prtimes.jp/main/html/rd/p/000000046.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M112 https://prtimes.jp/main/html/rd/p/000000198.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M113 https://prtimes.jp/main/html/rd/p/000000001.000128826.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M114 https://prtimes.jp/main/html/rd/p/000000019.000069673.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M114 https://prtimes.jp/main/html/rd/p/000000024.000069673.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M115 https://prtimes.jp/main/html/rd/p/000000621.000059144.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M115 https://prtimes.jp/main/html/rd/p/000001268.000059144.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M116 https://prtimes.jp/main/html/rd/p/000000046.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M116 https://prtimes.jp/main/html/rd/p/000000221.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M117 https://prtimes.jp/main/html/rd/p/000000167.000045593.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M118 https://prtimes.jp/main/html/rd/p/000000069.000145240.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M119 https://kepple.co.jp/articles/rvtr-tdr1": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M119 https://prtimes.jp/main/html/rd/p/000000027.000068122.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
 },
 "M12 https://forbesjapan.com/articles/detail/86183": {
 "date": "2026-11-09",
@@ -4586,6 +6119,146 @@
 },
 "M12 https://prtimes.jp/main/html/rd/p/000000004.000124237.html": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M120 https://prtimes.jp/main/html/rd/p/000000544.000014573.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M120 https://prtimes.jp/main/html/rd/p/000000675.000014573.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M121 https://prtimes.jp/main/html/rd/p/000000549.000021621.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M122 https://note.com/ideal_tsc/n/n0a8c897c3f1f": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M122 https://prtimes.jp/main/html/rd/p/000000100.000045593.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M123 https://prtimes.jp/main/html/rd/p/000000025.000035974.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M123 https://theseed.vc/news/beerbash11": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M124 https://246144478.hs-sites-na2.com/sentaku-community": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M124 https://ascii.jp/elem/000/004/449/4449849/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M125 https://smbcommunity.lenovo.com/japan/post/copilot-event-09252026-0fQyQjJb1F4xRgK": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M125 https://www.itmedia.co.jp/pcuser/articles/2610/15/news002.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M126 https://www.itmedia.co.jp/pcuser/articles/2607/20/news006.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M126 https://xn--ycrq3a75ks3b.style/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M126 https://xn--ycrq3a75ks3b.style/member/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M127 https://japan.iiba.org/events/babok-s12": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M127 https://mag.executive.itmedia.co.jp/executive/articles/2602/25/news018.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M128 https://note.com/kuma_y/n/ncbc4df1c5673": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M128 https://note.com/sou_mu_2019/n/n33deaf809907": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M128 https://prtimes.jp/main/html/rd/p/000000001.000124293.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M129 https://prtimes.jp/main/html/rd/p/000000005.000125388.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -4613,11 +6286,179 @@
 "note": ""
 },
 "M13 https://webtan.impress.co.jp/r/prtimes/items/000000162.000061977": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M130 https://all-dental-japan.com/%E5%85%A5%E4%BC%9A%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M130 https://prtimes.jp/main/html/rd/p/000000048.000091839.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M130 https://prtimes.jp/main/html/rd/p/000000141.000091839.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M131 https://bsrweb.jp/article/138093": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M131 https://bsrweb.jp/article/970127": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M131 https://prtimes.jp/main/html/rd/p/000000686.000023740.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M132 https://prtimes.jp/main/html/rd/p/000000049.000056207.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M132 https://prtimes.jp/main/html/rd/p/000000056.000056207.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M133 https://page-aejp.nagase.co.jp/l/1057343/2025-04-24/m6grkm": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M133 https://prtimes.jp/main/html/rd/p/000000137.000102973.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M133 https://www.logi-today.com/930978": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M134 https://prtimes.jp/main/html/rd/p/000000001.000160263.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M134 https://prtimes.jp/main/html/rd/p/000000186.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M135 https://prtimes.jp/main/html/rd/p/000000001.000129558.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M136 https://prtimes.jp/main/html/rd/p/000000006.000168654.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M136 https://prtimes.jp/main/html/rd/p/000000044.000078616.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M136 https://www.mori.co.jp/_mori_assets/files/assets/3f2dbd9a710d4daaaa8451a27e512959/37319daebeb24209a4444a8923d51b69/250407_1.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M137 https://prtimes.jp/main/html/rd/p/000000012.000083832.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M137 https://www.nskre.co.jp/company/news/2025/06/docs/20250618.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M137 https://www.nskre.co.jp/company/news/2025/20250618.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M138 https://prtimes.jp/main/html/rd/p/000000241.000030270.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M138 https://www.krp.co.jp/tamari-ba/detail/5446.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M139 https://prtimes.jp/main/html/rd/p/000000014.000156304.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M139 https://prtimes.jp/main/html/rd/p/000000151.000006647.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
 },
 "M14 https://prtimes.jp/main/html/rd/p/000000425.000027235.html": {
 "date": "2026-11-09",
@@ -4628,6 +6469,202 @@
 },
 "M14 https://prtimes.jp/main/html/rd/p/000000554.000027235.html": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M140 https://question.kyoto-shinkin.co.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M140 https://question.kyoto-shinkin.co.jp/about/member/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M140 https://question.kyoto-shinkin.co.jp/about/question/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M141 https://www.shizuoka-fg.co.jp/news-release/20250220_0je/250220_NR3.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M141 https://www.shizuoka-fg.co.jp/pdf.php?id=5674": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M142 https://www.kobelco.co.jp/notices/2025/pdf/251208_01_01.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M142 https://www.kobelco.co.jp/notices/files/20230929_1_01.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M142 https://www.kobelco.co.jp/notices/files/20240305_1_03.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M143 https://arch-incubationcenter.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M143 https://prtimes.jp/main/html/rd/p/000000402.000048109.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M143 https://www.mori.co.jp/img/article/230410_1.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M144 https://business-airport.net/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M144 https://business-airport.net/event/%E3%80%90%E9%96%8B%E5%82%AC%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88%E3%80%91%E3%80%8E%E5%85%B1%E3%81%AB%E5%89%B5%E3%82%8B%E3%83%93%E3%82%B8%E3%83%8D%E3%82%B9%E3%81%AE%E6%9C%AA%E6%9D%A5-business-airport-wi/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M144 https://prtimes.jp/main/html/rd/p/000000040.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M145 https://newsroom.kddi.com/news/detail/kddi_nr-655_4019.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M145 https://prtimes.jp/main/html/rd/p/000000134.000045593.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M145 https://spark-journal.kddi.com/mirai/article00272/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M146 https://prtimes.jp/main/html/rd/p/000000228.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M146 https://sg.wantedly.com/companies/company_1570586": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M146 https://www.score-x.net": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M147 https://prtimes.jp/main/html/rd/p/000000388.000128388.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M147 https://prtimes.jp/main/html/rd/p/000000398.000128388.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M147 https://www.gamebusiness.jp/article/2023/10/05/22295.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M148 https://event.union-tec.jp/home": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M148 https://prtimes.jp/main/html/rd/p/000000081.000031121.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M148 https://prtimes.jp/main/html/rd/p/000000168.000031121.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M149 https://luma.com/44gpn4er?locale=ja": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M149 https://prtimes.jp/main/html/rd/p/000000065.000016218.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -4649,6 +6686,139 @@
 },
 "M15 https://prtimes.jp/main/html/rd/p/000000548.000052843.html": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M150 https://carbon-credit.co.jp/LP/creators-lab": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M150 https://prtimes.jp/main/html/rd/p/000000009.000163870.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M151 https://news.nissyoku.co.jp/news/yamamoto20260604075205404": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M151 https://prtimes.jp/main/html/rd/p/000000136.000036006.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M151 https://www.logi-today.com/956823": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M152 https://peraichi.com/landing_pages/view/salesguild": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M152 https://prtimes.jp/main/html/rd/p/000000003.000061517.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M152 https://shachomeikan.jp/industry_article/5494": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M153 https://prtimes.jp/main/html/rd/p/000000123.000089471.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M153 https://prtimes.jp/main/html/rd/p/000000161.000089471.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M154 https://prtimes.jp/main/html/rd/p/000000047.000159579.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M155 https://prtimes.jp/main/html/rd/p/000000015.000059313.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M156 https://ascii.jp/elem/000/004/266/4266270/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M156 https://prtimes.jp/main/html/rd/p/000000006.000119710.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M157 https://note.com/impact_startup/n/nb19f78810d03": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M157 https://prtimes.jp/main/html/rd/p/000000047.000109519.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M158 https://prtimes.jp/main/html/rd/p/000000001.000097873.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M158 https://webtan.impress.co.jp/r/prtimes/items/000000002.000097873": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M159 https://prtimes.jp/main/html/rd/p/000000003.000126206.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -4682,22 +6852,162 @@
 "final_url": "",
 "note": ""
 },
+"M160 https://prtimes.jp/main/html/rd/p/000000002.000174321.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M161 https://prtimes.jp/main/html/rd/p/000000008.000116422.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M162 https://luma.com/aixkd2ul": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M162 https://luma.com/mwdk6nct?locale=ja": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M162 https://prtimes.jp/main/html/rd/p/000000236.000016218.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M163 https://kansta.jp/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M163 https://prtimes.jp/main/html/rd/p/000000001.000177685.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M163 https://prtimes.jp/main/html/rd/p/000000003.000177685.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M164 https://prtimes.jp/main/html/rd/p/000000001.000085707.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M165 https://prtimes.jp/main/html/rd/p/000000038.000027437.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M165 https://www.fastgrow.jp/articles/xgarage-200207": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M166 https://note.com/momo_start/n/n442f775d1a41": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M166 https://prtimes.jp/main/html/rd/p/000000002.000139020.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M167 https://prossell.jp/case/1sdywqv3w/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M167 https://prossell.jp/news/20240808/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M167 https://prtimes.jp/main/html/rd/p/000000028.000059560.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M168 https://www.jreast.co.jp/press/2025/20260226_ho02.pdf": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M168 https://www.jreast.co.jp/press/2026/20261006_ho02.pdf": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M169 https://dime.jp/genre/1657637/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M169 https://yurakucho-saai.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "M17 https://webtan.impress.co.jp/r/prtimes/items/000000058.000073493": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "M17 https://www.dreamnews.jp/press/0000312508/items/fd45ff": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
 "note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
 },
 "M17 https://www.dreamnews.jp/press/0000335851/items/4a7450": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
@@ -4705,6 +7015,118 @@
 },
 "M17 https://zaikei.co.jp/releases/3305893/": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M170 https://prtimes.jp/main/html/rd/p/000000001.000121431.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M170 https://prtimes.jp/main/html/rd/p/000000009.000121431.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M171 https://prtimes.jp/main/html/rd/p/000000001.000181756.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M171 https://prtimes.jp/main/html/rd/p/000000003.000181756.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M172 https://prtimes.jp/main/html/rd/p/000000208.000030943.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M173 https://prtimes.jp/main/html/rd/p/000000276.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M174 https://prtimes.jp/main/html/rd/p/000000134.000042181.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M175 https://100banch.com/about/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M175 https://prtimes.jp/main/html/rd/p/000000285.000034018.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M176 https://coki.jp/sustainable/esg/31961": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M176 https://coki.jp/sustainable/esg/38130/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M177 https://ascii.jp/elem/000/004/444/4444208/?rss=": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M177 https://voix.jp/business-cards/venture-friendly-project-launch/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M178 https://www.accenture.com/jp-ja/blogs/japan-careers-blog/kyushu-training": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M178 https://zenn.dev/acntechjp/articles/116482cd21d0b1": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M179 https://ascii.jp/elem/000/004/277/4277643/": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -4719,6 +7141,104 @@
 },
 "M18 https://prtimes.jp/main/html/rd/p/000000056.000145642.html": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M180 https://webtan.impress.co.jp/r/prtimes/items/000000072.000052511": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"M180 https://www.100inc.co.jp/news/20250516-hug11": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M180 https://www.100inc.co.jp/news/hugmeetup10": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M181 https://www.fujifilm.com/fb/ja/about/initiatives/technical/ai/journal/article025": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M182 https://prtimes.jp/main/html/rd/p/000000012.000120244.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M182 https://special.nikkeibp.co.jp/atclh/ONB/25/omron0324/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M183 https://esgra.jp/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M183 https://prtimes.jp/main/html/rd/p/000000013.000045389.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M183 https://prtimes.jp/main/html/rd/p/000000015.000045389.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M184 https://prtimes.jp/main/html/rd/p/000000070.000140975.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M184 https://tomoshibiinc.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M185 https://jukuaid.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M185 https://prtimes.jp/main/html/rd/p/000000033.000144551.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M186 https://prtimes.jp/main/html/rd/p/000000007.000143103.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -4886,7 +7406,7 @@
 "note": ""
 },
 "M27 https://enterprisezine.jp/article/detail/17870": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5026,7 +7546,7 @@
 "note": ""
 },
 "M35 https://thebridge.jp/2025/11/core-raises-seed-to-boost-community-and-career-matching": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5173,7 +7693,7 @@
 "note": ""
 },
 "M43 https://thebridge.jp/2026/03/monthly-pitch-100th": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5257,7 +7777,7 @@
 "note": ""
 },
 "M48 https://codezine.jp/article/detail/27878": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5306,7 +7826,7 @@
 "note": ""
 },
 "M50 https://webtan.impress.co.jp/n/2020/12/15/38518": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5648,15 +8168,15 @@
 "final_url": "",
 "note": ""
 },
-"M69 https://prtimes.jp/main/html/rd/p/000000015.000170519.html": {
+"M69 https://prtimes.jp/main/html/rd/p/000000036.000170519.html": {
 "date": "2026-11-09",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
 "note": ""
 },
-"M69 https://prtimes.jp/main/html/rd/p/000000036.000170519.html": {
-"date": "2026-11-09",
+"M69 https://prtimes.jp/main/html/rd/p/000000042.000170519.html": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -5879,8 +8399,351 @@
 "final_url": "",
 "note": ""
 },
+"M81 https://prtimes.jp/main/html/rd/p/000000063.000053812.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M81 https://upcycle.or.jp/benefits/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M82 https://jpn.nec.com/pibc/co_creation/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M82 https://jpn.nec.com/press/201909/20190925_01.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M82 https://slack.com/intl/ja-jp/customer-stories/tips-community-management-nurture-business-seeds": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M83 https://prtimes.jp/main/html/rd/p/000000131.000037686.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M83 https://prtimes.jp/main/html/rd/p/000000140.000037686.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M84 https://prtimes.jp/main/html/rd/p/000000455.000053134.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M84 https://prtimes.jp/main/html/rd/p/000000459.000053134.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M85 https://atotsugi-1st.com/about": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M85 https://prtimes.jp/main/html/rd/p/000000022.000051210.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M85 https://prtimes.jp/main/html/rd/p/000000060.000051210.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M86 https://prtimes.jp/main/html/rd/p/000000016.000126112.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M87 https://optemo.co.jp/knowhow/inside_comunity_20250630/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M87 https://optemo.co.jp/lp/is_ken/": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M87 https://prtimes.jp/main/html/rd/p/000000033.000061822.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M88 https://prtimes.jp/main/html/rd/p/000000471.000128388.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M89 https://incubatefund.com/en/community/blue-field-program/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M89 https://note.com/hacccccccchi/n/ne9f538a22b82": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M89 https://prtimes.jp/main/html/rd/p/000000038.000005647.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M90 https://prtimes.jp/main/html/rd/p/000000427.000006953.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M90 https://www.tokyu-land.co.jp/english/news/2026/001636.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M90 https://www.tokyu-land.co.jp/english/news/2026/001775.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M91 https://prtimes.jp/main/html/rd/p/000000014.000077204.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M91 https://prtimes.jp/main/html/rd/p/000000028.000072546.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M91 https://prtimes.jp/main/html/rd/p/000000062.000072546.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M92 https://f-e-a.jp/com.php": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
+"final_url": "",
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
+},
+"M92 https://prtimes.jp/main/html/rd/p/000000189.000042597.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M92 https://prtimes.jp/main/html/rd/p/000000192.000042597.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M93 https://prtimes.jp/main/html/rd/p/000000029.000068619.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M93 https://sophiacommunications.net/entrepreneur_lab/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M94 https://prtimes.jp/main/html/rd/p/000000631.000051782.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M94 https://prtimes.jp/main/html/rd/p/000000936.000051782.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M94 https://www.crossu.org/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M95 https://prtimes.jp/main/html/rd/p/000000020.000049702.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M95 https://prtimes.jp/main/html/rd/p/000000059.000049702.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M95 https://prtimes.jp/main/html/rd/p/000000080.000016002.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M96 https://prtimes.jp/main/html/rd/p/000000071.000024148.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M96 https://www.fse.or.jp/files/lis_tkj/24022688030.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M96 https://www.fse.or.jp/files/lis_tkj/24030788030.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M97 https://prtimes.jp/main/html/rd/p/000000002.000052119.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M97 https://prtimes.jp/main/html/rd/p/000000003.000052119.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M97 https://prtimes.jp/main/html/rd/p/000000007.000052119.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M98 https://prtimes.jp/main/html/rd/p/000000047.000135396.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M98 https://prtimes.jp/main/html/rd/p/000000071.000135396.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M98 https://san-tatsu.jp/pressrelease/497134/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M99 https://hubtokyo.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"M99 https://luma.com/8fs5eeww": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": 404,
+"final_url": "",
+"note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
+},
+"M99 https://www.timeout.jp/tokyo/ja/things-to-do/impacthubtokyo_cowarking": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "S01 https://markezine.jp/article/detail/50208?mode=print": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5922,7 +8785,7 @@
 "note": ""
 },
 "S05 https://holdings.panasonic/jp/corporate/sustainability/human-capital-management/community.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -5992,21 +8855,21 @@
 "note": ""
 },
 "S100 https://www.pwc.com/jp/ja/alumni/event-report02.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "S100 https://www.pwc.com/jp/ja/alumni/event-report03.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "S100 https://www.pwc.com/jp/ja/alumni/event-report04.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -6027,7 +8890,7 @@
 "note": ""
 },
 "S102 https://hrzine.jp/article/detail/6726": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -6111,7 +8974,7 @@
 "note": ""
 },
 "S107 https://recruit.kaonavi.jp/work-style/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -6412,7 +9275,7 @@
 "note": ""
 },
 "S138 https://commune.co.jp/case/20250120_7139/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
@@ -6524,7 +9387,7 @@
 "note": ""
 },
 "S146 https://www.nec-solutioninnovators.co.jp/csr/management/pdf/2025/CHAPTER10.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
@@ -6853,14 +9716,14 @@
 "note": ""
 },
 "S167 https://www.kentaku.co.jp/corporate/pr/info/2025/information_DIaward_20251212.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "S167 https://www.kentaku.co.jp/sustainability/social/diversity/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -6881,14 +9744,14 @@
 "note": ""
 },
 "S168 https://rakuten.today/blog/from-tokyo-to-toronto-pride-2026-at-rakuten.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": null,
 "final_url": "",
 "note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "S168 https://rakuten.today/blog/rakuten-pride-shines-bright-in-2024.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": null,
 "final_url": "",
@@ -6923,7 +9786,7 @@
 "note": ""
 },
 "S170 https://global.fujitsu/ja-JP/local/blog/article/2023-09-22-01": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 429,
 "final_url": "",
@@ -7070,7 +9933,7 @@
 "note": ""
 },
 "S180 https://careers.box.com/jp/ja/new-communities-in-japan/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -7098,11 +9961,11 @@
 "note": ""
 },
 "S181 https://tokyopride2025.trparchives.com/festival/sponsor/kirin/": {
-"date": "2026-11-09",
-"status": "拒否",
-"http_status": 403,
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": null,
 "final_url": "",
-"note": "自動アクセスを断られました（壊れているとは限りません）"
+"note": "応答がありません（時間をおいて2回取り直しても同じでした）"
 },
 "S181 https://www.kirinholdings.com/jp/innovation/humancapital/diversity/attempt_d/": {
 "date": "2026-11-09",
@@ -7175,14 +10038,14 @@
 "note": ""
 },
 "S189 https://www.tepco.co.jp/about/esg/social/human-capital/diversity-j.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "S189 https://www.tepco.co.jp/about/ir/library/annual_report/pdf/TP2025_HC.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -7238,14 +10101,14 @@
 "note": ""
 },
 "S195 https://www.kepco.co.jp/brand/alumninetwork/index.html": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
 },
 "S195 https://www.kepco.co.jp/corporate/notice/notice_pdf/20240819_1.pdf": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -7267,6 +10130,13 @@
 },
 "S197 https://note.com/asobica_official/n/n2adac239f721": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S197 https://note.com/asobica_official/n/n7ff492b8821f": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -7322,11 +10192,109 @@
 "note": ""
 },
 "S202 https://www.bizreach.jp/job/view/1693538/": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
 "note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S203 https://career.kddi.com/andkddi/category/culture/22042203.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S203 https://newsroom.kddi.com/news/detail/kddi_nr-326_3592.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S203 https://www.kddi.com/corporate/sustainability/society/diversity/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S204 https://career.kddi.com/andkddi/category/culture/22052301.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S204 https://career.kddi.com/andkddi/category/culture/22052302.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S204 https://spark-journal.kddi.com/mirai/article00028/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S205 https://www.shimz.co.jp/company/about/diversity/lgbtq/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S205 https://www.shimz.co.jp/company/about/report/report05/index.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S206 https://www.obayashi.co.jp/news/detail/news20250306_2.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S206 https://www.obayashi.co.jp/news/detail/news20250708_1.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S207 https://www.astellas.com/jp/sustainability/astellas-and-society/our-people": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S208 https://www.daiwa-grp.jp/about/work/diversity.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S209 https://www.nissay.co.jp/news/2024/pdf/20240530.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S209 https://www.nissay.co.jp/sustainability/evaluation/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
 },
 "S21 https://speakerdeck.com/taichinakamura/toyotanoshe-nei-komiyuniteinituitese-wen-itiyaou-tatuta4nian-noqi-ji-nogui-ji": {
 "date": "2026-11-09",
@@ -7335,8 +10303,253 @@
 "final_url": "",
 "note": ""
 },
+"S210 https://www.mizuho-fg.co.jp/release/20230707release_jp.html": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S210 https://www.mizuho-fg.co.jp/release/20230928release_jp.html": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S210 https://www.mizuho-fg.co.jp/sustainability/social/employee/dei/index.html": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S211 https://www.mizuho-fg.co.jp/saiyou/women-empowerment": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S211 https://www.mizuho-fg.co.jp/sustainability/report/pdf/hc_report_2024.pdf": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S212 https://www.jp.square-enix.com/recruit/career/work_life_story/2022/07/post.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S213 https://corp.skylark.co.jp/sustainability/social/employee/diversity.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S214 https://global.honda/jp/career/tag-re-entering-the-company-alumni.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S214 https://global.honda/jp/topics/2024/c_2024-10-31.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S215 https://kyodonewsprwire.jp/release/202411280751": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S215 https://prtimes.jp/main/html/rd/p/000000202.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S216 https://official-alumni.com/alumnavi/article/eisai-event": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S216 https://prtimes.jp/main/html/rd/p/000000217.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S216 https://www.eisai.co.jp/sustainability/society/employee/alumni/index.html": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S217 https://prtimes.jp/main/html/rd/p/000000478.000080252.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S218 https://prtimes.jp/main/html/rd/p/000000402.000027867.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S219 https://www.tokyu-land.co.jp/company/diversity_inclusion/empowerment/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S219 https://www.tokyu-land.co.jp/news/2023/000991.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "S22 https://speakerdeck.com/hacomono/keep-the-flame-of-agile-alive-managing-an-internal-agile-community": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S220 https://prtimes.jp/main/html/rd/p/000000181.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S220 https://www.jbic.go.jp/ja/information/news/news-2024/news_00014.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S221 https://prtimes.jp/main/html/rd/p/000000227.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S221 https://www.toda.co.jp/sustainability/social/humanresource.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S222 https://companydata.tsujigawa.com/press-20240819-004/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S222 https://prtimes.jp/main/html/rd/p/000000166.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S223 https://prtimes.jp/main/html/rd/p/000000216.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S224 https://prtimes.jp/main/html/rd/p/000000605.000016451.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S224 https://prtimes.jp/main/html/rd/p/000000980.000016451.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S225 https://alumni.jp.kpmg.com/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S226 https://note.com/geniee_inc/n/n128cee762b2c": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S226 https://note.com/geniee_inc/n/nd70d48fb8449": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S227 https://zenn.dev/nttdata_tech/articles/8069947063ca51": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S228 https://newsroom.lixil.com/ja/2026060201": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S228 https://www.lixil.com/jp/impact/inclusion/equal_opportunity.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S229 https://www.fastretailing.com/employment/ja/diversity/lgbtq/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S229 https://www.uniqlo.com/jp/ja/contents/sustainability/report/people/": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -7356,6 +10569,111 @@
 "final_url": "",
 "note": ""
 },
+"S230 https://group.kadokawa.co.jp/k-insight/ki58470.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S231 https://newswitch.jp/p/22488": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S231 https://www.rohto.co.jp/sustainability/employee/engagement/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S232 https://note.intimatemerger.com/n/nce42563472e4": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S233 https://note.com/bitkey/n/n5cda0d796296": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S234 https://note.valtes.co.jp/n/nf6e48b107c2d": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S235 https://note.com/cocoo_club/n/n10f4bfeab601": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S236 https://toranoana-lab.hatenablog.com/entry/2023/08/16/100000": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S237 https://sustainability-report.inpex.co.jp/2024/jp/_assets/downloads/soc-social-inpex-sr24.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S237 https://www.inpex.com/sustainability/2025/20251114.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S237 https://www.inpex.com/sustainability/social/human-capital/workplace/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S238 https://www.idemitsu.com/jp/news/2024/241119.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S238 https://www.idemitsu.com/jp/sustainability/society/d_e_and_i/promotion/index.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S239 https://www.nssol.nipponsteel.com/press/2014/20140304_140000.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S239 https://www.nssol.nipponsteel.com/sustainability/social/human_capital_management.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "S24 https://note.com/infosys_rescue/n/nd30fd0e788a9": {
 "date": "2026-11-09",
 "status": "正常",
@@ -7363,8 +10681,274 @@
 "final_url": "",
 "note": ""
 },
+"S240 https://terasu.biprogy.com/article/morning-challenge/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S240 https://www.biprogy.com/pdf/com/human_resources_strategy_report2025.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S240 https://www.biprogy.com/pdf/sustainability%20report2023_Social.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S241 https://official-alumni.com/alumnavi/article/scalumni-event-4": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S241 https://prtimes.jp/main/html/rd/p/000000651.000000726.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S241 https://www.hrpro.co.jp/hrsummit/2024/session_popup.php?scd=4828&smcd=79": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 202,
+"final_url": "",
+"note": ""
+},
+"S242 https://prtimes.jp/main/html/rd/p/000001318.000031978.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S242 https://www.travelvoice.jp/20250304-157278": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S243 https://prtimes.jp/main/html/rd/p/000000001.000126465.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S243 https://prtimes.jp/main/html/rd/p/000000051.000008894.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S244 https://kyodonewsprwire.jp/release/202111052968": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S244 https://prtimes.jp/main/html/rd/p/000000082.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S245 https://prtimes.jp/main/html/rd/p/000000082.000030026.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S245 https://www.advertimes.com/20240827/article471642/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S245 https://www.jgc.com/jp/esg-hsse/social/human-capital/recruting/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S246 https://note.com/daily_ad/n/n592a90f9fae4": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S247 https://note.com/bitkey/n/ncb46dce8921e": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S248 https://note.com/makuake_hr/n/n5961d9535386": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S248 https://note.com/makuake_hr/n/nf01d172c14d8": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S249 https://note.com/monoai/n/nbc9d001e0913": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S249 https://note.com/monoai/n/nc4ddd52b8db3": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S249 https://note.com/monoai/n/nd7880a226045": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
 "S25 https://note.com/bengo4_saiyo/n/n0a2f63a94758": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S250 https://note.com/geocode/n/n2d56fedd728e": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S250 https://note.com/geocode/n/n8c9bca8842ae": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S250 https://www.geo-code.co.jp/recruit/company/welfare/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S251 https://www.maruhan.co.jp/recruit/east-japan/alumni/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S251 https://www.nikkan-gendai.com/articles/view/money/340125/3": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S252 https://note.com/use/n/n695adebea10c": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S252 https://note.com/use/n/n75f3bdb43035": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S253 https://note.com/anymindgroup/n/n42a9392f2487": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S254 https://note.com/cyberace_pr/n/n1017a8389773": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S255 https://note.com/urata_recruit/n/n8fc837911b48": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S256 https://note.com/hutzper/n/n765e1bb15b0a": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S256 https://note.com/hutzper/n/n960ebcdcbede": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S257 https://note.com/quan_official/n/n06742367d2d6": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S258 https://jp.mitsuichemicals.com/jp/molp/index.htm": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S258 https://jp.mitsuichemicals.com/jp/molp/news/20250623/index.htm": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S259 https://jp.mitsuichemicals.com/jp/molp/article/detail_20230714_1/index.htm": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -7384,8 +10968,246 @@
 "final_url": "",
 "note": ""
 },
+"S260 https://group.ntt/jp/newsrelease/2022/06/15/220615a.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S260 https://news.mynavi.jp/article/20260306-4144254/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S261 https://www.dnp.co.jp/biz/theme/ccoe/003/__icsFiles/afieldfile/2024/07/04/20230607File20230602_3.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S261 https://www.dnp.co.jp/biz/theme/ccoe/index.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S262 https://www.global.toshiba/jp/sustainability/corporate/social/diversity.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S263 https://www.advantest.com/document/ja/about/sustainability/esg-related-documents/Ja_SustainabilityReport2025_04.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S263 https://www.advantest.com/ja/about/sustainability/society/dei/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S264 https://www.cyberagent.co.jp/way/list/detail/id=33323": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S265 https://note.com/triplethree_page/n/n9c3cfe45a705": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S266 https://note.com/hamee_831_/n/n36f5b896d027": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S266 https://note.com/hamee_831_/n/n94b36e9b0843": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S266 https://note.com/hamee_831_/n/n96269c906459": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S267 https://note.rehabforjapan.com/n/n665cd48fae00": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S267 https://zenn.dev/rehabforjapan/articles/20024e0de23ceb": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S268 https://note.rehabforjapan.com/n/n665cd48fae00": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S268 https://note.rehabforjapan.com/n/n9a74a12d2c32": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S269 https://qiita.com/RyoWakabayashi/items/5e91290ea790e78b7636": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S269 https://www.oec.co.jp/corporate/wp-content/uploads/2026/02/3fed4a4080f9517b34e320e3726561af.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S269 https://www.oec.co.jp/dx/img/torikumi_2024.pdf": {
+"date": "2026-11-16",
+"status": "要確認",
+"http_status": 404,
+"final_url": "",
+"note": "ページが見つかりません（時間をおいて2回取り直しても同じでした）"
+},
 "S27 https://prtimes.jp/main/html/rd/p/000000228.000036356.html": {
 "date": "2026-11-09",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S270 https://markezine.jp/article/detail/58573": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S271 https://prtimes.jp/main/html/rd/p/000000154.000107878.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S272 https://official-alumni.com/alumnavi/article/ajinomoto-event": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S272 https://www.ajinomoto.co.jp/company/jp/presscenter/press/detail/2024_01_18_02.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S273 https://www.hrpro.co.jp/hrsummit/2025/session.php?scd=5026&smcd=84": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 202,
+"final_url": "",
+"note": ""
+},
+"S273 https://www.smbcnikko.co.jp/news/release/2023/pdf/230516_01.pdf": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S274 https://eleminist.com/article/3728": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S274 https://jp.pg.com/newsroom/202009lgbtq/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S274 https://jp.pg.com/newsroom/pride-index/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S275 https://www.businessinsider.jp/article/294102/": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S275 https://www.marubeni-recruit.com/culture/hr-management": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S276 https://prtimes.jp/main/html/rd/p/000000355.000036356.html": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S277 https://www.denso.com/jp/ja/driven-base/career-life/life-talk/": {
+"date": "2026-11-16",
+"status": "拒否",
+"http_status": 403,
+"final_url": "",
+"note": "自動アクセスを断られました（壊れているとは限りません）"
+},
+"S278 https://www.fujifilm.com/fb/ja/about/initiatives/technical/ai/journal/article007": {
+"date": "2026-11-16",
+"status": "正常",
+"http_status": 200,
+"final_url": "",
+"note": ""
+},
+"S279 https://www.softbank.jp/sbnews/entry/20230906_01": {
+"date": "2026-11-16",
 "status": "正常",
 "http_status": 200,
 "final_url": "",
@@ -7770,7 +11592,7 @@
 "note": ""
 },
 "S60 https://note.com/miratap_official/n/n8f653019869a": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "要確認",
 "http_status": 404,
 "final_url": "",
@@ -7812,7 +11634,7 @@
 "note": ""
 },
 "S64 https://global.fujitsu/ja-jp/subsidiaries/flm/about/resources/topics/2023/0712": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 429,
 "final_url": "",
@@ -7840,7 +11662,7 @@
 "note": ""
 },
 "S66 https://blogs.oracle.com/oraclejapanpr/oracle-erg-odan-05-22-2024": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
@@ -8183,7 +12005,7 @@
 "note": ""
 },
 "S93 https://codezine.jp/article/detail/20036": {
-"date": "2026-11-09",
+"date": "2026-11-16",
 "status": "拒否",
 "http_status": 403,
 "final_url": "",
