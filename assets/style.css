@@ -665,14 +665,14 @@ main { flex: 1 0 auto; }
   .cards.is-list .card:hover a, .cards.is-list .card:hover .card-save { transform: none; box-shadow: none; }
 }
 .cards.is-entering .card:not([hidden]) { animation: card-rise .5s ease both; }
-/* 一覧のカードから事例ページへ、題名・種別の札・企業名がつながって移る（2026-11-15 の見本で採用。site.js が一覧の押したカードに同じ名前を付ける）。
+/* 一覧のカードから事例ページへ、種別の札・企業名がつながって移る（2026-11-15 の見本で採用。site.js が一覧の押したカードに同じ名前を付ける）。
+   題名（コミュニティ名）は移ると違和感があるので動かさない（2026-11-15 黒田さんの判断）。
    ページをまたぐのは Chrome 126+・Safari 18.2+。ほかのブラウザ・動きを減らす設定では今までどおり切り替わる */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
-  ::view-transition-group(vt-title), ::view-transition-group(vt-badge), ::view-transition-group(vt-company) { animation-duration: .38s; animation-timing-function: cubic-bezier(.2, 0, 0, 1); }
+  ::view-transition-group(vt-badge), ::view-transition-group(vt-company) { animation-duration: .38s; animation-timing-function: cubic-bezier(.2, 0, 0, 1); }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .25s; }
 }
-.case-head h1 { view-transition-name: vt-title; }
 .case-head .card-top .badge { view-transition-name: vt-badge; }
 .case-head .card-company { view-transition-name: vt-company; }
 /* 条件を変えたとき、カードが新しい位置へ動いて見える（2026-11-15 の見本で採用。app.js の withTransition が名前 card-ID を付ける）。

@@ -157,13 +157,14 @@ window.zukanSaved = (function () {
   return { load: load, has: has, toggle: toggle, setHeader: setHeader, fly: fly, sync: sync };
 })();
 
-// 一覧のカードから事例ページへ、題名・種別の札・企業名がつながって移る（2026-11-15 の見本で採用。ページをまたぐ View Transitions）。
-// 事例ページの見出しなどには CSS で名前（vt-title・vt-badge・vt-company）を付けてあり、一覧では押したカードにだけ同じ名前を付ける。
+// 一覧のカードから事例ページへ、種別の札・企業名がつながって移る（2026-11-15 の見本で採用。ページをまたぐ View Transitions）。
+// 題名（コミュニティ名）は移ると違和感があるので動かさない（2026-11-15 黒田さんの判断）。
+// 事例ページの札と企業名には CSS で名前（vt-badge・vt-company）を付けてあり、一覧では押したカードにだけ同じ名前を付ける。
 // 一覧に戻るときは、戻ってきた事例のカードに名前を付ける。目的の絵（右上の丸）は動かさない（黒田さんのメモ）。
 // 一覧と事例ページ、事例ページどうしのとき以外は動かさない。対応していないブラウザ・動きを減らす設定では今までどおり切り替わる
 (function () {
   if (!("onpageswap" in window)) return;
-  var VT = { ".card-title": "vt-title", ".badge": "vt-badge", ".card-company": "vt-company" };
+  var VT = { ".badge": "vt-badge", ".card-company": "vt-company" };
   function kind(url) {
     var p = new URL(url, location.href).pathname;
     if (/\/cases\/[^/]+\/(index\.html)?$/.test(p)) return "case";
