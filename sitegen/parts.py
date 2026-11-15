@@ -177,6 +177,12 @@ def type_badge(t):
     return f'<span class="badge {cls}">{esc(TYPE_LABEL.get(t, t))}</span>'
 
 
+def meta_line(items):
+    """カードの補足の1行（業種・開始年・段階・場）。項目ごとに span で包み、項目の途中では改行しない（「オンオフ両／方」と割れないように。
+    2026-11-15 の見本で採用）。区切りの「・」は前の項目に付けて、行の頭に来ないようにする"""
+    return "&nbsp;・ ".join(f'<span class="mi">{phrase(m)}</span>' for m in items)
+
+
 def card(c, prefix="", order=None):
     meta = [x for x in [c.get("業種"), c.get("開始年") and f"{c['開始年']}年〜", c.get("段階"), c.get("場")] if x]
     point = c.get("工夫のポイント") or c.get("主な施策")
@@ -213,8 +219,8 @@ def card(c, prefix="", order=None):
     return f"""<li class="card" {attrs} data-search="{esc(search)}" data-name="{esc(name_key)}" data-tags="{esc(tag_key)}">
   <a href="{prefix}cases/{esc(c['ID'])}/">
     {emo}<div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
-    <h3 class="card-title">{esc(c['_title'])}</h3>
-    {f'<p class="card-meta">{" ・ ".join(esc(m) for m in meta)}</p>' if meta else ''}
+    <h3 class="card-title">{phrase(c['_title'])}</h3>
+    {f'<p class="card-meta">{meta_line(meta)}</p>' if meta else ''}
     {f'<p class="card-point">{esc(shorten(point, 90))}</p>' if point else ''}
     {f'<ul class="tags tags-purpose">{tags}</ul>' if tags else ''}
   </a>

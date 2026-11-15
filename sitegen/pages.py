@@ -238,7 +238,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
     if c.get("工夫のポイント"):
         lede = f"""<section class="lede" style="--i: 0">
     <h2><img src="../../assets/emoji/1f4a1.png" alt="" width="20" height="20">この事例のポイント</h2>
-    <p>{esc(c['工夫のポイント'])}</p>
+    <p>{phrase(c['工夫のポイント'])}</p>
   </section>"""
     # 札にしない基本の情報（開始年・規模・ほかで使われていないツール）は、流れの段の頭に小さく添える
     size = c.get("規模") or c.get("規模の区分")
@@ -318,7 +318,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
   <nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../">事例一覧</a></li><li aria-current="page">{esc(c['企業名'])}</li></ol></nav>
   <header class="case-head">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
-    <h1>{esc(c['_title'])}</h1>
+    <h1>{phrase(c['_title'])}</h1>
     {f'<ul class="case-chips" aria-label="基本の情報">{chips}</ul>' if chips else ''}
     {f'<ul class="case-purposes" aria-label="目的">{purposes}</ul>' if purposes else ''}
     {save_button(c)}
@@ -393,7 +393,7 @@ def rel_card(o, click):
     tags = "".join(f'<li><img src="../../assets/emoji/{icon(p)}.png" alt="" width="14" height="14">{esc(p)}</li>' for p in o["_purpose"][:2])
     return (f'<a class="rel" href="../{esc(o["ID"])}/" data-goatcounter-click="{esc(click)}">{emo}'
             f'<span class="rel-top">{type_badge(o.get("種別"))}</span><small>{esc(o["企業名"])}</small>'
-            f'<strong>{esc(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}'
+            f'<strong>{phrase(o["_title"])}</strong>{f"<span class=rel-point>{esc(pt)}</span>" if pt else ""}'
             f'{f"<ul class=rel-tags>{tags}</ul>" if tags else ""}</a>')
 
 

@@ -66,6 +66,24 @@ def esc(s):
     return html.escape(s or "", quote=True)
 
 
+_BUDOUX = None
+
+
+def phrase(s):
+    """文節の切れ目に <wbr> を入れて HTML にする（2026-11-15 の見本で採用：iPhone の Safari でも語の途中で改行しないように）。
+    budoux が入っているとき（Actions では入れる）だけ区切り、なければ esc() と同じ。CSS は <wbr> を含む要素だけ word-break: keep-all にする"""
+    global _BUDOUX
+    if _BUDOUX is None:
+        try:
+            import budoux
+            _BUDOUX = budoux.load_default_japanese_parser()
+        except ImportError:
+            _BUDOUX = False
+    if not _BUDOUX or not s:
+        return esc(s)
+    return "<wbr>".join(esc(chunk) for chunk in _BUDOUX.parse(s))
+
+
 def fail(msg):
     print(f"[公開を中止] {msg}", file=sys.stderr)
     sys.exit(1)

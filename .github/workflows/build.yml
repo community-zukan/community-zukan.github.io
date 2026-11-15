@@ -49,7 +49,7 @@ jobs:
         timeout-minutes: 5
         run: |
           python3 -m venv .venv
-          .venv/bin/pip install --quiet --disable-pip-version-check "pillow==11.3.0" "pykakasi==2.3.0"
+          .venv/bin/pip install --quiet --disable-pip-version-check "pillow==11.3.0" "pykakasi==2.3.0" "budoux==0.7.0"
       # 事例ページごとの共有画像（1200×630）を作る。失敗してもサイト共通の画像のまま更新は続ける
       - name: 事例ページの共有画像を作る
         continue-on-error: true

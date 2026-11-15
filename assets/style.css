@@ -72,6 +72,11 @@ body {
 @supports (word-break: auto-phrase) {
   h1, h2, h3, .card-title { word-break: auto-phrase; text-wrap: balance; }
 }
+/* 文節で改行する（2026-11-15 の見本で採用）：ビルドが BudouX で文節の切れ目に <wbr> を入れた要素は、その印でだけ改行する。
+   auto-phrase は Chrome だけなので、iPhone の Safari でも語の途中で割れないようにする。入りきらない長い語だけ端で折る */
+:is(h1, h2, h3, .card-title, .lede p, .rel strong, .card-meta .mi):has(> wbr) { word-break: keep-all; overflow-wrap: anywhere; }
+/* カードの補足（業種・開始年・段階・場）は項目ごとのかたまりで次の行へ送る */
+.card-meta .mi { display: inline-block; max-width: 100%; }
 a { color: var(--sky); text-underline-offset: .2em; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible {
   outline: 3px solid var(--sky);
