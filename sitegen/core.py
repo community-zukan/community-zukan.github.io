@@ -241,8 +241,10 @@ def assign_tools(cases):
 def industry_group(cfg, v):
     if not v:
         return ""
+    # 言葉は業種の一部に当たれば、そのまとまりに入れる（上のまとまりから順に見る）。「=保険」の形は、業種がその言葉と同じときだけ当たる
+    # （「保険」を一部で当てると「業界団体（保険代理店）」まで金融に入ってしまうため。2026-11-15）
     for name, keys in cfg["industry_groups"]:
-        if any(k in v for k in keys):
+        if any((v == k[1:]) if k.startswith("=") else (k in v) for k in keys):
             return name
     return "その他"
 
