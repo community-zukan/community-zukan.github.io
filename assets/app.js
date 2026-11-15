@@ -353,6 +353,147 @@ function zukanListInit() {
     if (narrowMq.addEventListener) narrowMq.addEventListener('change', onWide);
   }
 
+  // 入力中の候補（2026-11-15 の見本で採用）。検索欄に文字を入れると、事例（企業名・コミュニティ名・読みに当たったもの。押すと事例ページへ）、
+  // ツール（件数つき。押すとそのツールの一覧）、目的・業種など（押すとその条件の一覧）を出す。上下キーで選び Enter で決め、Esc で閉じる。
+  // 当たった文字は太さ600と下線で示す（マーカーは使わない）。キーワードの絞り込みは今までどおり裏で効く
+  var suggest = document.getElementById('suggest');
+  var sgItems = [];
+  var sgActive = -1;
+  var toolCounts = {};
+  cards.forEach(function (c) { (c.dataset.tool || '').split('|').forEach(function (t) { if (t) toolCounts[t] = (toolCounts[t] || 0) + 1; }); });
+  var purposeIcon = {};
+  Array.prototype.forEach.call(document.querySelectorAll('.tile[data-purpose]'), function (t) {
+    var img = t.querySelector('img');
+    if (img && t.getAttribute('data-purpose')) purposeIcon[t.getAttribute('data-purpose')] = img.getAttribute('src');
+  });
+  var facetOpts = boxes.filter(function (b) { return b.name !== 'tool'; }).map(function (b) {
+    var small = b.parentNode.querySelector('small');
+    return { box: b, name: b.value, kind: FACET_LABEL[b.name] || '', n: small ? small.textContent : '' };
+  });
+  function sgHl(text, words) {
+    var nt = normalize(text);
+    if (nt.length !== text.length) return escHtml(text);   // 正規化で文字数が変わる語は印を付けない（位置がずれるため）
+    for (var i = 0; i < words.length; i++) {
+      var at = words[i] ? nt.indexOf(words[i]) : -1;
+      if (at !== -1) return escHtml(text.slice(0, at)) + '<b class="sg-hit">' + escHtml(text.slice(at, at + words[i].length)) + '</b>' + escHtml(text.slice(at + words[i].length));
+    }
+    return escHtml(text);
+  }
+  function hitAny(hay, words) { return words.some(function (w) { return w && hay.indexOf(w) !== -1; }); }
+  function closeSuggest() {
+    if (!suggest || suggest.hidden) return;
+    suggest.hidden = true;
+    q.setAttribute('aria-expanded', 'false');
+    q.removeAttribute('aria-activedescendant');
+    sgActive = -1;
+  }
+  function buildSuggest() {
+    if (!suggest) return;
+    var raw = q.value.trim();
+    var nq = normalize(raw);
+    if (!nq) { closeSuggest(); return; }
+    var words = alternatives(nq).map(normalize);
+    var html = '';
+    sgItems = [];
+    var add = function (item, inner, cls) {
+      var id = 'sg-' + sgItems.length;
+      sgItems.push(item);
+      html += '<div class="sg-opt' + (cls ? ' ' + cls : '') + '" role="option" id="' + id + '" data-i="' + (sgItems.length - 1) + '" aria-selected="false">' + inner + '</div>';
+    };
+    // 事例：いまの並び順のまま、名前と読みに当たったものを5件まで
+    var hits = Array.prototype.filter.call(list.children, function (c) { return hitAny(c.dataset.name || '', words); }).slice(0, 5);
+    if (hits.length) {
+      html += '<div class="sg-gh" role="presentation">事例</div>';
+      hits.forEach(function (c) {
+        var title = (c.querySelector('.card-title') || {}).textContent || '';
+        var co = (c.querySelector('.card-company') || {}).textContent || '';
+        var badge = c.querySelector('.badge');
+        add({ kind: 'case', href: c.querySelector('a').getAttribute('href'), id: idOf(c) },
+          (badge ? badge.outerHTML : '') + '<span class="sg-main"><span class="sg-title">' + sgHl(title, words) + '</span><span class="sg-sub">' + sgHl(co, words) + '</span></span>');
+      });
+    }
+    var tools = Object.keys(toolCounts).filter(function (t) { return hitAny(normalize(t), words); })
+      .sort(function (a, b) { return toolCounts[b] - toolCounts[a]; }).slice(0, 4);
+    if (tools.length) {
+      html += '<div class="sg-gh" role="presentation">ツール</div>';
+      tools.forEach(function (t) {
+        add({ kind: 'tool', value: t }, '<span class="sg-name">' + sgHl(t, words) + '</span><span class="sg-n">' + toolCounts[t] + '件</span>');
+      });
+    }
+    var facets = facetOpts.filter(function (o) { return hitAny(normalize(o.name), words); }).slice(0, 4);
+    if (facets.length) {
+      html += '<div class="sg-gh" role="presentation">目的・業種など</div>';
+      facets.forEach(function (o) {
+        var icon = purposeIcon[o.name] ? '<img src="' + escHtml(purposeIcon[o.name]) + '" alt="" width="20" height="20">' : '';
+        add({ kind: 'facet', opt: o }, icon + '<span class="sg-name">' + sgHl(o.name, words) + '</span><span class="sg-kind">' + escHtml(o.kind) + '</span><span class="sg-n">' + escHtml(o.n) + '件</span>');
+      });
+    }
+    add({ kind: 'all' }, '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><span class="sg-name">「' + escHtml(raw) + '」で一覧を絞り込む</span>', 'sg-all');
+    suggest.innerHTML = html;
+    suggest.hidden = false;
+    q.setAttribute('aria-expanded', 'true');
+    sgActive = -1;
+    q.removeAttribute('aria-activedescendant');
+  }
+  function moveSuggest(d) {
+    if (!sgItems.length) return;
+    // -1（どれも選んでいない）→ 0 → … → 最後 → -1 と回る
+    var span = sgItems.length + 1;
+    sgActive = ((sgActive + 1 + d) % span + span) % span - 1;
+    Array.prototype.forEach.call(suggest.querySelectorAll('.sg-opt'), function (o, i) {
+      var on = i === sgActive;
+      o.classList.toggle('is-active', on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+      if (on) o.scrollIntoView({ block: 'nearest' });
+    });
+    if (sgActive >= 0) q.setAttribute('aria-activedescendant', 'sg-' + sgActive); else q.removeAttribute('aria-activedescendant');
+  }
+  function pickSuggest(i) {
+    var it = sgItems[i];
+    if (!it) return;
+    if (it.kind === 'case') { gc('suggest/case/' + it.id, '候補から事例：' + it.id); location.href = it.href; return; }
+    closeSuggest();
+    if (it.kind === 'all') { gc('suggest-all', '候補から一覧を絞り込む'); return; }
+    q.value = '';
+    if (it.kind === 'tool') {
+      var box = boxes.filter(function (b) { return b.name === 'tool' && b.value === it.value; })[0];
+      if (box) box.checked = true; else toolSel = it.value;
+      gc('suggest/tool/' + it.value, '候補からツール：' + it.value);
+    } else {
+      it.opt.box.checked = true;
+      gc('suggest/' + it.opt.box.name + '/' + it.opt.name, '候補から' + it.opt.kind + '：' + it.opt.name);
+    }
+    withTransition(function () { apply(true); });
+  }
+  if (suggest) {
+    q.addEventListener('input', buildSuggest);
+    q.addEventListener('focus', function () { if (q.value.trim()) buildSuggest(); });
+    q.addEventListener('blur', function () { setTimeout(closeSuggest, 150); });
+    q.addEventListener('keydown', function (ev) {
+      if (ev.isComposing || ev.keyCode === 229) return;   // 日本語の変換中の Enter などは使わない
+      if (suggest.hidden) { if (ev.key === 'ArrowDown' && q.value.trim()) { buildSuggest(); ev.preventDefault(); } return; }
+      if (ev.key === 'ArrowDown') { moveSuggest(1); ev.preventDefault(); }
+      else if (ev.key === 'ArrowUp') { moveSuggest(-1); ev.preventDefault(); }
+      else if (ev.key === 'Escape') { closeSuggest(); ev.preventDefault(); }
+      else if (ev.key === 'Enter') { if (sgActive >= 0) { ev.preventDefault(); pickSuggest(sgActive); } else closeSuggest(); }
+    });
+    // 押しても検索欄からフォーカスを外さない（外すと blur で閉じてしまう）
+    suggest.addEventListener('mousedown', function (ev) { ev.preventDefault(); });
+    suggest.addEventListener('click', function (ev) {
+      var o = ev.target.closest('.sg-opt');
+      if (o) pickSuggest(parseInt(o.getAttribute('data-i'), 10));
+    });
+  }
+  // 「/」キーで検索欄へ（入力欄にいるときは効かない）
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== '/' || ev.ctrlKey || ev.metaKey || ev.altKey || ev.isComposing) return;
+    var t = ev.target;
+    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (sheet && sheet.open) return;
+    ev.preventDefault();
+    q.focus();
+  });
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）

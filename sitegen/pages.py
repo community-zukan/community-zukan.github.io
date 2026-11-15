@@ -128,7 +128,12 @@ def build_index(cfg, cases):
 <section class="finder wrap" aria-label="事例を探す">
   <div class="search-row">
     <label class="visually-hidden" for="q">キーワード</label>
-    <input id="q" type="search" placeholder="企業名・ツールなどで検索" autocomplete="off">
+    <div class="q-box">
+      <input id="q" type="search" placeholder="企業名・ツールなどで検索" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest">
+      <kbd class="q-kbd" aria-hidden="true" title="/ キーで検索欄へ">/</kbd>
+    </div>
+    <!-- 入力中の候補（2026-11-15 の見本で採用。app.js の buildSuggest）。幅は検索の行いっぱい -->
+    <div class="suggest" id="suggest" role="listbox" aria-label="検索の候補" hidden></div>
     <label class="visually-hidden" for="sort">並び順</label>
     <select id="sort">
       <option value="score" selected>おすすめ順</option>
