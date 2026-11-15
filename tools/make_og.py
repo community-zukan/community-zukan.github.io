@@ -9,7 +9,7 @@
 - 事例ごとの画像は og-items/{ID}.png に書きます。build.py が見つけたら /og/{ID}.png として公開し、
   事例ページの og:image にします。画像がない事例は assets/ogp.png のままです。
 - og-items/ はリポジトリに入れません（毎日のビルドで作り直します）。
-- 図鑑ノートの記事ごとの画像は og-items/note-<スラッグ>.png に書きます（一覧のカード・SNSの共有画像に使う）。
+- 図鑑ノートの記事ごとの画像は og-items/note-<スラッグ>.png に書きます（SNSの共有画像に使う）。一覧のカード用に幅720pxの AVIF・WebP（note-<スラッグ>-720.avif／.webp）も作ります。
   薄い空色の地に、右上の円と絵文字、「図鑑ノート｜社内」の札、題名、署名（2026-11-05 の見本の案B）。
   絵文字は Noto Emoji の 512px を tools/emoji/cache/ に取ってきて使い、取れないときは assets/emoji/ の 128px を使います。
 - 載せるのは種別・企業名・コミュニティ名だけです。企業のロゴや出典の画像は使いません。
@@ -251,6 +251,18 @@ def make_note(cfg, n, path):
     d.text((72, H - 64), "文：黒田悠介（コミュニティ研究家）", font=font("regular", 28), fill=INK2, anchor="ls")
     d.text((W - 72, H - 64), cfg["name"], font=font("bold", 28), fill=INK2, anchor="rs")
     img.save(path, optimize=True)
+    save_small(img, path)
+
+
+def save_small(img, path):
+    """一覧のカード用の小さい版（幅720px の AVIF と WebP）を、PNG の横に置く（2026-11-15 の見本で採用）。
+    表示は幅300px前後なので、PNG（1枚およそ70KB）をそのまま縮めて出すより5分の1ほど軽い。SNS の共有画像は PNG のまま"""
+    from PIL import features
+    small = img.convert("RGB").resize((720, 378), Image.LANCZOS)
+    base = path[:-4]
+    small.save(base + "-720.webp", quality=80)
+    if features.check("avif"):
+        small.save(base + "-720.avif", quality=60)
 
 
 def make_notes(cfg):

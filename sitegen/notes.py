@@ -135,10 +135,20 @@ def note_image(n, og_notes):
     return f"og/note-{n['slug']}.png" if n["slug"] in og_notes else "assets/ogp.png"
 
 
+def note_picture(n, og_notes, rel):
+    """一覧のカードの画像。小さい AVIF・WebP があれば <picture> で先に出し、PNG は対応していないブラウザ向けに残す（2026-11-15 の見本で採用）"""
+    img = f'<img class="note-card-img" src="{rel}{note_image(n, og_notes)}" alt="" loading="lazy" width="1200" height="630">'
+    if n["slug"] not in og_notes:
+        return img
+    sources = "".join(f'<source type="image/{ext}" srcset="{rel}og/note-{esc(n["slug"])}-720.{ext}">' for ext in ("avif", "webp")
+                      if os.path.exists(os.path.join(OUT, "og", f"note-{n['slug']}-720.{ext}")))
+    return f'<picture class="note-card-pic">{sources}{img}</picture>' if sources else img
+
+
 def note_list(notes, og_notes, rel):
     def li(n):
         meta = f"紹介する事例 {len(n['ids'])}件・{fmt_day(n['published'])}"
-        return (f'<li><a href="{rel}notes/{esc(n["slug"])}/"><img class="note-card-img" src="{rel}{note_image(n, og_notes)}" alt="" loading="lazy" width="1200" height="630">'
+        return (f'<li><a href="{rel}notes/{esc(n["slug"])}/">{note_picture(n, og_notes, rel)}'
                 f'<span class="note-card-body"><strong>{esc(n["title"])}</strong><span>{esc(n["description"])}</span><small>{meta}</small></span></a></li>')
     return '<ul class="note-grid">' + "".join(li(n) for n in notes) + "</ul>"
 
@@ -224,4 +234,9 @@ def copy_og_notes(notes):
             os.makedirs(os.path.join(OUT, "og"), exist_ok=True)
             shutil.copy(f, os.path.join(OUT, "og", f"note-{n['slug']}.png"))
             found.add(n["slug"])
+            # 一覧のカード用の小さい版（AVIF・WebP。make_og.py の save_small）もあれば置く
+            for ext in ("avif", "webp"):
+                small = os.path.join(ROOT, "og-items", f"note-{n['slug']}-720.{ext}")
+                if os.path.exists(small):
+                    shutil.copy(small, os.path.join(OUT, "og", f"note-{n['slug']}-720.{ext}"))
     return found
