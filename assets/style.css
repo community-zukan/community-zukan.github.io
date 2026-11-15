@@ -1034,3 +1034,47 @@ main { flex: 1 0 auto; }
   .logo { font-size: 16px; letter-spacing: 0; gap: 6px; }
   .logo-mark { width: 24px; height: 24px; }
 }
+
+/* 印刷・PDF（2026-11-15 の見本で採用）：事例ページを社内の会議や稟議の資料に回しやすくする。ヘッダー・ボタン・近い事例などは紙に出さず、
+   いちばん上に図鑑の名前と事例の URL、出典には行き先の URL を書き出す。多くの事例が A4 1枚に収まる。印刷のボタンは置かない（ブラウザの印刷から） */
+@media print {
+  @page { size: A4; margin: 12mm 14mm; }
+  :root, :root[data-theme="dark"] {
+    color-scheme: light;
+    --base: #f7f9fb; --bg-top: #ffffff; --bg-bottom: #ffffff; --card: #ffffff; --ink: #1a1d23; --text-body: #4a4f57; --text-sub: #5e636b; --line: #e3e6ea;
+    --sky: #1874b8; --sky-on-tint: #1568a6; --chip-bg: #e8eef5; --on-sky: #ffffff; --base-yellow: #fff3c4; --fan-fg: #6b4e00;
+    --multi-fg: #2e6b3c; --multi-bg: #e4f1e1; --hint: #fffaeb; --hint-line: #ecd68a; --tint-line: #cddcec;
+  }
+  body { background: var(--card); font-size: 14px; line-height: 1.6; }
+  .skip, .site-header, .case-top, .case-head .save, .save-tip, .actions, .useful-box, .trail, .feedback, .ai-box, .case-notes, .related, .site-footer { display: none !important; }
+  .lede, .flow > li { animation: none !important; }
+  .flow::after { display: none; }
+  .case.wrap { max-width: none; padding: 0; }
+  .case::before { content: "コミュニティ図鑑　" attr(data-url); display: block; margin: 0 0 12px; padding-bottom: 4px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--text-sub); }
+  a { color: inherit; text-decoration: none; }
+  a[target="_blank"]::after { content: none; }
+  .badge { border: 1px solid var(--line); }
+  .case-purposes a { border-color: var(--tint-line); }
+  .case-head { margin-bottom: 0; }
+  .case-head h1 { font-size: 24px; margin: 4px 0; }
+  .lede { margin: 12px 0; padding: 12px 16px; box-shadow: none; break-inside: avoid; }
+  .lede p { font-size: 16px; line-height: 1.7; }
+  .flow { margin-bottom: 12px; }
+  .flow::before { left: 17px; }
+  .flow > li { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; margin-bottom: 8px; break-inside: avoid; }
+  .flow .step { width: 36px; height: 36px; }
+  .flow .step img { width: 22px; height: 22px; }
+  .flow h2 { font-size: 16px; margin: 4px 0 0; }
+  .flow p.flow-meta { margin-bottom: 0; }
+  .hint { padding: 8px 16px; }
+  .hint-note { margin-top: 4px !important; }
+  .source { padding-top: 12px; }
+  .source h2 { font-size: 16px; margin: 0 0 4px; break-after: avoid; }
+  .source-links { display: block; margin: 0 0 4px; }
+  .source-button { display: block; padding: 0; min-height: 0; border: 0; font-size: 0; line-height: 1.6; }
+  .source-domain { font-size: 13px; color: var(--ink); }
+  .source-links .source-button::after { content: attr(href) !important; margin-left: 8px; font-size: 12px; color: var(--text-sub); word-break: break-all; }
+  .source-meta { font-size: 13px; line-height: 1.6; }
+  .source-meta div { padding: 0; }
+  .missing { font-size: 13px; }
+}

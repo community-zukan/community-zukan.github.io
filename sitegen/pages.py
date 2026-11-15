@@ -334,7 +334,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
                       f'{note_list(in_notes, og_notes or set(), "../../")}</section>')
     desc = shorten(f"{c['企業名']}の{c['_title']}。" + (c.get("工夫のポイント") or c.get("主な施策") or ""), 120)
     body = f"""
-<article class="case wrap">
+<article class="case wrap" data-url="{esc(cfg['base_url'].rstrip('/') + '/cases/' + c['ID'] + '/')}">
   <div class="case-top"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="../../">事例一覧</a></li><li aria-current="page">{esc(c['企業名'])}</li></ol></nav><p class="trail-pos" id="trail-pos" hidden></p></div>
   <header class="case-head">
     <div class="card-top">{type_badge(c.get('種別'))}<span class="card-company">{esc(c['企業名'])}</span></div>
