@@ -793,6 +793,20 @@ main { flex: 1 0 auto; }
 .rel:hover { border-color: var(--sky); color: var(--ink); }
 @media (hover: hover) { .rel:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); } }
 @media (prefers-reduced-motion: reduce) { .rel:hover { transform: none !important; } }
+/* 流れの線が、読み進めると伸びる（2026-11-15 の見本で採用。CSS のスクロール連動だけで、JavaScript は使わない）：
+   画面のまん中を「いま読んでいる位置」とみなし、流れの上端がまん中に来たら空色の線が伸び始め、下端で伸びきる。
+   丸い絵は、その中心がまん中を通るときに枠が空色になる。対応していないブラウザ・動きを減らす設定では灰色の線のまま */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .flow { view-timeline: --flow block; }
+    .flow > li { z-index: 1; }
+    .flow::after { content: ""; position: absolute; z-index: 0; left: 21px; top: 24px; bottom: 24px; width: 2px; background: var(--sky); transform-origin: top;
+      animation: flow-grow linear both; animation-timeline: --flow; animation-range: entry 50% exit 50%; }
+    .flow .step { animation: flow-reach linear both; animation-timeline: view(); animation-range: cover 47% cover 53%; }
+  }
+}
+@keyframes flow-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes flow-reach { from { border-color: var(--line); box-shadow: 0 0 0 0 var(--sky); } to { border-color: var(--sky); box-shadow: 0 0 0 1px var(--sky); } }
 /* 読み込んだとき、ポイント → 何をしたか → どうなったか…の順に、流れに沿ってふわっと出す（--i が順番） */
 .lede, .flow > li { animation: card-rise .5s ease both; animation-delay: calc(var(--i, 0) * .15s + .1s); }
 @media (prefers-reduced-motion: reduce) { .lede, .flow > li { animation: none; } }
