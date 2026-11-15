@@ -324,7 +324,7 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
                 f'<p>図鑑の事例からランダムに1件めくります。</p>'
                 f'<button type="button" class="rel-pick-button" id="rel-pick-button"><img src="../../assets/emoji/1f3b2.png" alt="" width="22" height="22">ほかの事例をひく</button></div>'
                 f'<div class="rel-pick-card" id="rel-pick-card" aria-live="polite"></div></div>')
-        rel_html = (f'<section class="related"><h2>近い事例</h2><div class="rel-tabs" role="tablist" aria-label="近い事例の切り口">{"".join(tabs)}</div>'
+        rel_html = (f'<section class="related" id="related"><h2>近い事例</h2><div class="rel-tabs" role="tablist" aria-label="近い事例の切り口">{"".join(tabs)}</div>'
                     f'{"".join(panels)}{pick}</section>')
     note_html_ = ""
     in_notes = [n for n in (notes or []) if c["ID"] in n["ids"]]
@@ -346,17 +346,10 @@ def build_case(cfg, c, related, og_image=None, notes=None, og_notes=None):
   {lede}
   {old_source_note(c)}
   {flow}
+  {useful_box(cfg, c, bool(rel_html))}
   {source}
   {share_bar(cfg, c)}
   <div class="feedback">
-    <div class="useful" id="useful" hidden>
-      <p>この事例は参考になりましたか。</p>
-      <span class="useful-buttons">
-        <button type="button" class="small-button" id="useful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="useful-{esc(c['ID'])}">役に立った</button>
-        <button type="button" class="small-button" id="notuseful-button" data-id="{esc(c['ID'])}" data-goatcounter-click="notuseful-{esc(c['ID'])}">いまひとつ</button>
-      </span>
-      <span class="useful-thanks" id="useful-thanks" role="status" aria-live="polite"></span>
-    </div>
     {report_link(cfg, c)}
   </div>
   {note_html_}
@@ -449,14 +442,49 @@ def share_bar(cfg, c):
 </div>"""
 
 
-def report_link(cfg, c):
+def report_url(cfg, c):
+    """連絡フォームの URL（対象の事例を事前入力する）。フォームがなければ空。"""
     if not cfg.get("contact_url"):
         return ""
     url = cfg["contact_url"]
     if cfg.get("contact_id_entry"):
         target = f"{c['ID']} {c['企業名']} {c['_title']}"
         url += "?usp=pp_url&" + urllib.parse.urlencode({cfg["contact_id_entry"]: target})
-    return f'<p class="report"><a href="{esc(url)}" target="_blank" rel="noopener">この事例の誤りを知らせる</a></p>'
+    return url
+
+
+def report_link(cfg, c):
+    url = report_url(cfg, c)
+    return f'<p class="report"><a href="{esc(url)}" target="_blank" rel="noopener">この事例の誤りを知らせる</a></p>' if url else ""
+
+
+def useful_box(cfg, c, has_related):
+    """役に立った・いまひとつ（2026-11-15 の見本で採用）。「あなたの会社なら」を読み終えた直後、出典の前に白い箱で聞く。
+    押すと、その場所にお礼と次の一歩（役に立った：あとで見るにも入れる・近い事例を見る／いまひとつ：足りない点を知らせる・近い事例を見る）を出す。
+    押したことはこのブラウザに残す（case.js）。JavaScript が動くときだけ出す。GoatCounter は useful-ID・notuseful-ID は今までどおり"""
+    i = esc(c["ID"])
+    url = report_url(cfg, c)
+    report = (f'<a class="useful-link" id="useful-report" href="{esc(url)}" target="_blank" rel="noopener" '
+              f'data-goatcounter-click="report-after-notuseful-{i}" hidden>足りない点を知らせる</a>') if url else ""
+    to_rel = (f'<a class="useful-link" id="useful-to-rel" href="#related" data-goatcounter-click="related-after-useful-{i}">'
+              f'近い事例を見る<span aria-hidden="true">&nbsp;↓</span></a>') if has_related else ""
+    return f"""<section class="useful-box" id="useful" aria-labelledby="useful-title" hidden>
+    <h2 id="useful-title">この事例は参考になりましたか</h2>
+    <div class="useful-choice" id="useful-choice">
+      <span class="useful-buttons">
+        <button type="button" class="useful-btn" id="useful-button" data-id="{i}" data-goatcounter-click="useful-{i}">役に立った</button>
+        <button type="button" class="useful-btn" id="notuseful-button" data-id="{i}" data-goatcounter-click="notuseful-{i}">いまひとつ</button>
+      </span>
+    </div>
+    <div class="useful-done" id="useful-done" hidden>
+      <p class="useful-thanks" id="useful-thanks" tabindex="-1" role="status"></p>
+      <div class="useful-next">
+        <button type="button" class="action-button save useful-save" id="useful-save" aria-pressed="false" data-goatcounter-click="save-after-useful-{i}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見るにも入れる</span></button>
+        {report}
+        {to_rel}
+      </div>
+    </div>
+  </section>"""
 
 
 def related_rows(cfg, c, cases, per_row=4):

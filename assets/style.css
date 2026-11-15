@@ -686,17 +686,29 @@ main { flex: 1 0 auto; }
 
 .report { font-size: 13px; margin: 0; }
 .feedback { margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6); font-size: 13px; color: var(--text-sub); }
-.useful { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
-.useful[hidden] { display: none; }
-.useful p { margin: 0; }
-.useful-buttons { display: flex; flex-wrap: nowrap; gap: var(--space-2); }  /* 「役に立った」と「いまひとつ」を別の行に分けない */
+.feedback:not(:has(*)) { display: none; }
+/* 役に立った（2026-11-15 の見本で採用）：「あなたの会社なら」の直後に白い箱で聞く。2つのボタンは同じ大きさで1組（別の行に分けない） */
+.useful-box { margin: 0 0 var(--space-8); padding: var(--space-6); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.useful-box[hidden] { display: none; }
+.useful-box h2 { margin: 0 0 var(--space-4); font-size: 18px; }
+.useful-buttons { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); max-width: 400px; }
+.useful-btn { min-height: 44px; padding: 0 var(--space-3); cursor: pointer; white-space: nowrap; font: inherit; font-size: 16px; font-weight: 600; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.useful-btn:hover { border-color: var(--sky); color: var(--sky); }
+.useful-done[hidden], .useful-choice[hidden] { display: none; }
+.useful-thanks { margin: 0 0 var(--space-3); font-size: 16px; font-weight: 600; color: var(--ink); }
+.useful-thanks:focus { outline: none; }
+.useful-next { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-6); }
+.useful-save { min-height: 44px; white-space: nowrap; }
+.useful-link { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--sky-on-tint); text-decoration: none; white-space: nowrap; }
+.useful-link:hover { text-decoration: underline; }
+.useful-link[hidden] { display: none; }
+@media (max-width: 400px) { .useful-box { padding: var(--space-4); } .useful-btn { padding: 0 var(--space-2); } }
+@media (prefers-reduced-motion: no-preference) { .useful-done.is-in { animation: card-rise .3s ease-out both; } }
 .small-button, .operator-link .button { white-space: nowrap; }
 .small-button { font: inherit; font-size: 13px; color: var(--text-body); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 4px 14px; min-height: 36px; cursor: pointer; }
 .small-button:hover { border-color: var(--sky); color: var(--sky); }
 .small-button:disabled { cursor: default; opacity: .6; }
 .small-button[aria-pressed="true"] { opacity: 1; border-color: var(--sky); color: var(--sky); font-weight: 600; }
-.useful-thanks { flex-basis: 100%; }
-.useful-thanks:empty { display: none; }
 
 /* あとで見る（/saved/） */
 .saved-page { padding-top: var(--space-6); padding-bottom: var(--space-16); }

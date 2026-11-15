@@ -15,6 +15,7 @@
     save.hidden = false;
     render();
     saved.setHeader(false);
+    document.addEventListener('zukan-saved-change', render);
     // 入れると、ボタンのしおりが弧を描いてヘッダーのしおりへ飛び、着いたところで件数が切り替わる（2026-11-15 の見本で採用。site.js の fly）。
     // 外すときは飛ばない。初めて入れたときだけ、開き方を一行添える（一度出したことはこのブラウザに残す）
     save.addEventListener('click', function () {
@@ -29,37 +30,62 @@
     });
   }
 
-  // 役に立った・いまひとつ：押した回数は GoatCounter が数える（data-goatcounter-click）。押したことはこのブラウザにだけ残す
+  // 役に立った・いまひとつ（2026-11-15 の見本で採用）：「あなたの会社なら」の直後の白い箱。押した回数は GoatCounter が数える（data-goatcounter-click）。
+  // 押すと、その場所にお礼と次の一歩を出す。押したことはこのブラウザにだけ残し、次に開いたときもお礼の形で出す
   var useful = document.getElementById('useful');
   if (useful) {
     var yes = document.getElementById('useful-button');
     var no = document.getElementById('notuseful-button');
+    var choice = document.getElementById('useful-choice');
+    var doneBox = document.getElementById('useful-done');
     var thanks = document.getElementById('useful-thanks');
+    var usave = document.getElementById('useful-save');
+    var ureport = document.getElementById('useful-report');
     var UKEY = 'zukan-useful';
     var cid = yes.getAttribute('data-id');
     var loadU = function () { try { return JSON.parse(localStorage.getItem(UKEY) || '[]') || []; } catch (e) { return []; } };
-    var done = function (good) {
-      yes.disabled = true;
-      no.disabled = true;
-      (good ? yes : no).setAttribute('aria-pressed', 'true');
-      thanks.textContent = good ? 'ありがとうございました。' : 'ありがとうございました。足りない点は「この事例の誤りを知らせる」からも送れます。';
+    var renderSave = function () {
+      if (!usave || !window.zukanSaved) return;
+      var on = window.zukanSaved.has(cid);
+      usave.setAttribute('aria-pressed', on ? 'true' : 'false');
+      usave.querySelector('.save-label').textContent = on ? 'あとで見るに入れました' : 'あとで見るにも入れる';
+    };
+    var done = function (good, fresh) {
+      thanks.textContent = good ? 'ありがとうございました' : 'ありがとうございました。足りない点があれば教えてください';
+      if (usave) usave.hidden = !good || !window.zukanSaved;
+      if (ureport) ureport.hidden = good;
+      renderSave();
+      choice.hidden = true;
+      doneBox.hidden = false;
+      if (fresh) {
+        doneBox.classList.remove('is-in'); void doneBox.offsetWidth; doneBox.classList.add('is-in');
+        thanks.focus({ preventScroll: true });
+      }
     };
     useful.hidden = false;
     var past = loadU();
-    if (past.indexOf(cid) !== -1) done(true);
-    else if (past.indexOf(cid + ':no') !== -1) done(false);
+    if (past.indexOf(cid) !== -1) done(true, false);
+    else if (past.indexOf(cid + ':no') !== -1) done(false, false);
     var press = function (good) {
-      if (yes.disabled) return;
       try {
         var l = loadU();
         l.push(good ? cid : cid + ':no');
         localStorage.setItem(UKEY, JSON.stringify(l));
       } catch (e) { /* 保存できなくても数えるのは続ける */ }
-      // GoatCounter の数え上げがクリックの処理を終えてからボタンを止める
-      setTimeout(function () { done(good); }, 0);
+      // GoatCounter の数え上げがクリックの処理を終えてから切り替える
+      setTimeout(function () { done(good, true); }, 0);
     };
     yes.addEventListener('click', function () { press(true); });
     no.addEventListener('click', function () { press(false); });
+    if (usave && window.zukanSaved) {
+      usave.addEventListener('click', function () {
+        var on = window.zukanSaved.toggle(cid);
+        if (on === null) return;
+        if (on) window.zukanSaved.fly(usave.querySelector('.save-icon'), function () { window.zukanSaved.setHeader(true); });
+        else window.zukanSaved.setHeader(false);
+      });
+      document.addEventListener('zukan-saved-change', renderSave);
+    }
   }
 
   var copy = document.getElementById('copy-url');
