@@ -77,12 +77,16 @@ function zukanListInit() {
   try { synonyms = JSON.parse(document.getElementById('synonyms').textContent) || []; } catch (e) { synonyms = []; }
   function alternatives(term) {
     var alts = [term];
+    var dropTerm = false;
     synonyms.forEach(function (g) {
       var hit = g.words.concat(g.readings).some(function (w) {
         return w === term || (term.length >= 2 && w.indexOf(term) !== -1);
       });
       if (hit) g.words.forEach(function (w) { if (alts.indexOf(w) === -1) alts.push(w); });
+      // 「読み:ヤマー」のように、ほかの語の一部にもなる言葉は、それ自体では探さない（「シブヤマーケター」に当たらないように）
+      if (hit && g.readonly && g.readonly.indexOf(term) !== -1) dropTerm = true;
     });
+    if (dropTerm && alts.length > 1) alts.shift();
     return alts;
   }
 

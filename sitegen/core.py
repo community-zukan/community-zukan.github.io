@@ -169,9 +169,16 @@ def load_synonyms():
     for g in groups:
         if not isinstance(g, list):
             continue
-        words = sorted({normalize(w) for w in g if w.strip()})
-        readings = sorted({reading(w) for w in g if w.strip()} - {""} - set(words))
-        out.append({"words": words, "readings": readings})
+        # 「読み:ヤマー」の形の言葉は、どのグループに当たるかの判定にだけ使い、事例を探す言葉には入れない
+        # （「ヤマー」で探すと「シブヤマーケター」「〜やマーケティング」にも当たってしまうため。2026-11-15）
+        only_read = {normalize(w[3:]) for w in g if w.startswith("読み:") and w[3:].strip()}
+        plain = [w for w in g if w.strip() and not w.startswith("読み:")]
+        words = sorted({normalize(w) for w in plain})
+        readings = sorted(({reading(w) for w in plain} | only_read) - {""} - set(words))
+        g_out = {"words": words, "readings": readings}
+        if only_read:
+            g_out["readonly"] = sorted(only_read - set(words))  # app.js：この言葉そのものでは探さない
+        out.append(g_out)
     return out
 
 
