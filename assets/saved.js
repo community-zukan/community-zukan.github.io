@@ -65,6 +65,6 @@
   });
 
   fetch(list.getAttribute('data-src')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-    .then(function (t) { list.innerHTML = t; render(); })
+    .then(function (t) { list.innerHTML = t; if (window.zukanSaved) window.zukanSaved.sync(list); render(); })
     .catch(function () { countEl.textContent = '事例を読み込めませんでした。時間をおいて開き直してください。'; });
 })();

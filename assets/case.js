@@ -1,38 +1,31 @@
 // 事例ページ：あとで見る・URLのコピー
 (function () {
-  var KEY = 'zukan-saved';
-
-  // localStorage が使えない環境（プライベートブラウズなど）でも、ページは壊さない
-  function load() {
-    try { return JSON.parse(localStorage.getItem(KEY) || '[]') || []; } catch (e) { return []; }
-  }
-  function store(list) {
-    try { localStorage.setItem(KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
-  }
-
+  // あとで見るの保存は site.js の zukanSaved（どのページでも同じ仕組み）
   var save = document.getElementById('save');
-  if (save) {
+  var saved = window.zukanSaved;
+  if (save && saved) {
     var id = save.getAttribute('data-id');
     var label = save.querySelector('.save-label');
+    var tip = document.getElementById('save-tip');
     var render = function () {
-      var on = load().indexOf(id) !== -1;
+      var on = saved.has(id);
       save.setAttribute('aria-pressed', on ? 'true' : 'false');
       label.textContent = on ? 'あとで見るに入れました' : 'あとで見る';
-      // ヘッダーのしおりの件数も合わせる
-      var count = document.getElementById('header-saved-count');
-      if (count) { var n = load().length; count.textContent = n ? n : ''; }
     };
     save.hidden = false;
     render();
+    saved.setHeader(false);
+    // 入れると、ボタンのしおりが弧を描いてヘッダーのしおりへ飛び、着いたところで件数が切り替わる（2026-11-15 の見本で採用。site.js の fly）。
+    // 外すときは飛ばない。初めて入れたときだけ、開き方を一行添える（一度出したことはこのブラウザに残す）
     save.addEventListener('click', function () {
-      var list = load();
-      var i = list.indexOf(id);
-      if (i === -1) list.unshift(id); else list.splice(i, 1);
-      if (!store(list)) {
-        label.textContent = 'このブラウザでは保存できませんでした';
-        return;
-      }
+      var on = saved.toggle(id);
+      if (on === null) { label.textContent = 'このブラウザでは保存できませんでした'; return; }
       render();
+      if (!on) { saved.setHeader(false); if (tip) tip.hidden = true; return; }
+      saved.fly(save.querySelector('.save-icon'), function () { saved.setHeader(true); });
+      var taught = false;
+      try { taught = localStorage.getItem('zukan-save-tip') === '1'; localStorage.setItem('zukan-save-tip', '1'); } catch (e) { /* 何もしない */ }
+      if (tip && !taught) { tip.hidden = false; tip.classList.remove('is-in'); void tip.offsetWidth; tip.classList.add('is-in'); }
     });
   }
 

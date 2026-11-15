@@ -421,7 +421,9 @@ def save_button(c):
     """あとで見る。読み終わる前に入れたい人のために、事例ページの見出しの札の下（最初に見える位置）に置く（2026-11-06 黒田さんの判断）。JavaScript が動くときだけ出す。"""
     i = esc(c["ID"])
     return (f'<button type="button" class="action-button save" id="save" data-id="{i}" aria-pressed="false" '
-            f'data-goatcounter-click="save-{i}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>')
+            f'data-goatcounter-click="save-{i}" hidden><span class="save-icon" aria-hidden="true"></span><span class="save-label">あとで見る</span></button>'
+            # 初めて入れたときだけ、開き方を一行添える（2026-11-15 の見本で採用。case.js）
+            f'<p class="save-tip" id="save-tip" role="status" hidden>あとで見るに入れました。ヘッダーのしおりからいつでも開けます</p>')
 
 
 def share_bar(cfg, c):

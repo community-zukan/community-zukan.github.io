@@ -66,3 +66,93 @@
   if (window.ResizeObserver) new ResizeObserver(update).observe(header);
   else window.addEventListener("resize", update);
 })();
+
+// あとで見る（どのページでも使う）：保存（localStorage の zukan-saved。入れた順に古いものから並ぶ）、ヘッダーのしおりの件数、
+// 一覧のカードのしおりのボタン（2026-11-15 の見本で採用）、入れたときにしおりがヘッダーへ飛ぶ動き（同じく採用）
+window.zukanSaved = (function () {
+  var KEY = "zukan-saved";
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch (e) { return []; }
+  }
+  function store(list) {
+    try { localStorage.setItem(KEY, JSON.stringify(list)); return true; } catch (e) { return false; }
+  }
+  function has(id) { return load().indexOf(id) !== -1; }
+  // 入れる／外す。入れたら true、外したら false、保存できなかったら null
+  function toggle(id) {
+    var list = load();
+    var i = list.indexOf(id);
+    if (i === -1) list.push(id); else list.splice(i, 1);
+    if (!store(list)) return null;
+    document.dispatchEvent(new CustomEvent("zukan-saved-change", { detail: { id: id, on: i === -1, count: list.length } }));
+    return i === -1;
+  }
+  function restart(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  // ヘッダーのしおりの件数。pop のときは数字がポンと大きくなって戻る
+  function setHeader(pop) {
+    var link = document.getElementById("header-saved");
+    var count = document.getElementById("header-saved-count");
+    if (!link || !count) return;
+    var n = load().length;
+    count.textContent = n ? String(n) : "";
+    link.setAttribute("title", n ? "あとで見る（" + n + "件）" : "あとで見る");
+    if (pop) { restart(count, "is-pop"); restart(link, "is-pop"); }
+  }
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // from（押したボタンの絵）からヘッダーのしおりまで、しおりが弧を描いて飛ぶ（transform と opacity だけ）。
+  // 動きを減らす設定・動かせないブラウザ・ヘッダーが見えないときは飛ばさずに、すぐ done
+  function fly(from, done) {
+    var target = document.querySelector("#header-saved svg");
+    if (calm || !from || !target || !Element.prototype.animate) { done(); return; }
+    var a = from.getBoundingClientRect(), b = target.getBoundingClientRect();
+    if (!a.width || !b.width || b.bottom < 0) { done(); return; }
+    var x0 = a.left + a.width / 2, y0 = a.top + a.height / 2, x1 = b.left + b.width / 2, y1 = b.top + b.height / 2;
+    var cx = x0 + (x1 - x0) * 0.2, cy = Math.min(y0, y1) - 28;
+    var piece = document.createElement("span");
+    piece.className = "save-fly";
+    piece.setAttribute("aria-hidden", "true");
+    piece.appendChild(document.createElement("i"));
+    document.body.appendChild(piece);
+    var frames = [];
+    for (var k = 0, N = 20; k <= N; k++) {
+      var u = k / N;
+      var t = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      var x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * cx + t * t * x1;
+      var y = (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * cy + t * t * y1;
+      var s = u < 0.25 ? 1 + u / 0.25 * 0.5 : 1.5 - (u - 0.25) / 0.75 * 0.8;
+      frames.push({ offset: u, opacity: u > 0.9 ? (1 - u) / 0.1 : 1,
+        transform: "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) rotate(" + (Math.sin(u * Math.PI) * -14).toFixed(1) + "deg) scale(" + s.toFixed(3) + ")" });
+    }
+    var anim = piece.animate(frames, { duration: 560, easing: "linear", fill: "forwards" });
+    var finished = false;
+    var end = function () { if (finished) return; finished = true; if (piece.parentNode) piece.parentNode.removeChild(piece); done(); };
+    anim.onfinish = end;
+    setTimeout(end, 900);  // 動きが止まっても、件数は必ず変える
+  }
+  // カードのしおりのボタンを、入っているかどうかに合わせる（読み込んだあとに足したカードにも呼ぶ）
+  function sync(root) {
+    var list = load();
+    Array.prototype.forEach.call((root || document).querySelectorAll(".card-save"), function (b) {
+      b.setAttribute("aria-pressed", list.indexOf(b.getAttribute("data-id")) !== -1 ? "true" : "false");
+    });
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest(".card-save");
+    if (!b) return;
+    ev.preventDefault();
+    var id = b.getAttribute("data-id");
+    var on = toggle(id);
+    if (on === null) return;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    restart(b, "is-press");
+    if (on) {
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "save-card-" + id, title: "あとで見る（一覧のカード）：" + id, event: true });
+      fly(b.querySelector("svg"), function () { setHeader(true); });
+    } else {
+      setHeader(false);
+    }
+  });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { sync(); });
+  else sync();
+  return { load: load, has: has, toggle: toggle, setHeader: setHeader, fly: fly, sync: sync };
+})();

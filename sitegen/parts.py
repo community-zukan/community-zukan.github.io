@@ -224,6 +224,7 @@ def card(c, prefix="", order=None):
     {f'<p class="card-point">{esc(shorten(point, 90))}</p>' if point else ''}
     {f'<ul class="tags tags-purpose">{tags}</ul>' if tags else ''}
   </a>
+  <button type="button" class="card-save" data-id="{esc(c['ID'])}" aria-pressed="false" aria-label="あとで見る：{esc(c['_title'])}" title="あとで見る"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
 </li>"""
 
 

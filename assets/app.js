@@ -5,7 +5,7 @@
   var restUrl = listEl && listEl.getAttribute('data-rest');
   if (restUrl && window.fetch) {
     fetch(restUrl).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-      .then(function (t) { listEl.insertAdjacentHTML('beforeend', t); })
+      .then(function (t) { listEl.insertAdjacentHTML('beforeend', t); if (window.zukanSaved) window.zukanSaved.sync(listEl); })
       .catch(function () { /* 入っている分だけで動かす */ })
       .then(zukanListInit);
   } else {
@@ -750,8 +750,16 @@ function zukanListInit() {
   if (saved.length) {
     savedToggle.hidden = false;
     setSavedOnly(false);
-    savedToggle.addEventListener('click', function () { setSavedOnly(!savedOnly); apply(false); });
   }
+  savedToggle.addEventListener('click', function () { setSavedOnly(!savedOnly); apply(false); });
+  // 一覧のカードのしおりで入れたり外したりしたとき（site.js が知らせる）
+  document.addEventListener('zukan-saved-change', function () {
+    saved = savedIds();
+    savedToggle.hidden = !saved.length;
+    if (!saved.length && savedOnly) savedOnly = false;
+    setSavedOnly(savedOnly);
+    if (savedOnly) apply(false, true);
+  });
 
   // 検索の例：読み込むたびに候補から選び直す。実際に検索された言葉（searched）は2つまで混ぜ、残りは運営が選んだ言葉（picked）から。
   // 今のデータで1件も見つからない言葉は出さない
