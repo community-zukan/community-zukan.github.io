@@ -665,16 +665,13 @@ main { flex: 1 0 auto; }
   .cards.is-list .card:hover a, .cards.is-list .card:hover .card-save { transform: none; box-shadow: none; }
 }
 .cards.is-entering .card:not([hidden]) { animation: card-rise .5s ease both; }
-/* 一覧のカードから事例ページへ、種別の札・企業名がつながって移る（2026-11-15 の見本で採用。site.js が一覧の押したカードに同じ名前を付ける）。
-   題名（コミュニティ名）は移ると違和感があるので動かさない（2026-11-15 黒田さんの判断）。
+/* 一覧と事例ページのあいだは、ページ全体が重なって切り替わる（2026-11-15。site.js がほかのページへの移動では止める）。
+   カードの題名・札・企業名がつながって移る動きは、違和感があるので外した（2026-11-15 黒田さんの判断）。
    ページをまたぐのは Chrome 126+・Safari 18.2+。ほかのブラウザ・動きを減らす設定では今までどおり切り替わる */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
-  ::view-transition-group(vt-badge), ::view-transition-group(vt-company) { animation-duration: .38s; animation-timing-function: cubic-bezier(.2, 0, 0, 1); }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .25s; }
 }
-.case-head .card-top .badge { view-transition-name: vt-badge; }
-.case-head .card-company { view-transition-name: vt-company; }
 /* 条件を変えたとき、カードが新しい位置へ動いて見える（2026-11-15 の見本で採用。app.js の withTransition が名前 card-ID を付ける）。
    Safari 18.0〜18.1 は view-transition-class に対応しないので、ブラウザの標準の動き（位置の移動と重ねて切り替え）になる */
 .card { view-transition-class: card; }

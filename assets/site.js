@@ -157,49 +157,21 @@ window.zukanSaved = (function () {
   return { load: load, has: has, toggle: toggle, setHeader: setHeader, fly: fly, sync: sync };
 })();
 
-// 一覧のカードから事例ページへ、種別の札・企業名がつながって移る（2026-11-15 の見本で採用。ページをまたぐ View Transitions）。
-// 題名（コミュニティ名）は移ると違和感があるので動かさない（2026-11-15 黒田さんの判断）。
-// 事例ページの札と企業名には CSS で名前（vt-badge・vt-company）を付けてあり、一覧では押したカードにだけ同じ名前を付ける。
-// 一覧に戻るときは、戻ってきた事例のカードに名前を付ける。目的の絵（右上の丸）は動かさない（黒田さんのメモ）。
-// 一覧と事例ページ、事例ページどうしのとき以外は動かさない。対応していないブラウザ・動きを減らす設定では今までどおり切り替わる
+// 一覧と事例ページ、事例ページどうしを移るときだけ、ページ全体を重ねて切り替える（ページをまたぐ View Transitions。CSS の @view-transition）。
+// ほかのページへの移動では止める。カードの題名・札・企業名がつながって移る動きは、違和感があるので外した（2026-11-15 黒田さんの判断）
 (function () {
   if (!("onpageswap" in window)) return;
-  var VT = { ".badge": "vt-badge", ".card-company": "vt-company" };
   function kind(url) {
     var p = new URL(url, location.href).pathname;
     if (/\/cases\/[^/]+\/(index\.html)?$/.test(p)) return "case";
     if (/^\/(index\.html)?$/.test(p)) return "list";
     return "other";
   }
-  function caseId(url) { var m = new URL(url, location.href).pathname.match(/\/cases\/([^/]+)\//); return m ? m[1] : ""; }
-  function clearNames() {
-    Array.prototype.forEach.call(document.querySelectorAll("#cards [style*='view-transition-name']"), function (el) { el.style.viewTransitionName = ""; });
-  }
-  function nameCard(id) {
-    var a = document.querySelector('#cards .card:not([hidden]) a[href="cases/' + id + '/"]');
-    if (!a) return false;
-    Object.keys(VT).forEach(function (sel) { var el = a.querySelector(sel); if (el) el.style.viewTransitionName = VT[sel]; });
-    return true;
-  }
   window.addEventListener("pageswap", function (e) {
     if (!e.viewTransition) return;
     var to = e.activation && e.activation.entry ? e.activation.entry.url : "";
     var from = kind(location.href), toKind = to ? kind(to) : "other";
-    if (from === "list" && toKind === "case") {
-      clearNames();
-      if (!nameCard(caseId(to))) e.viewTransition.skipTransition();
-    } else if (from === "case" && (toKind === "list" || toKind === "case")) {
-      try { sessionStorage.setItem("zukan-vt-from", caseId(location.href)); } catch (err) { /* 何もしない */ }
-    } else {
-      e.viewTransition.skipTransition();
-    }
-  });
-  window.addEventListener("pagereveal", function (e) {
-    if (!e.viewTransition || kind(location.href) !== "list") return;
-    clearNames();
-    var id = "";
-    try { id = sessionStorage.getItem("zukan-vt-from") || ""; sessionStorage.removeItem("zukan-vt-from"); } catch (err) { /* 何もしない */ }
-    if (!id || !nameCard(id)) { e.viewTransition.skipTransition(); return; }
-    e.viewTransition.finished.then(clearNames, clearNames);
+    var ok = (from === "list" && toKind === "case") || (from === "case" && (toKind === "list" || toKind === "case"));
+    if (!ok) e.viewTransition.skipTransition();
   });
 })();
