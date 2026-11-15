@@ -33,6 +33,7 @@ function zukanListInit() {
   var savedToggle = document.getElementById('saved-toggle');
   var savedOnly = false;
   var calmMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;  // 動きを減らす設定
+  var sheet = document.getElementById('filter-sheet');   // スマホの絞り込みの板（下の「スマホの絞り込み」）
   var applied = document.getElementById('applied');
   var appliedList = document.getElementById('applied-list');
   // GoatCounter で数える（あとから作るボタンは count.js の data-goatcounter-click が効かないので、ここから送る）
@@ -207,7 +208,7 @@ function zukanListInit() {
     });
   }
   function withTransition(update) {
-    if (calmMotion || !document.startViewTransition || document.hidden) { update(); return; }
+    if (calmMotion || !document.startViewTransition || document.hidden || (sheet && sheet.open)) { update(); return; }
     if (vtCur) vtCur.skipTransition();
     nameCards();
     var t = document.startViewTransition(function () { update(); nameCards(); });
@@ -299,6 +300,59 @@ function zukanListInit() {
     flipTimer = setTimeout(function () { flipTimer = 0; rcNum.className = 'rc-num'; rcNum.innerHTML = digitsHtml(String(curCount)); }, 350 + len * 30 + 60);
   }
 
+  // スマホの絞り込み（2026-11-15 の見本で採用）：狭い画面（絞り込みの欄が左に並ばない幅）では、「条件で絞り込む」を押すと
+  // 下から板（dialog）が出る。中身は details の .filters-body をそのまま移して使い（札の状態はそのまま）、閉じたら戻す。
+  // 札を押すたびに一覧と板の下の「n件を見る」が変わり、押すと0件になる札は薄くする。広い画面は今までどおり左の欄
+  var sheetBody = document.getElementById('sheet-body');
+  var filtersBody = details.querySelector('.filters-body');
+  var narrowMq = window.matchMedia ? window.matchMedia('(max-width: 999px)') : null;
+  function updateSheet(s, terms, shown) {
+    if (!sheet || !sheet.open) return;
+    document.getElementById('sheet-n').textContent = shown;
+    document.getElementById('sheet-apply').disabled = shown === 0;
+    boxes.forEach(function (b) {
+      var zero = false;
+      if (!b.checked) {
+        var s2 = {};
+        Object.keys(s).forEach(function (k) { s2[k] = s[k].slice(); });
+        (s2[b.name] = s2[b.name] || []).push(b.value);
+        zero = countWith(s2, terms, savedOnly) === 0;
+      }
+      b.closest('.chip').classList.toggle('is-zero', zero);
+    });
+  }
+  if (sheet && sheet.showModal && narrowMq) {
+    details.querySelector('summary').addEventListener('click', function (ev) {
+      if (!narrowMq.matches) return;
+      ev.preventDefault();
+      sheetBody.appendChild(filtersBody);
+      sheet.showModal();
+      apply(false, true);
+      gc('filter-sheet-open', '絞り込みの板を開く');
+    });
+    sheet.addEventListener('close', function () {
+      details.appendChild(filtersBody);
+      details.open = false;
+      boxes.forEach(function (b) { b.closest('.chip').classList.remove('is-zero'); });
+    });
+    // 後ろ（板の外）を押しても閉じる。Safari は closedby="any" に対応しないので、ここで閉じる
+    sheet.addEventListener('click', function (ev) { if (ev.target === sheet) sheet.close(); });
+    document.getElementById('sheet-close').addEventListener('click', function () { sheet.close(); });
+    document.getElementById('sheet-clear').addEventListener('click', function () {
+      boxes.forEach(function (b) { b.checked = false; });
+      toolSel = '';
+      apply(true);
+    });
+    document.getElementById('sheet-apply').addEventListener('click', function () {
+      gc('filter-sheet-apply', '絞り込みの板から一覧を見る');
+      sheet.close();
+      var y = details.getBoundingClientRect().bottom + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-offset'), 10) || 64) - 8;
+      window.scrollTo(0, Math.max(0, y));
+    });
+    var onWide = function () { if (!narrowMq.matches && sheet.open) sheet.close(); };
+    if (narrowMq.addEventListener) narrowMq.addEventListener('change', onWide);
+  }
+
   function apply(pushState, keepLimit) {
     if (!keepLimit) limit = PAGE;
     // キーワードが変わったら並べ直す（検索の例・「外す」のボタンなど、どこから変わっても）
@@ -332,6 +386,7 @@ function zukanListInit() {
     narrowPurposes(s);
     // コミュニティAIへの案内：結果が少ない（data-few の件数以下）ときだけ囲みで出す
     if (aiHelp) aiHelp.hidden = shown > (parseInt(aiHelp.getAttribute('data-few'), 10) || 5);
+    updateSheet(s, terms, shown);
     if (toolNote) {
       toolNote.hidden = !toolSel;
       toolNote.querySelector('span').textContent = toolSel ? 'ツール「' + toolSel + '」を使っている事例' : '';

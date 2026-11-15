@@ -140,12 +140,19 @@ def build_index(cfg, cases):
     {search_examples(cfg)}
   </div>
   <details class="filters" id="filters">
-    <summary><span>条件で絞り込む</span><span class="active-count" id="active-count"></span></summary>
+    <summary><span>条件で絞り込む</span><span class="active-count" id="active-count"></span><svg class="filters-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></summary>
     <div class="filters-body">
       <button type="button" id="reset3" class="link-button filters-reset" hidden>すべて外す</button>
       {''.join(filters)}
     </div>
   </details>
+  <!-- スマホの絞り込み（2026-11-15 の見本で採用）：「条件で絞り込む」を押すと下から板が出る。中身は上の .filters-body を app.js が移して使う -->
+  <dialog class="filter-sheet" id="filter-sheet" aria-labelledby="sheet-title">
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <div class="sheet-head"><h2 id="sheet-title">条件で絞り込む</h2><button type="button" class="link-button" id="sheet-clear">すべて外す</button><button type="button" class="sheet-close" id="sheet-close">閉じる</button></div>
+    <div class="sheet-body" id="sheet-body"></div>
+    <div class="sheet-foot"><button type="button" class="button sheet-apply" id="sheet-apply"><span id="sheet-n">{len(cases)}</span>件を見る</button></div>
+  </dialog>
   <div class="result-bar">
     <!-- 件数：数字が変わるとき1桁ずつめくれる（2026-11-15 の見本で採用。app.js の flipCount）。読み上げは隠した文字だけ -->
     <p id="result-count" class="result-count" aria-live="polite"><span class="visually-hidden" id="result-say">{len(cases)}件の事例</span><span class="rc-show" aria-hidden="true"><span class="rc-pre" id="rc-pre" hidden>{len(cases)}件中&nbsp;</span><span class="rc-num" id="rc-num">{len(cases)}</span><span class="rc-unit">件の事例</span></span></p>

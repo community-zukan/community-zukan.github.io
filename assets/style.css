@@ -256,6 +256,34 @@ html { scroll-padding-top: calc(var(--header-offset, 64px) + 12px); }
 .filters summary::after { content: "＋"; color: var(--text-sub); margin-left: auto; padding-left: var(--space-3); }
 .filters[open] summary::after { content: "－"; }
 .active-count { font-size: 13px; color: var(--sky); font-weight: 600; }
+/* スマホの絞り込みの板（2026-11-15 の見本で採用。app.js が .filters-body を移して使う）。広い画面では使わない */
+.filters-icon { display: none; width: 20px; height: 20px; margin-left: auto; padding-left: var(--space-3); box-sizing: content-box; fill: none; stroke: var(--text-sub); stroke-width: 2; stroke-linecap: round; }
+@media (max-width: 999px) {
+  .js .filters summary::after { content: none; }
+  .js .filters-icon { display: block; }
+}
+.filter-sheet { position: fixed; inset: auto 0 0 0; width: 100%; max-width: none; height: min(85dvh, 760px); max-height: none; margin: 0; padding: 0 0 env(safe-area-inset-bottom, 0px); border: 0; border-radius: var(--radius-lg) var(--radius-lg) 0 0; background: var(--card); color: var(--ink); box-shadow: var(--shadow-lift); flex-direction: column; overscroll-behavior: contain; }
+.filter-sheet[open] { display: flex; }
+.filter-sheet::backdrop { background: color-mix(in srgb, var(--footer-bg) 50%, transparent); }
+.sheet-grip { flex: none; width: 40px; height: 4px; margin: var(--space-2) auto 0; border-radius: var(--radius-sm); background: var(--tint-line); }
+.sheet-head { flex: none; display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4) var(--space-3); border-bottom: 1px solid var(--line); }
+.sheet-head h2 { margin: 0 auto 0 0; font-size: 16px; white-space: nowrap; }
+.sheet-head .link-button { white-space: nowrap; }
+.sheet-close { min-height: 40px; padding: 0 var(--space-3); white-space: nowrap; cursor: pointer; font: inherit; font-size: 14px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.sheet-close:hover { border-color: var(--sky); color: var(--sky); }
+.sheet-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.sheet-body .filters-body { border-top: 0; padding-top: 0; }
+.sheet-body .filters-reset { display: none; }  /* 板では上の「すべて外す」を使う */
+.sheet-foot { flex: none; padding: var(--space-3) var(--space-4) var(--space-4); border-top: 1px solid var(--line); background: var(--card); }
+.sheet-apply { display: block; width: 100%; min-height: 48px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sheet-apply:disabled { background: var(--line); color: var(--text-sub); cursor: default; }
+.chip.is-zero span { opacity: .45; }  /* 押すと0件になる札（押せないわけではない） */
+@media (prefers-reduced-motion: no-preference) {
+  .filter-sheet[open] { animation: sheet-up .34s cubic-bezier(.2, .8, .2, 1) both; }
+  .filter-sheet[open]::backdrop { animation: sheet-fade .34s ease both; }
+}
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes sheet-fade { from { opacity: 0; } to { opacity: 1; } }
 .filters-body { padding: var(--space-1) var(--space-4) var(--space-4); border-top: 1px solid var(--line); }
 .facet { border: 0; margin: var(--space-4) 0 0; padding: 0; min-width: 0; }
 .facet legend { font-size: 13px; font-weight: 600; color: var(--text-body); margin-bottom: var(--space-2); padding: 0; }
