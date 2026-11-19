@@ -28,7 +28,7 @@ def parse_note_file(path):
                 meta[k.strip()] = v.strip()
     slug = os.path.splitext(os.path.basename(path))[0]
     return {"slug": slug, "title": meta.get("title", slug), "description": meta.get("description", ""),
-            "kind": meta.get("kind", ""), "emoji": meta.get("emoji", "") or "1f4d3",
+            "kind": meta.get("kind", ""), "question": meta.get("question", ""), "emoji": meta.get("emoji", "") or "1f4d3",
             "published": to_date(meta.get("published", "")), "updated": to_date(meta.get("updated", "")),
             "draft": meta.get("draft", "").lower() in ("true", "yes", "1"), "body": body,
             "ids": re.findall(r"^:::case\s+(\S+)", body, re.M)}
@@ -132,7 +132,13 @@ def note_emoji(n, rel):
 
 
 def note_image(n, og_notes):
-    return f"og/note-{n['slug']}.png" if n["slug"] in og_notes else "assets/ogp.png"
+    """記事の共有画像のURL。画像の中身から版の印を付け、作り直したときに SNS やブラウザが古い画像を出し続けないようにする"""
+    if n["slug"] not in og_notes:
+        return "assets/ogp.png"
+    path = os.path.join(OUT, "og", f"note-{n['slug']}.png")
+    with open(path, "rb") as f:
+        v = hashlib.sha1(f.read()).hexdigest()[:8]
+    return f"og/note-{n['slug']}.png?v={v}"
 
 
 def note_picture(n, og_notes, rel):

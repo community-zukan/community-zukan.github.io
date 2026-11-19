@@ -201,8 +201,9 @@ def emoji_image(code):
     return Image.open(path).convert("RGBA")
 
 
-def title_lines(d, title, fnt, width, max_lines):
-    """題名を「。」「、」のところで区切って行に詰める。1つの区切りが長すぎるときだけ文字の途中で折り返す。"""
+def title_lines(d, title, fnt, width, max_lines, strict=False):
+    """題名を「。」「、」のところで区切って行に詰める。1つの区切りが長すぎるときだけ文字の途中で折り返す
+    （strict のときは折り返さずに None を返し、呼ぶ側で文字を小さくする）。"""
     import re
     lines, cur = [], ""
     for seg in re.findall(r"[^。、）」』]+[。、）」』]*", title):
@@ -214,6 +215,8 @@ def title_lines(d, title, fnt, width, max_lines):
         cur = ""
         if d.textlength(seg, font=fnt) <= width:
             cur = seg
+        elif strict:
+            return None
         else:
             parts = wrap(d, seg, fnt, width, 9)
             lines += parts[:-1]
@@ -223,33 +226,55 @@ def title_lines(d, title, fnt, width, max_lines):
     return lines if len(lines) <= max_lines else None
 
 
+NOTE_PAPER, NOTE_EDGE = "#f4f7fa", "#dde4ec"  # 図鑑ノートの画像：ごく薄い灰色の地と、白いカードの線
+
+
+def note_question(n):
+    """画像に大きく出す問い。記事の頭の question を使い、ないときは題名の「。」の前（（ ）の補足は外す）"""
+    import re
+    if n.get("question"):
+        return n["question"]
+    head, _, tail = n["title"].partition("。")
+    return re.sub(r"（[^）]*）", "", head) if tail else n["title"]
+
+
 def make_note(cfg, n, path):
-    img = Image.new("RGB", (W, H), NOTE_BG)
+    """図鑑ノートの共有画像（2026-11-20 の見本 https://claude.ai/artifact/WQvhkMPvWYXdCqzbBGoQkh で案D）。
+    白いカードに、記事が答える問いを大きく出し、題名は下に小さく添える"""
+    img = Image.new("RGB", (W, H), NOTE_PAPER)
     d = ImageDraw.Draw(img)
-    d.ellipse((W - 330, -170, W + 170, 330), fill=NOTE_CIRCLE)
-    d.ellipse((W - 260, 60, W - 80, 240), fill=SURFACE)
-    e = emoji_image(n["emoji"]).resize((128, 128), Image.LANCZOS)
-    img.paste(e, (W - 234, 86), e)
+    d.rounded_rectangle((48, 48, W - 48, H - 48), radius=24, fill=SURFACE, outline=NOTE_EDGE, width=2)
+    e = emoji_image(n["emoji"]).resize((96, 96), Image.LANCZOS)
+    img.paste(e, (96, 96), e)
     label = "図鑑ノート" + ("｜" + n["kind"] if n["kind"] else "")
-    pf = font("bold", 30)
-    tw = d.textlength(label, font=pf)
-    d.rounded_rectangle((72, 72, 72 + tw + 48, 128), radius=12, fill=ACCENT)  # 札の角は小さく（サイトの札と同じ考え方。もとは丸い形の 28）
-    d.text((96, 112), label, font=pf, fill=SURFACE, anchor="ls")
-    # 題名は円にかからない幅で、3行までに収まる大きさを選ぶ
-    for size in (64, 60, 56, 50, 46):
-        tf = font("medium", size)  # 題名は Medium（もとは Bold）
-        lines = title_lines(d, n["title"], tf, W - 72 - 330, 3)
+    d.text((216, 160), label, font=font("bold", 28), fill=ACCENT, anchor="ls")
+    # 問いは「、」で区切って2行までに収まる大きさを選ぶ。収まらなければ文字の途中で折り返して3行まで
+    q, width = note_question(n), W - 192
+    lines = None
+    for size in (76, 70, 64, 58):
+        tf = font("bold", size)
+        lines = title_lines(d, q, tf, width, 2, strict=True)
         if lines:
             break
     if not lines:
-        lines = wrap(d, n["title"], tf, W - 72 - 330, 3)
-    lh = int(size * 1.42)
-    y = 170 + size
+        size = 58
+        tf = font("bold", size)
+        lines = wrap(d, q, tf, width, 3)
+    lh = int(size * 1.3)
+    y = 230 + size
     for ln in lines:
-        d.text((72, y), ln, font=tf, fill=INK, anchor="ls")
+        d.text((96, y), ln, font=tf, fill=INK, anchor="ls")
         y += lh
-    d.text((72, H - 64), "文：黒田悠介（コミュニティ研究家）", font=font("regular", 28), fill=INK2, anchor="ls")
-    d.text((W - 72, H - 64), cfg["name"], font=font("bold", 28), fill=INK2, anchor="rs")
+    # 題名は1行で添える（長いときは文字を小さく、それでも入らなければ「…」）
+    for ts in (28, 26, 24):
+        sf = font("medium", ts)
+        tl = wrap(d, "→ " + n["title"], sf, width, 1)
+        if not tl[0].endswith("…"):
+            break
+    d.text((96, H - 136), tl[0], font=sf, fill=INK2, anchor="ls")
+    book(img, 96, H - 104, 32)
+    d.text((138, H - 78), cfg["name"], font=font("bold", 22), fill=INK3, anchor="ls")
+    d.text((W - 96, H - 78), "文：黒田悠介", font=font("regular", 22), fill=INK3, anchor="rs")
     img.save(path, optimize=True)
     save_small(img, path)
 
