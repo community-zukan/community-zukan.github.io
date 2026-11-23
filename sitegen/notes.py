@@ -134,7 +134,7 @@ def note_emoji(n, rel):
 def note_image(n, og_notes):
     """記事の共有画像のURL。画像の中身から版の印を付け、作り直したときに SNS やブラウザが古い画像を出し続けないようにする"""
     if n["slug"] not in og_notes:
-        return "assets/ogp.png"
+        return f"assets/ogp.png?v={ver('ogp.png')}"
     path = os.path.join(OUT, "og", f"note-{n['slug']}.png")
     with open(path, "rb") as f:
         v = hashlib.sha1(f.read()).hexdigest()[:8]

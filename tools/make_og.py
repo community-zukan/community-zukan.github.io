@@ -138,17 +138,64 @@ def frame(cfg):
     return img, d
 
 
+# サイト全体の共有画像の背景に並べる会社（data/latest.csv にあるものだけを使う。2026-11-23 note の見出し画像の案B）
+SHELF_COMPANIES = ("トヨタ自動車 ソニー 日立製作所 富士通 NEC パナソニック カルビー キユーピー サントリー 味の素 良品計画 ワークマン 資生堂 花王 "
+                   "ヤマハ発動機 本田技研工業 日産自動車 カシオ計算機 ロート製薬 サッポロビール 明治 森永製菓 江崎グリコ カゴメ 楽天グループ LINEヤフー "
+                   "サイボウズ Sansan freee マネーフォワード SmartHR リクルート NTTドコモ KDDI ソフトバンク 三菱商事 丸紅 住友商事 日本航空 スノーピーク "
+                   "ミズノ ニトリ アドビ デンソー 三井化学 JT ダイハツ工業 日本生命保険 ポーラ オタフクソース").split()
+
+
+def shelf_companies():
+    import csv
+    import random
+    import re
+    kinds = {}
+    path = os.path.join(ROOT, "data", "latest.csv")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                kinds.setdefault(re.sub(r"[（(].*?[）)]", "", r.get("企業名", "")).strip(), r.get("種別", ""))
+    picks = [(n, kinds[n]) for n in SHELF_COMPANIES if n in kinds]
+    random.Random(4).shuffle(picks)
+    return picks
+
+
 def make_site(cfg):
-    img, d = frame(cfg)
-    book(img, 78, 76, 112)
-    d.text((80, 300), cfg["name"], font=font("bold", 96), fill=INK, anchor="ls")
-    lines = wrap(d, cfg["subtitle"], font("regular", 40), W - 160, 2)
-    y = 372
-    for ln in lines:
-        d.text((80, y), ln, font=font("regular", 40), fill=INK2, anchor="ls")
-        y += 58
-    d.text((80, y + 20), "目的・段階・活動の型で、自社に近い事例を探せます", font=font("regular", 30), fill=INK3, anchor="ls")
-    img.save(SITE_OG, optimize=True)
+    """サイト全体の共有画像。事例に載っている会社の名前のカードを敷き詰め、まん中の白い箱に本の絵・サイト名・副題を置く
+    （2026-11-23 黒田さんが note の見出し画像の3案から選んだ案Bを、共有画像にも使う。戻し先のタグ zukan-before-site-ogp-2026-11-23）"""
+    img = Image.new("RGB", (W, H), "#eef2f6")
+    d = ImageDraw.Draw(img)
+    picks = shelf_companies() or [(cfg["name"], "")]
+    cw, ch, gap = 184, 66, 13
+    i = 0
+    for r in range(H // (ch + gap) + 2):
+        off = -(cw // 2) * (r % 2)
+        for k in range(W // (cw + gap) + 2):
+            co, t = picks[i % len(picks)]
+            i += 1
+            x, y = off + k * (cw + gap) - 20, r * (ch + gap) - 22
+            fg, bg = TYPE_COLORS.get(t, (INK3, LINE))
+            d.rounded_rectangle((x, y, x + cw, y + ch), radius=12, fill=SURFACE, outline="#d6dee8", width=2)
+            d.rounded_rectangle((x + 13, y + 13, x + 25, y + 25), radius=3, fill=bg, outline=fg, width=1)
+            cf = font("bold", 21)
+            while d.textlength(co, font=cf) > cw - 36 and cf.size > 14:
+                cf = font("bold", cf.size - 2)
+            d.text((x + 13, y + 49), co, font=cf, fill=INK2, anchor="ls")
+    # まん中の白い箱（ぼかした影つき）
+    box = (188, 132, W - 188, H - 132)
+    veil = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(veil).rounded_rectangle(box, radius=30, fill=(255, 255, 255, 250))
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle((box[0] + 6, box[1] + 12, box[2] + 6, box[3] + 12), radius=30, fill=(20, 40, 70, 60))
+    from PIL import ImageFilter
+    img = img.convert("RGBA")
+    img.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(18)))
+    img.alpha_composite(veil)
+    d = ImageDraw.Draw(img)
+    book(img, W / 2 - 41, 170, 82)
+    d.text((W / 2, 356), cfg["name"], font=font("bold", 86), fill=INK, anchor="ms")
+    d.text((W / 2, 424), cfg["subtitle"], font=font("medium", 32), fill=INK2, anchor="ms")
+    img.convert("RGB").save(SITE_OG, optimize=True)
     print(f"作りました: {os.path.relpath(SITE_OG, ROOT)}")
 
 

@@ -78,7 +78,8 @@ def page(cfg, *, title, description, path, body, depth=0, og_image=None, og_type
     full_title = f"{title}｜{cfg['name']}" if title else f"{cfg['name']}｜{cfg['subtitle']}"
     base = cfg["base_url"].rstrip("/")
     canonical = base + "/" + path
-    og_image = base + "/" + (og_image or "assets/ogp.png")
+    # サイト全体の共有画像は中身から版の印を付ける（作り直したときに SNS が古い画像を出し続けないように。2026-11-23）
+    og_image = base + "/" + (og_image or f"assets/ogp.png?v={ver('ogp.png')}")
     extra = ""
     for obj in jsonld or []:
         # 「<」をすべて置き換え、どんな文字が来ても埋め込みが壊れないようにする（観測所と同じ。2026-11-07）
